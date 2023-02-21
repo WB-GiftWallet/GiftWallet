@@ -95,10 +95,7 @@ final class DetailViewController: UIViewController {
         configureScrollView()
         configureContentView()
         configureInnerContents()
-        
-        let aaa = UITapGestureRecognizer(target: self, action: #selector(tapImageView))
-        giftImageView.isUserInteractionEnabled = true
-        giftImageView.addGestureRecognizer(aaa)
+        configureImageTapGesture()
     }
     
     private func configureScrollView() {
@@ -164,28 +161,37 @@ final class DetailViewController: UIViewController {
         giftImageView.setContentHuggingPriority(.fittingSizeLevel, for: .vertical)
     }
     
+    private func configureImageTapGesture() {
+        let gestureRecognizer = UITapGestureRecognizer(target: self, action: #selector(tapImageView))
+        
+        giftImageView.isUserInteractionEnabled = true
+        giftImageView.addGestureRecognizer(gestureRecognizer)
+    }
+    
     @objc private func tapSeletedButton() {
         //TODO: Seleted Button Tapped
         let alert = UIAlertController(title: nil, message: nil, preferredStyle: .alert)
         
+        if isUseableGift {
+            alert.title = "사용 완료 처리할까요?"
+        } else {
+            alert.title = "사용 가능한 기프티콘인가요?"
+        }
+        
         let cancel = UIAlertAction(title: "아니요", style: .destructive) { _ in
             self.dismiss(animated: true)
         }
-        alert.addAction(cancel)
         
-        if isUseableGift {
-            alert.title = "사용 완료 처리할까요?"
-            let done = UIAlertAction(title: "네", style: .default) { _ in
+        let done = UIAlertAction(title: "네", style: .default) { _ in
+            if self.isUseableGift {
                 self.changeGiftState(true)
-            }
-            alert.addAction(done)
-        } else {
-            alert.title = "사용 가능한 기프티콘인가요?"
-            let done = UIAlertAction(title: "네", style: .default) { _ in
+            } else {
                 self.changeGiftState(false)
             }
-            alert.addAction(done)
         }
+        
+        alert.addAction(cancel)
+        alert.addAction(done)
         
         present(alert, animated: true)
     }
