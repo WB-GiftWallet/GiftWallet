@@ -85,6 +85,8 @@ final class DetailViewController: UIViewController {
         return imageView
     }()
     
+    private var isUseableGift = true
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         
@@ -162,13 +164,46 @@ final class DetailViewController: UIViewController {
         giftImageView.setContentHuggingPriority(.fittingSizeLevel, for: .vertical)
     }
     
-    @objc func tapImageView(sender: UITapGestureRecognizer) {
-        //TODO: ImageView Tapped
-        print("Tapped ImageView")
+    @objc private func tapSeletedButton() {
+        //TODO: Seleted Button Tapped
+        let alert = UIAlertController(title: nil, message: nil, preferredStyle: .alert)
+        
+        let cancel = UIAlertAction(title: "아니요", style: .destructive) { _ in
+            self.dismiss(animated: true)
+        }
+        alert.addAction(cancel)
+        
+        if isUseableGift {
+            alert.title = "사용 완료 처리할까요?"
+            let done = UIAlertAction(title: "네", style: .default) { _ in
+                self.changeGiftState(true)
+            }
+            alert.addAction(done)
+        } else {
+            alert.title = "사용 가능한 기프티콘인가요?"
+            let done = UIAlertAction(title: "네", style: .default) { _ in
+                self.changeGiftState(false)
+            }
+            alert.addAction(done)
+        }
+        
+        present(alert, animated: true)
     }
     
-    @objc func tapSeletedButton() {
-        //TODO: Seleted Button Tapped
-        print("Tapped SeletedButton")
+    //TODO: 사용불가, 가능 변경
+    private func changeGiftState(_ seleted: Bool) {
+        isUseableGift.toggle()
+        
+        if seleted {
+            selectedButton.backgroundColor = .systemGray
+        } else {
+            selectedButton.backgroundColor = .systemPurple
+        }
+        dismiss(animated: true)
+    }
+    
+    @objc private func tapImageView(sender: UITapGestureRecognizer) {
+        //TODO: ImageView Tapped
+        print("Tapped ImageView")
     }
 }
