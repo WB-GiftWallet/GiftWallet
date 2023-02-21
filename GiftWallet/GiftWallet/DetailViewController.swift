@@ -7,7 +7,7 @@
 
 import UIKit
 
-class DetailViewController: UIViewController {
+final class DetailViewController: UIViewController {
     
     private let scrollView: UIScrollView = {
         let view = UIScrollView(frame: .zero)
@@ -25,7 +25,7 @@ class DetailViewController: UIViewController {
         return view
     }()
     
-    private let brand: UILabel = {
+    private let brandLabel: UILabel = {
         let label = UILabel()
         
         label.text = "스타벅스 커피"
@@ -35,7 +35,7 @@ class DetailViewController: UIViewController {
         return label
     }()
     
-    private let productName: UILabel = {
+    private let productNameLabel: UILabel = {
         let label = UILabel()
         
         label.text = "아이스 아메리카노 (tall)"
@@ -45,7 +45,7 @@ class DetailViewController: UIViewController {
         return label
     }()
     
-    private let dateDueTo: UILabel = {
+    private let dateDueLabel: UILabel = {
         let label = UILabel()
         
         label.text = "2024. 04. 14 까지"
@@ -76,13 +76,13 @@ class DetailViewController: UIViewController {
         return button
     }()
     
-    private let imageView: UIImageView = {
-        let view = UIImageView()
+    private let giftImageView: UIImageView = {
+        let imageView = UIImageView()
         
-        view.image = UIImage(named: "tempImages")
-        view.contentMode = .scaleToFill
+        imageView.image = UIImage(named: "tempImages")
+        imageView.contentMode = .scaleToFill
         
-        return view
+        return imageView
     }()
     
     override func viewDidLoad() {
@@ -90,6 +90,16 @@ class DetailViewController: UIViewController {
         
         view.backgroundColor = .systemBackground
         
+        configureScrollView()
+        configureContentView()
+        configureInnerContents()
+        
+        let aaa = UITapGestureRecognizer(target: self, action: #selector(tapImageView))
+        giftImageView.isUserInteractionEnabled = true
+        giftImageView.addGestureRecognizer(aaa)
+    }
+    
+    private func configureScrollView() {
         view.addSubview(scrollView)
         
         NSLayoutConstraint.activate([
@@ -98,7 +108,9 @@ class DetailViewController: UIViewController {
             scrollView.trailingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.trailingAnchor),
             scrollView.bottomAnchor.constraint(equalTo: view.safeAreaLayoutGuide.bottomAnchor)
         ])
-        
+    }
+    
+    private func configureContentView() {
         scrollView.addSubview(contentsView)
         
         NSLayoutConstraint.activate([
@@ -112,26 +124,28 @@ class DetailViewController: UIViewController {
         let contentViewHeight = contentsView.heightAnchor.constraint(greaterThanOrEqualTo: view.heightAnchor)
         contentViewHeight.priority = .defaultLow
         contentViewHeight.isActive = true
-        
-        [brand, productName, dateDueTo, memoLabel, selectedButton, imageView].forEach {
+    }
+    
+    private func configureInnerContents() {
+        [brandLabel, productNameLabel, dateDueLabel, memoLabel, selectedButton, giftImageView].forEach {
             $0.translatesAutoresizingMaskIntoConstraints = false
             contentsView.addSubview($0)
         }
         
         NSLayoutConstraint.activate([
-            brand.topAnchor.constraint(equalTo: contentsView.topAnchor, constant: 10),
-            brand.leadingAnchor.constraint(equalTo: contentsView.leadingAnchor, constant: view.frame.width / 20),
-            brand.trailingAnchor.constraint(equalTo: contentsView.trailingAnchor, constant: -view.frame.width / 20),
+            brandLabel.topAnchor.constraint(equalTo: contentsView.topAnchor, constant: 10),
+            brandLabel.leadingAnchor.constraint(equalTo: contentsView.leadingAnchor, constant: view.frame.width / 20),
+            brandLabel.trailingAnchor.constraint(equalTo: contentsView.trailingAnchor, constant: -view.frame.width / 20),
 
-            productName.topAnchor.constraint(equalTo: brand.bottomAnchor, constant: 10),
-            productName.leadingAnchor.constraint(equalTo: contentsView.leadingAnchor, constant: view.frame.width / 20),
-            productName.trailingAnchor.constraint(equalTo: contentsView.trailingAnchor, constant: -view.frame.width / 20),
+            productNameLabel.topAnchor.constraint(equalTo: brandLabel.bottomAnchor, constant: 10),
+            productNameLabel.leadingAnchor.constraint(equalTo: contentsView.leadingAnchor, constant: view.frame.width / 20),
+            productNameLabel.trailingAnchor.constraint(equalTo: contentsView.trailingAnchor, constant: -view.frame.width / 20),
 
-            dateDueTo.topAnchor.constraint(equalTo: productName.bottomAnchor, constant: 5),
-            dateDueTo.leadingAnchor.constraint(equalTo: contentsView.leadingAnchor, constant: view.frame.width / 20),
-            dateDueTo.trailingAnchor.constraint(equalTo: contentsView.trailingAnchor, constant: -view.frame.width / 20),
+            dateDueLabel.topAnchor.constraint(equalTo: productNameLabel.bottomAnchor, constant: 5),
+            dateDueLabel.leadingAnchor.constraint(equalTo: contentsView.leadingAnchor, constant: view.frame.width / 20),
+            dateDueLabel.trailingAnchor.constraint(equalTo: contentsView.trailingAnchor, constant: -view.frame.width / 20),
 
-            memoLabel.topAnchor.constraint(equalTo: dateDueTo.bottomAnchor, constant: 10),
+            memoLabel.topAnchor.constraint(equalTo: dateDueLabel.bottomAnchor, constant: 10),
             memoLabel.leadingAnchor.constraint(equalTo: contentsView.leadingAnchor, constant: view.frame.width / 20),
             memoLabel.trailingAnchor.constraint(equalTo: contentsView.trailingAnchor, constant: -view.frame.width / 20),
             
@@ -140,23 +154,21 @@ class DetailViewController: UIViewController {
             selectedButton.trailingAnchor.constraint(equalTo: contentsView.trailingAnchor, constant: -view.frame.width / 20),
             selectedButton.heightAnchor.constraint(equalToConstant: view.frame.height / 20),
 
-            imageView.topAnchor.constraint(equalTo: selectedButton.bottomAnchor, constant: view.frame.width / 20),
-            imageView.leadingAnchor.constraint(equalTo: contentsView.leadingAnchor),
-            imageView.trailingAnchor.constraint(equalTo: contentsView.trailingAnchor),
-            imageView.bottomAnchor.constraint(equalTo: contentsView.bottomAnchor)
+            giftImageView.topAnchor.constraint(equalTo: selectedButton.bottomAnchor, constant: view.frame.width / 20),
+            giftImageView.leadingAnchor.constraint(equalTo: contentsView.leadingAnchor),
+            giftImageView.trailingAnchor.constraint(equalTo: contentsView.trailingAnchor),
+            giftImageView.bottomAnchor.constraint(equalTo: contentsView.bottomAnchor)
         ])
-        imageView.setContentCompressionResistancePriority(.required, for: .vertical)
-        
-        let aaa = UITapGestureRecognizer(target: self, action: #selector(tapImageView))
-        imageView.isUserInteractionEnabled = true
-        imageView.addGestureRecognizer(aaa)
+        giftImageView.setContentHuggingPriority(.fittingSizeLevel, for: .vertical)
     }
     
     @objc func tapImageView(sender: UITapGestureRecognizer) {
         //TODO: ImageView Tapped
+        print("Tapped ImageView")
     }
     
     @objc func tapSeletedButton() {
         //TODO: Seleted Button Tapped
+        print("Tapped SeletedButton")
     }
 }
