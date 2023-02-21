@@ -54,15 +54,15 @@ final class DetailViewController: UIViewController {
         
         return label
     }()
-    
-    private let memoLabel: UILabel = {
-        let label = UILabel()
         
-        label.text = "메모입력란입니다."
-        label.font = .preferredFont(forTextStyle: .title2)
-        label.numberOfLines = 2
+    private let memoTextField: UITextField = {
+        let textField = UITextField()
         
-        return label
+        textField.font = .preferredFont(forTextStyle: .title2)
+        textField.borderStyle = .roundedRect
+        textField.placeholder = "메모입력란입니다."
+        
+        return textField
     }()
     
     private let selectedButton: UIButton = {
@@ -129,7 +129,7 @@ final class DetailViewController: UIViewController {
     }
     
     private func configureInnerContents() {
-        [brandLabel, productNameLabel, dateDueLabel, memoLabel, selectedButton, giftImageView].forEach {
+        [brandLabel, productNameLabel, dateDueLabel, memoTextField, selectedButton, giftImageView].forEach {
             $0.translatesAutoresizingMaskIntoConstraints = false
             contentsView.addSubview($0)
         }
@@ -147,11 +147,11 @@ final class DetailViewController: UIViewController {
             dateDueLabel.leadingAnchor.constraint(equalTo: contentsView.leadingAnchor, constant: view.frame.width / 20),
             dateDueLabel.trailingAnchor.constraint(equalTo: contentsView.trailingAnchor, constant: -view.frame.width / 20),
 
-            memoLabel.topAnchor.constraint(equalTo: dateDueLabel.bottomAnchor, constant: 10),
-            memoLabel.leadingAnchor.constraint(equalTo: contentsView.leadingAnchor, constant: view.frame.width / 20),
-            memoLabel.trailingAnchor.constraint(equalTo: contentsView.trailingAnchor, constant: -view.frame.width / 20),
+            memoTextField.topAnchor.constraint(equalTo: dateDueLabel.bottomAnchor, constant: 10),
+            memoTextField.leadingAnchor.constraint(equalTo: contentsView.leadingAnchor, constant: view.frame.width / 20),
+            memoTextField.trailingAnchor.constraint(equalTo: contentsView.trailingAnchor, constant: -view.frame.width / 20),
             
-            selectedButton.topAnchor.constraint(equalTo: memoLabel.bottomAnchor, constant: 20),
+            selectedButton.topAnchor.constraint(equalTo: memoTextField.bottomAnchor, constant: 20),
             selectedButton.leadingAnchor.constraint(equalTo: contentsView.leadingAnchor, constant: view.frame.width / 20),
             selectedButton.trailingAnchor.constraint(equalTo: contentsView.trailingAnchor, constant: -view.frame.width / 20),
             selectedButton.heightAnchor.constraint(equalToConstant: view.frame.height / 20),
