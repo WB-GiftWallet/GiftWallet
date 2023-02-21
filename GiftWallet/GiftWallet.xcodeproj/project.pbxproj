@@ -10,6 +10,8 @@
 		D2D6B74F29A3DEC900E6188C /* MainViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D2D6B74E29A3DEC900E6188C /* MainViewController.swift */; };
 		D2D6B75129A3DEE900E6188C /* MainViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = D2D6B75029A3DEE900E6188C /* MainViewModel.swift */; };
 		D2D6B75429A3E07300E6188C /* EXT+UIViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D2D6B75329A3E07300E6188C /* EXT+UIViewController.swift */; };
+		D2DAAA1C29A44B1600D70E8C /* MainCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = D2DAAA1B29A44B1600D70E8C /* MainCollectionViewCell.swift */; };
+		D2DAAA2029A44B9200D70E8C /* ReusableView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D2DAAA1F29A44B9200D70E8C /* ReusableView.swift */; };
 		FC1E747229A207DA0010A4BA /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = FC1E747129A207DA0010A4BA /* AppDelegate.swift */; };
 		FC1E747429A207DA0010A4BA /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = FC1E747329A207DA0010A4BA /* SceneDelegate.swift */; };
 		FC1E747C29A207DA0010A4BA /* GiftWallet.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = FC1E747A29A207DA0010A4BA /* GiftWallet.xcdatamodeld */; };
@@ -21,6 +23,8 @@
 		D2D6B74E29A3DEC900E6188C /* MainViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainViewController.swift; sourceTree = "<group>"; };
 		D2D6B75029A3DEE900E6188C /* MainViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainViewModel.swift; sourceTree = "<group>"; };
 		D2D6B75329A3E07300E6188C /* EXT+UIViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "EXT+UIViewController.swift"; sourceTree = "<group>"; };
+		D2DAAA1B29A44B1600D70E8C /* MainCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainCollectionViewCell.swift; sourceTree = "<group>"; };
+		D2DAAA1F29A44B9200D70E8C /* ReusableView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReusableView.swift; sourceTree = "<group>"; };
 		FC1E746E29A207DA0010A4BA /* GiftWallet.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = GiftWallet.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		FC1E747129A207DA0010A4BA /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		FC1E747329A207DA0010A4BA /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
@@ -46,6 +50,7 @@
 			children = (
 				D2D6B74E29A3DEC900E6188C /* MainViewController.swift */,
 				D2D6B75029A3DEE900E6188C /* MainViewModel.swift */,
+				D2DAAA1B29A44B1600D70E8C /* MainCollectionViewCell.swift */,
 			);
 			path = MainView;
 			sourceTree = "<group>";
@@ -56,6 +61,14 @@
 				D2D6B75329A3E07300E6188C /* EXT+UIViewController.swift */,
 			);
 			path = Preview;
+			sourceTree = "<group>";
+		};
+		D2DAAA1E29A44B3200D70E8C /* Model */ = {
+			isa = PBXGroup;
+			children = (
+				D2DAAA1F29A44B9200D70E8C /* ReusableView.swift */,
+			);
+			path = Model;
 			sourceTree = "<group>";
 		};
 		FC1E746529A207DA0010A4BA = {
@@ -77,8 +90,9 @@
 		FC1E747029A207DA0010A4BA /* GiftWallet */ = {
 			isa = PBXGroup;
 			children = (
-				D2D6B75229A3E04900E6188C /* Preview */,
 				D2D6B74D29A3DE6A00E6188C /* MainView */,
+				D2DAAA1E29A44B3200D70E8C /* Model */,
+				D2D6B75229A3E04900E6188C /* Preview */,
 				FC1E747129A207DA0010A4BA /* AppDelegate.swift */,
 				FC1E747329A207DA0010A4BA /* SceneDelegate.swift */,
 				FC1E747D29A207DC0010A4BA /* Assets.xcassets */,
@@ -159,8 +173,10 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				D2DAAA1C29A44B1600D70E8C /* MainCollectionViewCell.swift in Sources */,
 				D2D6B75429A3E07300E6188C /* EXT+UIViewController.swift in Sources */,
 				FC1E747229A207DA0010A4BA /* AppDelegate.swift in Sources */,
+				D2DAAA2029A44B9200D70E8C /* ReusableView.swift in Sources */,
 				FC1E747C29A207DA0010A4BA /* GiftWallet.xcdatamodeld in Sources */,
 				FC1E747429A207DA0010A4BA /* SceneDelegate.swift in Sources */,
 				D2D6B74F29A3DEC900E6188C /* MainViewController.swift in Sources */,

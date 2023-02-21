@@ -18,7 +18,7 @@ AAAA 님의
     }
     
     private let viewModel: MainViewModel
-    
+        
     private let userNameLabel = {
        let label = UILabel()
         
@@ -73,6 +73,38 @@ AAAA 님의
         return label
     }()
     
+    private lazy var expireCollectionView: UICollectionView = {
+        let collectionViewFlowLayout = UICollectionViewFlowLayout()
+        collectionViewFlowLayout.scrollDirection = .horizontal
+        
+        let collectionView = UICollectionView(frame: .zero,
+                                              collectionViewLayout: collectionViewFlowLayout)
+        collectionView.register(MainCollectionViewCell.self,
+                                forCellWithReuseIdentifier: MainCollectionViewCell.reuseIdentifier)
+        collectionView.delegate = self
+        collectionView.dataSource = self
+        collectionView.showsHorizontalScrollIndicator = false
+        collectionView.translatesAutoresizingMaskIntoConstraints = false
+        return collectionView
+    }()
+    
+    private lazy var recentCollectionView: UICollectionView = {
+        let collectionViewFlowLayout = UICollectionViewFlowLayout()
+        collectionViewFlowLayout.scrollDirection = .horizontal
+        
+        let collectionView = UICollectionView(frame: .zero,
+                                              collectionViewLayout: collectionViewFlowLayout)
+        collectionView.register(MainCollectionViewCell.self,
+                                forCellWithReuseIdentifier: MainCollectionViewCell.reuseIdentifier)
+        collectionView.delegate = self
+        collectionView.dataSource = self
+        collectionView.showsHorizontalScrollIndicator = false
+        collectionView.translatesAutoresizingMaskIntoConstraints = false
+        return collectionView
+    }()
+    
+    
+    
     // 헤드라벨 compositionalLayout 구성 후 추가
     private let recentCollectionViewHeaderLabel = {
         let label = UILabel()
@@ -95,6 +127,7 @@ AAAA 님의
         setupViews()
     }
     
+    
     private func setupNavigation() {
         let searchAction = UIAction { _ in
             print("검색창 전환")
@@ -111,12 +144,12 @@ AAAA 님의
                                                             primaryAction: bellAction)
         navigationController?.navigationBar.tintColor = .black
     }
-    
+        
     private func setupViews() {
         
         [userNameLabel, updateUserInfoButton].forEach(userInfoVerticalStackView.addArrangedSubview(_:))
         [userInfoVerticalStackView, userProfileImageView].forEach(userInfoHorizontalStackView.addArrangedSubview(_:))
-        [userInfoHorizontalStackView].forEach(view.addSubview(_:))
+        [userInfoHorizontalStackView, expireCollectionView, recentCollectionView].forEach(view.addSubview(_:))
         
         let safeArea = view.safeAreaLayoutGuide
         
@@ -126,10 +159,67 @@ AAAA 님의
             userInfoHorizontalStackView.trailingAnchor.constraint(equalTo: safeArea.trailingAnchor, constant: -20),
             
             userProfileImageView.widthAnchor.constraint(equalTo: safeArea.widthAnchor, multiplier: 0.15),
-            userProfileImageView.heightAnchor.constraint(equalTo: userProfileImageView.widthAnchor)
+            userProfileImageView.heightAnchor.constraint(equalTo: userProfileImageView.widthAnchor),
+            
+            expireCollectionView.topAnchor.constraint(equalTo: userInfoHorizontalStackView.bottomAnchor, constant: 10),
+            expireCollectionView.leadingAnchor.constraint(equalTo: userInfoHorizontalStackView.leadingAnchor),
+            expireCollectionView.trailingAnchor.constraint(equalTo: userInfoHorizontalStackView.trailingAnchor),
+            expireCollectionView.widthAnchor.constraint(equalTo: userInfoHorizontalStackView.widthAnchor),
+            expireCollectionView.heightAnchor.constraint(equalTo: expireCollectionView.widthAnchor),
+            
+            recentCollectionView.topAnchor.constraint(equalTo: expireCollectionView.bottomAnchor, constant: 10),
+            recentCollectionView.leadingAnchor.constraint(equalTo: expireCollectionView.leadingAnchor),
+            recentCollectionView.trailingAnchor.constraint(equalTo: expireCollectionView.trailingAnchor),
+            recentCollectionView.widthAnchor.constraint(equalTo: expireCollectionView.widthAnchor),
+            recentCollectionView.heightAnchor.constraint(equalTo: recentCollectionView.widthAnchor)
         ])
     }
 }
+
+extension MainViewController: UICollectionViewDataSource, UICollectionViewDelegate {
+    func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
+        switch collectionView {
+        case expireCollectionView:
+            return viewModel.expireModel.count
+        case recentCollectionView:
+            return viewModel.recentModel.count
+        default:
+            return .zero
+        }
+    }
+    
+    func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
+        switch collectionView {
+        case expireCollectionView:
+            let cell = expireCollectionView.dequeueReusableCell(withReuseIdentifier: MainCollectionViewCell.reuseIdentifier,
+                                                                for: indexPath) as? MainCollectionViewCell ?? MainCollectionViewCell()
+            let model = viewModel.expireModel[indexPath.row]
+            cell.configureCell(data: model)
+            return cell
+        case recentCollectionView:
+            let cell = recentCollectionView.dequeueReusableCell(withReuseIdentifier: MainCollectionViewCell.reuseIdentifier,
+                                                                for: indexPath) as? MainCollectionViewCell ?? MainCollectionViewCell()
+            let model = viewModel.recentModel[indexPath.row]
+            cell.configureCell(data: model)
+            return cell
+        default:
+            print("셀 반환 실패")
+        }
+        return UICollectionViewCell()
+    }
+}
+
+extension MainViewController: UICollectionViewDelegateFlowLayout {
+    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
+        return CGSize(width: collectionView.frame.width / 2.2, height: 300)
+    }
+    
+    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, minimumInteritemSpacingForSectionAt section: Int) -> CGFloat {
+        return 10
+    }
+}
+
+
 
 #if canImport(SwiftUI) && DEBUG
 import SwiftUI
