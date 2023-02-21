@@ -41,8 +41,7 @@ AAAA 님의
     private let userProfileImageView = {
        let imageView = UIImageView()
         
-        imageView.image = UIImage(systemName: "cloud")
-        
+        imageView.image = UIImage(named: "testImagewoongPhoto")
         return imageView
     }()
     
@@ -69,7 +68,8 @@ AAAA 님의
     // 헤드라벨 compositionalLayout 구성 후 추가
     private let expireCollectionViewHeaderLabel = {
         let label = UILabel()
-        
+        label.text = "😟 기간이 얼마 안남았어요!"
+        label.font = .boldSystemFont(ofSize: 20)
         return label
     }()
     
@@ -85,7 +85,15 @@ AAAA 님의
         collectionView.dataSource = self
         collectionView.showsHorizontalScrollIndicator = false
         collectionView.translatesAutoresizingMaskIntoConstraints = false
+        
         return collectionView
+    }()
+    
+    private let recentCollectionViewHeaderLabel = {
+        let label = UILabel()
+        label.text = "😄 최근에 등록했어요."
+        label.font = .boldSystemFont(ofSize: 20)
+        return label
     }()
     
     private lazy var recentCollectionView: UICollectionView = {
@@ -104,14 +112,6 @@ AAAA 님의
     }()
     
     
-    
-    // 헤드라벨 compositionalLayout 구성 후 추가
-    private let recentCollectionViewHeaderLabel = {
-        let label = UILabel()
-        
-        return label
-    }()
-    
     init(viewModel: MainViewModel) {
         self.viewModel = viewModel
         super.init(nibName: nil, bundle: nil)
@@ -125,6 +125,12 @@ AAAA 님의
         super.viewDidLoad()
         setupNavigation()
         setupViews()
+    }
+    
+    override func viewWillLayoutSubviews() {
+        super.viewWillLayoutSubviews()
+        userProfileImageView.layer.cornerRadius = userProfileImageView.frame.width / 2
+        userProfileImageView.clipsToBounds = true
     }
     
     
@@ -158,7 +164,7 @@ AAAA 님의
             userInfoHorizontalStackView.leadingAnchor.constraint(equalTo: safeArea.leadingAnchor, constant: 20),
             userInfoHorizontalStackView.trailingAnchor.constraint(equalTo: safeArea.trailingAnchor, constant: -20),
             
-            userProfileImageView.widthAnchor.constraint(equalTo: safeArea.widthAnchor, multiplier: 0.15),
+            userProfileImageView.widthAnchor.constraint(equalTo: safeArea.widthAnchor, multiplier: 0.2),
             userProfileImageView.heightAnchor.constraint(equalTo: userProfileImageView.widthAnchor),
             
             expireCollectionView.topAnchor.constraint(equalTo: userInfoHorizontalStackView.bottomAnchor, constant: 10),

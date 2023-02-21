@@ -11,22 +11,29 @@ class MainCollectionViewCell: UICollectionViewCell, ReusableView {
     
     private let giftImageView = {
        let imageView = UIImageView()
-        
+        imageView.layer.cornerRadius = 10.0
+        imageView.clipsToBounds = true
         return imageView
     }()
     
     private let brandLabel = {
        let label = UILabel()
+        label.font = .boldSystemFont(ofSize: 16)
         return label
     }()
     
     private let productNameLabel = {
         let label = UILabel()
+        label.font = .systemFont(ofSize: 15)
+
         return label
     }()
     
     private let expireDateLabel = {
         let label = UILabel()
+        label.font = .systemFont(ofSize: 14)
+        label.textColor = .systemGray
+
         return label
     }()
     
@@ -34,7 +41,9 @@ class MainCollectionViewCell: UICollectionViewCell, ReusableView {
        let stackView = UIStackView()
         
         stackView.axis = .vertical
-        stackView.spacing = 5
+        stackView.spacing = 2
+        stackView.distribution = .fillEqually
+        stackView.alignment = .center
         
         return stackView
     }()
@@ -44,6 +53,7 @@ class MainCollectionViewCell: UICollectionViewCell, ReusableView {
         
         stackView.axis = .vertical
         stackView.spacing = 10
+        stackView.alignment = .center
         stackView.translatesAutoresizingMaskIntoConstraints = false
         
         return stackView
@@ -63,13 +73,12 @@ class MainCollectionViewCell: UICollectionViewCell, ReusableView {
         giftImageView.image = data.image
         brandLabel.text = data.brandName
         productNameLabel.text = data.product
-        expireDateLabel.text = data.date.description
+        expireDateLabel.text = DateFormatter.convertToDisplayString(date: data.date)
     }
     
-    
     private func setupViews() {
-        [productNameLabel, expireDateLabel].forEach(subLabelVerticalStackView.addArrangedSubview(_:))
-        [giftImageView, brandLabel, subLabelVerticalStackView].forEach(allContentsVerticalStackView.addArrangedSubview(_:))
+        [brandLabel, productNameLabel, expireDateLabel].forEach(subLabelVerticalStackView.addArrangedSubview(_:))
+        [giftImageView, subLabelVerticalStackView].forEach(allContentsVerticalStackView.addArrangedSubview(_:))
         contentView.addSubview(allContentsVerticalStackView)
         
         let safeArea = contentView.safeAreaLayoutGuide
