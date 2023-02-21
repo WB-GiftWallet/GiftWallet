@@ -8,6 +8,7 @@
 
 /* Begin PBXBuildFile section */
 		F629A99429A4FA4900977AA8 /* DetailViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F629A99329A4FA4900977AA8 /* DetailViewController.swift */; };
+		F63298D029A5133A00C2BF87 /* GiftImageViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F63298CF29A5133A00C2BF87 /* GiftImageViewController.swift */; };
 		FC1E747229A207DA0010A4BA /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = FC1E747129A207DA0010A4BA /* AppDelegate.swift */; };
 		FC1E747429A207DA0010A4BA /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = FC1E747329A207DA0010A4BA /* SceneDelegate.swift */; };
 		FC1E747629A207DA0010A4BA /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = FC1E747529A207DA0010A4BA /* ViewController.swift */; };
@@ -18,6 +19,7 @@
 
 /* Begin PBXFileReference section */
 		F629A99329A4FA4900977AA8 /* DetailViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DetailViewController.swift; sourceTree = "<group>"; };
+		F63298CF29A5133A00C2BF87 /* GiftImageViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GiftImageViewController.swift; sourceTree = "<group>"; };
 		FC1E746E29A207DA0010A4BA /* GiftWallet.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = GiftWallet.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		FC1E747129A207DA0010A4BA /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		FC1E747329A207DA0010A4BA /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
@@ -62,6 +64,7 @@
 				FC1E747329A207DA0010A4BA /* SceneDelegate.swift */,
 				FC1E747529A207DA0010A4BA /* ViewController.swift */,
 				F629A99329A4FA4900977AA8 /* DetailViewController.swift */,
+				F63298CF29A5133A00C2BF87 /* GiftImageViewController.swift */,
 				FC1E747D29A207DC0010A4BA /* Assets.xcassets */,
 				FC1E747F29A207DC0010A4BA /* LaunchScreen.storyboard */,
 				FC1E748229A207DC0010A4BA /* Info.plist */,
@@ -144,6 +147,7 @@
 				FC1E747229A207DA0010A4BA /* AppDelegate.swift in Sources */,
 				F629A99429A4FA4900977AA8 /* DetailViewController.swift in Sources */,
 				FC1E747C29A207DA0010A4BA /* GiftWallet.xcdatamodeld in Sources */,
+				F63298D029A5133A00C2BF87 /* GiftImageViewController.swift in Sources */,
 				FC1E747429A207DA0010A4BA /* SceneDelegate.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

@@ -202,8 +202,10 @@ final class DetailViewController: UIViewController {
         dismiss(animated: true)
     }
     
+    //TODO: ImageView Tapped
     @objc private func tapImageView(sender: UITapGestureRecognizer) {
-        //TODO: ImageView Tapped
-        print("Tapped ImageView")
+        guard let image = giftImageView.image else { return }
+        
+        present(GiftImageViewController(image: image), animated: true)
     }
 }
