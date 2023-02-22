@@ -17,10 +17,27 @@ AAAA 님의
         static let updateUserInfoDescription = "정보 수정"
     }
     
-    private let viewModel: MainViewModel
+    private let contentScrollView: UIScrollView = {
         
+        let scrollView = UIScrollView()
+        scrollView.backgroundColor = .white
+        scrollView.showsVerticalScrollIndicator = false
+        scrollView.translatesAutoresizingMaskIntoConstraints = false
+        
+        return scrollView
+    }()
+    
+    private let contentView = {
+        let view = UIView()
+        view.translatesAutoresizingMaskIntoConstraints = false
+        return UIView()
+    }()
+    
+    
+    private let viewModel: MainViewModel
+    
     private let userNameLabel = {
-       let label = UILabel()
+        let label = UILabel()
         
         label.text = Constant.userNameDescription
         label.font = UIFont.preferredFont(forTextStyle: .title2)
@@ -30,7 +47,7 @@ AAAA 님의
     }()
     
     private let updateUserInfoButton = {
-       let button = UIButton()
+        let button = UIButton()
         
         button.setTitle(Constant.updateUserInfoDescription, for: .normal)
         button.setTitleColor(UIColor.gray, for: .normal)
@@ -39,7 +56,7 @@ AAAA 님의
     }()
     
     private let userProfileImageView = {
-       let imageView = UIImageView()
+        let imageView = UIImageView()
         
         imageView.image = UIImage(named: "testImagewoongPhoto")
         return imageView
@@ -56,59 +73,64 @@ AAAA 님의
     }()
     
     private let userInfoHorizontalStackView = {
-       let stackView = UIStackView()
+        let stackView = UIStackView()
         
         stackView.axis = .horizontal
         stackView.alignment = .center
-        stackView.translatesAutoresizingMaskIntoConstraints = false
         
         return stackView
     }()
     
-    // 헤드라벨 compositionalLayout 구성 후 추가
     private let expireCollectionViewHeaderLabel = {
         let label = UILabel()
+        
         label.text = "😟 기간이 얼마 안남았어요!"
         label.font = .boldSystemFont(ofSize: 20)
+        
         return label
     }()
     
-    private lazy var expireCollectionView: UICollectionView = {
-        let collectionViewFlowLayout = UICollectionViewFlowLayout()
-        collectionViewFlowLayout.scrollDirection = .horizontal
+    private lazy var expireCollectionView: CustomCollectionView = {
+        let collectionView = CustomCollectionView()
         
-        let collectionView = UICollectionView(frame: .zero,
-                                              collectionViewLayout: collectionViewFlowLayout)
-        collectionView.register(MainCollectionViewCell.self,
-                                forCellWithReuseIdentifier: MainCollectionViewCell.reuseIdentifier)
         collectionView.delegate = self
         collectionView.dataSource = self
-        collectionView.showsHorizontalScrollIndicator = false
-        collectionView.translatesAutoresizingMaskIntoConstraints = false
         
         return collectionView
     }()
     
     private let recentCollectionViewHeaderLabel = {
         let label = UILabel()
+        
         label.text = "😄 최근에 등록했어요."
         label.font = .boldSystemFont(ofSize: 20)
+        
         return label
     }()
     
-    private lazy var recentCollectionView: UICollectionView = {
-        let collectionViewFlowLayout = UICollectionViewFlowLayout()
-        collectionViewFlowLayout.scrollDirection = .horizontal
+    private lazy var recentCollectionView: CustomCollectionView = {
+        let collectionView = CustomCollectionView()
         
-        let collectionView = UICollectionView(frame: .zero,
-                                              collectionViewLayout: collectionViewFlowLayout)
-        collectionView.register(MainCollectionViewCell.self,
-                                forCellWithReuseIdentifier: MainCollectionViewCell.reuseIdentifier)
         collectionView.delegate = self
         collectionView.dataSource = self
-        collectionView.showsHorizontalScrollIndicator = false
-        collectionView.translatesAutoresizingMaskIntoConstraints = false
+        
         return collectionView
+    }()
+    
+    private let expireVerticalStackView = {
+        let stackView = UIStackView()
+        
+        stackView.axis = .vertical
+        
+        return stackView
+    }()
+    
+    private let recentVerticalStackView = {
+        let stackView = UIStackView()
+        
+        stackView.axis = .vertical
+        
+        return stackView
     }()
     
     
@@ -150,34 +172,48 @@ AAAA 님의
                                                             primaryAction: bellAction)
         navigationController?.navigationBar.tintColor = .black
     }
-        
+    
     private func setupViews() {
         
         [userNameLabel, updateUserInfoButton].forEach(userInfoVerticalStackView.addArrangedSubview(_:))
         [userInfoVerticalStackView, userProfileImageView].forEach(userInfoHorizontalStackView.addArrangedSubview(_:))
-        [userInfoHorizontalStackView, expireCollectionView, recentCollectionView].forEach(view.addSubview(_:))
+        [expireCollectionViewHeaderLabel, expireCollectionView].forEach(expireVerticalStackView.addArrangedSubview(_:))
+        [recentCollectionViewHeaderLabel, recentCollectionView].forEach(recentVerticalStackView.addArrangedSubview(_:))
+        
+        contentScrollView.addSubview(contentView)
+        [userInfoHorizontalStackView, expireVerticalStackView, recentVerticalStackView].forEach(contentView.addSubview(_:))
+        view.addSubview(contentScrollView)
+        
         
         let safeArea = view.safeAreaLayoutGuide
         
         NSLayoutConstraint.activate([
-            userInfoHorizontalStackView.topAnchor.constraint(equalTo: safeArea.topAnchor, constant: 10),
-            userInfoHorizontalStackView.leadingAnchor.constraint(equalTo: safeArea.leadingAnchor, constant: 20),
-            userInfoHorizontalStackView.trailingAnchor.constraint(equalTo: safeArea.trailingAnchor, constant: -20),
+            contentScrollView.topAnchor.constraint(equalTo: view.topAnchor),
+            contentScrollView.leadingAnchor.constraint(equalTo: safeArea.leadingAnchor),
+            contentScrollView.trailingAnchor.constraint(equalTo: safeArea.trailingAnchor),
+            contentScrollView.bottomAnchor.constraint(equalTo: safeArea.bottomAnchor),
+    
+            contentView.topAnchor.constraint(equalTo: contentScrollView.topAnchor),
+            contentView.leadingAnchor.constraint(equalTo: contentScrollView.leadingAnchor),
+            contentView.trailingAnchor.constraint(equalTo: contentScrollView.trailingAnchor),
+            contentView.bottomAnchor.constraint(equalTo: contentScrollView.bottomAnchor),
+            contentView.widthAnchor.constraint(equalTo: contentScrollView.widthAnchor),
+            contentView.heightAnchor.constraint(equalTo:
+                                                    contentScrollView.heightAnchor),
             
-            userProfileImageView.widthAnchor.constraint(equalTo: safeArea.widthAnchor, multiplier: 0.2),
-            userProfileImageView.heightAnchor.constraint(equalTo: userProfileImageView.widthAnchor),
+            userInfoHorizontalStackView.topAnchor.constraint(equalTo: contentView.topAnchor),
+            userInfoHorizontalStackView.leadingAnchor.constraint(equalTo: contentView.leadingAnchor),
+            userInfoHorizontalStackView.trailingAnchor.constraint(equalTo: contentView.trailingAnchor),
             
-            expireCollectionView.topAnchor.constraint(equalTo: userInfoHorizontalStackView.bottomAnchor, constant: 10),
-            expireCollectionView.leadingAnchor.constraint(equalTo: userInfoHorizontalStackView.leadingAnchor),
-            expireCollectionView.trailingAnchor.constraint(equalTo: userInfoHorizontalStackView.trailingAnchor),
-            expireCollectionView.widthAnchor.constraint(equalTo: userInfoHorizontalStackView.widthAnchor),
-            expireCollectionView.heightAnchor.constraint(equalTo: expireCollectionView.widthAnchor),
+            expireVerticalStackView.topAnchor.constraint(equalTo: userInfoHorizontalStackView.bottomAnchor, constant: 10),
+            expireVerticalStackView.leadingAnchor.constraint(equalTo: userInfoHorizontalStackView.leadingAnchor),
+            expireVerticalStackView.trailingAnchor.constraint(equalTo: userInfoHorizontalStackView.trailingAnchor),
             
-            recentCollectionView.topAnchor.constraint(equalTo: expireCollectionView.bottomAnchor, constant: 10),
-            recentCollectionView.leadingAnchor.constraint(equalTo: expireCollectionView.leadingAnchor),
-            recentCollectionView.trailingAnchor.constraint(equalTo: expireCollectionView.trailingAnchor),
-            recentCollectionView.widthAnchor.constraint(equalTo: expireCollectionView.widthAnchor),
-            recentCollectionView.heightAnchor.constraint(equalTo: recentCollectionView.widthAnchor)
+            recentVerticalStackView.topAnchor.constraint(equalTo: expireVerticalStackView.bottomAnchor, constant: 10),
+            recentVerticalStackView.leadingAnchor.constraint(equalTo: expireVerticalStackView.leadingAnchor),
+            recentVerticalStackView.trailingAnchor.constraint(equalTo: expireVerticalStackView.trailingAnchor),
+            recentVerticalStackView.bottomAnchor.constraint(equalTo: contentView.bottomAnchor)
+            // constraint만 다시잡으면 될듯함.
         ])
     }
 }

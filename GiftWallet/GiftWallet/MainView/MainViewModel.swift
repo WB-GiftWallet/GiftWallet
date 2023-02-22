@@ -19,6 +19,7 @@ class MainViewModel {
     
     let recentModel: [Gifts] = [
         Gifts(id: UUID(), image: UIImage(named: "testImageEDIYA")!, brandName: "이디야커피", product: "아메리카노 EX", date: Date()),
+        Gifts(id: UUID(), image: UIImage(named: "testImageSTARBUCKSSMALL")!, brandName: "스타벅스", product: "아메리카노 T", date: Date()),
         Gifts(id: UUID(), image: UIImage(named: "testImageSTARBUCKSSMALL")!, brandName: "스타벅스", product: "아메리카노 T", date: Date())
     ]
     
