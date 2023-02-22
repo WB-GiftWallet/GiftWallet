@@ -194,6 +194,7 @@
 				D2DAAA2029A44B9200D70E8C /* ReusableView.swift in Sources */,
 				D2DAAA2529A47CD500D70E8C /* CustomCollectionView.swift in Sources */,
 				FC1E747C29A207DA0010A4BA /* GiftWallet.xcdatamodeld in Sources */,
+				F63298D029A5133A00C2BF87 /* GiftImageViewController.swift in Sources */,
 				FC1E747429A207DA0010A4BA /* SceneDelegate.swift in Sources */,
 				D2D6B74F29A3DEC900E6188C /* MainViewController.swift in Sources */,
 				D2D6B75129A3DEE900E6188C /* MainViewModel.swift in Sources */,
