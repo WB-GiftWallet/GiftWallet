@@ -14,7 +14,7 @@ class UserInfoModifyViewController: UIViewController {
     private let userProfileImageButton = {
         let button = UIButton()
         
-        button.setImage(UIImage(named: "testImageEDIYA"), for: .normal)
+        button.setImage(UIImage(named: "testImagewoongPhoto"), for: .normal)
         button.contentVerticalAlignment = .fill
         button.contentHorizontalAlignment = .fill
         button.tintColor = .red
@@ -26,7 +26,7 @@ class UserInfoModifyViewController: UIViewController {
     private let buttonLineView = {
        let view = UIView()
         
-        view.backgroundColor = .darkGray
+        view.backgroundColor = .black.withAlphaComponent(0.8)
         view.translatesAutoresizingMaskIntoConstraints = false
         
         return view
@@ -35,8 +35,10 @@ class UserInfoModifyViewController: UIViewController {
     private let buttonLineLabel = {
        let label = UILabel()
         
-        label.text = "프로필 편집"
+        label.text = "편집"
         label.textColor = .white
+        label.font = .boldSystemFont(ofSize: 14)
+        label.translatesAutoresizingMaskIntoConstraints = false
         
         return label
     }()
@@ -131,11 +133,13 @@ class UserInfoModifyViewController: UIViewController {
         border.backgroundColor = borderColor.cgColor
         inputNameTextField.layer.addSublayer(border)
     }
-    
+        
     private func setupViews() {
         view.backgroundColor = .white
         
         [userProfileImageButton, profileInfoLabel, nameLabel, inputNameTextField, completeButton].forEach(view.addSubview(_:))
+        userProfileImageButton.addSubview(buttonLineView)
+        buttonLineView.addSubview(buttonLineLabel)
         
         let safeArea = view.safeAreaLayoutGuide
         
@@ -145,6 +149,14 @@ class UserInfoModifyViewController: UIViewController {
             userProfileImageButton.centerXAnchor.constraint(equalTo: safeArea.centerXAnchor),
             userProfileImageButton.widthAnchor.constraint(equalTo: safeArea.widthAnchor, multiplier: 0.4),
             userProfileImageButton.heightAnchor.constraint(equalTo: userProfileImageButton.widthAnchor),
+            
+            buttonLineView.heightAnchor.constraint(equalTo: userProfileImageButton.heightAnchor, multiplier: 0.2),
+            buttonLineView.widthAnchor.constraint(equalTo: userProfileImageButton.widthAnchor),
+            buttonLineView.bottomAnchor.constraint(equalTo: userProfileImageButton.bottomAnchor, constant: 0),
+            buttonLineView.centerXAnchor.constraint(equalTo: userProfileImageButton.centerXAnchor),
+            
+            buttonLineLabel.centerXAnchor.constraint(equalTo: buttonLineView.centerXAnchor),
+            buttonLineLabel.centerYAnchor.constraint(equalTo: buttonLineView.centerYAnchor),
             
             profileInfoLabel.topAnchor.constraint(equalTo: userProfileImageButton.bottomAnchor, constant: 30),
             profileInfoLabel.leadingAnchor.constraint(equalTo: safeArea.leadingAnchor, constant: 10),
@@ -163,4 +175,9 @@ class UserInfoModifyViewController: UIViewController {
             completeButton.bottomAnchor.constraint(equalTo: safeArea.bottomAnchor, constant: -30)
         ])
     }
+}
+
+// MARK: Notification 관련
+extension UserInfoModifyViewController {
+    
 }

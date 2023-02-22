@@ -167,6 +167,7 @@ AAAA 님의
         super.viewWillLayoutSubviews()
         userProfileImageView.layer.cornerRadius = userProfileImageView.frame.width / 2
         userProfileImageView.clipsToBounds = true
+//        userInfoModifyButton.titleLabel?.font = .boldSystemFont(ofSize: 15)
     }
     
     
