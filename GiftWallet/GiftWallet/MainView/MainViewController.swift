@@ -49,7 +49,7 @@ AAAA 님의
         return label
     }()
     
-    private let updateUserInfoButton = {
+    private let userInfoModifyButton = {
         let button = UIButton()
         
         button.setTitle(Constant.updateUserInfoDescription, for: .normal)
@@ -171,6 +171,13 @@ AAAA 님의
     
     
     private func setupNavigation() {
+        let modifyAction = UIAction { [weak self] _ in
+            let userInfoModifyViewModel = UserInfoModifyViewModel()
+            let userInfoModifyViewController = UserInfoModifyViewController(userInfoModifyViewModel: userInfoModifyViewModel)
+            self?.navigationController?.pushViewController(userInfoModifyViewController, animated: true)
+        }
+        userInfoModifyButton.addAction(modifyAction, for: .touchUpInside)
+        
         let searchAction = UIAction { _ in
             print("검색창 전환")
         }
@@ -189,7 +196,7 @@ AAAA 님의
     
     private func setupViews() {
 
-        [userNameLabel, updateUserInfoButton].forEach(userInfoVerticalStackView.addArrangedSubview(_:))
+        [userNameLabel, userInfoModifyButton].forEach(userInfoVerticalStackView.addArrangedSubview(_:))
         [userInfoVerticalStackView, userProfileImageView].forEach(userInfoHorizontalStackView.addArrangedSubview(_:))
         
         contentView.addSubview(userInfoHorizontalStackView)

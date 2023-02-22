@@ -1,0 +1,168 @@
+//
+//  UserInfoModifyViewController.swift
+//  GiftWallet
+//
+//  Created by 서현웅 on 2023/02/22.
+//
+
+import UIKit
+
+class UserInfoModifyViewController: UIViewController {
+    
+    private let userInfoModifyViewModel: UserInfoModifyViewModel
+    
+    private let userProfileImageButton = {
+        let button = UIButton()
+        
+        button.setImage(UIImage(named: "testImageEDIYA"), for: .normal)
+        button.contentVerticalAlignment = .fill
+        button.contentHorizontalAlignment = .fill
+        button.tintColor = .red
+        button.translatesAutoresizingMaskIntoConstraints = false
+        
+        return button
+    }()
+    
+    private let buttonLineView = {
+       let view = UIView()
+        
+        view.backgroundColor = .darkGray
+        view.translatesAutoresizingMaskIntoConstraints = false
+        
+        return view
+    }()
+    
+    private let buttonLineLabel = {
+       let label = UILabel()
+        
+        label.text = "프로필 편집"
+        label.textColor = .white
+        
+        return label
+    }()
+    
+    private let playButton: UIButton = {
+        let button = UIButton()
+        
+        button.isHidden = true
+        button.setImage(UIImage(systemName: "play.fill"), for: .normal)
+        button.contentVerticalAlignment = .fill
+        button.contentHorizontalAlignment = .fill
+        button.tintColor = .black
+        button.translatesAutoresizingMaskIntoConstraints = false
+        
+        return button
+    }()
+    
+    private let profileInfoLabel = {
+       let label = UILabel()
+        
+        label.font = .boldSystemFont(ofSize: 20)
+        label.text = "프로필 정보"
+        label.translatesAutoresizingMaskIntoConstraints = false
+        
+        return label
+    }()
+    
+    private let nameLabel = {
+       let label = UILabel()
+        
+        label.font = .boldSystemFont(ofSize: 15)
+        label.text = "이름"
+        label.translatesAutoresizingMaskIntoConstraints = false
+        
+        return label
+    }()
+    
+    private let inputNameTextField = {
+        let textField = UITextField()
+        
+        textField.translatesAutoresizingMaskIntoConstraints = false
+        
+        return textField
+    }()
+    
+    private let completeButton = {
+        let button = UIButton(type: .roundedRect)
+        
+        button.setTitle("변경하기", for: .normal)
+        button.setTitleColor(UIColor.white, for: .normal)
+        button.titleLabel?.font = UIFont.boldSystemFont(ofSize: 20)
+        button.backgroundColor = .systemPurple
+        button.layer.cornerRadius = 5
+        button.translatesAutoresizingMaskIntoConstraints = false
+        
+        return button
+    }()
+    
+    init(userInfoModifyViewModel: UserInfoModifyViewModel) {
+        self.userInfoModifyViewModel = userInfoModifyViewModel
+        super.init(nibName: nil, bundle: nil)
+    }
+    
+    required init?(coder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
+    }
+    
+    
+    override func viewDidLoad() {
+        super.viewDidLoad()
+        setupNavigation()
+        setupViews()
+        
+    }
+    
+    override func viewWillLayoutSubviews() {
+        super.viewWillLayoutSubviews()
+        userProfileImageButton.layer.cornerRadius = userProfileImageButton.frame.width / 2
+        userProfileImageButton.clipsToBounds = true
+        setupTextFieldBottomBorder()
+    }
+    
+    private func setupNavigation() {
+        title = "프로필 편집"
+    }
+    
+    func setupTextFieldBottomBorder() {
+        let borderColor: UIColor = .systemGray
+        let border = CALayer()
+        border.frame = CGRect(x: 0,
+                              y: inputNameTextField.frame.size.height + 5,
+                              width: inputNameTextField.frame.width,
+                              height: 2)
+        border.backgroundColor = borderColor.cgColor
+        inputNameTextField.layer.addSublayer(border)
+    }
+    
+    private func setupViews() {
+        view.backgroundColor = .white
+        
+        [userProfileImageButton, profileInfoLabel, nameLabel, inputNameTextField, completeButton].forEach(view.addSubview(_:))
+        
+        let safeArea = view.safeAreaLayoutGuide
+        
+        NSLayoutConstraint.activate([
+            
+            userProfileImageButton.topAnchor.constraint(equalTo: safeArea.topAnchor, constant: 10),
+            userProfileImageButton.centerXAnchor.constraint(equalTo: safeArea.centerXAnchor),
+            userProfileImageButton.widthAnchor.constraint(equalTo: safeArea.widthAnchor, multiplier: 0.4),
+            userProfileImageButton.heightAnchor.constraint(equalTo: userProfileImageButton.widthAnchor),
+            
+            profileInfoLabel.topAnchor.constraint(equalTo: userProfileImageButton.bottomAnchor, constant: 30),
+            profileInfoLabel.leadingAnchor.constraint(equalTo: safeArea.leadingAnchor, constant: 10),
+            
+            nameLabel.topAnchor.constraint(equalTo: profileInfoLabel.bottomAnchor, constant: 30),
+            nameLabel.leadingAnchor.constraint(equalTo: profileInfoLabel.leadingAnchor),
+            
+            inputNameTextField.topAnchor.constraint(equalTo: nameLabel.bottomAnchor, constant: 15),
+            inputNameTextField.leadingAnchor.constraint(equalTo: nameLabel.leadingAnchor),
+            inputNameTextField.trailingAnchor.constraint(equalTo: safeArea.trailingAnchor, constant: -10),
+            inputNameTextField.heightAnchor.constraint(equalTo: safeArea.heightAnchor, multiplier: 0.05),
+            
+            completeButton.centerXAnchor.constraint(equalTo: safeArea.centerXAnchor),
+            completeButton.widthAnchor.constraint(equalTo: safeArea.widthAnchor, multiplier: 0.9),
+            completeButton.heightAnchor.constraint(equalTo: safeArea.heightAnchor, multiplier: 0.07),
+            completeButton.bottomAnchor.constraint(equalTo: safeArea.bottomAnchor, constant: -30)
+        ])
+    }
+}
