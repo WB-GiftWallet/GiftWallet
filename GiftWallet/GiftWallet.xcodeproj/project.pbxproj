@@ -14,6 +14,8 @@
 		D2DAAA2029A44B9200D70E8C /* ReusableView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D2DAAA1F29A44B9200D70E8C /* ReusableView.swift */; };
 		D2DAAA2329A4720300D70E8C /* Ext+DateFormatter.swift in Sources */ = {isa = PBXBuildFile; fileRef = D2DAAA2229A4720300D70E8C /* Ext+DateFormatter.swift */; };
 		D2DAAA2529A47CD500D70E8C /* CustomCollectionView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D2DAAA2429A47CD500D70E8C /* CustomCollectionView.swift */; };
+		F6A4AB4A29A5DA1C009AEB78 /* GiftImageViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F6A4AB4829A5DA1C009AEB78 /* GiftImageViewController.swift */; };
+		F6A4AB4B29A5DA1C009AEB78 /* DetailViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F6A4AB4929A5DA1C009AEB78 /* DetailViewController.swift */; };
 		FC1E747229A207DA0010A4BA /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = FC1E747129A207DA0010A4BA /* AppDelegate.swift */; };
 		FC1E747429A207DA0010A4BA /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = FC1E747329A207DA0010A4BA /* SceneDelegate.swift */; };
 		FC1E747C29A207DA0010A4BA /* GiftWallet.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = FC1E747A29A207DA0010A4BA /* GiftWallet.xcdatamodeld */; };
@@ -29,6 +31,8 @@
 		D2DAAA1F29A44B9200D70E8C /* ReusableView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReusableView.swift; sourceTree = "<group>"; };
 		D2DAAA2229A4720300D70E8C /* Ext+DateFormatter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Ext+DateFormatter.swift"; sourceTree = "<group>"; };
 		D2DAAA2429A47CD500D70E8C /* CustomCollectionView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomCollectionView.swift; sourceTree = "<group>"; };
+		F6A4AB4829A5DA1C009AEB78 /* GiftImageViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GiftImageViewController.swift; sourceTree = "<group>"; };
+		F6A4AB4929A5DA1C009AEB78 /* DetailViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DetailViewController.swift; sourceTree = "<group>"; };
 		FC1E746E29A207DA0010A4BA /* GiftWallet.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = GiftWallet.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		FC1E747129A207DA0010A4BA /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		FC1E747329A207DA0010A4BA /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
@@ -84,6 +88,15 @@
 			path = Extension;
 			sourceTree = "<group>";
 		};
+		F6A4AB4729A5D9F1009AEB78 /* DetailView */ = {
+			isa = PBXGroup;
+			children = (
+				F6A4AB4929A5DA1C009AEB78 /* DetailViewController.swift */,
+				F6A4AB4829A5DA1C009AEB78 /* GiftImageViewController.swift */,
+			);
+			path = DetailView;
+			sourceTree = "<group>";
+		};
 		FC1E746529A207DA0010A4BA = {
 			isa = PBXGroup;
 			children = (
@@ -105,6 +118,7 @@
 			children = (
 				D2DAAA2129A471D600D70E8C /* Extension */,
 				D2D6B74D29A3DE6A00E6188C /* MainView */,
+				F6A4AB4729A5D9F1009AEB78 /* DetailView */,
 				D2DAAA1E29A44B3200D70E8C /* Model */,
 				D2D6B75229A3E04900E6188C /* Preview */,
 				FC1E747129A207DA0010A4BA /* AppDelegate.swift */,
@@ -191,13 +205,14 @@
 				D2DAAA1C29A44B1600D70E8C /* MainCollectionViewCell.swift in Sources */,
 				D2D6B75429A3E07300E6188C /* EXT+UIViewController.swift in Sources */,
 				FC1E747229A207DA0010A4BA /* AppDelegate.swift in Sources */,
+				F6A4AB4A29A5DA1C009AEB78 /* GiftImageViewController.swift in Sources */,
 				D2DAAA2029A44B9200D70E8C /* ReusableView.swift in Sources */,
 				D2DAAA2529A47CD500D70E8C /* CustomCollectionView.swift in Sources */,
 				FC1E747C29A207DA0010A4BA /* GiftWallet.xcdatamodeld in Sources */,
-				F63298D029A5133A00C2BF87 /* GiftImageViewController.swift in Sources */,
 				FC1E747429A207DA0010A4BA /* SceneDelegate.swift in Sources */,
 				D2D6B74F29A3DEC900E6188C /* MainViewController.swift in Sources */,
 				D2D6B75129A3DEE900E6188C /* MainViewModel.swift in Sources */,
+				F6A4AB4B29A5DA1C009AEB78 /* DetailViewController.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
