@@ -41,19 +41,6 @@ class UserInfoModifyViewController: UIViewController {
         return label
     }()
     
-    private let playButton: UIButton = {
-        let button = UIButton()
-        
-        button.isHidden = true
-        button.setImage(UIImage(systemName: "play.fill"), for: .normal)
-        button.contentVerticalAlignment = .fill
-        button.contentHorizontalAlignment = .fill
-        button.tintColor = .black
-        button.translatesAutoresizingMaskIntoConstraints = false
-        
-        return button
-    }()
-    
     private let profileInfoLabel = {
        let label = UILabel()
         
@@ -109,7 +96,7 @@ class UserInfoModifyViewController: UIViewController {
         super.viewDidLoad()
         setupNavigation()
         setupViews()
-        
+        setupButton()
     }
     
     override func viewWillLayoutSubviews() {
@@ -118,6 +105,17 @@ class UserInfoModifyViewController: UIViewController {
         userProfileImageButton.clipsToBounds = true
         setupTextFieldBottomBorder()
     }
+    
+    private func setupButton() {
+        let modifyAction = UIAction { [weak self] _ in
+            let formSheetViewController = FormSheetViewController()
+            formSheetViewController.modalPresentationStyle = .overFullScreen
+            formSheetViewController.modalTransitionStyle = .crossDissolve
+            self?.present(formSheetViewController, animated: true)
+        }
+        userProfileImageButton.addAction(modifyAction, for: .touchUpInside)
+    }
+    
     
     private func setupNavigation() {
         title = "프로필 편집"
