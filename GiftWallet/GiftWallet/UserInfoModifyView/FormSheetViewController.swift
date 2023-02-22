@@ -36,7 +36,7 @@ class FormSheetViewController: UIViewController {
         let button = UIButton()
         
         button.setImage(UIImage(systemName: "photo"), for: .normal)
-        button.tintColor = .black
+        button.tintColor = .gray
         button.contentHorizontalAlignment = .fill
         button.contentVerticalAlignment = .fill
         button.translatesAutoresizingMaskIntoConstraints = false
@@ -53,6 +53,17 @@ class FormSheetViewController: UIViewController {
         return label
     }()
     
+    lazy var activityIndicator: UIActivityIndicatorView = {
+        let indicator = UIActivityIndicatorView()
+        
+        indicator.style = .large
+        indicator.startAnimating()
+        indicator.isHidden = true
+        indicator.translatesAutoresizingMaskIntoConstraints = false
+        
+        return indicator
+    }()
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         setupViews()
@@ -61,7 +72,14 @@ class FormSheetViewController: UIViewController {
     
     private func setupButton() {
         let photoAction = UIAction { [weak self] _ in
-            print("사진으로 이동")
+            self?.activityIndicator.isHidden = false
+            let imagePickerController = UIImagePickerController()
+            imagePickerController.sourceType = .savedPhotosAlbum
+            imagePickerController.delegate = self
+            imagePickerController.modalPresentationStyle = .fullScreen
+            self?.present(imagePickerController, animated: true, completion: {
+                self?.activityIndicator.isHidden = true
+            })
         }
         photoImageButton.addAction(photoAction, for: .touchUpInside)
         
@@ -71,7 +89,7 @@ class FormSheetViewController: UIViewController {
         
         view.backgroundColor = UIColor.init(red: 0, green: 0, blue: 0, alpha: 0.8)
         
-        [defaultLabel, photoImageButton, photoImageViewDescriptionLabel].forEach(contentView.addSubview(_:))
+        [defaultLabel, photoImageButton, photoImageViewDescriptionLabel, activityIndicator].forEach(contentView.addSubview(_:))
         view.addSubview(contentView)
         
         NSLayoutConstraint.activate([
@@ -89,7 +107,10 @@ class FormSheetViewController: UIViewController {
             photoImageButton.heightAnchor.constraint(equalTo: photoImageButton.widthAnchor),
             
             photoImageViewDescriptionLabel.topAnchor.constraint(equalTo: photoImageButton.bottomAnchor, constant: 30),
-            photoImageViewDescriptionLabel.centerXAnchor.constraint(equalTo: photoImageButton.centerXAnchor)
+            photoImageViewDescriptionLabel.centerXAnchor.constraint(equalTo: photoImageButton.centerXAnchor),
+            
+            activityIndicator.centerXAnchor.constraint(equalTo: contentView.centerXAnchor),
+            activityIndicator.centerYAnchor.constraint(equalTo: contentView.centerYAnchor)
         ])
     }
 }
@@ -105,4 +126,10 @@ extension FormSheetViewController {
             self.dismiss(animated: true)
         }
     }
+}
+
+extension FormSheetViewController: UIImagePickerControllerDelegate,
+                                   UINavigationControllerDelegate {
+    // 이미지 선택 구현
+    
 }
