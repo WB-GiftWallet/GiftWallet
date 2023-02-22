@@ -91,7 +91,7 @@ AAAA 님의
         let label = UILabel()
         
         label.text = "😟 기간이 얼마 안남았어요!"
-        label.font = .boldSystemFont(ofSize: 20)
+        label.font = .boldSystemFont(ofSize: 22)
         label.translatesAutoresizingMaskIntoConstraints = false
         
         return label
@@ -111,7 +111,7 @@ AAAA 님의
         let label = UILabel()
         
         label.text = "😄 최근에 등록했어요."
-        label.font = .boldSystemFont(ofSize: 20)
+        label.font = .boldSystemFont(ofSize: 22)
         label.translatesAutoresizingMaskIntoConstraints = false
         
         return label
@@ -210,6 +210,8 @@ AAAA 님의
         contentScrollView.addSubview(contentView)
         view.addSubview(contentScrollView)
         
+        let safeArea = contentView.safeAreaLayoutGuide
+        
         NSLayoutConstraint.activate([
             contentScrollView.topAnchor.constraint(equalTo: view.topAnchor),
             contentScrollView.leadingAnchor.constraint(equalTo: view.leadingAnchor),
@@ -223,30 +225,30 @@ AAAA 님의
             contentView.widthAnchor.constraint(equalTo: contentScrollView.widthAnchor),
             contentView.heightAnchor.constraint(equalTo: contentScrollView.heightAnchor),
             
-            userProfileImageView.widthAnchor.constraint(equalTo: contentView.widthAnchor, multiplier: 0.15),
+            userProfileImageView.widthAnchor.constraint(equalTo: contentView.widthAnchor, multiplier: 0.2),
             userProfileImageView.heightAnchor.constraint(equalTo: userProfileImageView.widthAnchor),
             
-            userInfoHorizontalStackView.topAnchor.constraint(equalTo: contentView.topAnchor),
-            userInfoHorizontalStackView.leadingAnchor.constraint(equalTo: contentView.leadingAnchor, constant: 10),
-            userInfoHorizontalStackView.trailingAnchor.constraint(equalTo: contentView.trailingAnchor, constant: -10),
+            userInfoHorizontalStackView.topAnchor.constraint(equalTo: safeArea.topAnchor, constant: 5),
+            userInfoHorizontalStackView.leadingAnchor.constraint(equalTo: safeArea.leadingAnchor, constant: 30),
+            userInfoHorizontalStackView.trailingAnchor.constraint(equalTo: safeArea.trailingAnchor, constant: -30),
             
-            expireCollectionViewHeaderLabel.topAnchor.constraint(equalTo: userInfoHorizontalStackView.bottomAnchor, constant: 10),
-            expireCollectionViewHeaderLabel.leadingAnchor.constraint(equalTo: userInfoHorizontalStackView.leadingAnchor),
+            expireCollectionViewHeaderLabel.topAnchor.constraint(equalTo: userInfoHorizontalStackView.bottomAnchor, constant: 30),
+            expireCollectionViewHeaderLabel.leadingAnchor.constraint(equalTo: safeArea.leadingAnchor, constant: 15),
             
-            expireCollectionView.topAnchor.constraint(equalTo: expireCollectionViewHeaderLabel.bottomAnchor, constant: 10),
+            expireCollectionView.topAnchor.constraint(equalTo: expireCollectionViewHeaderLabel.bottomAnchor, constant: 5),
             expireCollectionView.leadingAnchor.constraint(equalTo: expireCollectionViewHeaderLabel.leadingAnchor),
             expireCollectionView.trailingAnchor.constraint(equalTo: expireCollectionViewHeaderLabel.trailingAnchor),
             expireCollectionView.widthAnchor.constraint(equalTo: contentView.widthAnchor),
-            expireCollectionView.heightAnchor.constraint(equalTo: contentView.heightAnchor, multiplier: 0.45),
+            expireCollectionView.heightAnchor.constraint(equalTo: expireCollectionView.widthAnchor, multiplier: 0.85),
             
             recentCollectionViewHeaderLabel.topAnchor.constraint(equalTo: expireCollectionView.bottomAnchor, constant: 10),
-            recentCollectionViewHeaderLabel.leadingAnchor.constraint(equalTo: userInfoHorizontalStackView.leadingAnchor),
+            recentCollectionViewHeaderLabel.leadingAnchor.constraint(equalTo: expireCollectionViewHeaderLabel.leadingAnchor),
             
-            recentCollectionView.topAnchor.constraint(equalTo: recentCollectionViewHeaderLabel.bottomAnchor, constant: 10),
+            recentCollectionView.topAnchor.constraint(equalTo: recentCollectionViewHeaderLabel.bottomAnchor, constant: 5),
             recentCollectionView.leadingAnchor.constraint(equalTo: recentCollectionViewHeaderLabel.leadingAnchor),
             recentCollectionView.trailingAnchor.constraint(equalTo: recentCollectionViewHeaderLabel.trailingAnchor),
             recentCollectionView.widthAnchor.constraint(equalTo: contentView.widthAnchor),
-            recentCollectionView.heightAnchor.constraint(equalTo: contentView.heightAnchor, multiplier: 0.45),
+            recentCollectionView.heightAnchor.constraint(equalTo: recentCollectionView.widthAnchor, multiplier: 0.85),
             
         ])
     }
@@ -293,7 +295,7 @@ extension MainViewController: UICollectionViewDataSource, UICollectionViewDelega
 
 extension MainViewController: UICollectionViewDelegateFlowLayout {
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
-        return CGSize(width: collectionView.frame.width / 2.2, height: 300)
+        return CGSize(width: collectionView.frame.width / 2.5, height: 300)
     }
     
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, minimumInteritemSpacingForSectionAt section: Int) -> CGFloat {
