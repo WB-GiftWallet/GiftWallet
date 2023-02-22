@@ -9,7 +9,7 @@ import UIKit
 
 class CustomCollectionView: UICollectionView {
     
-    private let collectionViewFlowLayout = UICollectionViewFlowLayout()
+    let collectionViewFlowLayout = UICollectionViewFlowLayout()
         
     override init(frame: CGRect, collectionViewLayout layout: UICollectionViewLayout) {
         super.init(frame: frame, collectionViewLayout: collectionViewFlowLayout)
