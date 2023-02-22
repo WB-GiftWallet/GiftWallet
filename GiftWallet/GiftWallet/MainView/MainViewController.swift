@@ -171,6 +171,8 @@ AAAA 님의
     
     
     private func setupNavigation() {
+        title = ""
+        
         let modifyAction = UIAction { [weak self] _ in
             let userInfoModifyViewModel = UserInfoModifyViewModel()
             let userInfoModifyViewController = UserInfoModifyViewController(userInfoModifyViewModel: userInfoModifyViewModel)
