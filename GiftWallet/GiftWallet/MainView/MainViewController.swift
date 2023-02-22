@@ -201,12 +201,6 @@ AAAA 님의
         contentScrollView.addSubview(contentView)
         view.addSubview(contentScrollView)
         
-        let safeArea = view.safeAreaLayoutGuide
-        
-//        let contentViewHeight = contentView.heightAnchor.constraint(greaterThanOrEqualTo: view.heightAnchor)
-//                contentViewHeight.priority = .defaultLow
-//                contentViewHeight.isActive = true
-        
         NSLayoutConstraint.activate([
             contentScrollView.topAnchor.constraint(equalTo: view.topAnchor),
             contentScrollView.leadingAnchor.constraint(equalTo: view.leadingAnchor),
@@ -280,6 +274,12 @@ extension MainViewController: UICollectionViewDataSource, UICollectionViewDelega
         }
         return UICollectionViewCell()
     }
+    
+    func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
+        let detailViewController = DetailViewController()
+        navigationController?.pushViewController(detailViewController, animated: true)
+    }
+    
 }
 
 extension MainViewController: UICollectionViewDelegateFlowLayout {
@@ -291,15 +291,3 @@ extension MainViewController: UICollectionViewDelegateFlowLayout {
         return 10
     }
 }
-
-
-
-#if canImport(SwiftUI) && DEBUG
-import SwiftUI
-
-struct MainViewControllerPreview: PreviewProvider {
-    static var previews: some View {
-        MainViewController(viewModel: MainViewModel()).showPreview()
-    }
-}
-#endif

@@ -7,7 +7,7 @@
 
 import UIKit
 
-final class GiftImageViewController: ViewController{
+final class GiftImageViewController: UIViewController {
     let giftImageView = UIImageView()
     
     init(image: UIImage) {
