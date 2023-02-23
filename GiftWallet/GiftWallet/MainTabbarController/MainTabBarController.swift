@@ -7,7 +7,59 @@
 
 import UIKit
 
-class MainTabBarController: UITabBarController, UITabBarControllerDelegate {
+final class MainTabBarController: UITabBarController {
+    
+    private enum tag: Int {
+        case detail
+        case addGift
+        case setting
+        
+        var systemName: String {
+            switch self {
+            case .detail:
+                return "list.clipboard.fill"
+            case .addGift:
+                return "plus.circle.fill"
+            case .setting:
+                return "gearshape"
+            }
+        }
+    }
+    
+    private let deTailViewController: MainViewController = {
+        let viewController = MainViewController(viewModel: MainViewModel())
+        
+        viewController.tabBarItem.image = UIImage(systemName: tag.detail.systemName)
+        viewController.tabBarItem.tag = tag.detail.rawValue
+        
+        return viewController
+    }()
+    
+    // TODO: AddGiftViewController 구현 및 연결
+    private let addGiftViewController: UIViewController = {
+        let viewController = UIViewController()
+        
+        viewController.view.backgroundColor = .yellow
+        viewController.tabBarItem.image = UIImage(
+            systemName: tag.addGift.systemName,
+            withConfiguration: UIImage.SymbolConfiguration(
+                font: .systemFont(ofSize: 45)
+            )
+        )?.withBaselineOffset(fromBottom: UIFont.systemFontSize * 2)
+        viewController.tabBarItem.tag = tag.addGift.rawValue
+        
+        return viewController
+    }()
+    
+    // TODO: settingViewController 구현 및 연결
+    private let settingViewController: UIViewController = {
+        let viewController = UIViewController()
+        
+        viewController.tabBarItem.image = UIImage(systemName: tag.setting.systemName)
+        viewController.tabBarItem.tag = tag.setting.rawValue
+        
+        return viewController
+    }()
     
     private var isAddGiftTabBarEnabled = true
     
@@ -15,48 +67,36 @@ class MainTabBarController: UITabBarController, UITabBarControllerDelegate {
         super.viewDidLoad()
         delegate = self
         
-        // TODO: Color 변경
-        self.tabBar.tintColor = .label
-        self.tabBar.unselectedItemTintColor = .systemPink
-        
-        let appearance = UITabBarAppearance()
-        appearance.configureWithDefaultBackground()
-        
-        let deTailViewController = MainViewController(viewModel: MainViewModel())
-        deTailViewController.tabBarItem.image = UIImage(systemName: "list.clipboard.fill")
-        deTailViewController.tabBarItem.tag = 0
-        
-        // TODO: AddGiftViewController구현 및 연결
-        let addGiftViewController = UIViewController()
-        addGiftViewController.view.backgroundColor = .yellow
-        addGiftViewController.tabBarItem.image = UIImage(systemName: "plus.circle.fill", withConfiguration: UIImage.SymbolConfiguration(font: .systemFont(ofSize: 45)))?.withBaselineOffset(fromBottom: UIFont.systemFontSize * 2)
-        addGiftViewController.tabBarItem.tag = 1
-        
-        let settingViewController = UIViewController()
-        settingViewController.tabBarItem.image = UIImage(systemName: "gearshape")
-        settingViewController.tabBarItem.tag = 2
-        
-        viewControllers = [deTailViewController, addGiftViewController, settingViewController]
+        configureEachViewControllers()
     }
     
     override func tabBar(_ tabBar: UITabBar, didSelect item: UITabBarItem) {
         if item.tag == 1 {
-            let previousIndex = self.selectedIndex
-            
-            self.selectedIndex = previousIndex
             isAddGiftTabBarEnabled = false
             
             //TODO: AddViewController 구현 및 present
             let temporaryVC = UIViewController()
             temporaryVC.view.backgroundColor = .systemPurple
             present(temporaryVC, animated: true)
-            
         } else {
             isAddGiftTabBarEnabled = true
         }
     }
     
-    func tabBarController(_ tabBarController: UITabBarController, shouldSelect viewController: UIViewController) -> Bool {
+    private func configureEachViewControllers() {
+        // TODO: Color 변경
+        self.tabBar.tintColor = .label
+        self.tabBar.unselectedItemTintColor = .systemPink
+        
+        viewControllers = [deTailViewController, addGiftViewController, settingViewController]
+    }
+}
+
+extension MainTabBarController: UITabBarControllerDelegate {
+    func tabBarController(
+        _ tabBarController: UITabBarController,
+        shouldSelect viewController: UIViewController
+    ) -> Bool {
         return isAddGiftTabBarEnabled
     }
 }
