@@ -23,6 +23,7 @@
 		FC1E747C29A207DA0010A4BA /* GiftWallet.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = FC1E747A29A207DA0010A4BA /* GiftWallet.xcdatamodeld */; };
 		FC1E747E29A207DC0010A4BA /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = FC1E747D29A207DC0010A4BA /* Assets.xcassets */; };
 		FC1E748129A207DC0010A4BA /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = FC1E747F29A207DC0010A4BA /* LaunchScreen.storyboard */; };
+		FC62FF1029A77B5A003E63B0 /* MainTabBarController.swift in Sources */ = {isa = PBXBuildFile; fileRef = FC62FF0F29A77B5A003E63B0 /* MainTabBarController.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -44,6 +45,7 @@
 		FC1E747D29A207DC0010A4BA /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		FC1E748029A207DC0010A4BA /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		FC1E748229A207DC0010A4BA /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		FC62FF0F29A77B5A003E63B0 /* MainTabBarController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainTabBarController.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -122,6 +124,7 @@
 		FC1E747029A207DA0010A4BA /* GiftWallet */ = {
 			isa = PBXGroup;
 			children = (
+				FC62FF1129A77B77003E63B0 /* MainTabbarController */,
 				D295E4B329A5E2D700E12CAF /* UserInfoModifyView */,
 				D2D6B74D29A3DE6A00E6188C /* MainView */,
 				F6A4AB4729A5D9F1009AEB78 /* DetailView */,
@@ -135,6 +138,14 @@
 				FC1E747A29A207DA0010A4BA /* GiftWallet.xcdatamodeld */,
 			);
 			path = GiftWallet;
+			sourceTree = "<group>";
+		};
+		FC62FF1129A77B77003E63B0 /* MainTabbarController */ = {
+			isa = PBXGroup;
+			children = (
+				FC62FF0F29A77B5A003E63B0 /* MainTabBarController.swift */,
+			);
+			path = MainTabbarController;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -209,6 +220,7 @@
 			files = (
 				D295E4B929A5F64200E12CAF /* FormSheetViewController.swift in Sources */,
 				D2DAAA2329A4720300D70E8C /* Ext+DateFormatter.swift in Sources */,
+				FC62FF1029A77B5A003E63B0 /* MainTabBarController.swift in Sources */,
 				D2DAAA1C29A44B1600D70E8C /* MainCollectionViewCell.swift in Sources */,
 				FC1E747229A207DA0010A4BA /* AppDelegate.swift in Sources */,
 				F6A4AB4A29A5DA1C009AEB78 /* GiftImageViewController.swift in Sources */,
