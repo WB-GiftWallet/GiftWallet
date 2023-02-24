@@ -167,7 +167,7 @@ AAAA 님의
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
-        viewModel.sortedByCurrentDate()
+        viewModel.sortOutInGlobalThread()
     }
     
     private func bind() {

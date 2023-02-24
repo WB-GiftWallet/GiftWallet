@@ -12,6 +12,7 @@
 		D295E4B929A5F64200E12CAF /* FormSheetViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D295E4B829A5F64200E12CAF /* FormSheetViewController.swift */; };
 		D2A282B629A85EBC002CCF5A /* Gift.swift in Sources */ = {isa = PBXBuildFile; fileRef = D2A282B529A85EBC002CCF5A /* Gift.swift */; };
 		D2A282B829A85EF2002CCF5A /* Observable.swift in Sources */ = {isa = PBXBuildFile; fileRef = D2A282B729A85EF2002CCF5A /* Observable.swift */; };
+		D2A282C029A8702B002CCF5A /* MainViewModelTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = D2A282BF29A8702B002CCF5A /* MainViewModelTests.swift */; };
 		D2D6B74F29A3DEC900E6188C /* MainViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D2D6B74E29A3DEC900E6188C /* MainViewController.swift */; };
 		D2D6B75129A3DEE900E6188C /* MainViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = D2D6B75029A3DEE900E6188C /* MainViewModel.swift */; };
 		D2DAAA1C29A44B1600D70E8C /* MainCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = D2DAAA1B29A44B1600D70E8C /* MainCollectionViewCell.swift */; };
@@ -27,12 +28,24 @@
 		FC1E748129A207DC0010A4BA /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = FC1E747F29A207DC0010A4BA /* LaunchScreen.storyboard */; };
 /* End PBXBuildFile section */
 
+/* Begin PBXContainerItemProxy section */
+		D2A282C129A8702B002CCF5A /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = FC1E746629A207DA0010A4BA /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = FC1E746D29A207DA0010A4BA;
+			remoteInfo = GiftWallet;
+		};
+/* End PBXContainerItemProxy section */
+
 /* Begin PBXFileReference section */
 		D295E4B429A5E2F400E12CAF /* UserInfoModifyViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserInfoModifyViewController.swift; sourceTree = "<group>"; };
 		D295E4B629A5E31400E12CAF /* UserInfoModifyViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserInfoModifyViewModel.swift; sourceTree = "<group>"; };
 		D295E4B829A5F64200E12CAF /* FormSheetViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FormSheetViewController.swift; sourceTree = "<group>"; };
 		D2A282B529A85EBC002CCF5A /* Gift.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Gift.swift; sourceTree = "<group>"; };
 		D2A282B729A85EF2002CCF5A /* Observable.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Observable.swift; sourceTree = "<group>"; };
+		D2A282BD29A8702B002CCF5A /* MainViewModelTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = MainViewModelTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
+		D2A282BF29A8702B002CCF5A /* MainViewModelTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainViewModelTests.swift; sourceTree = "<group>"; };
 		D2D6B74E29A3DEC900E6188C /* MainViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainViewController.swift; sourceTree = "<group>"; };
 		D2D6B75029A3DEE900E6188C /* MainViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainViewModel.swift; sourceTree = "<group>"; };
 		D2DAAA1B29A44B1600D70E8C /* MainCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainCollectionViewCell.swift; sourceTree = "<group>"; };
@@ -51,6 +64,13 @@
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
+		D2A282BA29A8702B002CCF5A /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 		FC1E746B29A207DA0010A4BA /* Frameworks */ = {
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
@@ -69,6 +89,14 @@
 				D295E4B829A5F64200E12CAF /* FormSheetViewController.swift */,
 			);
 			path = UserInfoModifyView;
+			sourceTree = "<group>";
+		};
+		D2A282BE29A8702B002CCF5A /* MainViewModelTests */ = {
+			isa = PBXGroup;
+			children = (
+				D2A282BF29A8702B002CCF5A /* MainViewModelTests.swift */,
+			);
+			path = MainViewModelTests;
 			sourceTree = "<group>";
 		};
 		D2D6B74D29A3DE6A00E6188C /* MainView */ = {
@@ -113,6 +141,7 @@
 			isa = PBXGroup;
 			children = (
 				FC1E747029A207DA0010A4BA /* GiftWallet */,
+				D2A282BE29A8702B002CCF5A /* MainViewModelTests */,
 				FC1E746F29A207DA0010A4BA /* Products */,
 			);
 			sourceTree = "<group>";
@@ -121,6 +150,7 @@
 			isa = PBXGroup;
 			children = (
 				FC1E746E29A207DA0010A4BA /* GiftWallet.app */,
+				D2A282BD29A8702B002CCF5A /* MainViewModelTests.xctest */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -146,6 +176,24 @@
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
+		D2A282BC29A8702B002CCF5A /* MainViewModelTests */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = D2A282C329A8702B002CCF5A /* Build configuration list for PBXNativeTarget "MainViewModelTests" */;
+			buildPhases = (
+				D2A282B929A8702B002CCF5A /* Sources */,
+				D2A282BA29A8702B002CCF5A /* Frameworks */,
+				D2A282BB29A8702B002CCF5A /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				D2A282C229A8702B002CCF5A /* PBXTargetDependency */,
+			);
+			name = MainViewModelTests;
+			productName = MainViewModelTests;
+			productReference = D2A282BD29A8702B002CCF5A /* MainViewModelTests.xctest */;
+			productType = "com.apple.product-type.bundle.unit-test";
+		};
 		FC1E746D29A207DA0010A4BA /* GiftWallet */ = {
 			isa = PBXNativeTarget;
 			buildConfigurationList = FC1E748529A207DC0010A4BA /* Build configuration list for PBXNativeTarget "GiftWallet" */;
@@ -173,6 +221,10 @@
 				LastSwiftUpdateCheck = 1420;
 				LastUpgradeCheck = 1420;
 				TargetAttributes = {
+					D2A282BC29A8702B002CCF5A = {
+						CreatedOnToolsVersion = 14.2;
+						TestTargetID = FC1E746D29A207DA0010A4BA;
+					};
 					FC1E746D29A207DA0010A4BA = {
 						CreatedOnToolsVersion = 14.2;
 					};
@@ -192,11 +244,19 @@
 			projectRoot = "";
 			targets = (
 				FC1E746D29A207DA0010A4BA /* GiftWallet */,
+				D2A282BC29A8702B002CCF5A /* MainViewModelTests */,
 			);
 		};
 /* End PBXProject section */
 
 /* Begin PBXResourcesBuildPhase section */
+		D2A282BB29A8702B002CCF5A /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 		FC1E746C29A207DA0010A4BA /* Resources */ = {
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
@@ -209,6 +269,14 @@
 /* End PBXResourcesBuildPhase section */
 
 /* Begin PBXSourcesBuildPhase section */
+		D2A282B929A8702B002CCF5A /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				D2A282C029A8702B002CCF5A /* MainViewModelTests.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 		FC1E746A29A207DA0010A4BA /* Sources */ = {
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
@@ -234,6 +302,14 @@
 		};
 /* End PBXSourcesBuildPhase section */
 
+/* Begin PBXTargetDependency section */
+		D2A282C229A8702B002CCF5A /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = FC1E746D29A207DA0010A4BA /* GiftWallet */;
+			targetProxy = D2A282C129A8702B002CCF5A /* PBXContainerItemProxy */;
+		};
+/* End PBXTargetDependency section */
+
 /* Begin PBXVariantGroup section */
 		FC1E747F29A207DC0010A4BA /* LaunchScreen.storyboard */ = {
 			isa = PBXVariantGroup;
@@ -246,6 +322,48 @@
 /* End PBXVariantGroup section */
 
 /* Begin XCBuildConfiguration section */
+		D2A282C429A8702B002CCF5A /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				BUNDLE_LOADER = "$(TEST_HOST)";
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				GENERATE_INFOPLIST_FILE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 16.2;
+				MACOSX_DEPLOYMENT_TARGET = 13.0;
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = asdf.MainViewModelTests;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SDKROOT = auto;
+				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator macosx";
+				SWIFT_EMIT_LOC_STRINGS = NO;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/GiftWallet.app/$(BUNDLE_EXECUTABLE_FOLDER_PATH)/GiftWallet";
+			};
+			name = Debug;
+		};
+		D2A282C529A8702B002CCF5A /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				BUNDLE_LOADER = "$(TEST_HOST)";
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				GENERATE_INFOPLIST_FILE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 16.2;
+				MACOSX_DEPLOYMENT_TARGET = 13.0;
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = asdf.MainViewModelTests;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SDKROOT = auto;
+				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator macosx";
+				SWIFT_EMIT_LOC_STRINGS = NO;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/GiftWallet.app/$(BUNDLE_EXECUTABLE_FOLDER_PATH)/GiftWallet";
+			};
+			name = Release;
+		};
 		FC1E748329A207DC0010A4BA /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
@@ -415,6 +533,15 @@
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
+		D2A282C329A8702B002CCF5A /* Build configuration list for PBXNativeTarget "MainViewModelTests" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				D2A282C429A8702B002CCF5A /* Debug */,
+				D2A282C529A8702B002CCF5A /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
 		FC1E746929A207DA0010A4BA /* Build configuration list for PBXProject "GiftWallet" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
