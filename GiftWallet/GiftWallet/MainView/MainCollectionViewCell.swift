@@ -69,12 +69,12 @@ class MainCollectionViewCell: UICollectionViewCell, ReusableView {
         fatalError("init(coder:) has not been implemented")
     }
     
-    func configureCell(data: Gifts) {
-        giftImageView.image = data.image
-        brandLabel.text = data.brandName
-        productNameLabel.text = data.product
-        expireDateLabel.text = DateFormatter.convertToDisplayString(date: data.date)
-    }
+//    func configureCell(data: Gifts) {
+//        giftImageView.image = data.image
+//        brandLabel.text = data.brandName
+//        productNameLabel.text = data.product
+//        expireDateLabel.text = DateFormatter.convertToDisplayString(date: data.date)
+//    }
     
     private func setupViews() {
         [brandLabel, productNameLabel, expireDateLabel].forEach(subLabelVerticalStackView.addArrangedSubview(_:))

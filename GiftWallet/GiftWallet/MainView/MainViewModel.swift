@@ -8,30 +8,52 @@
 import Foundation
 
 class MainViewModel {
-    let expireModel: [Gifts] = [
-        Gifts(id: UUID(), image: UIImage(named: "testImageEDIYA")!, brandName: "이디야커피", product: "아메리카노 EX", date: Date()),
-        Gifts(id: UUID(), image: UIImage(named: "testImageSTARBUCKSSMALL")!, brandName: "스타벅스", product: "아메리카노 T", date: Date()),
-        Gifts(id: UUID(), image: UIImage(named: "testImageSTARBUCKSSMALL")!, brandName: "스타벅스", product: "아메리카노 T", date: Date()),
-        Gifts(id: UUID(), image: UIImage(named: "testImageSTARBUCKSSMALL")!, brandName: "스타벅스", product: "아메리카노 T", date: Date()),
-        Gifts(id: UUID(), image: UIImage(named: "testImageSTARBUCKSSMALL")!, brandName: "스타벅스", product: "아메리카노 T", date: Date()),
-        Gifts(id: UUID(), image: UIImage(named: "testImageSTARBUCKSSMALL")!, brandName: "스타벅스", product: "아메리카노 T", date: Date())
-    ]
+    var allGifts: [Gift] = []
+    var expireGifts: Observable<[Gift]> = .init([])
+    var recentGifts: Observable<[Gift]> = .init([])
+    var unavailableGifts: [Gift] = []
     
-    let recentModel: [Gifts] = [
-        Gifts(id: UUID(), image: UIImage(named: "testImageEDIYA")!, brandName: "이디야커피", product: "아메리카노 EX", date: Date()),
-        Gifts(id: UUID(), image: UIImage(named: "testImageSTARBUCKSSMALL")!, brandName: "스타벅스", product: "아메리카노 T", date: Date()),
-        Gifts(id: UUID(), image: UIImage(named: "testImageSTARBUCKSSMALL")!, brandName: "스타벅스", product: "아메리카노 T", date: Date())
-    ]
+    // TODO: 추후에 코어데이터를 fetch해올 함수
+    func fetchSampleData() {
+        allGifts = Gift.sampleGifts
+    }
+    
+    func sortedByCurrentDate() {
+        let calendar = Calendar.current
+        
+        expireGifts.value = allGifts.filter({ gift in
+            guard let giftExpireDateNotNil = gift.expireDate else { return false }
+            return calendar.checkExpireDataIsSevenDays(greaterThanSeven: false, expireDate: giftExpireDateNotNil)
+        })
+        
+        recentGifts.value = allGifts.filter({ gift in
+            guard let giftExpireDateNotNil = gift.expireDate else { return true }
+            return calendar.checkExpireDataIsSevenDays(greaterThanSeven: true, expireDate: giftExpireDateNotNil)
+        })
+        
+        unavailableGifts = allGifts.filter({ gift in
+            guard let giftExpireDateNotNil = gift.expireDate else { return false }
+            return gift.useableState == false || calendar.checkIsExpired(expireDate: giftExpireDateNotNil)
+            
+        })
+    }
     
 }
 
-
-import UIKit
-
-struct Gifts {
-    let id: UUID
-    let image: UIImage
-    let brandName: String
-    let product: String
-    let date: Date
+fileprivate extension Calendar {
+    func checkExpireDataIsSevenDays(greaterThanSeven: Bool, expireDate: Date) -> Bool {
+        let today = Date()
+        let components = self.dateComponents([.day], from: today, to: expireDate)
+        guard let differenceDate = components.day else { return false }
+        
+        return greaterThanSeven ?  differenceDate > 7 : differenceDate <= 7
+    }
+    
+    func checkIsExpired(expireDate: Date) -> Bool {
+        let today = Date()
+        let comparisonResult = self.compare(today, to: expireDate, toGranularity: .day)
+        
+        return comparisonResult == .orderedAscending ? true : false
+        
+    }
 }

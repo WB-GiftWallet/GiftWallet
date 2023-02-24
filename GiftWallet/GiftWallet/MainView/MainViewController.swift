@@ -256,36 +256,36 @@ AAAA 님의
 }
 
 extension MainViewController: UICollectionViewDataSource, UICollectionViewDelegate {
-    func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        switch collectionView {
-        case expireCollectionView:
-            return viewModel.expireModel.count
-        case recentCollectionView:
-            return viewModel.recentModel.count
-        default:
-            return .zero
-        }
-    }
+//    func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
+//        switch collectionView {
+//        case expireCollectionView:
+//            return viewModel.expireModel.count
+//        case recentCollectionView:
+//            return viewModel.recentModel.count
+//        default:
+//            return .zero
+//        }
+//    }
     
-    func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
-        switch collectionView {
-        case expireCollectionView:
-            let cell = expireCollectionView.dequeueReusableCell(withReuseIdentifier: MainCollectionViewCell.reuseIdentifier,
-                                                                for: indexPath) as? MainCollectionViewCell ?? MainCollectionViewCell()
-            let model = viewModel.expireModel[indexPath.row]
-            cell.configureCell(data: model)
-            return cell
-        case recentCollectionView:
-            let cell = recentCollectionView.dequeueReusableCell(withReuseIdentifier: MainCollectionViewCell.reuseIdentifier,
-                                                                for: indexPath) as? MainCollectionViewCell ?? MainCollectionViewCell()
-            let model = viewModel.recentModel[indexPath.row]
-            cell.configureCell(data: model)
-            return cell
-        default:
-            print("셀 반환 실패")
-        }
-        return UICollectionViewCell()
-    }
+//    func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
+//        switch collectionView {
+//        case expireCollectionView:
+//            let cell = expireCollectionView.dequeueReusableCell(withReuseIdentifier: MainCollectionViewCell.reuseIdentifier,
+//                                                                for: indexPath) as? MainCollectionViewCell ?? MainCollectionViewCell()
+//            let model = viewModel.expireModel[indexPath.row]
+//            cell.configureCell(data: model)
+//            return cell
+//        case recentCollectionView:
+//            let cell = recentCollectionView.dequeueReusableCell(withReuseIdentifier: MainCollectionViewCell.reuseIdentifier,
+//                                                                for: indexPath) as? MainCollectionViewCell ?? MainCollectionViewCell()
+//            let model = viewModel.recentModel[indexPath.row]
+//            cell.configureCell(data: model)
+//            return cell
+//        default:
+//            print("셀 반환 실패")
+//        }
+//        return UICollectionViewCell()
+//    }
     
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
         let detailViewController = DetailViewController()
