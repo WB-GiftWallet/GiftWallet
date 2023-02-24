@@ -13,12 +13,12 @@ enum CoreDataError: Error {
 }
 
 extension CoreDataError: LocalizedError {
-  public var errorDescription: String? {
-    switch self {
-    case .contextInvalid:
-      return NSLocalizedString("CoreData Context Error", comment: "context Invalid")
-    case .coreDataError:
-      return "Some CoreData Error"
+    public var errorDescription: String? {
+        switch self {
+        case .contextInvalid:
+            return NSLocalizedString("CoreData Context Error", comment: "context Invalid")
+        case .coreDataError:
+            return "Some CoreData Error"
+        }
     }
-  }
 }

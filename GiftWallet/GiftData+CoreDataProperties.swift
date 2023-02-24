@@ -2,7 +2,7 @@
 //  GiftData+CoreDataProperties.swift
 //  GiftWallet
 //
-//  Created by Byunghee_Yoon on 2023/02/25.
+//  Created by Baem on 2023/02/25.
 //
 //
 
