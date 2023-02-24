@@ -59,7 +59,7 @@ enum Category {
 }
 
 
-fileprivate extension Date {
+private extension Date {
     func addFromTodayDate(_ value: Int) -> Date {
         let currentDate = self
         let valueDaysLater = Calendar.current.date(byAdding: .day, value: value, to: currentDate)!

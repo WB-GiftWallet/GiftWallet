@@ -40,7 +40,7 @@ class MainViewModel {
     
 }
 
-fileprivate extension Calendar {
+private extension Calendar {
     func checkExpireDataIsSevenDays(greaterThanSeven: Bool, expireDate: Date) -> Bool {
         let today = Date()
         let components = self.dateComponents([.day], from: today, to: expireDate)
