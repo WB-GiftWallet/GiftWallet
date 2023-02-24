@@ -40,7 +40,6 @@ class MainViewModel {
         unavailableGifts = allGifts.filter({ gift in
             guard let giftExpireDateNotNil = gift.expireDate else { return false }
             return gift.useableState == false || calendar.checkIsExpired(expireDate: giftExpireDateNotNil)
-            
         })
     }
     
