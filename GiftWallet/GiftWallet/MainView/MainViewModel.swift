@@ -20,24 +20,24 @@ class MainViewModel {
     
     func sortedByCurrentDate() {
         let calendar = Calendar.current
-        
-        expireGifts.value = allGifts.filter({ gift in
-            guard let giftExpireDateNotNil = gift.expireDate else { return false }
-            return calendar.checkExpireDataIsSevenDays(greaterThanSeven: false, expireDate: giftExpireDateNotNil)
-        })
-        
-        recentGifts.value = allGifts.filter({ gift in
-            guard let giftExpireDateNotNil = gift.expireDate else { return true }
-            return calendar.checkExpireDataIsSevenDays(greaterThanSeven: true, expireDate: giftExpireDateNotNil)
-        })
-        
-        unavailableGifts = allGifts.filter({ gift in
-            guard let giftExpireDateNotNil = gift.expireDate else { return false }
-            return gift.useableState == false || calendar.checkIsExpired(expireDate: giftExpireDateNotNil)
+        DispatchQueue.global().async { [self] in
+            expireGifts.value = allGifts.filter({ gift in
+                guard let giftExpireDateNotNil = gift.expireDate else { return false }
+                return calendar.checkExpireDataIsSevenDays(greaterThanSeven: false, expireDate: giftExpireDateNotNil)
+            })
             
-        })
+            recentGifts.value = allGifts.filter({ gift in
+                guard let giftExpireDateNotNil = gift.expireDate else { return true }
+                return calendar.checkExpireDataIsSevenDays(greaterThanSeven: true, expireDate: giftExpireDateNotNil)
+            })
+            
+            unavailableGifts = allGifts.filter({ gift in
+                guard let giftExpireDateNotNil = gift.expireDate else { return false }
+                return gift.useableState == false || calendar.checkIsExpired(expireDate: giftExpireDateNotNil)
+                
+            })
+        }
     }
-    
 }
 
 private extension Calendar {

@@ -162,21 +162,25 @@ AAAA 님의
         viewModel.fetchSampleData()
         setupNavigation()
         setupViews()
+        bind()
     }
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         viewModel.sortedByCurrentDate()
-        bind()
     }
     
     private func bind() {
         viewModel.expireGifts.bind { [weak self] _ in
-            self?.expireCollectionView.reloadData()
+            DispatchQueue.main.async {
+                self?.expireCollectionView.reloadData()
+            }
         }
         
         viewModel.recentGifts.bind { [weak self] _ in
-            self?.recentCollectionView.reloadData()
+            DispatchQueue.main.async {
+                self?.recentCollectionView.reloadData()
+            }
         }
     }
     
