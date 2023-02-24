@@ -4,14 +4,8 @@
 //
 //  Created by Baem on 2023/02/24.
 
-
 import CoreData
 import UIKit
-
-enum CoreDataError: Error {
-    case contextError
-    case coreDataError
-}
 
 final class CoreDataManager {
     
@@ -23,7 +17,7 @@ final class CoreDataManager {
     
     func fetchData() -> Result<[GiftData], CoreDataError> {
         guard let context = appDelegate?.persistentContainer.viewContext else {
-            return .failure(.contextError)
+            return .failure(.contextInvalid)
         }
         
         do {
@@ -36,19 +30,17 @@ final class CoreDataManager {
         return .failure(.coreDataError)
     }
     
-    func saveData(_ giftData: Gift) {
-        guard let context = appDelegate?.persistentContainer.viewContext else { return }
+    func saveData(_ giftData: Gift) throws {
+        guard let context = appDelegate?.persistentContainer.viewContext else {
+            throw CoreDataError.contextInvalid
+        }
         let entity = NSEntityDescription.entity(forEntityName: "GiftData", in: context)
         
         if let entity = entity {
             let info = NSManagedObject(entity: entity, insertInto: context)
             info.setValue(giftData.number, forKey: "number")
-            
-            // image 데이터화
             info.setValue(giftData.image?.pngData(), forKey: "image")
-            // 카테고리 데이터화
             info.setValue(giftData.category?.rawValue, forKey: "category")
-            
             info.setValue(giftData.brandName, forKey: "brandName")
             info.setValue(giftData.productName, forKey: "productName")
             info.setValue(giftData.memo, forKey: "memo")
@@ -63,8 +55,11 @@ final class CoreDataManager {
         }
     }
     
-    func updateData(_ giftData: Gift) {
-        guard let context = appDelegate?.persistentContainer.viewContext else { return }
+    func updateData(_ giftData: Gift) throws {
+        guard let context = appDelegate?.persistentContainer.viewContext else {
+            throw CoreDataError.contextInvalid
+        }
+        
         let fetchRequest = NSFetchRequest<NSFetchRequestResult>.init(entityName: "GiftData")
         fetchRequest.predicate = NSPredicate(format: "number = %@", giftData.number as CVarArg)
 
@@ -73,12 +68,8 @@ final class CoreDataManager {
             guard let updatingData = test[0] as? NSManagedObject else { return }
             
             updatingData.setValue(giftData.number, forKey: "number")
-            
-            // image 데이터화
             updatingData.setValue(giftData.image?.pngData(), forKey: "image")
-            // 카테고리 데이터화
             updatingData.setValue(giftData.category?.rawValue, forKey: "category")
-            
             updatingData.setValue(giftData.brandName, forKey: "brandName")
             updatingData.setValue(giftData.productName, forKey: "productName")
             updatingData.setValue(giftData.memo, forKey: "memo")
@@ -96,8 +87,11 @@ final class CoreDataManager {
         }
     }
     
-    func deleteDate(id number: Int16) {
-        guard let context = appDelegate?.persistentContainer.viewContext else { return }
+    func deleteDate(id number: Int16) throws {
+        guard let context = appDelegate?.persistentContainer.viewContext else {
+            throw CoreDataError.contextInvalid
+        }
+        
         let fetchRequest = NSFetchRequest<NSFetchRequestResult>.init(entityName: "GiftData")
         fetchRequest.predicate = NSPredicate(format: "number = %@", number as CVarArg)
         
