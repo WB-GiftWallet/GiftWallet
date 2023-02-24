@@ -159,8 +159,25 @@ AAAA 님의
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        viewModel.fetchSampleData()
         setupNavigation()
         setupViews()
+    }
+    
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        viewModel.sortedByCurrentDate()
+        bind()
+    }
+    
+    private func bind() {
+        viewModel.expireGifts.bind { [weak self] _ in
+            self?.expireCollectionView.reloadData()
+        }
+        
+        viewModel.recentGifts.bind { [weak self] _ in
+            self?.recentCollectionView.reloadData()
+        }
     }
     
     override func viewWillLayoutSubviews() {
@@ -256,36 +273,37 @@ AAAA 님의
 }
 
 extension MainViewController: UICollectionViewDataSource, UICollectionViewDelegate {
-//    func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-//        switch collectionView {
-//        case expireCollectionView:
-//            return viewModel.expireModel.count
-//        case recentCollectionView:
-//            return viewModel.recentModel.count
-//        default:
-//            return .zero
-//        }
-//    }
+    func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
+        switch collectionView {
+        case expireCollectionView:
+            return viewModel.expireGifts.value.count
+        case recentCollectionView:
+            return viewModel.recentGifts.value.count
+        default:
+            print("테이블뷰데이터소스: 이거문제있음.")
+            return .zero
+        }
+    }
     
-//    func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
-//        switch collectionView {
-//        case expireCollectionView:
-//            let cell = expireCollectionView.dequeueReusableCell(withReuseIdentifier: MainCollectionViewCell.reuseIdentifier,
-//                                                                for: indexPath) as? MainCollectionViewCell ?? MainCollectionViewCell()
-//            let model = viewModel.expireModel[indexPath.row]
-//            cell.configureCell(data: model)
-//            return cell
-//        case recentCollectionView:
-//            let cell = recentCollectionView.dequeueReusableCell(withReuseIdentifier: MainCollectionViewCell.reuseIdentifier,
-//                                                                for: indexPath) as? MainCollectionViewCell ?? MainCollectionViewCell()
-//            let model = viewModel.recentModel[indexPath.row]
-//            cell.configureCell(data: model)
-//            return cell
-//        default:
-//            print("셀 반환 실패")
-//        }
-//        return UICollectionViewCell()
-//    }
+    func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
+        switch collectionView {
+        case expireCollectionView:
+            let cell = expireCollectionView.dequeueReusableCell(withReuseIdentifier: MainCollectionViewCell.reuseIdentifier,
+                                                                for: indexPath) as? MainCollectionViewCell ?? MainCollectionViewCell()
+            let expireGift = viewModel.expireGifts.value[indexPath.row]
+            cell.configureCell(data: expireGift)
+            return cell
+        case recentCollectionView:
+            let cell = recentCollectionView.dequeueReusableCell(withReuseIdentifier: MainCollectionViewCell.reuseIdentifier,
+                                                                for: indexPath) as? MainCollectionViewCell ?? MainCollectionViewCell()
+            let recentGift = viewModel.recentGifts.value[indexPath.row]
+            cell.configureCell(data: recentGift)
+            return cell
+        default:
+            print("셀 반환 실패")
+        }
+        return UICollectionViewCell()
+    }
     
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
         let detailViewController = DetailViewController()

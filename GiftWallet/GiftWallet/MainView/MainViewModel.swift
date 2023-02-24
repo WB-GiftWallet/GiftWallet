@@ -52,8 +52,8 @@ fileprivate extension Calendar {
     func checkIsExpired(expireDate: Date) -> Bool {
         let today = Date()
         let comparisonResult = self.compare(today, to: expireDate, toGranularity: .day)
-        
-        return comparisonResult == .orderedAscending ? true : false
+
+        return comparisonResult == .orderedDescending ? true : false
         
     }
 }
