@@ -40,8 +40,7 @@ struct Gift {
     }
 }
 
-
-enum Category {
+enum Category: String {
     case chicken
     case cafe
     case bread
