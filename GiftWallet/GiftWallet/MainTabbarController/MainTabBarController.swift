@@ -26,7 +26,7 @@ final class MainTabBarController: UITabBarController {
         }
     }
     
-    private let deTailViewController: MainViewController = {
+    private let mainViewController: MainViewController = {
         let viewController = MainViewController(viewModel: MainViewModel())
         
         viewController.tabBarItem.image = UIImage(systemName: tag.detail.systemName)
@@ -39,7 +39,6 @@ final class MainTabBarController: UITabBarController {
     private let addGiftViewController: UIViewController = {
         let viewController = UIViewController()
         
-        viewController.view.backgroundColor = .yellow
         viewController.tabBarItem.image = UIImage(
             systemName: tag.addGift.systemName,
             withConfiguration: UIImage.SymbolConfiguration(
@@ -88,7 +87,7 @@ final class MainTabBarController: UITabBarController {
         self.tabBar.tintColor = .label
         self.tabBar.unselectedItemTintColor = .systemPink
         
-        viewControllers = [deTailViewController, addGiftViewController, settingViewController]
+        viewControllers = [mainViewController, addGiftViewController, settingViewController]
     }
 }
 
