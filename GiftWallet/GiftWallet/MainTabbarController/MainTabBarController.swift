@@ -76,6 +76,8 @@ final class MainTabBarController: UITabBarController {
             //TODO: AddViewController 구현 및 present
             let temporaryVC = UIViewController()
             temporaryVC.view.backgroundColor = .systemPurple
+            let gift = Gift(image: UIImage(systemName: "cloud"), category: .bread, brandName: "안녕", productName: "응", memo: "유ㅣㅇ", expireDate: Date())
+            try? CoreDataManager.shared.saveData(gift)
             present(temporaryVC, animated: true)
         } else {
             isAddGiftTabBarEnabled = true

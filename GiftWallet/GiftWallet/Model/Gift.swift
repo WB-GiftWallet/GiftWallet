@@ -8,8 +8,7 @@
 import UIKit
 
 struct Gift {
-    static var currentNumber: Int = 0
-    let number: Int
+    let number: Int = 0
     let image: UIImage?
     let category: Category?
     let brandName: String?
@@ -27,7 +26,6 @@ struct Gift {
          useableState: Bool = true,
          expireDate: Date?,
          useDate: Date? = nil) {
-        self.number = Gift.currentNumber
         self.image = image
         self.category = category
         self.brandName = brandName
@@ -36,7 +34,6 @@ struct Gift {
         self.useableState = useableState
         self.expireDate = expireDate
         self.useDate = useDate
-        Gift.currentNumber += 1
     }
 }
 

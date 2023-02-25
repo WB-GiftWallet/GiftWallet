@@ -36,9 +36,12 @@ final class CoreDataManager {
         }
         let entity = NSEntityDescription.entity(forEntityName: "GiftData", in: context)
         
+        let giftDataMostRecentNumber = fetchMostRecentNumber(context: context) + 1
+        print("giftDataMostRecentNumber:::" , giftDataMostRecentNumber)
+        
         if let entity = entity {
             let info = NSManagedObject(entity: entity, insertInto: context)
-            info.setValue(giftData.number, forKey: "number")
+            info.setValue(giftDataMostRecentNumber, forKey: "number")
             info.setValue(giftData.image?.pngData(), forKey: "image")
             info.setValue(giftData.category?.rawValue, forKey: "category")
             info.setValue(giftData.brandName, forKey: "brandName")
@@ -107,6 +110,22 @@ final class CoreDataManager {
             }
         } catch {
             print(error.localizedDescription)
+        }
+    }
+}
+
+extension CoreDataManager {
+    private func fetchMostRecentNumber(context: NSManagedObjectContext) -> Int16 {
+        let request: NSFetchRequest<GiftData> = GiftData.fetchRequest()
+        request.sortDescriptors = [NSSortDescriptor(keyPath: \GiftData.number,
+                                                    ascending: false)]
+        request.fetchLimit = 1
+        if let lastGift = try? context.fetch(request).first {
+            let gift = GiftData(context: context)
+            gift.number = lastGift.number
+            return gift.number
+        } else {
+            return 0
         }
     }
 }
