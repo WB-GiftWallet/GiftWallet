@@ -52,7 +52,8 @@ final class MainTabBarController: UITabBarController {
     
     // TODO: settingViewController 구현 및 연결
     private let settingViewController: UIViewController = {
-        let viewController = UIViewController()
+        let etcSettingViewController = EtcSettingViewController(viewModel: EtcSettingViewModel())
+        let viewController = UINavigationController(rootViewController: etcSettingViewController)
         
         viewController.tabBarItem.image = UIImage(systemName: tag.setting.systemName)
         viewController.tabBarItem.tag = tag.setting.rawValue
