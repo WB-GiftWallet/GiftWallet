@@ -64,6 +64,10 @@ class EtcSettingViewController: UIViewController {
     private let settingTableView = {
        let tableView = UITableView()
         
+        tableView.register(EtcSettingTableViewCell.self,
+                           forCellReuseIdentifier: EtcSettingTableViewCell.reuseIdentifier)
+        tableView.translatesAutoresizingMaskIntoConstraints = false
+        
         return tableView
     }()
     
@@ -79,8 +83,15 @@ class EtcSettingViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        setupTableViewAttributes()
         setupNavigation()
         setupViews()
+    }
+    
+    
+    private func setupTableViewAttributes() {
+        settingTableView.delegate = self
+        settingTableView.dataSource = self
     }
     
     private func setupNavigation() {
@@ -118,4 +129,56 @@ class EtcSettingViewController: UIViewController {
     }
     
 
+}
+
+extension EtcSettingViewController: UITableViewDelegate, UITableViewDataSource {
+    
+
+    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+        return viewModel.setupNumberOfRowsInSection(section: section)
+    }
+    
+    func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+        let cell = settingTableView.dequeueReusableCell(withIdentifier: EtcSettingTableViewCell.reuseIdentifier,
+                                                        for: indexPath) as? EtcSettingTableViewCell ?? EtcSettingTableViewCell()
+        bind(cell: cell)
+        cell.configureCell(section: indexPath.section, index: indexPath.row)
+        
+        
+        cell.accessoryType = .disclosureIndicator
+        
+        return cell
+    }
+    
+    private func bind(cell: EtcSettingTableViewCell) {
+        cell.senderStatus.bind { status in
+            let reloadTargetIndex = IndexPath(row: 0, section: 1)
+            let targetCell = self.settingTableView.cellForRow(at: reloadTargetIndex) as? EtcSettingTableViewCell ?? EtcSettingTableViewCell()
+            
+            switch status {
+            case true:
+                targetCell.statusLabel.text = "ON"
+            case false:
+                targetCell.statusLabel.text = "OFF"
+            }
+        }
+    }
+    
+    
+    func numberOfSections(in tableView: UITableView) -> Int {
+        return 2
+    }
+    
+    func tableView(_ tableView: UITableView, titleForHeaderInSection section: Int) -> String? {
+        return viewModel.setupSectionHeader(section: section)
+    }
+    
+    func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
+        return view.frame.height / 15
+    }
+    
+}
+
+extension EtcSettingViewController {
+    
 }
