@@ -9,10 +9,14 @@ import Foundation
 
 class EtcSettingViewModel {
     
+    var sectionNumber: Int {
+        return 2
+    }
+    
     func setupNumberOfRowsInSection(section: Int) -> Int {
         switch section {
         case 0:
-            return 3
+            return 2
         case 1:
             return 3
         default:
@@ -21,16 +25,7 @@ class EtcSettingViewModel {
     }
     
     func setupSectionHeader(section: Int) -> String {
-        switch section {
-        case 0:
-            return "계정정보"
-        case 1:
-            return "권한 설정"
-        default:
-            return "섹션설정오류"
-        }
-        
-        
+        guard let constantForSection = Constant(rawValue: section) else { return "" }
+        return constantForSection.sectionDescription
     }
-    
 }

@@ -141,11 +141,9 @@ extension EtcSettingViewController: UITableViewDelegate, UITableViewDataSource {
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = settingTableView.dequeueReusableCell(withIdentifier: EtcSettingTableViewCell.reuseIdentifier,
                                                         for: indexPath) as? EtcSettingTableViewCell ?? EtcSettingTableViewCell()
+        cell.accessoryType = .disclosureIndicator
         bind(cell: cell)
         cell.configureCell(section: indexPath.section, index: indexPath.row)
-        
-        
-        cell.accessoryType = .disclosureIndicator
         
         return cell
     }
@@ -154,7 +152,6 @@ extension EtcSettingViewController: UITableViewDelegate, UITableViewDataSource {
         cell.senderStatus.bind { status in
             let reloadTargetIndex = IndexPath(row: 0, section: 1)
             let targetCell = self.settingTableView.cellForRow(at: reloadTargetIndex) as? EtcSettingTableViewCell ?? EtcSettingTableViewCell()
-            
             switch status {
             case true:
                 targetCell.statusLabel.text = "ON"
@@ -164,9 +161,8 @@ extension EtcSettingViewController: UITableViewDelegate, UITableViewDataSource {
         }
     }
     
-    
     func numberOfSections(in tableView: UITableView) -> Int {
-        return 2
+        return viewModel.sectionNumber
     }
     
     func tableView(_ tableView: UITableView, titleForHeaderInSection section: Int) -> String? {

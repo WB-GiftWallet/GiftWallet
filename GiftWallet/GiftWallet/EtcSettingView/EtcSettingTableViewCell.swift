@@ -57,9 +57,10 @@ class EtcSettingTableViewCell: UITableViewCell, ReusableView {
     func configureCell(section: Int, index: Int) {
         switch section {
         case 0:
-            settingListLabel.text = ZeroSectionConstant(rawValue: index)?.labelDescription
-            statusLabel.text = ZeroSectionConstant(rawValue: index)?.subLabelDescription
+            settingListLabel.text = Constant.AccountInfo(rawValue: index)?.labelDescription
+            statusLabel.text = nil
         case 1:
+            settingListLabel.text = Constant.AuthorizeSetting(rawValue: index)?.labelDescription
             setupAttributes(index)
         default:
             break
@@ -98,78 +99,3 @@ class EtcSettingTableViewCell: UITableViewCell, ReusableView {
     
 }
 
-enum ZeroSectionConstant: Int {
-    case useHistory
-    case noneDefine1
-    case noneDefine2
-    
-    var labelDescription: String {
-        switch self {
-        case .useHistory:
-            return "사용내역"
-        case .noneDefine1:
-            return "미정1"
-        case .noneDefine2:
-            return "미정2"
-        }
-    }
-    
-    var subLabelDescription: String? {
-        switch self {
-        case .useHistory:
-            return nil
-        case .noneDefine1:
-            return "이용중"
-        case .noneDefine2:
-            return "이용중"
-        }
-    }
-}
-
-enum FirstSectionConstant: Int {
-    case pushState
-    case settingPush
-    case settingPushTime
-    case what
-    
-    var labelDescription: String {
-        switch self {
-        case .pushState:
-            return "푸시알림"
-        case .settingPush:
-            return "푸시알림 설정"
-        case .settingPushTime:
-            return "알림 시각"
-        case .what:
-            return "빈공간"
-        }
-    }
-    
-    var subLabelDescription: Any? {
-        switch self {
-        case .pushState:
-            return nil
-        case .settingPush:
-            return nil
-        case .settingPushTime:
-            return "9시"
-        case .what:
-            return "암껏도아님"
-        }
-    }
-    
-}
-
-enum SwitchStatus {
-    case ON
-    case OFF
-    
-    var labelDescription: String {
-        switch self {
-        case .ON:
-            return "ON"
-        case .OFF:
-            return "OFF"
-        }
-    }
-}
