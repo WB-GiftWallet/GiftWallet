@@ -14,6 +14,8 @@
 		D2A282B829A85EF2002CCF5A /* Observable.swift in Sources */ = {isa = PBXBuildFile; fileRef = D2A282B729A85EF2002CCF5A /* Observable.swift */; };
 		D2A282C029A8702B002CCF5A /* MainViewModelTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = D2A282BF29A8702B002CCF5A /* MainViewModelTests.swift */; };
 		D2B6333D29ACCA4100EE9ACE /* Constant.swift in Sources */ = {isa = PBXBuildFile; fileRef = D2B6333C29ACCA4100EE9ACE /* Constant.swift */; };
+		D2B6334029ACD1A100EE9ACE /* UsageHistoryViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = D2B6333F29ACD1A100EE9ACE /* UsageHistoryViewModel.swift */; };
+		D2B6334229ACD1CB00EE9ACE /* UsageHistoryViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D2B6334129ACD1CB00EE9ACE /* UsageHistoryViewController.swift */; };
 		D2C7A45929A9DA6C00EB6D56 /* EtcSettingViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D2C7A45829A9DA6C00EB6D56 /* EtcSettingViewController.swift */; };
 		D2C7A45B29A9DAB500EB6D56 /* EtcSttingViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = D2C7A45A29A9DAB500EB6D56 /* EtcSttingViewModel.swift */; };
 		D2C7A45D29A9E77100EB6D56 /* EtcSettingTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = D2C7A45C29A9E77100EB6D56 /* EtcSettingTableViewCell.swift */; };
@@ -52,6 +54,8 @@
 		D2A282BD29A8702B002CCF5A /* MainViewModelTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = MainViewModelTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		D2A282BF29A8702B002CCF5A /* MainViewModelTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainViewModelTests.swift; sourceTree = "<group>"; };
 		D2B6333C29ACCA4100EE9ACE /* Constant.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Constant.swift; sourceTree = "<group>"; };
+		D2B6333F29ACD1A100EE9ACE /* UsageHistoryViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UsageHistoryViewModel.swift; sourceTree = "<group>"; };
+		D2B6334129ACD1CB00EE9ACE /* UsageHistoryViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UsageHistoryViewController.swift; sourceTree = "<group>"; };
 		D2C7A45829A9DA6C00EB6D56 /* EtcSettingViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EtcSettingViewController.swift; sourceTree = "<group>"; };
 		D2C7A45A29A9DAB500EB6D56 /* EtcSttingViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EtcSttingViewModel.swift; sourceTree = "<group>"; };
 		D2C7A45C29A9E77100EB6D56 /* EtcSettingTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EtcSettingTableViewCell.swift; sourceTree = "<group>"; };
@@ -107,6 +111,15 @@
 				D2A282BF29A8702B002CCF5A /* MainViewModelTests.swift */,
 			);
 			path = MainViewModelTests;
+			sourceTree = "<group>";
+		};
+		D2B6333E29ACD17500EE9ACE /* EtcUsageHistoryView */ = {
+			isa = PBXGroup;
+			children = (
+				D2B6333F29ACD1A100EE9ACE /* UsageHistoryViewModel.swift */,
+				D2B6334129ACD1CB00EE9ACE /* UsageHistoryViewController.swift */,
+			);
+			path = EtcUsageHistoryView;
 			sourceTree = "<group>";
 		};
 		D2C7A45729A9DA3300EB6D56 /* EtcSettingView */ = {
@@ -179,6 +192,7 @@
 		FC1E747029A207DA0010A4BA /* GiftWallet */ = {
 			isa = PBXGroup;
 			children = (
+				D2B6333E29ACD17500EE9ACE /* EtcUsageHistoryView */,
 				D2C7A45729A9DA3300EB6D56 /* EtcSettingView */,
 				FC62FF1129A77B77003E63B0 /* MainTabbarController */,
 				D295E4B329A5E2D700E12CAF /* UserInfoModifyView */,
@@ -323,6 +337,8 @@
 				F6A4AB4A29A5DA1C009AEB78 /* GiftImageViewController.swift in Sources */,
 				D2DAAA2029A44B9200D70E8C /* ReusableView.swift in Sources */,
 				D2A282B629A85EBC002CCF5A /* Gift.swift in Sources */,
+				D2B6334229ACD1CB00EE9ACE /* UsageHistoryViewController.swift in Sources */,
+				D2B6334029ACD1A100EE9ACE /* UsageHistoryViewModel.swift in Sources */,
 				D2DAAA2529A47CD500D70E8C /* CustomCollectionView.swift in Sources */,
 				D295E4B729A5E31400E12CAF /* UserInfoModifyViewModel.swift in Sources */,
 				FC1E747C29A207DA0010A4BA /* GiftWallet.xcdatamodeld in Sources */,

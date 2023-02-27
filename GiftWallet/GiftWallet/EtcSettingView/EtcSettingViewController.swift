@@ -131,7 +131,7 @@ class EtcSettingViewController: UIViewController {
 
 }
 
-extension EtcSettingViewController: UITableViewDelegate, UITableViewDataSource {
+extension EtcSettingViewController: UITableViewDataSource {
     
 
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
@@ -175,6 +175,17 @@ extension EtcSettingViewController: UITableViewDelegate, UITableViewDataSource {
     
 }
 
-extension EtcSettingViewController {
+extension EtcSettingViewController: UITableViewDelegate {
+    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        if indexPath.section == 0, indexPath.row == 0 {
+            sceneConversion()
+        }
+    }
+    
+    private func sceneConversion() {
+        let usageHistoryViewController = UsageHistoryViewController(viewModel: UsageHistoryViewModel())
+        navigationController?.pushViewController(usageHistoryViewController, animated: true)
+        
+    }
     
 }
