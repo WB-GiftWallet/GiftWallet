@@ -16,6 +16,7 @@
 		D2B6333D29ACCA4100EE9ACE /* Constant.swift in Sources */ = {isa = PBXBuildFile; fileRef = D2B6333C29ACCA4100EE9ACE /* Constant.swift */; };
 		D2B6334029ACD1A100EE9ACE /* UsageHistoryViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = D2B6333F29ACD1A100EE9ACE /* UsageHistoryViewModel.swift */; };
 		D2B6334229ACD1CB00EE9ACE /* UsageHistoryViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D2B6334129ACD1CB00EE9ACE /* UsageHistoryViewController.swift */; };
+		D2B6334429ACEAB700EE9ACE /* HistoryTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = D2B6334329ACEAB700EE9ACE /* HistoryTableViewCell.swift */; };
 		D2C7A45929A9DA6C00EB6D56 /* EtcSettingViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D2C7A45829A9DA6C00EB6D56 /* EtcSettingViewController.swift */; };
 		D2C7A45B29A9DAB500EB6D56 /* EtcSttingViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = D2C7A45A29A9DAB500EB6D56 /* EtcSttingViewModel.swift */; };
 		D2C7A45D29A9E77100EB6D56 /* EtcSettingTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = D2C7A45C29A9E77100EB6D56 /* EtcSettingTableViewCell.swift */; };
@@ -56,6 +57,7 @@
 		D2B6333C29ACCA4100EE9ACE /* Constant.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Constant.swift; sourceTree = "<group>"; };
 		D2B6333F29ACD1A100EE9ACE /* UsageHistoryViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UsageHistoryViewModel.swift; sourceTree = "<group>"; };
 		D2B6334129ACD1CB00EE9ACE /* UsageHistoryViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UsageHistoryViewController.swift; sourceTree = "<group>"; };
+		D2B6334329ACEAB700EE9ACE /* HistoryTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HistoryTableViewCell.swift; sourceTree = "<group>"; };
 		D2C7A45829A9DA6C00EB6D56 /* EtcSettingViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EtcSettingViewController.swift; sourceTree = "<group>"; };
 		D2C7A45A29A9DAB500EB6D56 /* EtcSttingViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EtcSttingViewModel.swift; sourceTree = "<group>"; };
 		D2C7A45C29A9E77100EB6D56 /* EtcSettingTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EtcSettingTableViewCell.swift; sourceTree = "<group>"; };
@@ -118,6 +120,7 @@
 			children = (
 				D2B6333F29ACD1A100EE9ACE /* UsageHistoryViewModel.swift */,
 				D2B6334129ACD1CB00EE9ACE /* UsageHistoryViewController.swift */,
+				D2B6334329ACEAB700EE9ACE /* HistoryTableViewCell.swift */,
 			);
 			path = EtcUsageHistoryView;
 			sourceTree = "<group>";
@@ -344,6 +347,7 @@
 				FC1E747C29A207DA0010A4BA /* GiftWallet.xcdatamodeld in Sources */,
 				D2B6333D29ACCA4100EE9ACE /* Constant.swift in Sources */,
 				D295E4B529A5E2F400E12CAF /* UserInfoModifyViewController.swift in Sources */,
+				D2B6334429ACEAB700EE9ACE /* HistoryTableViewCell.swift in Sources */,
 				FC1E747429A207DA0010A4BA /* SceneDelegate.swift in Sources */,
 				D2C7A45B29A9DAB500EB6D56 /* EtcSttingViewModel.swift in Sources */,
 				D2D6B74F29A3DEC900E6188C /* MainViewController.swift in Sources */,

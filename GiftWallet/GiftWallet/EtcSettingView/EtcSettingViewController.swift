@@ -183,9 +183,8 @@ extension EtcSettingViewController: UITableViewDelegate {
     }
     
     private func sceneConversion() {
-        let usageHistoryViewController = UsageHistoryViewController(viewModel: UsageHistoryViewModel())
+        let UsageHistoryViewModel = UsageHistoryViewModel(unavailableGifts: viewModel.unavailableGifts)
+        let usageHistoryViewController = UsageHistoryViewController(viewModel: UsageHistoryViewModel)
         navigationController?.pushViewController(usageHistoryViewController, animated: true)
-        
     }
-    
 }

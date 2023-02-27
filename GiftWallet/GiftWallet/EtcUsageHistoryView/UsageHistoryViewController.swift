@@ -14,6 +14,8 @@ class UsageHistoryViewController: UIViewController {
     private let historyTableView = {
         let tableView = UITableView()
         
+        tableView.register(HistoryTableViewCell.self,
+                           forCellReuseIdentifier: HistoryTableViewCell.reuseIdentifier)
         tableView.translatesAutoresizingMaskIntoConstraints = false
         
         return tableView
@@ -56,12 +58,20 @@ class UsageHistoryViewController: UIViewController {
 }
 
 extension UsageHistoryViewController: UITableViewDataSource {
+    func numberOfSections(in tableView: UITableView) -> Int {
+        return viewModel.unavailableGifts.count
+    }
+    
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return 0
+        return viewModel.unavailableGifts.count
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        return UITableViewCell()
+        let cell = tableView.dequeueReusableCell(withIdentifier: HistoryTableViewCell.reuseIdentifier, for: indexPath) as? HistoryTableViewCell ?? HistoryTableViewCell()
+        
+        cell.configureCell(data: viewModel.unavailableGifts[indexPath.row])
+        
+        return cell
     }
     
     

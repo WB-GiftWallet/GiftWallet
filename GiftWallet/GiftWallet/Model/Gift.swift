@@ -65,6 +65,9 @@ extension Gift {
         Gift(image: UIImage(named: "testImageEDIYA"), category: nil, brandName: "이그저스트커피", productName: "그냥커피5리터", memo: "맛있엉", expireDate: Date().addFromTodayDate(25)),
         Gift(image: UIImage(named: "testImageEDIYA"), category: nil, brandName: "이그저스트커핑", productName: "그냥커피 50리터", memo: nil, expireDate: Date().addFromTodayDate(100)),
         Gift(image: nil, category: nil, brandName: nil, productName: "이것만입력하자", memo: nil, expireDate: nil),
-        Gift(image: UIImage(named: "testImageSTARBUCKSSMALL"), category: nil, brandName: nil, productName: "빵임", memo: nil, expireDate: Date().addFromTodayDate(5))
+        Gift(image: UIImage(named: "testImageSTARBUCKSSMALL"), category: nil, brandName: nil, productName: "빵임", memo: nil, expireDate: Date().addFromTodayDate(5)),
+        Gift(image: UIImage(named: "testImageSTARBUCKSSMALL"), category: nil, brandName: nil, productName: "빵임", memo: nil, expireDate: Date().addFromTodayDate(-5))
+
+        
     ]
 }
