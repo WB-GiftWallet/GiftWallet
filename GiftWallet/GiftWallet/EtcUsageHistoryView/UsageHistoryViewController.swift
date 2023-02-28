@@ -32,8 +32,14 @@ class UsageHistoryViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        viewModel.fetchSampledata()
         setupTableViewAttributes()
+        setupNavigation()
         setupViews()
+    }
+    
+    private func setupNavigation() {
+        title = "주문·배송"
     }
     
     private func setupTableViewAttributes() {
@@ -73,10 +79,10 @@ extension UsageHistoryViewController: UITableViewDataSource {
         
         return cell
     }
-    
-    
 }
 
 extension UsageHistoryViewController: UITableViewDelegate {
-    
+    func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
+        return view.frame.height / 10
+    }
 }

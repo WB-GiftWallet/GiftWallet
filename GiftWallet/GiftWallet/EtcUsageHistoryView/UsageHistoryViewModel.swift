@@ -13,6 +13,12 @@ class UsageHistoryViewModel {
     init(unavailableGifts: [Gift]) {
         self.unavailableGifts = unavailableGifts
     }
+    
+    func fetchSampledata() {
+        self.unavailableGifts = Gift.sampleGifts
+    }
+    
+    
 }
 
 private extension Date {

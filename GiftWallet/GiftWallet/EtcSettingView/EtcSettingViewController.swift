@@ -109,7 +109,6 @@ class EtcSettingViewController: UIViewController {
         simpleProfileHeaderHorizontalStackView.backgroundColor = .red
         
         NSLayoutConstraint.activate([
-            
             logoutButton.widthAnchor.constraint(equalTo: simpleProfileHeaderHorizontalStackView.widthAnchor, multiplier: 0.2),
             logoutButton.heightAnchor.constraint(equalTo: simpleProfileHeaderHorizontalStackView.heightAnchor, multiplier: 0.3),
             
@@ -124,11 +123,7 @@ class EtcSettingViewController: UIViewController {
             settingTableView.trailingAnchor.constraint(equalTo: safeArea.trailingAnchor),
             settingTableView.bottomAnchor.constraint(equalTo: view.bottomAnchor)
         ])
-        
-        
     }
-    
-
 }
 
 extension EtcSettingViewController: UITableViewDataSource {

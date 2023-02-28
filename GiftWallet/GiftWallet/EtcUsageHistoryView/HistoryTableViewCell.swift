@@ -12,8 +12,8 @@ class HistoryTableViewCell: UITableViewCell, ReusableView {
     private let productImageView = {
         let imageView = UIImageView()
         
-        imageView.image = UIImage(named: "testImageEDIYA")
-        imageView.layer.cornerRadius = 5
+        imageView.layer.cornerRadius = 15
+        imageView.clipsToBounds = true
         imageView.translatesAutoresizingMaskIntoConstraints = false
         
         return imageView
@@ -22,17 +22,26 @@ class HistoryTableViewCell: UITableViewCell, ReusableView {
     private let brandLabel = {
         let label = UILabel()
         
+        label.textColor = .systemGray
+        label.font = .boldSystemFont(ofSize: 12)
+        
         return label
     }()
     
     private let productLabel = {
        let label = UILabel()
         
+        label.textColor = .black
+        label.font = .systemFont(ofSize: 16)
+        
         return label
     }()
     
     private let statusLabel = {
        let label = UILabel()
+        
+        label.textColor = .systemGreen
+        label.font = .boldSystemFont(ofSize: 14)
         
         return label
     }()
@@ -62,13 +71,13 @@ class HistoryTableViewCell: UITableViewCell, ReusableView {
         [productImageView, labelStackView].forEach(contentView.addSubview(_:))
         
         NSLayoutConstraint.activate([
-            productImageView.topAnchor.constraint(equalTo: contentView.topAnchor, constant: 5),
+
+            productImageView.centerYAnchor.constraint(equalTo: contentView.centerYAnchor),
             productImageView.leadingAnchor.constraint(equalTo: contentView.leadingAnchor, constant: 5),
-            productImageView.bottomAnchor.constraint(equalTo: contentView.bottomAnchor, constant: -5),
             productImageView.widthAnchor.constraint(equalTo: contentView.widthAnchor, multiplier: 0.15),
             productImageView.heightAnchor.constraint(equalTo: productImageView.widthAnchor),
             
-            labelStackView.leadingAnchor.constraint(equalTo: productImageView.trailingAnchor, constant: 10),
+            labelStackView.leadingAnchor.constraint(equalTo: productImageView.trailingAnchor, constant: 15),
             labelStackView.trailingAnchor.constraint(equalTo: contentView.trailingAnchor, constant: -5),
             labelStackView.centerYAnchor.constraint(equalTo: productImageView.centerYAnchor)
         ])
