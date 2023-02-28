@@ -20,6 +20,8 @@
 		D2C7A45929A9DA6C00EB6D56 /* EtcSettingViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D2C7A45829A9DA6C00EB6D56 /* EtcSettingViewController.swift */; };
 		D2C7A45B29A9DAB500EB6D56 /* EtcSttingViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = D2C7A45A29A9DAB500EB6D56 /* EtcSttingViewModel.swift */; };
 		D2C7A45D29A9E77100EB6D56 /* EtcSettingTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = D2C7A45C29A9E77100EB6D56 /* EtcSettingTableViewCell.swift */; };
+		D2CDDBCD29ADFACB00E000E3 /* DateCalCulateUseCase.swift in Sources */ = {isa = PBXBuildFile; fileRef = D2CDDBCC29ADFACB00E000E3 /* DateCalCulateUseCase.swift */; };
+		D2CDDBD529ADFE7700E000E3 /* DateCalculateUseCaseTest.swift in Sources */ = {isa = PBXBuildFile; fileRef = D2CDDBD429ADFE7700E000E3 /* DateCalculateUseCaseTest.swift */; };
 		D2D6B74F29A3DEC900E6188C /* MainViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D2D6B74E29A3DEC900E6188C /* MainViewController.swift */; };
 		D2D6B75129A3DEE900E6188C /* MainViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = D2D6B75029A3DEE900E6188C /* MainViewModel.swift */; };
 		D2DAAA1C29A44B1600D70E8C /* MainCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = D2DAAA1B29A44B1600D70E8C /* MainCollectionViewCell.swift */; };
@@ -48,6 +50,13 @@
 			remoteGlobalIDString = FC1E746D29A207DA0010A4BA;
 			remoteInfo = GiftWallet;
 		};
+		D2CDDBD629ADFE7700E000E3 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = FC1E746629A207DA0010A4BA /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = FC1E746D29A207DA0010A4BA;
+			remoteInfo = GiftWallet;
+		};
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
@@ -65,6 +74,9 @@
 		D2C7A45829A9DA6C00EB6D56 /* EtcSettingViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EtcSettingViewController.swift; sourceTree = "<group>"; };
 		D2C7A45A29A9DAB500EB6D56 /* EtcSttingViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EtcSttingViewModel.swift; sourceTree = "<group>"; };
 		D2C7A45C29A9E77100EB6D56 /* EtcSettingTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EtcSettingTableViewCell.swift; sourceTree = "<group>"; };
+		D2CDDBCC29ADFACB00E000E3 /* DateCalCulateUseCase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DateCalCulateUseCase.swift; sourceTree = "<group>"; };
+		D2CDDBD229ADFE7600E000E3 /* DateCalculateUseCaseTest.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = DateCalculateUseCaseTest.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
+		D2CDDBD429ADFE7700E000E3 /* DateCalculateUseCaseTest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DateCalculateUseCaseTest.swift; sourceTree = "<group>"; };
 		D2D6B74E29A3DEC900E6188C /* MainViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainViewController.swift; sourceTree = "<group>"; };
 		D2D6B75029A3DEE900E6188C /* MainViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainViewModel.swift; sourceTree = "<group>"; };
 		D2DAAA1B29A44B1600D70E8C /* MainCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainCollectionViewCell.swift; sourceTree = "<group>"; };
@@ -89,6 +101,13 @@
 
 /* Begin PBXFrameworksBuildPhase section */
 		D2A282BA29A8702B002CCF5A /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		D2CDDBCF29ADFE7600E000E3 /* Frameworks */ = {
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
@@ -142,6 +161,22 @@
 				D2B6333C29ACCA4100EE9ACE /* Constant.swift */,
 			);
 			path = EtcSettingView;
+			sourceTree = "<group>";
+		};
+		D2CDDBCB29ADFA8F00E000E3 /* UseCase */ = {
+			isa = PBXGroup;
+			children = (
+				D2CDDBCC29ADFACB00E000E3 /* DateCalCulateUseCase.swift */,
+			);
+			path = UseCase;
+			sourceTree = "<group>";
+		};
+		D2CDDBD329ADFE7700E000E3 /* DateCalculateUseCaseTest */ = {
+			isa = PBXGroup;
+			children = (
+				D2CDDBD429ADFE7700E000E3 /* DateCalculateUseCaseTest.swift */,
+			);
+			path = DateCalculateUseCaseTest;
 			sourceTree = "<group>";
 		};
 		D2D6B74D29A3DE6A00E6188C /* MainView */ = {
@@ -199,6 +234,7 @@
 			children = (
 				FC1E747029A207DA0010A4BA /* GiftWallet */,
 				D2A282BE29A8702B002CCF5A /* MainViewModelTests */,
+				D2CDDBD329ADFE7700E000E3 /* DateCalculateUseCaseTest */,
 				FC1E746F29A207DA0010A4BA /* Products */,
 			);
 			sourceTree = "<group>";
@@ -208,6 +244,7 @@
 			children = (
 				FC1E746E29A207DA0010A4BA /* GiftWallet.app */,
 				D2A282BD29A8702B002CCF5A /* MainViewModelTests.xctest */,
+				D2CDDBD229ADFE7600E000E3 /* DateCalculateUseCaseTest.xctest */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -215,6 +252,7 @@
 		FC1E747029A207DA0010A4BA /* GiftWallet */ = {
 			isa = PBXGroup;
 			children = (
+				D2CDDBCB29ADFA8F00E000E3 /* UseCase */,
 				D2B6333E29ACD17500EE9ACE /* EtcUsageHistoryView */,
 				D2C7A45729A9DA3300EB6D56 /* EtcSettingView */,
 				FC62FF1129A77B77003E63B0 /* MainTabbarController */,
@@ -262,6 +300,24 @@
 			productReference = D2A282BD29A8702B002CCF5A /* MainViewModelTests.xctest */;
 			productType = "com.apple.product-type.bundle.unit-test";
 		};
+		D2CDDBD129ADFE7600E000E3 /* DateCalculateUseCaseTest */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = D2CDDBD829ADFE7700E000E3 /* Build configuration list for PBXNativeTarget "DateCalculateUseCaseTest" */;
+			buildPhases = (
+				D2CDDBCE29ADFE7600E000E3 /* Sources */,
+				D2CDDBCF29ADFE7600E000E3 /* Frameworks */,
+				D2CDDBD029ADFE7600E000E3 /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				D2CDDBD729ADFE7700E000E3 /* PBXTargetDependency */,
+			);
+			name = DateCalculateUseCaseTest;
+			productName = DateCalculateUseCaseTest;
+			productReference = D2CDDBD229ADFE7600E000E3 /* DateCalculateUseCaseTest.xctest */;
+			productType = "com.apple.product-type.bundle.unit-test";
+		};
 		FC1E746D29A207DA0010A4BA /* GiftWallet */ = {
 			isa = PBXNativeTarget;
 			buildConfigurationList = FC1E748529A207DC0010A4BA /* Build configuration list for PBXNativeTarget "GiftWallet" */;
@@ -293,6 +349,10 @@
 						CreatedOnToolsVersion = 14.2;
 						TestTargetID = FC1E746D29A207DA0010A4BA;
 					};
+					D2CDDBD129ADFE7600E000E3 = {
+						CreatedOnToolsVersion = 14.2;
+						TestTargetID = FC1E746D29A207DA0010A4BA;
+					};
 					FC1E746D29A207DA0010A4BA = {
 						CreatedOnToolsVersion = 14.2;
 					};
@@ -313,12 +373,20 @@
 			targets = (
 				FC1E746D29A207DA0010A4BA /* GiftWallet */,
 				D2A282BC29A8702B002CCF5A /* MainViewModelTests */,
+				D2CDDBD129ADFE7600E000E3 /* DateCalculateUseCaseTest */,
 			);
 		};
 /* End PBXProject section */
 
 /* Begin PBXResourcesBuildPhase section */
 		D2A282BB29A8702B002CCF5A /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		D2CDDBD029ADFE7600E000E3 /* Resources */ = {
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
@@ -345,6 +413,14 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
+		D2CDDBCE29ADFE7600E000E3 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				D2CDDBD529ADFE7700E000E3 /* DateCalculateUseCaseTest.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 		FC1E746A29A207DA0010A4BA /* Sources */ = {
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
@@ -352,6 +428,7 @@
 				D2C7A45929A9DA6C00EB6D56 /* EtcSettingViewController.swift in Sources */,
 				D2A282B829A85EF2002CCF5A /* Observable.swift in Sources */,
 				D295E4B929A5F64200E12CAF /* FormSheetViewController.swift in Sources */,
+				D2CDDBCD29ADFACB00E000E3 /* DateCalCulateUseCase.swift in Sources */,
 				D2DAAA2329A4720300D70E8C /* Ext+DateFormatter.swift in Sources */,
 				FC62FF1029A77B5A003E63B0 /* MainTabBarController.swift in Sources */,
 				D2C7A45D29A9E77100EB6D56 /* EtcSettingTableViewCell.swift in Sources */,
@@ -387,6 +464,11 @@
 			isa = PBXTargetDependency;
 			target = FC1E746D29A207DA0010A4BA /* GiftWallet */;
 			targetProxy = D2A282C129A8702B002CCF5A /* PBXContainerItemProxy */;
+		};
+		D2CDDBD729ADFE7700E000E3 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = FC1E746D29A207DA0010A4BA /* GiftWallet */;
+			targetProxy = D2CDDBD629ADFE7700E000E3 /* PBXContainerItemProxy */;
 		};
 /* End PBXTargetDependency section */
 
@@ -434,6 +516,48 @@
 				MACOSX_DEPLOYMENT_TARGET = 13.0;
 				MARKETING_VERSION = 1.0;
 				PRODUCT_BUNDLE_IDENTIFIER = asdf.MainViewModelTests;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SDKROOT = auto;
+				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator macosx";
+				SWIFT_EMIT_LOC_STRINGS = NO;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/GiftWallet.app/$(BUNDLE_EXECUTABLE_FOLDER_PATH)/GiftWallet";
+			};
+			name = Release;
+		};
+		D2CDDBD929ADFE7700E000E3 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				BUNDLE_LOADER = "$(TEST_HOST)";
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				GENERATE_INFOPLIST_FILE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 16.2;
+				MACOSX_DEPLOYMENT_TARGET = 13.0;
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = asdf.DateCalculateUseCaseTest;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SDKROOT = auto;
+				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator macosx";
+				SWIFT_EMIT_LOC_STRINGS = NO;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/GiftWallet.app/$(BUNDLE_EXECUTABLE_FOLDER_PATH)/GiftWallet";
+			};
+			name = Debug;
+		};
+		D2CDDBDA29ADFE7700E000E3 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				BUNDLE_LOADER = "$(TEST_HOST)";
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				GENERATE_INFOPLIST_FILE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 16.2;
+				MACOSX_DEPLOYMENT_TARGET = 13.0;
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = asdf.DateCalculateUseCaseTest;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SDKROOT = auto;
 				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator macosx";
@@ -618,6 +742,15 @@
 			buildConfigurations = (
 				D2A282C429A8702B002CCF5A /* Debug */,
 				D2A282C529A8702B002CCF5A /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		D2CDDBD829ADFE7700E000E3 /* Build configuration list for PBXNativeTarget "DateCalculateUseCaseTest" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				D2CDDBD929ADFE7700E000E3 /* Debug */,
+				D2CDDBDA29ADFE7700E000E3 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
