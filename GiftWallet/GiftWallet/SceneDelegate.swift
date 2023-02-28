@@ -15,7 +15,11 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
         guard let windowScene = (scene as? UIWindowScene) else { return }
         let window = UIWindow(windowScene: windowScene)
         
-        let mainTabBarController = MainTabBarController()
+        let mainViewModel = MainViewModel()
+        let etcSettingViewModel = EtcSettingViewModel(unavailableGifts: mainViewModel.unavailableGifts)
+        
+        let mainTabBarController = MainTabBarController(mainViewModel: mainViewModel,
+                                                        etcSettingViewModel: etcSettingViewModel)
         let navigationMainController = UINavigationController(rootViewController: mainTabBarController)
         window.backgroundColor = .white
         window.rootViewController = navigationMainController

@@ -9,6 +9,9 @@ import UIKit
 
 final class MainTabBarController: UITabBarController {
     
+    private let mainViewModel: MainViewModel
+    private let etcSettingViewModel: EtcSettingViewModel
+    
     private enum tag: Int {
         case detail
         case addGift
@@ -26,8 +29,8 @@ final class MainTabBarController: UITabBarController {
         }
     }
     
-    private let mainViewController: MainViewController = {
-        let viewController = MainViewController(viewModel: MainViewModel())
+    private lazy var mainViewController: UIViewController = {
+        let viewController = MainViewController(viewModel: mainViewModel)
         
         viewController.tabBarItem.image = UIImage(systemName: tag.detail.systemName)
         viewController.tabBarItem.tag = tag.detail.rawValue
@@ -36,7 +39,7 @@ final class MainTabBarController: UITabBarController {
     }()
     
     // TODO: AddGiftViewController 구현 및 연결
-    private let addGiftViewController: UIViewController = {
+    private lazy var addGiftViewController: UIViewController = {
         let viewController = UIViewController()
         
         viewController.tabBarItem.image = UIImage(
@@ -51,8 +54,8 @@ final class MainTabBarController: UITabBarController {
     }()
     
     // TODO: settingViewController 구현 및 연결
-    private let settingViewController: UIViewController = {
-        let viewController = UIViewController()
+    private lazy var settingViewController: UIViewController = {
+        let viewController = EtcSettingViewController(viewModel: etcSettingViewModel)
         
         viewController.tabBarItem.image = UIImage(systemName: tag.setting.systemName)
         viewController.tabBarItem.tag = tag.setting.rawValue
@@ -61,6 +64,16 @@ final class MainTabBarController: UITabBarController {
     }()
     
     private var isAddGiftTabBarEnabled = true
+    
+    init(mainViewModel: MainViewModel, etcSettingViewModel: EtcSettingViewModel) {
+        self.mainViewModel = mainViewModel
+        self.etcSettingViewModel = etcSettingViewModel
+        super.init(nibName: nil, bundle: nil)
+    }
+    
+    required init?(coder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
+    }
     
     override func viewDidLoad() {
         super.viewDidLoad()
