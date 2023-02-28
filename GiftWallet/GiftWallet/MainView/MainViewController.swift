@@ -159,7 +159,7 @@ AAAA 님의
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        viewModel.fetchSampleData()
+        
         setupProfileButton()
         setupViews()
         bind()
@@ -167,6 +167,8 @@ AAAA 님의
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
+        
+        viewModel.fetchCoreData()
         viewModel.sortOutInGlobalThread()
     }
     

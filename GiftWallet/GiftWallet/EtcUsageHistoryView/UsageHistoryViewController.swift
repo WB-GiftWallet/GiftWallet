@@ -32,7 +32,7 @@ class UsageHistoryViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        viewModel.fetchSampledata()
+        
         setupTableViewAttributes()
         setupNavigation()
         setupViews()

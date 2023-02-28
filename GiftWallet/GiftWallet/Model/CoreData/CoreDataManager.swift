@@ -42,7 +42,7 @@ final class CoreDataManager {
         if let entity = entity {
             let info = NSManagedObject(entity: entity, insertInto: context)
             info.setValue(giftDataMostRecentNumber, forKey: "number")
-            info.setValue(giftData.image?.pngData(), forKey: "image")
+            info.setValue(giftData.image.pngData(), forKey: "image")
             info.setValue(giftData.category?.rawValue, forKey: "category")
             info.setValue(giftData.brandName, forKey: "brandName")
             info.setValue(giftData.productName, forKey: "productName")
@@ -71,7 +71,7 @@ final class CoreDataManager {
             guard let updatingData = test[0] as? NSManagedObject else { return }
             
             updatingData.setValue(giftData.number, forKey: "number")
-            updatingData.setValue(giftData.image?.pngData(), forKey: "image")
+            updatingData.setValue(giftData.image.pngData(), forKey: "image")
             updatingData.setValue(giftData.category?.rawValue, forKey: "category")
             updatingData.setValue(giftData.brandName, forKey: "brandName")
             updatingData.setValue(giftData.productName, forKey: "productName")
