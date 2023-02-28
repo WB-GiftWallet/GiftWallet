@@ -31,7 +31,7 @@ extension DateCalculateUseCase {
     func checkExpireDateIsSmallerThanSevenDays(expireDate: Date) -> Bool {
         let subtractionResult = subtractionOftheDays(expireDate: expireDate, today: Date())
         
-        return subtractionResult <= 7 ? true : false
+        return subtractionResult >= 0 && subtractionResult <= 7 ? true : false
     }
     
     func checkExpireDateIsBiggerThanSevenDays(expireDate: Date) -> Bool {
