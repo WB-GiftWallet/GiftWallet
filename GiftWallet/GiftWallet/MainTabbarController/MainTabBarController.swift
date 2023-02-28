@@ -80,6 +80,7 @@ final class MainTabBarController: UITabBarController {
         delegate = self
         
         configureEachViewControllers()
+        setupNavigation()
     }
     
     override func tabBar(_ tabBar: UITabBar, didSelect item: UITabBarItem) {
@@ -103,6 +104,25 @@ final class MainTabBarController: UITabBarController {
         self.tabBar.unselectedItemTintColor = .systemPink
         
         viewControllers = [mainViewController, addGiftViewController, settingViewController]
+    }
+    
+    private func setupNavigation() {
+        title = ""
+        
+        let searchAction = UIAction { _ in
+            print("검색창 전환")
+        }
+        let bellAction = UIAction { _ in
+            print("알림리스트로 전환")
+        }
+        
+        let searchSFSymbol = UIImage(systemName: "magnifyingglass")
+        navigationItem.leftBarButtonItem = UIBarButtonItem(image: searchSFSymbol,
+                                                           primaryAction: searchAction)
+        let bellSFSymbol = UIImage(systemName: "bell.fill")
+        navigationItem.rightBarButtonItem = UIBarButtonItem(image: bellSFSymbol,
+                                                            primaryAction: bellAction)
+        navigationController?.navigationBar.tintColor = .black
     }
 }
 

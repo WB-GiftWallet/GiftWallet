@@ -160,7 +160,7 @@ AAAA 님의
     override func viewDidLoad() {
         super.viewDidLoad()
         viewModel.fetchSampleData()
-        setupNavigation()
+        setupProfileButton()
         setupViews()
         bind()
     }
@@ -188,34 +188,15 @@ AAAA 님의
         super.viewWillLayoutSubviews()
         userProfileImageView.layer.cornerRadius = userProfileImageView.frame.width / 2
         userProfileImageView.clipsToBounds = true
-//        userInfoModifyButton.titleLabel?.font = .boldSystemFont(ofSize: 15)
     }
     
-    
-    private func setupNavigation() {
-        title = ""
-        
+    func setupProfileButton() {
         let modifyAction = UIAction { [weak self] _ in
             let userInfoModifyViewModel = UserInfoModifyViewModel()
             let userInfoModifyViewController = UserInfoModifyViewController(userInfoModifyViewModel: userInfoModifyViewModel)
             self?.navigationController?.pushViewController(userInfoModifyViewController, animated: true)
         }
         userInfoModifyButton.addAction(modifyAction, for: .touchUpInside)
-        
-        let searchAction = UIAction { _ in
-            print("검색창 전환")
-        }
-        let bellAction = UIAction { _ in
-            print("알림리스트로 전환")
-        }
-        
-        let searchSFSymbol = UIImage(systemName: "magnifyingglass")
-        navigationItem.leftBarButtonItem = UIBarButtonItem(image: searchSFSymbol,
-                                                           primaryAction: searchAction)
-        let bellSFSymbol = UIImage(systemName: "bell.fill")
-        navigationItem.rightBarButtonItem = UIBarButtonItem(image: bellSFSymbol,
-                                                            primaryAction: bellAction)
-        navigationController?.navigationBar.tintColor = .black
     }
     
     private func setupViews() {
