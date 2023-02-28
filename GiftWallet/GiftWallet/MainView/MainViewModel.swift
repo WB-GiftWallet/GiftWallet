@@ -6,6 +6,7 @@
 //
 
 import Foundation
+import UIKit
 
 class MainViewModel {
     var allGifts: [Gift] = []
@@ -13,9 +14,16 @@ class MainViewModel {
     var recentGifts: Observable<[Gift]> = .init([])
     var unavailableGifts: [Gift] = []
     
-    // TODO: 추후에 코어데이터를 fetch해올 함수
-    func fetchSampleData() {
-        allGifts = Gift.sampleGifts
+    func fetchCoreData() {
+        switch CoreDataManager.shared.fetchData() {
+        case .success(let data):
+            data.forEach { giftData in
+                guard let bindData = Gift(giftData: giftData) else { return }
+                allGifts.append(bindData)
+            }
+        case .failure(let error):
+            print(error.localizedDescription)
+        }
     }
     
     func sortOutInGlobalThread() {

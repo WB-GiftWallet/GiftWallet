@@ -90,8 +90,6 @@ final class MainTabBarController: UITabBarController {
             //TODO: AddViewController 구현 및 present
             let temporaryVC = UIViewController()
             temporaryVC.view.backgroundColor = .systemPurple
-            let gift = Gift(image: UIImage(systemName: "cloud"), category: .bread, brandName: "안녕", productName: "응", memo: "유ㅣㅇ", expireDate: Date())
-            try? CoreDataManager.shared.saveData(gift)
             present(temporaryVC, animated: true)
         } else {
             isAddGiftTabBarEnabled = true
@@ -113,7 +111,9 @@ final class MainTabBarController: UITabBarController {
             print("검색창 전환")
         }
         let bellAction = UIAction { _ in
-            print("알림리스트로 전환")
+            //TODO: 알림 리스트 전환으로 변경
+            print("CoreData 추가")
+            Gift.addSampleData()
         }
         
         let searchSFSymbol = UIImage(systemName: "magnifyingglass")
