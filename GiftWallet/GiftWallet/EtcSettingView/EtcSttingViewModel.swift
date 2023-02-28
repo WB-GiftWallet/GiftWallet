@@ -8,11 +8,6 @@
 import Foundation
 
 class EtcSettingViewModel {
-    var unavailableGifts: [Gift]
-    
-    init(unavailableGifts: [Gift]) {
-        self.unavailableGifts = unavailableGifts
-    }
     
     var sectionNumber: Int {
         return 2

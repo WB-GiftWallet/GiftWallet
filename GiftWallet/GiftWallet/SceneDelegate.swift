@@ -16,7 +16,7 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
         let window = UIWindow(windowScene: windowScene)
         
         let mainViewModel = MainViewModel()
-        let etcSettingViewModel = EtcSettingViewModel(unavailableGifts: mainViewModel.unavailableGifts)
+        let etcSettingViewModel = EtcSettingViewModel()
         
         let mainTabBarController = MainTabBarController(mainViewModel: mainViewModel,
                                                         etcSettingViewModel: etcSettingViewModel)
