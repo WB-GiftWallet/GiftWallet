@@ -8,11 +8,7 @@
 import Foundation
 
 class UsageHistoryViewModel {
-    var unavailableGifts: [Gift]
-    
-    init(unavailableGifts: [Gift]) {
-        self.unavailableGifts = unavailableGifts
-    }
+    var unavailableGifts: [Gift] = []
 }
 
 private extension Date {
