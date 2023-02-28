@@ -19,10 +19,7 @@ class MainViewModel {
     func fetchCoreData() {
         switch CoreDataManager.shared.fetchData() {
         case .success(let data):
-            data.forEach { giftData in
-                guard let bindData = Gift(giftData: giftData) else { return }
-                allGifts.append(bindData)
-            }
+            allGifts = data
         case .failure(let error):
             print(error.localizedDescription)
         }

@@ -15,15 +15,15 @@ final class CoreDataManager {
     
     private let appDelegate = UIApplication.shared.delegate as? AppDelegate
     
-    func fetchData() -> Result<[GiftData], CoreDataError> {
+    func fetchData() -> Result<[Gift], CoreDataError> {
         guard let context = appDelegate?.persistentContainer.viewContext else {
             return .failure(.contextInvalid)
         }
         
         do {
-            let contact = try context.fetch(GiftData.fetchRequest())
-            
-            return .success(contact)
+            let result = try context.fetch(GiftData.fetchRequest())
+            let resultToGifts = result.compactMap { Gift(giftData: $0) }
+            return .success(resultToGifts)
         } catch {
             print(error.localizedDescription)
         }
