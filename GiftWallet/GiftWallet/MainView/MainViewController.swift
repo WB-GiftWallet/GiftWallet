@@ -190,7 +190,7 @@ AAAA 님의
         userProfileImageView.clipsToBounds = true
     }
     
-    func setupProfileButton() {
+    private func setupProfileButton() {
         let modifyAction = UIAction { [weak self] _ in
             let userInfoModifyViewModel = UserInfoModifyViewModel()
             let userInfoModifyViewController = UserInfoModifyViewController(userInfoModifyViewModel: userInfoModifyViewModel)

@@ -79,6 +79,7 @@ final class MainTabBarController: UITabBarController {
         super.viewDidLoad()
         delegate = self
         
+        setupNavigation()
         configureEachViewControllers()
         setupNavigation()
     }
