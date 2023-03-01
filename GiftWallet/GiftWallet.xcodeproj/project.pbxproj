@@ -22,6 +22,7 @@
 		D2C7A45D29A9E77100EB6D56 /* EtcSettingTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = D2C7A45C29A9E77100EB6D56 /* EtcSettingTableViewCell.swift */; };
 		D2CDDBCD29ADFACB00E000E3 /* DateCalCulateUseCase.swift in Sources */ = {isa = PBXBuildFile; fileRef = D2CDDBCC29ADFACB00E000E3 /* DateCalCulateUseCase.swift */; };
 		D2CDDBD529ADFE7700E000E3 /* DateCalculateUseCaseTest.swift in Sources */ = {isa = PBXBuildFile; fileRef = D2CDDBD429ADFE7700E000E3 /* DateCalculateUseCaseTest.swift */; };
+		D2CDDBE029AF3CD300E000E3 /* VisionManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = D2CDDBDF29AF3CD300E000E3 /* VisionManager.swift */; };
 		D2D6B74F29A3DEC900E6188C /* MainViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D2D6B74E29A3DEC900E6188C /* MainViewController.swift */; };
 		D2D6B75129A3DEE900E6188C /* MainViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = D2D6B75029A3DEE900E6188C /* MainViewModel.swift */; };
 		D2DAAA1C29A44B1600D70E8C /* MainCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = D2DAAA1B29A44B1600D70E8C /* MainCollectionViewCell.swift */; };
@@ -77,6 +78,7 @@
 		D2CDDBCC29ADFACB00E000E3 /* DateCalCulateUseCase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DateCalCulateUseCase.swift; sourceTree = "<group>"; };
 		D2CDDBD229ADFE7600E000E3 /* DateCalculateUseCaseTest.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = DateCalculateUseCaseTest.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		D2CDDBD429ADFE7700E000E3 /* DateCalculateUseCaseTest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DateCalculateUseCaseTest.swift; sourceTree = "<group>"; };
+		D2CDDBDF29AF3CD300E000E3 /* VisionManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VisionManager.swift; sourceTree = "<group>"; };
 		D2D6B74E29A3DEC900E6188C /* MainViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainViewController.swift; sourceTree = "<group>"; };
 		D2D6B75029A3DEE900E6188C /* MainViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainViewModel.swift; sourceTree = "<group>"; };
 		D2DAAA1B29A44B1600D70E8C /* MainCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainCollectionViewCell.swift; sourceTree = "<group>"; };
@@ -179,6 +181,14 @@
 			path = DateCalculateUseCaseTest;
 			sourceTree = "<group>";
 		};
+		D2CDDBDE29AF3CC600E000E3 /* Manager */ = {
+			isa = PBXGroup;
+			children = (
+				D2CDDBDF29AF3CD300E000E3 /* VisionManager.swift */,
+			);
+			path = Manager;
+			sourceTree = "<group>";
+		};
 		D2D6B74D29A3DE6A00E6188C /* MainView */ = {
 			isa = PBXGroup;
 			children = (
@@ -252,6 +262,7 @@
 		FC1E747029A207DA0010A4BA /* GiftWallet */ = {
 			isa = PBXGroup;
 			children = (
+				D2CDDBDE29AF3CC600E000E3 /* Manager */,
 				D2CDDBCB29ADFA8F00E000E3 /* UseCase */,
 				D2B6333E29ACD17500EE9ACE /* EtcUsageHistoryView */,
 				D2C7A45729A9DA3300EB6D56 /* EtcSettingView */,
@@ -428,6 +439,7 @@
 				D2C7A45929A9DA6C00EB6D56 /* EtcSettingViewController.swift in Sources */,
 				D2A282B829A85EF2002CCF5A /* Observable.swift in Sources */,
 				D295E4B929A5F64200E12CAF /* FormSheetViewController.swift in Sources */,
+				D2CDDBE029AF3CD300E000E3 /* VisionManager.swift in Sources */,
 				D2CDDBCD29ADFACB00E000E3 /* DateCalCulateUseCase.swift in Sources */,
 				D2DAAA2329A4720300D70E8C /* Ext+DateFormatter.swift in Sources */,
 				FC62FF1029A77B5A003E63B0 /* MainTabBarController.swift in Sources */,
