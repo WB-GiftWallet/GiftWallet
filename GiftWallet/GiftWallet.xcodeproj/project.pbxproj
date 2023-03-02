@@ -9,6 +9,7 @@
 /* Begin PBXBuildFile section */
 		17D5963729AF6F9800AFE039 /* SearchTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 17D5963629AF6F9800AFE039 /* SearchTableViewController.swift */; };
 		17D5963929B02CBD00AFE039 /* SearchGiftCustomCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 17D5963829B02CBD00AFE039 /* SearchGiftCustomCell.swift */; };
+		17D5963B29B0835800AFE039 /* Extension+Date.swift in Sources */ = {isa = PBXBuildFile; fileRef = 17D5963A29B0835800AFE039 /* Extension+Date.swift */; };
 		D295E4B529A5E2F400E12CAF /* UserInfoModifyViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D295E4B429A5E2F400E12CAF /* UserInfoModifyViewController.swift */; };
 		D295E4B729A5E31400E12CAF /* UserInfoModifyViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = D295E4B629A5E31400E12CAF /* UserInfoModifyViewModel.swift */; };
 		D295E4B929A5F64200E12CAF /* FormSheetViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D295E4B829A5F64200E12CAF /* FormSheetViewController.swift */; };
@@ -64,6 +65,7 @@
 /* Begin PBXFileReference section */
 		17D5963629AF6F9800AFE039 /* SearchTableViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchTableViewController.swift; sourceTree = "<group>"; };
 		17D5963829B02CBD00AFE039 /* SearchGiftCustomCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchGiftCustomCell.swift; sourceTree = "<group>"; };
+		17D5963A29B0835800AFE039 /* Extension+Date.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Extension+Date.swift"; sourceTree = "<group>"; };
 		D295E4B429A5E2F400E12CAF /* UserInfoModifyViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserInfoModifyViewController.swift; sourceTree = "<group>"; };
 		D295E4B629A5E31400E12CAF /* UserInfoModifyViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserInfoModifyViewModel.swift; sourceTree = "<group>"; };
 		D295E4B829A5F64200E12CAF /* FormSheetViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FormSheetViewController.swift; sourceTree = "<group>"; };
@@ -217,6 +219,7 @@
 		D2DAAA2129A471D600D70E8C /* Extension */ = {
 			isa = PBXGroup;
 			children = (
+				17D5963A29B0835800AFE039 /* Extension+Date.swift */,
 				D2DAAA2229A4720300D70E8C /* Ext+DateFormatter.swift */,
 			);
 			path = Extension;
@@ -460,6 +463,7 @@
 				D2DAAA2529A47CD500D70E8C /* CustomCollectionView.swift in Sources */,
 				D295E4B729A5E31400E12CAF /* UserInfoModifyViewModel.swift in Sources */,
 				FC1E747C29A207DA0010A4BA /* GiftWallet.xcdatamodeld in Sources */,
+				17D5963B29B0835800AFE039 /* Extension+Date.swift in Sources */,
 				D2B6333D29ACCA4100EE9ACE /* Constant.swift in Sources */,
 				D295E4B529A5E2F400E12CAF /* UserInfoModifyViewController.swift in Sources */,
 				D2B6334429ACEAB700EE9ACE /* HistoryTableViewCell.swift in Sources */,
