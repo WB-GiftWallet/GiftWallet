@@ -157,9 +157,9 @@ final class DetailViewController: UIViewController {
             giftImageView.topAnchor.constraint(equalTo: selectedButton.bottomAnchor, constant: view.frame.width / 20),
             giftImageView.leadingAnchor.constraint(equalTo: contentsView.leadingAnchor),
             giftImageView.trailingAnchor.constraint(equalTo: contentsView.trailingAnchor),
-            giftImageView.bottomAnchor.constraint(equalTo: contentsView.bottomAnchor)
+            giftImageView.bottomAnchor.constraint(equalTo: contentsView.bottomAnchor),
+            giftImageView.heightAnchor.constraint(lessThanOrEqualTo: giftImageView.widthAnchor, multiplier: 2)
         ])
-        giftImageView.setContentHuggingPriority(.fittingSizeLevel, for: .vertical)
     }
     
     private func configureImageTapGesture() {
@@ -184,6 +184,7 @@ final class DetailViewController: UIViewController {
         }
         
         let done = UIAlertAction(title: "네", style: .default) { _ in
+            // TODO: CoreData Update구현
             if self.isUseableGift {
                 self.changeGiftState(true)
             } else {
