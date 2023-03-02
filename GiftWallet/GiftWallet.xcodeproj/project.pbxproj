@@ -23,6 +23,11 @@
 		D2CDDBCD29ADFACB00E000E3 /* DateCalCulateUseCase.swift in Sources */ = {isa = PBXBuildFile; fileRef = D2CDDBCC29ADFACB00E000E3 /* DateCalCulateUseCase.swift */; };
 		D2CDDBD529ADFE7700E000E3 /* DateCalculateUseCaseTest.swift in Sources */ = {isa = PBXBuildFile; fileRef = D2CDDBD429ADFE7700E000E3 /* DateCalculateUseCaseTest.swift */; };
 		D2CDDBE029AF3CD300E000E3 /* VisionManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = D2CDDBDF29AF3CD300E000E3 /* VisionManager.swift */; };
+		D2CDDBE229AF3D2B00E000E3 /* AutomationUserInputManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = D2CDDBE129AF3D2B00E000E3 /* AutomationUserInputManager.swift */; };
+		D2CDDBE729AF487600E000E3 /* BrandList.swift in Sources */ = {isa = PBXBuildFile; fileRef = D2CDDBE629AF487600E000E3 /* BrandList.swift */; };
+		D2CDDBEA29AF4BF500E000E3 /* AddViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D2CDDBE929AF4BF500E000E3 /* AddViewController.swift */; };
+		D2CDDBEC29AF4C0700E000E3 /* AddViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = D2CDDBEB29AF4C0700E000E3 /* AddViewModel.swift */; };
+		D2CDDBF429B0716000E000E3 /* CustomTextField.swift in Sources */ = {isa = PBXBuildFile; fileRef = D2CDDBF329B0716000E000E3 /* CustomTextField.swift */; };
 		D2D6B74F29A3DEC900E6188C /* MainViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D2D6B74E29A3DEC900E6188C /* MainViewController.swift */; };
 		D2D6B75129A3DEE900E6188C /* MainViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = D2D6B75029A3DEE900E6188C /* MainViewModel.swift */; };
 		D2DAAA1C29A44B1600D70E8C /* MainCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = D2DAAA1B29A44B1600D70E8C /* MainCollectionViewCell.swift */; };
@@ -79,6 +84,11 @@
 		D2CDDBD229ADFE7600E000E3 /* DateCalculateUseCaseTest.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = DateCalculateUseCaseTest.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		D2CDDBD429ADFE7700E000E3 /* DateCalculateUseCaseTest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DateCalculateUseCaseTest.swift; sourceTree = "<group>"; };
 		D2CDDBDF29AF3CD300E000E3 /* VisionManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VisionManager.swift; sourceTree = "<group>"; };
+		D2CDDBE129AF3D2B00E000E3 /* AutomationUserInputManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AutomationUserInputManager.swift; sourceTree = "<group>"; };
+		D2CDDBE629AF487600E000E3 /* BrandList.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BrandList.swift; sourceTree = "<group>"; };
+		D2CDDBE929AF4BF500E000E3 /* AddViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddViewController.swift; sourceTree = "<group>"; };
+		D2CDDBEB29AF4C0700E000E3 /* AddViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddViewModel.swift; sourceTree = "<group>"; };
+		D2CDDBF329B0716000E000E3 /* CustomTextField.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomTextField.swift; sourceTree = "<group>"; };
 		D2D6B74E29A3DEC900E6188C /* MainViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainViewController.swift; sourceTree = "<group>"; };
 		D2D6B75029A3DEE900E6188C /* MainViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainViewModel.swift; sourceTree = "<group>"; };
 		D2DAAA1B29A44B1600D70E8C /* MainCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainCollectionViewCell.swift; sourceTree = "<group>"; };
@@ -185,8 +195,26 @@
 			isa = PBXGroup;
 			children = (
 				D2CDDBDF29AF3CD300E000E3 /* VisionManager.swift */,
+				D2CDDBE129AF3D2B00E000E3 /* AutomationUserInputManager.swift */,
 			);
 			path = Manager;
+			sourceTree = "<group>";
+		};
+		D2CDDBE829AF4BE000E000E3 /* AddVIew */ = {
+			isa = PBXGroup;
+			children = (
+				D2CDDBE929AF4BF500E000E3 /* AddViewController.swift */,
+				D2CDDBEB29AF4C0700E000E3 /* AddViewModel.swift */,
+			);
+			path = AddVIew;
+			sourceTree = "<group>";
+		};
+		D2CDDBF229B0713A00E000E3 /* CustomUI */ = {
+			isa = PBXGroup;
+			children = (
+				D2CDDBF329B0716000E000E3 /* CustomTextField.swift */,
+			);
+			path = CustomUI;
 			sourceTree = "<group>";
 		};
 		D2D6B74D29A3DE6A00E6188C /* MainView */ = {
@@ -207,6 +235,7 @@
 				D2A282B529A85EBC002CCF5A /* Gift.swift */,
 				FC074C0229A9033B006AD199 /* CoreData */,
 				D2A282B729A85EF2002CCF5A /* Observable.swift */,
+				D2CDDBE629AF487600E000E3 /* BrandList.swift */,
 			);
 			path = Model;
 			sourceTree = "<group>";
@@ -262,8 +291,10 @@
 		FC1E747029A207DA0010A4BA /* GiftWallet */ = {
 			isa = PBXGroup;
 			children = (
-				D2CDDBDE29AF3CC600E000E3 /* Manager */,
+				D2CDDBF229B0713A00E000E3 /* CustomUI */,
 				D2CDDBCB29ADFA8F00E000E3 /* UseCase */,
+				D2CDDBDE29AF3CC600E000E3 /* Manager */,
+				D2CDDBE829AF4BE000E000E3 /* AddVIew */,
 				D2B6333E29ACD17500EE9ACE /* EtcUsageHistoryView */,
 				D2C7A45729A9DA3300EB6D56 /* EtcSettingView */,
 				FC62FF1129A77B77003E63B0 /* MainTabbarController */,
@@ -436,6 +467,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				D2CDDBE729AF487600E000E3 /* BrandList.swift in Sources */,
 				D2C7A45929A9DA6C00EB6D56 /* EtcSettingViewController.swift in Sources */,
 				D2A282B829A85EF2002CCF5A /* Observable.swift in Sources */,
 				D295E4B929A5F64200E12CAF /* FormSheetViewController.swift in Sources */,
@@ -443,11 +475,14 @@
 				D2CDDBCD29ADFACB00E000E3 /* DateCalCulateUseCase.swift in Sources */,
 				D2DAAA2329A4720300D70E8C /* Ext+DateFormatter.swift in Sources */,
 				FC62FF1029A77B5A003E63B0 /* MainTabBarController.swift in Sources */,
+				D2CDDBE229AF3D2B00E000E3 /* AutomationUserInputManager.swift in Sources */,
 				D2C7A45D29A9E77100EB6D56 /* EtcSettingTableViewCell.swift in Sources */,
 				D2DAAA1C29A44B1600D70E8C /* MainCollectionViewCell.swift in Sources */,
 				FC074C0629A90361006AD199 /* GiftData+CoreDataProperties.swift in Sources */,
 				FC1E747229A207DA0010A4BA /* AppDelegate.swift in Sources */,
 				FC074C0129A8D5B5006AD199 /* CoreDataManager.swift in Sources */,
+				D2CDDBF429B0716000E000E3 /* CustomTextField.swift in Sources */,
+				D2CDDBEA29AF4BF500E000E3 /* AddViewController.swift in Sources */,
 				FC074C0529A90361006AD199 /* GiftData+CoreDataClass.swift in Sources */,
 				F6A4AB4A29A5DA1C009AEB78 /* GiftImageViewController.swift in Sources */,
 				D2DAAA2029A44B9200D70E8C /* ReusableView.swift in Sources */,
@@ -465,6 +500,7 @@
 				D2D6B74F29A3DEC900E6188C /* MainViewController.swift in Sources */,
 				D2D6B75129A3DEE900E6188C /* MainViewModel.swift in Sources */,
 				F6A4AB4B29A5DA1C009AEB78 /* DetailViewController.swift in Sources */,
+				D2CDDBEC29AF4C0700E000E3 /* AddViewModel.swift in Sources */,
 				FCAD20A529A91A55004214FD /* CoreDataError.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -701,6 +737,7 @@
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_TEAM = N2WW86KJNF;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = GiftWallet/Info.plist;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
@@ -712,7 +749,7 @@
 					"@executable_path/Frameworks",
 				);
 				MARKETING_VERSION = 1.0;
-				PRODUCT_BUNDLE_IDENTIFIER = wb.GiftWallet;
+				PRODUCT_BUNDLE_IDENTIFIER = wb.GiftWalletl;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_EMIT_LOC_STRINGS = YES;
 				SWIFT_VERSION = 5.0;
@@ -727,6 +764,7 @@
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_TEAM = N2WW86KJNF;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = GiftWallet/Info.plist;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
@@ -738,7 +776,7 @@
 					"@executable_path/Frameworks",
 				);
 				MARKETING_VERSION = 1.0;
-				PRODUCT_BUNDLE_IDENTIFIER = wb.GiftWallet;
+				PRODUCT_BUNDLE_IDENTIFIER = wb.GiftWalletl;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_EMIT_LOC_STRINGS = YES;
 				SWIFT_VERSION = 5.0;

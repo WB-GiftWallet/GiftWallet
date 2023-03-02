@@ -64,7 +64,7 @@ class UserInfoModifyViewController: UIViewController {
     }()
     
     private let inputNameTextField = {
-        let textField = UITextField()
+        let textField = CustomTextField()
         
         textField.translatesAutoresizingMaskIntoConstraints = false
         
@@ -105,7 +105,7 @@ class UserInfoModifyViewController: UIViewController {
         super.viewWillLayoutSubviews()
         userProfileImageButton.layer.cornerRadius = userProfileImageButton.frame.width / 2
         userProfileImageButton.clipsToBounds = true
-        setupTextFieldBottomBorder()
+        inputNameTextField.setupTextFieldBottomBorder()
     }
     
     private func setupButton() {
@@ -118,22 +118,10 @@ class UserInfoModifyViewController: UIViewController {
         userProfileImageButton.addAction(modifyAction, for: .touchUpInside)
     }
     
-    
     private func setupNavigation() {
         title = "프로필 편집"
     }
     
-    func setupTextFieldBottomBorder() {
-        let borderColor: UIColor = .systemGray
-        let border = CALayer()
-        border.frame = CGRect(x: 0,
-                              y: inputNameTextField.frame.size.height + 5,
-                              width: inputNameTextField.frame.width,
-                              height: 2)
-        border.backgroundColor = borderColor.cgColor
-        inputNameTextField.layer.addSublayer(border)
-    }
-        
     private func setupViews() {
         view.backgroundColor = .white
         

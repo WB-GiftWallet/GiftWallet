@@ -6,6 +6,7 @@
 //
 
 import UIKit
+import PhotosUI
 
 final class MainTabBarController: UITabBarController {
     
@@ -39,7 +40,7 @@ final class MainTabBarController: UITabBarController {
     }()
     
     // TODO: AddGiftViewController 구현 및 연결
-    private lazy var addGiftViewController: UIViewController = {
+    private lazy var blankViewController: UIViewController = {
         let viewController = UIViewController()
         
         viewController.tabBarItem.image = UIImage(
@@ -86,11 +87,7 @@ final class MainTabBarController: UITabBarController {
     override func tabBar(_ tabBar: UITabBar, didSelect item: UITabBarItem) {
         if item.tag == 1 {
             isAddGiftTabBarEnabled = false
-            
-            //TODO: AddViewController 구현 및 present
-            let temporaryVC = UIViewController()
-            temporaryVC.view.backgroundColor = .systemPurple
-            present(temporaryVC, animated: true)
+            presentPHPicekrViewController()
         } else {
             isAddGiftTabBarEnabled = true
         }
@@ -101,7 +98,7 @@ final class MainTabBarController: UITabBarController {
         self.tabBar.tintColor = .label
         self.tabBar.unselectedItemTintColor = .systemPink
         
-        viewControllers = [mainViewController, addGiftViewController, settingViewController]
+        viewControllers = [mainViewController, blankViewController, settingViewController]
     }
     
     private func setupNavigation() {
@@ -132,5 +129,42 @@ extension MainTabBarController: UITabBarControllerDelegate {
         shouldSelect viewController: UIViewController
     ) -> Bool {
         return isAddGiftTabBarEnabled
+    }
+}
+
+extension MainTabBarController: PHPickerViewControllerDelegate {
+    func picker(_ picker: PHPickerViewController, didFinishPicking results: [PHPickerResult]) {
+        if results.isEmpty {
+            self.dismiss(animated: true)
+        } else {
+            self.dismiss(animated: true) {
+                print(results)
+                let addViewModel = AddViewModel()
+                let addViewControlller = AddViewController(viewModel: addViewModel, page: .brand)
+                let navigationAddViewController = UINavigationController(rootViewController: addViewControlller)
+                navigationAddViewController.modalPresentationStyle = .fullScreen
+                self.present(navigationAddViewController, animated: true)
+            }
+        }
+    }
+    
+    private func presentPHPicekrViewController() {
+        let configuration = setupPHPicekrConfiguration()
+        let picekrViewController = PHPickerViewController(configuration: configuration)
+        
+        picekrViewController.delegate = self
+        picekrViewController.modalPresentationStyle = .fullScreen
+        
+        present(picekrViewController, animated: true)
+    }
+    
+    private func setupPHPicekrConfiguration() -> PHPickerConfiguration {
+        var configuration = PHPickerConfiguration(photoLibrary: .shared())
+        
+        configuration.filter = .images
+        configuration.preferredAssetRepresentationMode = .current
+        configuration.selectionLimit = 1
+        
+        return configuration
     }
 }
