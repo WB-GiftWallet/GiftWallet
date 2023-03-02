@@ -11,7 +11,7 @@ class UsageHistoryViewModel {
     var unavailableGifts: [Gift] = []
 }
 
-private extension Date {
+extension Date {
     func setupDateStyleForDisplay() -> String {
         let dateFormatter = DateFormatter()
         dateFormatter.dateFormat = "yyyy년 MM월 dd일"
