@@ -8,14 +8,16 @@
 import UIKit
 
 class AddViewModel {
-    
-    
+    let selectedImage: UIImage
     
     var gift: Observable<Gift>?
     var userInput: UserInput = UserInput(image: UIImage(systemName: "cloud")!,
                                          brandName: "",
                                          productName: "",
                                          expireDate: Date())
+    init(seletedImage: UIImage) {
+        self.selectedImage = seletedImage
+    }
     
     func buttonActionByPage(page: Page, _ value: String) {
         switch page {

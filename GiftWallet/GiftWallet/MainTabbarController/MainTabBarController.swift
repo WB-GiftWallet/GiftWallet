@@ -138,8 +138,8 @@ extension MainTabBarController: PHPickerViewControllerDelegate {
             self.dismiss(animated: true)
         } else {
             self.dismiss(animated: true) {
-                print(results)
-                let addViewModel = AddViewModel()
+                guard let formattedImage = self.getImage(results: results) else { return }
+                let addViewModel = AddViewModel(seletedImage: formattedImage)
                 let addViewControlller = AddViewController(viewModel: addViewModel, page: .brand)
                 let navigationAddViewController = UINavigationController(rootViewController: addViewControlller)
                 navigationAddViewController.modalPresentationStyle = .fullScreen
@@ -167,4 +167,25 @@ extension MainTabBarController: PHPickerViewControllerDelegate {
         
         return configuration
     }
+    
+    private func getImage(results: [PHPickerResult]) -> UIImage? {
+        var formattedImage: UIImage?
+        guard let itemProvider = results.first?.itemProvider else { return nil }
+
+        let semaphore = DispatchSemaphore(value: 0)
+        if itemProvider.canLoadObject(ofClass: UIImage.self) {
+            itemProvider.loadObject(ofClass: UIImage.self, completionHandler: { image, error in
+                if let error = error {
+                    print(error.localizedDescription)
+                } else {
+                    formattedImage = image as? UIImage
+                }
+                semaphore.signal()
+            })
+        }
+        semaphore.wait()
+        
+        return formattedImage
+    }
+    
 }

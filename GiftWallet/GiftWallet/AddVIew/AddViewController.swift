@@ -12,11 +12,11 @@ class AddViewController: UIViewController {
     let page: Page
     let viewModel: AddViewModel
     
-    let giftImageView = {
+    private lazy var giftImageView = {
         let imageView = UIImageView()
         
         imageView.translatesAutoresizingMaskIntoConstraints = false
-        imageView.image = UIImage(named: "testImageSTARBUCKSSMALL")
+        imageView.image = viewModel.selectedImage
         imageView.contentMode = .scaleAspectFit
         imageView.clipsToBounds = true
         
