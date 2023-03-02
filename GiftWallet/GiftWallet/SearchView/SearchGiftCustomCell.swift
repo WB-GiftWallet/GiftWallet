@@ -73,21 +73,20 @@ class CustomCell: UITableViewCell {
     }
     
     private func setupViews() {
-        contentView.layoutMargins = .init(top: 3, left: 3, bottom: 3, right: 3 )
-        let safeArea = contentView.layoutMarginsGuide
+        contentView.layoutMargins = .init(top: 3, left: 3, bottom: -3, right: -3)
+        let marginGuide = contentView.layoutMarginsGuide
         
         [giftImageView, labelStackView].forEach(contentView.addSubview(_:))
         [brandNameLabel ,productNameLabel, expireDateLabel].forEach(labelStackView.addArrangedSubview(_:))
         
         NSLayoutConstraint.activate([
-            giftImageView.topAnchor.constraint(equalTo: safeArea.topAnchor),
-            giftImageView.leadingAnchor.constraint(equalTo: safeArea.leadingAnchor),
-            giftImageView.bottomAnchor.constraint(equalTo: safeArea.bottomAnchor),
-            giftImageView.widthAnchor.constraint(equalToConstant: contentView.frame.width / 3),
-            giftImageView.widthAnchor.constraint(equalTo: giftImageView.heightAnchor),
+            giftImageView.centerYAnchor.constraint(equalTo: marginGuide.centerYAnchor),
+            giftImageView.leadingAnchor.constraint(equalTo: marginGuide.leadingAnchor),
+            giftImageView.widthAnchor.constraint(equalTo: marginGuide.widthAnchor, multiplier: 0.3),
+            giftImageView.heightAnchor.constraint(equalTo: giftImageView.widthAnchor),
             
             labelStackView.leadingAnchor.constraint(equalTo: giftImageView.trailingAnchor, constant: 10),
-            labelStackView.trailingAnchor.constraint(equalTo: safeArea.trailingAnchor),
+            labelStackView.trailingAnchor.constraint(equalTo: marginGuide.trailingAnchor),
             labelStackView.centerYAnchor.constraint(equalTo: giftImageView.centerYAnchor)
         ])
     }

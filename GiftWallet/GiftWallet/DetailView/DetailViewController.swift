@@ -9,6 +9,8 @@ import UIKit
 
 final class DetailViewController: UIViewController {
     
+    private let coreDataIndexNumber: Int
+    
     private let scrollView: UIScrollView = {
         let view = UIScrollView(frame: .zero)
         
@@ -80,13 +82,21 @@ final class DetailViewController: UIViewController {
         let imageView = UIImageView()
         
         imageView.image = UIImage(named: "tempImages")
-//        imageView.contentMode = .scaleToFill
         imageView.contentMode = .scaleAspectFit
         
         return imageView
     }()
     
     private var isUseableGift = true
+    
+    init(coreDataIndexNumber: Int, isUseableGift: Bool = true) {
+        self.coreDataIndexNumber = coreDataIndexNumber
+        super.init(nibName: nil, bundle: nil)
+    }
+    
+    required init?(coder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
+    }
     
     override func viewDidLoad() {
         super.viewDidLoad()
