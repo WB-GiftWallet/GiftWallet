@@ -9,12 +9,11 @@ import UIKit
 
 final class SearchTableViewController: UITableViewController {
     
-    let giftSearchController = UISearchController(searchResultsController: nil)
+    private let giftSearchController = UISearchController(searchResultsController: nil)
     
-    var filteringGifts = [Gift]()
-    var allGiftData = [Gift]()
-    
-    var isFiltering: Bool {
+    private var allGiftData = [Gift]()
+    private var filteringGifts = [Gift]()
+    private var isFiltering: Bool {
         let searchController = self.navigationItem.searchController
         let isActive = searchController?.isActive ?? false
         let isSearchBarHasText = searchController?.searchBar.text?.isEmpty == false
@@ -24,20 +23,27 @@ final class SearchTableViewController: UITableViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        giftSearchController.searchBar.placeholder = "브랜드 이름으로 검색하세요!"
+        setSearchController()
+    }
+    
+    private func setSearchController() {
         
+        giftSearchController.searchBar.placeholder = "브랜드 이름으로 검색하세요!"
         //scopeBar 사용시
         giftSearchController.searchBar.showsScopeBar = true
         
         // Navigation title 숨기지 않게함
         giftSearchController.hidesNavigationBarDuringPresentation = true
         
-        //        giftSearchController.hidesBottomBarWhenPushed = false
+        giftSearchController.hidesBottomBarWhenPushed = true
         
-        self.navigationItem.title = "아따 브랜드 검색해유"
-        //        self.navigationController?.navigationBar.prefersLargeTitles = true // Large title로 하고싶을 때 추가
-        //        self.navigationController?.navigationBar.backgroundColor = . brown
+        giftSearchController.searchBar.showsSearchResultsButton = true
+        //        self.navigationItem.title = "검색title"
         
+        // SearchBar 항상 보이도록 설정
+        self.navigationItem.hidesSearchBarWhenScrolling = false
+        // Large title로 하고싶을 때 추가
+        //        self.navigationController?.navigationBar.prefersLargeTitles = true
         
         self.navigationItem.searchController = giftSearchController
         
@@ -47,8 +53,7 @@ final class SearchTableViewController: UITableViewController {
         switch CoreDataManager.shared.fetchData() {
             case .success(let data):
                 data.forEach { giftData in
-                    guard let bindData = Gift(giftData: giftData) else { return }
-                    allGiftData.append(bindData)
+                    allGiftData.append(giftData)
                 }
             case .failure(let error):
                 print(error.localizedDescription)
@@ -56,11 +61,10 @@ final class SearchTableViewController: UITableViewController {
         
         self.filteringGifts = self.allGiftData.sorted(by: {$0.number < $1.number})
     }
-    
-    override func viewWillAppear(_ animated: Bool) {
-        super.viewWillAppear(true)
-        print(allGiftData)
-    }
+}
+
+//MARK: TableView Method
+extension SearchTableViewController {
     
     override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         return self.isFiltering ? self.filteringGifts.count : self.allGiftData.count
@@ -72,15 +76,17 @@ final class SearchTableViewController: UITableViewController {
         }
         
         if self.isFiltering {
-            cell.giftImageView.image = filteringGifts[indexPath.row].image
-            cell.brandNameLabel.text = filteringGifts[indexPath.row].brandName
-            cell.productNameLabel.text = filteringGifts[indexPath.row].productName
-            cell.expireDateLabel.text = filteringGifts[indexPath.row].expireDate?.setupDateStyleForDisplay()
+            let indexGiftsData = filteringGifts[indexPath.row]
+            cell.giftImageView.image = indexGiftsData.image
+            cell.brandNameLabel.text = indexGiftsData.brandName
+            cell.productNameLabel.text = indexGiftsData.productName
+            cell.expireDateLabel.text = indexGiftsData.expireDate?.setupDateStyleForDisplay()
         } else {
-            cell.giftImageView.image = allGiftData[indexPath.row].image
-            cell.brandNameLabel.text = allGiftData[indexPath.row].brandName
-            cell.productNameLabel.text = allGiftData[indexPath.row].productName
-            cell.expireDateLabel.text = allGiftData[indexPath.row].expireDate?.setupDateStyleForDisplay()
+            let indexGiftsData = allGiftData[indexPath.row]
+            cell.giftImageView.image = indexGiftsData.image
+            cell.brandNameLabel.text = indexGiftsData.brandName
+            cell.productNameLabel.text = indexGiftsData.productName
+            cell.expireDateLabel.text = indexGiftsData.expireDate?.setupDateStyleForDisplay()
         }
         
         return cell
