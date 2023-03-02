@@ -78,15 +78,20 @@ class AddViewController: UIViewController {
     
     private func setupButton() {
         let actionButtonAction = UIAction { [weak self] _ in
-            guard let self = self else { return }
+            guard let self = self,
+                  let inputText = self.inputTextField.text else { return }
             switch self.page {
             case .brand:
+                self.viewModel.buttonActionByPage(page: self.page, inputText)
                 self.sceneConversion()
             case .productName:
+                self.viewModel.buttonActionByPage(page: self.page, inputText)
                 self.sceneConversion()
             case .expireDate:
-                //TODO: 등록시키기
-                print("등록완료")
+                self.viewModel.buttonActionByPage(page: self.page, inputText)
+                self.viewModel.createCoreData {
+                    self.dismiss(animated: true)
+                }
             }
         }
         actionButton.addAction(actionButtonAction, for: .touchUpInside)

@@ -8,15 +8,31 @@
 import UIKit
 
 class AddViewModel {
-    let selectedImage: UIImage
     
-    var gift: Observable<Gift>?
+    private let coreDataManager = CoreDataManager.shared
+    
+    let selectedImage: UIImage
+    var gift: Gift?
     var userInput: UserInput = UserInput(image: UIImage(systemName: "cloud")!,
                                          brandName: "",
                                          productName: "",
                                          expireDate: Date())
     init(seletedImage: UIImage) {
         self.selectedImage = seletedImage
+    }
+    
+    func createCoreData(completion: @escaping () -> Void) {
+        guard let gift = gift else { return }
+//        let semaphore = DispatchSemaphore(value: 0)
+        
+        do {
+            try coreDataManager.saveData(gift)
+//            semaphore.signal()
+            completion()
+        } catch {
+            print(error.localizedDescription)
+        }
+//        semaphore.wait()
     }
     
     func buttonActionByPage(page: Page, _ value: String) {
@@ -32,7 +48,7 @@ class AddViewModel {
     }
     
     private func makeGiftInstance(_ data: UserInput) {
-        let inputtedGift = Gift(image: userInput.image, category: nil, brandName: userInput.brandName, productName: userInput.productName, memo: nil, expireDate: userInput.expireDate)
+        let inputtedGift = Gift(image: selectedImage, category: nil, brandName: userInput.brandName, productName: userInput.productName, memo: nil, expireDate: userInput.expireDate)
         gift = .init(inputtedGift)
     }
 }
