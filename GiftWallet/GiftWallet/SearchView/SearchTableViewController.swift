@@ -94,6 +94,26 @@ extension SearchTableViewController {
     
     override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         
+        let detailViewController = DetailViewController()
+        
+        if self.isFiltering {
+            let indexGiftsData = filteringGifts[indexPath.row]
+            detailViewController.changeBrandLabel(name: indexGiftsData.brandName!)
+            detailViewController.changeProductNameLabel(name: indexGiftsData.productName!)
+            detailViewController.changeDateDueLabel(date: indexGiftsData.expireDate!)
+            detailViewController.changeMemoTextField(name: indexGiftsData.memo!)
+            detailViewController.changeGiftImageView(image: indexGiftsData.image)
+        } else {
+            let indexGiftsData = allGiftData[indexPath.row]
+            detailViewController.changeBrandLabel(name: indexGiftsData.brandName!)
+            detailViewController.changeProductNameLabel(name: indexGiftsData.productName!)
+            detailViewController.changeDateDueLabel(date: indexGiftsData.expireDate!)
+            detailViewController.changeMemoTextField(name: indexGiftsData.memo)
+            detailViewController.changeGiftImageView(image: indexGiftsData.image)
+        }
+        
+        navigationController?.pushViewController(detailViewController, animated: true)
+        
         tableView.deselectRow(at: indexPath, animated: true)
         
         return
