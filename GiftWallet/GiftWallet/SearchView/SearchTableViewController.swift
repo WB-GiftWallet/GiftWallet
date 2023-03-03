@@ -23,32 +23,11 @@ final class SearchTableViewController: UITableViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
+        fetchGiftCoreData()
         setSearchController()
     }
     
-    private func setSearchController() {
-        
-        giftSearchController.searchBar.placeholder = "브랜드 이름으로 검색하세요!"
-        //scopeBar 사용시
-        giftSearchController.searchBar.showsScopeBar = true
-        
-        // Navigation title 숨기지 않게함
-        giftSearchController.hidesNavigationBarDuringPresentation = true
-        
-        giftSearchController.hidesBottomBarWhenPushed = true
-        
-        giftSearchController.searchBar.showsSearchResultsButton = true
-        //        self.navigationItem.title = "검색title"
-        
-        // SearchBar 항상 보이도록 설정
-        self.navigationItem.hidesSearchBarWhenScrolling = false
-        // Large title로 하고싶을 때 추가
-        //        self.navigationController?.navigationBar.prefersLargeTitles = true
-        
-        self.navigationItem.searchController = giftSearchController
-        
-        tableView.register(CustomCell.self, forCellReuseIdentifier: "giftCustomCell")
-        giftSearchController.searchResultsUpdater = self
+    private func fetchGiftCoreData() {
         
         switch CoreDataManager.shared.fetchData() {
             case .success(let data):
@@ -60,6 +39,20 @@ final class SearchTableViewController: UITableViewController {
         }
         
         self.filteringGifts = self.allGiftData.sorted(by: {$0.number < $1.number})
+    }
+    
+    private func setSearchController() {
+        
+        giftSearchController.searchResultsUpdater = self
+        
+        giftSearchController.searchBar.placeholder = "브랜드 이름으로 검색하세요!"
+        giftSearchController.hidesBottomBarWhenPushed = true
+        giftSearchController.searchBar.showsSearchResultsButton = true
+        
+        self.navigationItem.hidesSearchBarWhenScrolling = false
+        self.navigationItem.searchController = giftSearchController
+        
+        tableView.register(CustomCell.self, forCellReuseIdentifier: "giftCustomCell")
     }
 }
 
