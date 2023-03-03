@@ -10,6 +10,8 @@ import UIKit
 class AddViewModel {
     
     private let coreDataManager = CoreDataManager.shared
+    private let visionManager = VisionManager()
+    private let useCase = AutoInputUseCase()
     
     let selectedImage: UIImage
     var gift: Gift?
@@ -21,18 +23,27 @@ class AddViewModel {
         self.selectedImage = seletedImage
     }
     
+    func 가져와라텍스트필드데이터를() -> String? {
+        return ""
+    }
+    
+    func getBrandNameFromSeletedImage() -> String? {
+        let texts = visionManager.vnRecognizeRequest(image: selectedImage)
+        let brandName = useCase.processImageTextsToBrandNameText(imageTexts: texts)
+        
+        return brandName
+    }
+    
+    
     func createCoreData(completion: @escaping () -> Void) {
         guard let gift = gift else { return }
-//        let semaphore = DispatchSemaphore(value: 0)
         
         do {
             try coreDataManager.saveData(gift)
-//            semaphore.signal()
             completion()
         } catch {
             print(error.localizedDescription)
         }
-//        semaphore.wait()
     }
     
     func buttonActionByPage(page: Page, _ value: String) {

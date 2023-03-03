@@ -8,14 +8,16 @@
 import UIKit
 import Vision
 
-struct VisionManager {
-    
-    func vnRecognizeRequest() {
-        guard let cgImage = UIImage(named: "testImageSTARBUCKSSMALL")?.cgImage else { return }
-
+struct VisionManager {    
+    func vnRecognizeRequest(image: UIImage) -> [String]? {
+        guard let cgImage = image.cgImage else { return nil }
+        var result: [String]? = []
+        
         let requestHandler = VNImageRequestHandler(cgImage: cgImage)
 
-        let request = VNRecognizeTextRequest(completionHandler: recognizeTextHandler)
+        let request = VNRecognizeTextRequest { request, error in
+            result = recognizeTextHandler(request: request, error: error)
+        }
         request.recognitionLanguages = ["ko_KR"]
 
         do {
@@ -23,13 +25,14 @@ struct VisionManager {
         } catch {
             print("Unable to perform the requests: \(error).")
         }
+        return result
     }
     
-    func recognizeTextHandler(request: VNRequest, error: Error?) {
-        guard let observations = request.results as? [VNRecognizedTextObservation] else { return }
+    private func recognizeTextHandler(request: VNRequest, error: Error?) -> [String]? {
+        guard let observations = request.results as? [VNRecognizedTextObservation] else { return nil }
         let recognizedStrings = observations.compactMap { observation in
             return observation.topCandidates(1).first?.string
         }
-        print(recognizedStrings)
+        return recognizedStrings
     }
 }

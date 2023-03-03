@@ -69,11 +69,16 @@ class AddViewController: UIViewController {
         setupNavigation()
         setupViews()
         setupButton()
+        setuptextInTextField()
     }
     
     override func viewDidLayoutSubviews() {
         super.viewDidLayoutSubviews()
         inputTextField.setupTextFieldBottomBorder()
+    }
+    
+    private func setuptextInTextField() {
+        inputTextField.text = viewModel.getBrandNameFromSeletedImage()
     }
     
     private func setupButton() {

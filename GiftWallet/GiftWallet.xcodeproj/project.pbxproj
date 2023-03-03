@@ -23,7 +23,7 @@
 		D2CDDBCD29ADFACB00E000E3 /* DateCalCulateUseCase.swift in Sources */ = {isa = PBXBuildFile; fileRef = D2CDDBCC29ADFACB00E000E3 /* DateCalCulateUseCase.swift */; };
 		D2CDDBD529ADFE7700E000E3 /* DateCalculateUseCaseTest.swift in Sources */ = {isa = PBXBuildFile; fileRef = D2CDDBD429ADFE7700E000E3 /* DateCalculateUseCaseTest.swift */; };
 		D2CDDBE029AF3CD300E000E3 /* VisionManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = D2CDDBDF29AF3CD300E000E3 /* VisionManager.swift */; };
-		D2CDDBE229AF3D2B00E000E3 /* AutomationUserInputManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = D2CDDBE129AF3D2B00E000E3 /* AutomationUserInputManager.swift */; };
+		D2CDDBE229AF3D2B00E000E3 /* AutoInputUseCase.swift in Sources */ = {isa = PBXBuildFile; fileRef = D2CDDBE129AF3D2B00E000E3 /* AutoInputUseCase.swift */; };
 		D2CDDBE729AF487600E000E3 /* BrandList.swift in Sources */ = {isa = PBXBuildFile; fileRef = D2CDDBE629AF487600E000E3 /* BrandList.swift */; };
 		D2CDDBEA29AF4BF500E000E3 /* AddViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D2CDDBE929AF4BF500E000E3 /* AddViewController.swift */; };
 		D2CDDBEC29AF4C0700E000E3 /* AddViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = D2CDDBEB29AF4C0700E000E3 /* AddViewModel.swift */; };
@@ -84,7 +84,7 @@
 		D2CDDBD229ADFE7600E000E3 /* DateCalculateUseCaseTest.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = DateCalculateUseCaseTest.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		D2CDDBD429ADFE7700E000E3 /* DateCalculateUseCaseTest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DateCalculateUseCaseTest.swift; sourceTree = "<group>"; };
 		D2CDDBDF29AF3CD300E000E3 /* VisionManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VisionManager.swift; sourceTree = "<group>"; };
-		D2CDDBE129AF3D2B00E000E3 /* AutomationUserInputManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AutomationUserInputManager.swift; sourceTree = "<group>"; };
+		D2CDDBE129AF3D2B00E000E3 /* AutoInputUseCase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AutoInputUseCase.swift; sourceTree = "<group>"; };
 		D2CDDBE629AF487600E000E3 /* BrandList.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BrandList.swift; sourceTree = "<group>"; };
 		D2CDDBE929AF4BF500E000E3 /* AddViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddViewController.swift; sourceTree = "<group>"; };
 		D2CDDBEB29AF4C0700E000E3 /* AddViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddViewModel.swift; sourceTree = "<group>"; };
@@ -179,6 +179,7 @@
 			isa = PBXGroup;
 			children = (
 				D2CDDBCC29ADFACB00E000E3 /* DateCalCulateUseCase.swift */,
+				D2CDDBE129AF3D2B00E000E3 /* AutoInputUseCase.swift */,
 			);
 			path = UseCase;
 			sourceTree = "<group>";
@@ -195,7 +196,6 @@
 			isa = PBXGroup;
 			children = (
 				D2CDDBDF29AF3CD300E000E3 /* VisionManager.swift */,
-				D2CDDBE129AF3D2B00E000E3 /* AutomationUserInputManager.swift */,
 			);
 			path = Manager;
 			sourceTree = "<group>";
@@ -475,7 +475,7 @@
 				D2CDDBCD29ADFACB00E000E3 /* DateCalCulateUseCase.swift in Sources */,
 				D2DAAA2329A4720300D70E8C /* Ext+DateFormatter.swift in Sources */,
 				FC62FF1029A77B5A003E63B0 /* MainTabBarController.swift in Sources */,
-				D2CDDBE229AF3D2B00E000E3 /* AutomationUserInputManager.swift in Sources */,
+				D2CDDBE229AF3D2B00E000E3 /* AutoInputUseCase.swift in Sources */,
 				D2C7A45D29A9E77100EB6D56 /* EtcSettingTableViewCell.swift in Sources */,
 				D2DAAA1C29A44B1600D70E8C /* MainCollectionViewCell.swift in Sources */,
 				FC074C0629A90361006AD199 /* GiftData+CoreDataProperties.swift in Sources */,
