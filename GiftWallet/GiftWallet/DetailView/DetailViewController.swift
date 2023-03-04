@@ -63,6 +63,7 @@ final class DetailViewController: UIViewController {
         textField.font = .preferredFont(forTextStyle: .title2)
         textField.borderStyle = .roundedRect
         textField.placeholder = "메모입력란입니다."
+        textField.addTarget(nil, action: #selector(textFieldDidChange), for: .editingChanged)
         
         return textField
     }()
@@ -255,6 +256,12 @@ final class DetailViewController: UIViewController {
         guard let image = giftImageView.image else { return }
         
         present(GiftImageViewController(image: image), animated: true)
+    }
+    
+    // MARK: Memo Text Field Changed Method
+    @objc private func textFieldDidChange() {
+        coreGiftData?.memo = memoTextField.text
+        coreDataUpdate()
     }
 }
 
