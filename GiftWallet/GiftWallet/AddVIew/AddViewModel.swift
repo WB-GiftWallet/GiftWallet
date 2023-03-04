@@ -24,6 +24,8 @@ class AddViewModel {
     }
     
     func 가져와라텍스트필드데이터를() -> String? {
+        useCase.processImageTextsToExpireDate()
+        
         return ""
     }
     

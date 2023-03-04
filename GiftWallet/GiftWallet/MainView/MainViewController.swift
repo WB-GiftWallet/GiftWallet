@@ -163,6 +163,8 @@ AAAA 님의
         setupProfileButton()
         setupViews()
         bind()
+        let autoUsecaes = AutoInputUseCase()
+        autoUsecaes.processImageTextsToExpireDate()
     }
     
     override func viewWillAppear(_ animated: Bool) {
