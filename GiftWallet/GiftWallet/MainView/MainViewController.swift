@@ -293,11 +293,19 @@ extension MainViewController: UICollectionViewDataSource, UICollectionViewDelega
     }
     
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
-        // TODO: detailViewController, send Number
-        let detailViewController = DetailViewController(coreDataIndexNumber: 0)
+        var sendingGiftData: Gift?
+        
+        switch collectionView {
+            case expireCollectionView:
+                sendingGiftData = viewModel.expireGifts.value[indexPath.row]
+            case recentCollectionView:
+                sendingGiftData = viewModel.recentGifts.value[indexPath.row]
+            default:
+                sendingGiftData = nil
+        }
+        let detailViewController = DetailViewController(giftData: sendingGiftData)
         navigationController?.pushViewController(detailViewController, animated: true)
     }
-    
 }
 
 extension MainViewController: UICollectionViewDelegateFlowLayout {

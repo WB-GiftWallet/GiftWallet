@@ -9,7 +9,7 @@ import UIKit
 
 final class DetailViewController: UIViewController {
     
-    private let coreDataIndexNumber: Int
+    private var coreGiftData: Gift?
     
     private let scrollView: UIScrollView = {
         let view = UIScrollView(frame: .zero)
@@ -89,8 +89,8 @@ final class DetailViewController: UIViewController {
     
     private var isUseableGift = true
     
-    init(coreDataIndexNumber: Int, isUseableGift: Bool = true) {
-        self.coreDataIndexNumber = coreDataIndexNumber
+    init(giftData: Gift?) {
+        self.coreGiftData = giftData
         super.init(nibName: nil, bundle: nil)
     }
     
@@ -107,6 +107,26 @@ final class DetailViewController: UIViewController {
         configureContentView()
         configureInnerContents()
         configureImageTapGesture()
+        
+        setupGiftData()
+    }
+    
+    private func setupGiftData() {
+        brandLabel.text = coreGiftData?.brandName
+        productNameLabel.text = coreGiftData?.productName
+        dateDueLabel.text = coreGiftData?.expireDate?.setupDateStyleForDisplay()
+        memoTextField.text = coreGiftData?.memo
+        giftImageView.image = coreGiftData?.image
+        
+        guard let useableState = coreGiftData?.useableState else { return }
+        
+        if useableState {
+            isUseableGift = true
+            selectedButton.backgroundColor = .systemPurple
+        } else {
+            isUseableGift = false
+            selectedButton.backgroundColor = .systemGray
+        }
     }
     
     private func configureScrollView() {
@@ -197,6 +217,8 @@ final class DetailViewController: UIViewController {
             // TODO: CoreData Update구현
             if self.isUseableGift {
                 self.changeGiftState(true)
+//                var giftData = Gift()
+//                CoreDataManager.shared.updateData(<#T##giftData: Gift##Gift#>)
             } else {
                 self.changeGiftState(false)
             }
