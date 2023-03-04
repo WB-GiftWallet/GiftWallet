@@ -9,6 +9,8 @@ import UIKit
 
 final class DetailViewController: UIViewController {
     
+    private let coreDataIndexNumber: Int
+    
     private let scrollView: UIScrollView = {
         let view = UIScrollView(frame: .zero)
         
@@ -80,12 +82,21 @@ final class DetailViewController: UIViewController {
         let imageView = UIImageView()
         
         imageView.image = UIImage(named: "tempImages")
-        imageView.contentMode = .scaleToFill
+        imageView.contentMode = .scaleAspectFit
         
         return imageView
     }()
     
     private var isUseableGift = true
+    
+    init(coreDataIndexNumber: Int, isUseableGift: Bool = true) {
+        self.coreDataIndexNumber = coreDataIndexNumber
+        super.init(nibName: nil, bundle: nil)
+    }
+    
+    required init?(coder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
+    }
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -156,9 +167,9 @@ final class DetailViewController: UIViewController {
             giftImageView.topAnchor.constraint(equalTo: selectedButton.bottomAnchor, constant: view.frame.width / 20),
             giftImageView.leadingAnchor.constraint(equalTo: contentsView.leadingAnchor),
             giftImageView.trailingAnchor.constraint(equalTo: contentsView.trailingAnchor),
-            giftImageView.bottomAnchor.constraint(equalTo: contentsView.bottomAnchor)
+            giftImageView.bottomAnchor.constraint(equalTo: contentsView.bottomAnchor),
+            giftImageView.heightAnchor.constraint(lessThanOrEqualTo: giftImageView.widthAnchor, multiplier: 2)
         ])
-        giftImageView.setContentHuggingPriority(.fittingSizeLevel, for: .vertical)
     }
     
     private func configureImageTapGesture() {
@@ -183,6 +194,7 @@ final class DetailViewController: UIViewController {
         }
         
         let done = UIAlertAction(title: "네", style: .default) { _ in
+            // TODO: CoreData Update구현
             if self.isUseableGift {
                 self.changeGiftState(true)
             } else {
@@ -213,5 +225,48 @@ final class DetailViewController: UIViewController {
         guard let image = giftImageView.image else { return }
         
         present(GiftImageViewController(image: image), animated: true)
+    }
+}
+
+// MARK: ValueChange
+extension DetailViewController {
+    func changeBrandLabel(name: String?) {
+        guard let name = name else {
+            brandLabel.text = "Name is Nill"
+            return
+        }
+        brandLabel.text = name
+    }
+    
+    func changeProductNameLabel(name: String?) {
+        guard let name = name else {
+            productNameLabel.text = "Name is Nill"
+            return
+        }
+        productNameLabel.text = name
+    }
+    
+    func changeDateDueLabel(date: Date?) {
+        guard let date = date else {
+            brandLabel.text = "Date is Nil"
+            return
+        }
+        dateDueLabel.text = date.setupDateStyleForDisplay()
+    }
+    
+    func changeMemoTextField(name: String?) {
+        guard let name = name else {
+            return
+        }
+        memoTextField.text = name
+    }
+    
+    // TODO: 사용완료 버튼
+    func changeSelectedButton(bool: Bool) {
+        
+    }
+    
+    func changeGiftImageView(image: UIImage) {
+        giftImageView.image = image
     }
 }
