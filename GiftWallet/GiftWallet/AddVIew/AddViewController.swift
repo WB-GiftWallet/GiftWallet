@@ -70,6 +70,8 @@ class AddViewController: UIViewController {
         setupViews()
         setupButton()
         setuptextInTextField()
+        setupDatePicekrInputViewWhenPageIsExpireDate()
+        hideKeyboardWhenTappedAround()
     }
     
     override func viewDidLayoutSubviews() {
@@ -117,7 +119,7 @@ class AddViewController: UIViewController {
         
         let buttonImage = UIImage(systemName: "multiply")
         navigationItem.rightBarButtonItem = UIBarButtonItem(image: buttonImage,
-                                                           primaryAction: closeAction)
+                                                            primaryAction: closeAction)
         navigationController?.navigationBar.tintColor = .black
     }
     
@@ -148,8 +150,53 @@ class AddViewController: UIViewController {
             actionButton.bottomAnchor.constraint(equalTo: safeArea.bottomAnchor,constant: -30),
             actionButton.widthAnchor.constraint(equalTo: safeArea.widthAnchor, multiplier: 0.9),
             actionButton.heightAnchor.constraint(equalTo: safeArea.heightAnchor, multiplier: 0.07)
-            
-            
         ])
+    }
+}
+
+
+//MARK: Keyboard 관련
+extension AddViewController {
+    private func hideKeyboardWhenTappedAround() {
+        let tap = UITapGestureRecognizer(target: self, action: #selector(dismissKeyboard))
+        tap.cancelsTouchesInView = false
+        view.addGestureRecognizer(tap)
+    }
+    
+    @objc
+    private func dismissKeyboard() {
+        view.endEditing(true)
+    }
+
+    private func setupDatePicekrInputViewWhenPageIsExpireDate() {
+        if page == .expireDate {
+            setupDatePicekrAttributes()
+        }
+    }
+    
+    private func setupDatePicekrAttributes() {
+        let datePickerView = UIDatePicker()
+        
+        datePickerView.sizeToFit()
+        datePickerView.preferredDatePickerStyle = .inline
+        datePickerView.locale = Locale(identifier: "ko-KR")
+        datePickerView.setDate(Date(), animated: true)
+        datePickerView.addTarget(self,
+                                 action: #selector(valueChangedDatePicker(sender:)),
+                                 for: .valueChanged)
+        
+        inputTextField.inputView = datePickerView
+        inputTextField.inputView?.backgroundColor = .white
+    }
+    
+    @objc
+    private func valueChangedDatePicker(sender: UIDatePicker) {
+        let dateFormatter = DateFormatter()
+        dateFormatter.dateFormat = "yyyy. MM. dd"
+        dateFormatter.locale = Locale(identifier: "ko_KR")
+        
+        if inputTextField.isFirstResponder {
+            inputTextField.text = dateFormatter.string(from: sender.date)
+        }
     }
 }
