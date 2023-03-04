@@ -80,7 +80,7 @@ class AddViewController: UIViewController {
     }
     
     private func setuptextInTextField() {
-        inputTextField.text = viewModel.getBrandNameFromSeletedImage()
+//        inputTextField.text = viewModel.getBrandNameFromSeletedImage()
     }
     
     private func setupButton() {
@@ -176,11 +176,16 @@ extension AddViewController {
     
     private func setupDatePicekrAttributes() {
         let datePickerView = UIDatePicker()
+        var components = DateComponents()
         
         datePickerView.sizeToFit()
         datePickerView.preferredDatePickerStyle = .inline
         datePickerView.locale = Locale(identifier: "ko-KR")
         datePickerView.setDate(Date(), animated: true)
+        components.day = 0
+        let minimumDate = Calendar.autoupdatingCurrent.date(byAdding: components, to: Date())
+        datePickerView.minimumDate = minimumDate
+        
         datePickerView.addTarget(self,
                                  action: #selector(valueChangedDatePicker(sender:)),
                                  for: .valueChanged)

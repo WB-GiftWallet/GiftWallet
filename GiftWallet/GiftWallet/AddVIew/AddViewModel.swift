@@ -23,17 +23,17 @@ class AddViewModel {
         self.selectedImage = seletedImage
     }
     
-    func 가져와라텍스트필드데이터를() -> String? {
-        useCase.processImageTextsToExpireDate()
-        
-        return ""
-    }
-    
-    func getBrandNameFromSeletedImage() -> String? {
+    func 가져와라텍스트필드데이터를(page: Page) -> String? {
         let texts = visionManager.vnRecognizeRequest(image: selectedImage)
-        let brandName = useCase.processImageTextsToBrandNameText(imageTexts: texts)
         
-        return brandName
+        switch page {
+        case .brand:
+            return useCase.processImageTextsToBrandNameText(imageTexts: texts)
+        case .productName:
+            return nil
+        case .expireDate:
+            return useCase.processImageTextsToExpireDate(imageTexts: texts)
+        }
     }
     
     

@@ -26,47 +26,38 @@ struct AutoInputUseCase {
     }
     
     //MARK: Texts To Date
-    func processImageTextsToExpireDate() {
-        guard let regex = setupRegularExpression(regexPattern: .yyyyMMdd) else { return }
-        let dateStrings = ["달콤함을전하다.", "CONETCON", "STARBUCKS' (스타벅스) 카페 아메리카노", "T", "사용장소 : 스타벅스", "상품수량: 1개", "*사용기한 : 2023.02.12까지", "9999-7088-7125", "2012년 08월03", "2011.11.02", "2233/11/11", "22331111"]
-        let trimmedDateStrings = trimmingDataString(dateStrings)
-
-        let results = trimmedDateStrings.filter {
-            let isContainNumberInTrimmingDateString = !regex.matches(in: $0,
-                                                        options: [],
-                                                        range: NSRange(location: 0, length: $0.utf16.count)).isEmpty
-            return isContainNumberInTrimmingDateString
-        }
+    func processImageTextsToExpireDate(imageTexts: [String]?) -> String? {
+        guard let regex = setupRegularExpression(),
+              let imageTexts = imageTexts else { return nil }
         
-        let pattern = "[^0-9.]"
-        let filtered = results.map { $0.replacingOccurrences(of: pattern, with: "", options: .regularExpression) }
-        print(filtered)
+        let trimmedImageTexts = trimmingImageTexts(imageTexts)
+        let filteredTexts = filterWhenImageTextHasNumber(regex, trimmedImageTexts)
+        let removeNumberInTexts = removeNumberInFilteredTexts(filteredTexts)
+        let removeDotTexts = removeDotInTexts(removeNumberInTexts)
+        let filterdByTextCountTexts = filterIsEnoughTextCount(removeDotTexts)
+        let removeDuplicatedNumberTexts = removeDuplicatedNumber(filterdByTextCountTexts)
+                
+        let outputDateString = processInputDateFormatToDisplayingDateFormat(texts: removeDuplicatedNumberTexts)
         
-        let removeDot = filtered.map({ $0.replacingOccurrences(of: ".", with: "") })
-        print(removeDot)
-        
-        let aa = removeDot.filter({ $0.count >= 5 && $0.count <= 8 })
-        print(aa)
-        
-        let resultSet = Set(aa)
-        let arrayResult = Array(resultSet)
-        print(arrayResult)
-        
-        let InputFormatter = DateFormatter()
-        InputFormatter.dateFormat = "yyyyMMdd"
-        
-        if let date = InputFormatter.date(from: arrayResult.first!) {
-            let outputFormatter = DateFormatter()
-            outputFormatter.dateFormat = "yyyy.MM.dd"
-            let outputDateString = outputFormatter.string(from: date)
-            print(outputDateString)
-        }
-        
-        
-        
+        return outputDateString
     }
     
-    private func setupRegularExpression(regexPattern: DatePattern) -> NSRegularExpression? {
+    private func trimmingImageTexts(_ values: [String]) -> [String] {
+        return values.map({ $0.replacingOccurrences(of: " ", with: "") })
+    }
+    
+    private func filterWhenImageTextHasNumber(_ regex: NSRegularExpression,
+                                              _ texts: [String]) -> [String] {
+        let filteredTexts = texts.filter {
+            let isContainNumberInTexts = !regex.matches(in: $0,
+                                                        options: [],
+                                                        range: NSRange(location: 0, length: $0.utf16.count)).isEmpty
+            return isContainNumberInTexts
+        }
+        return filteredTexts
+    }
+    
+    private func setupRegularExpression() -> NSRegularExpression? {
         var regex: NSRegularExpression?
         
         do {
@@ -79,44 +70,56 @@ struct AutoInputUseCase {
         return regex
     }
     
-    private func trimmingDataString(_ values: [String]) -> [String] {
-        return values.map({ $0.replacingOccurrences(of: " ", with: "") })
+    private func removeNumberInFilteredTexts(_ texts: [String]) -> [String] {
+        let regexPattern = "[^0-9.]"
+        
+        let removedNumberInTexts = texts.map {
+            $0.replacingOccurrences(of: regexPattern, with: "", options: .regularExpression)
+        }
+        return removedNumberInTexts
     }
-    /*
-     let regex = try! NSRegularExpression(pattern: #"\b\d{4}[./\-년]\d{2}[./\-월 ]\d{2}[^\d]*\b"#)
-
-     var dates: [String] = []
-
-     for str in array {
-         let range = NSRange(str.startIndex..<str.endIndex, in: str)
-         let matches = regex.matches(in: str, range: range)
-         for match in matches {
-             let date = (str as NSString).substring(with: match.range)
-             dates.append(date)
-         }
-     }
-     */
     
+    private func removeDotInTexts(_ texts: [String]) -> [String] {
+        return texts.map({ $0.replacingOccurrences(of: ".", with: "") })
+    }
     
+    private func filterIsEnoughTextCount(_ texts: [String]) -> [String] {
+        return texts.filter({ $0.count >= 5 && $0.count <= 8 })
+    }
     
-}
-
-enum DatePattern: CaseIterable {
-    case yyyyMMdd
-    case yyyyMdd
-    case yyMMdd
-    case yyMdd
+    private func removeDuplicatedNumber(_ texts: [String]) -> [String] {
+        let setTexts = Set(texts)
+        return Array(setTexts)
+    }
     
-    var regexDescription: String {
-        switch self {
-        case .yyyyMMdd:
-            return #"^\d{4}[./\-년]?\d{2}[./\-월 ]?\d{2}[^\d]*$"#
-        case .yyyyMdd:
-            return #"^\d{4}[./\-년 ]?\d{1,2}[./\-월 ]?\d{2}[^\d]*$"#
-        case .yyMMdd:
-            return #"^\d{2}[./\-년 ]?\d{2}[./\-월 ]?\d{2}[^\d]*$"#
-        case .yyMdd:
-            return #"^\d{2}[./\-년 ]?\d{1,2}[./\-월 ]?\d{2}[^\d]*$"#
+    private func processInputDateFormatToDisplayingDateFormat(texts: [String]) -> String? {
+        guard let text = texts.first else { return nil }
+        var outputString: String?
+        
+        let inputDateFormatter = DateFormatter()
+        inputDateFormatter.dateFormat = branchOutByTextCount(text: text)
+        
+        if let date = inputDateFormatter.date(from: text) {
+            let outputFormatter = DateFormatter()
+            outputFormatter.dateFormat = "yyyy. MM. dd"
+            outputString = outputFormatter.string(from: date)
+            return outputString
+        }
+        return outputString
+    }
+    
+    private func branchOutByTextCount(text: String) -> String {
+        switch text.count {
+        case 5:
+            return "yyMdd"
+        case 6:
+            return "yyMMdd"
+        case 7:
+            return "yyyyMdd"
+        case 8:
+            return "yyyyMMdd"
+        default:
+            return "yyyyMMdd"
         }
     }
 }
