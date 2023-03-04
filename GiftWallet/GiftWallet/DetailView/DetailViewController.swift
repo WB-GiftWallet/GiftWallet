@@ -87,8 +87,6 @@ final class DetailViewController: UIViewController {
         return imageView
     }()
     
-    private var isUseableGift = true
-    
     init(giftData: Gift?) {
         self.coreGiftData = giftData
         super.init(nibName: nil, bundle: nil)
@@ -121,10 +119,10 @@ final class DetailViewController: UIViewController {
         guard let useableState = coreGiftData?.useableState else { return }
         
         if useableState {
-            isUseableGift = true
+            coreGiftData?.useableState = true
             selectedButton.backgroundColor = .systemPurple
         } else {
-            isUseableGift = false
+            coreGiftData?.useableState = false
             selectedButton.backgroundColor = .systemGray
         }
     }
@@ -200,10 +198,12 @@ final class DetailViewController: UIViewController {
     }
     
     @objc private func tapSeletedButton() {
-        //TODO: Seleted Button Tapped
         let alert = UIAlertController(title: nil, message: nil, preferredStyle: .alert)
+        guard let useableState = coreGiftData?.useableState else {
+            return
+        }
         
-        if isUseableGift {
+        if useableState {
             alert.title = "사용 완료 처리할까요?"
         } else {
             alert.title = "사용 가능한 기프티콘인가요?"
@@ -214,14 +214,13 @@ final class DetailViewController: UIViewController {
         }
         
         let done = UIAlertAction(title: "네", style: .default) { _ in
-            // TODO: CoreData Update구현
-            if self.isUseableGift {
+            if useableState {
                 self.changeGiftState(true)
-//                var giftData = Gift()
-//                CoreDataManager.shared.updateData(<#T##giftData: Gift##Gift#>)
             } else {
                 self.changeGiftState(false)
             }
+            
+            self.coreDataUpdate()
         }
         
         alert.addAction(cancel)
@@ -230,19 +229,28 @@ final class DetailViewController: UIViewController {
         present(alert, animated: true)
     }
     
-    //TODO: 사용불가, 가능 변경
     private func changeGiftState(_ seleted: Bool) {
-        isUseableGift.toggle()
+        coreGiftData?.useableState.toggle()
         
         if seleted {
             selectedButton.backgroundColor = .systemGray
         } else {
             selectedButton.backgroundColor = .systemPurple
         }
+        
         dismiss(animated: true)
     }
     
-    //TODO: ImageView Tapped
+    private func coreDataUpdate() {
+        guard let coreGiftData = coreGiftData else { return }
+        
+        do {
+            try CoreDataManager.shared.updateData(coreGiftData)
+        } catch {
+            print(error.localizedDescription)
+        }
+    }
+    
     @objc private func tapImageView(sender: UITapGestureRecognizer) {
         guard let image = giftImageView.image else { return }
         
@@ -281,11 +289,6 @@ extension DetailViewController {
             return
         }
         memoTextField.text = name
-    }
-    
-    // TODO: 사용완료 버튼
-    func changeSelectedButton(bool: Bool) {
-        
     }
     
     func changeGiftImageView(image: UIImage) {
