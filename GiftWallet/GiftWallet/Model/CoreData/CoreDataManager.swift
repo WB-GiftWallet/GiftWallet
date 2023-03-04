@@ -80,10 +80,13 @@ final class CoreDataManager {
             updatingData.setValue(giftData.expireDate, forKey: "expireDate")
             updatingData.setValue(giftData.useDate, forKey: "useDate")
             
-            do {
-                try context.save()
-            } catch {
-                print(error.localizedDescription)
+            if context.hasChanges {
+                do {
+                    try context.save()
+                    return
+                } catch {
+                    print(error.localizedDescription)
+                }
             }
         } catch {
             print(error.localizedDescription)
