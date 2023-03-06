@@ -8,14 +8,8 @@
 import UIKit
 
 class MainViewController: UIViewController, UISearchBarDelegate, UISearchControllerDelegate {
-    
-    enum Constant {
-        static let userNameDescription = """
-AAAA 님의
-기프티콘 지갑입니다.
-"""
-        static let updateUserInfoDescription = "정보 수정"
-    }
+
+    private let viewModel: MainViewModel
     
     private lazy var contentScrollView: UIScrollView = {
         
@@ -35,63 +29,30 @@ AAAA 님의
         return view
     }()
     
-    
-    private let viewModel: MainViewModel
-    
-    private let userNameLabel = {
-        let label = UILabel()
+    private lazy var searchButton = {
+        let button = UIButton(frame: CGRect(x: 0, y: 0, width: view.frame.width * 0.9, height: view.frame.height * 0.04))
+        button.backgroundColor = .serachButton
+        button.setTitle("    브랜드로 검색하기", for: .normal)
+        button.titleLabel?.font = UIFont(style: .medium, size: 16)
+        button.setTitleColor(UIColor.searchLabel, for: .normal)
+        button.contentHorizontalAlignment = .left
+        button.setImage(UIImage(systemName: "magnifyingglass"), for: .normal)
+        button.tintColor = .searchLabel
+        button.semanticContentAttribute = .forceRightToLeft
+        button.imageEdgeInsets = UIEdgeInsets(top: 0, left: view.frame.width - button.frame.width * 0.55, bottom: 0, right: 0)
+        button.layer.cornerRadius = 6
         
-        label.text = Constant.userNameDescription
-        label.font = UIFont.preferredFont(forTextStyle: .title2)
-        label.numberOfLines = 0
-        label.translatesAutoresizingMaskIntoConstraints = false
-        
-        return label
-    }()
-    
-    private let userInfoModifyButton = {
-        let button = UIButton()
-        
-        button.setTitle(Constant.updateUserInfoDescription, for: .normal)
-        button.setTitleColor(UIColor.gray, for: .normal)
         button.translatesAutoresizingMaskIntoConstraints = false
         
         return button
     }()
     
-    private let userProfileImageView = {
-        let imageView = UIImageView()
-        
-        imageView.image = UIImage(named: "testImagewoongPhoto")
-        return imageView
-    }()
-    
-    private let userInfoVerticalStackView = {
-        let stackView = UIStackView()
-        
-        stackView.axis = .vertical
-        stackView.alignment = .leading
-        stackView.spacing = 5
-        
-        return stackView
-    }()
-    
-    private let userInfoHorizontalStackView = {
-        let stackView = UIStackView()
-        
-        stackView.axis = .horizontal
-        stackView.alignment = .center
-        stackView.distribution = .equalSpacing
-        stackView.translatesAutoresizingMaskIntoConstraints = false
-        
-        return stackView
-    }()
     
     private let expireCollectionViewHeaderLabel = {
         let label = UILabel()
         
         label.text = "😟 기간이 얼마 안남았어요!"
-        label.font = .boldSystemFont(ofSize: 22)
+        label.font = UIFont(style: FontStyle.bold, size: 18)
         label.translatesAutoresizingMaskIntoConstraints = false
         
         return label
@@ -111,7 +72,7 @@ AAAA 님의
         let label = UILabel()
         
         label.text = "😄 최근에 등록했어요."
-        label.font = .boldSystemFont(ofSize: 22)
+        label.font = UIFont(style: FontStyle.bold, size: 18)
         label.translatesAutoresizingMaskIntoConstraints = false
         
         return label
@@ -160,8 +121,9 @@ AAAA 님의
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        setupProfileButton()
         setupViews()
+        setupButton()
+        
         bind()
         
     }
@@ -189,25 +151,20 @@ AAAA 님의
     
     override func viewWillLayoutSubviews() {
         super.viewWillLayoutSubviews()
-        userProfileImageView.layer.cornerRadius = userProfileImageView.frame.width / 2
-        userProfileImageView.clipsToBounds = true
+
     }
     
-    private func setupProfileButton() {
-        let modifyAction = UIAction { [weak self] _ in
-            let userInfoModifyViewModel = UserInfoModifyViewModel()
-            let userInfoModifyViewController = UserInfoModifyViewController(userInfoModifyViewModel: userInfoModifyViewModel)
-            self?.navigationController?.pushViewController(userInfoModifyViewController, animated: true)
+    private func setupButton() {
+        let searchButtonAction = UIAction { _ in
+            let searchTableViewController = SearchTableViewController()
+            self.navigationController?.pushViewController(searchTableViewController, animated: true)
         }
-        userInfoModifyButton.addAction(modifyAction, for: .touchUpInside)
+        searchButton.addAction(searchButtonAction, for: .touchUpInside)
     }
     
     private func setupViews() {
 
-        [userNameLabel, userInfoModifyButton].forEach(userInfoVerticalStackView.addArrangedSubview(_:))
-        [userInfoVerticalStackView, userProfileImageView].forEach(userInfoHorizontalStackView.addArrangedSubview(_:))
-        
-        contentView.addSubview(userInfoHorizontalStackView)
+        contentView.addSubview(searchButton)
         contentView.addSubview(expireCollectionViewHeaderLabel)
         contentView.addSubview(expireCollectionView)
         contentView.addSubview(recentCollectionViewHeaderLabel)
@@ -231,26 +188,24 @@ AAAA 님의
             contentView.widthAnchor.constraint(equalTo: contentScrollView.widthAnchor),
             contentView.heightAnchor.constraint(equalTo: contentScrollView.heightAnchor),
             
-            userProfileImageView.widthAnchor.constraint(equalTo: contentView.widthAnchor, multiplier: 0.2),
-            userProfileImageView.heightAnchor.constraint(equalTo: userProfileImageView.widthAnchor),
+            searchButton.topAnchor.constraint(equalTo: safeArea.topAnchor, constant: 10),
+            searchButton.centerXAnchor.constraint(equalTo: contentView.centerXAnchor),
+            searchButton.widthAnchor.constraint(equalTo: contentView.widthAnchor, multiplier: 0.9),
+            searchButton.heightAnchor.constraint(equalTo: contentView.heightAnchor, multiplier: 0.04),
             
-            userInfoHorizontalStackView.topAnchor.constraint(equalTo: safeArea.topAnchor, constant: 5),
-            userInfoHorizontalStackView.leadingAnchor.constraint(equalTo: safeArea.leadingAnchor, constant: 30),
-            userInfoHorizontalStackView.trailingAnchor.constraint(equalTo: safeArea.trailingAnchor, constant: -30),
-            
-            expireCollectionViewHeaderLabel.topAnchor.constraint(equalTo: userInfoHorizontalStackView.bottomAnchor, constant: 30),
+            expireCollectionViewHeaderLabel.topAnchor.constraint(equalTo: searchButton.bottomAnchor, constant: 30),
             expireCollectionViewHeaderLabel.leadingAnchor.constraint(equalTo: safeArea.leadingAnchor, constant: 15),
             
-            expireCollectionView.topAnchor.constraint(equalTo: expireCollectionViewHeaderLabel.bottomAnchor, constant: 5),
+            expireCollectionView.topAnchor.constraint(equalTo: expireCollectionViewHeaderLabel.bottomAnchor, constant: 15),
             expireCollectionView.leadingAnchor.constraint(equalTo: expireCollectionViewHeaderLabel.leadingAnchor),
             expireCollectionView.trailingAnchor.constraint(equalTo: expireCollectionViewHeaderLabel.trailingAnchor),
             expireCollectionView.widthAnchor.constraint(equalTo: contentView.widthAnchor),
             expireCollectionView.heightAnchor.constraint(equalTo: expireCollectionView.widthAnchor, multiplier: 0.85),
             
-            recentCollectionViewHeaderLabel.topAnchor.constraint(equalTo: expireCollectionView.bottomAnchor, constant: 10),
+            recentCollectionViewHeaderLabel.topAnchor.constraint(equalTo: expireCollectionView.bottomAnchor, constant: 25),
             recentCollectionViewHeaderLabel.leadingAnchor.constraint(equalTo: expireCollectionViewHeaderLabel.leadingAnchor),
             
-            recentCollectionView.topAnchor.constraint(equalTo: recentCollectionViewHeaderLabel.bottomAnchor, constant: 5),
+            recentCollectionView.topAnchor.constraint(equalTo: recentCollectionViewHeaderLabel.bottomAnchor, constant: 15),
             recentCollectionView.leadingAnchor.constraint(equalTo: recentCollectionViewHeaderLabel.leadingAnchor),
             recentCollectionView.trailingAnchor.constraint(equalTo: recentCollectionViewHeaderLabel.trailingAnchor),
             recentCollectionView.widthAnchor.constraint(equalTo: contentView.widthAnchor),
@@ -311,7 +266,7 @@ extension MainViewController: UICollectionViewDataSource, UICollectionViewDelega
 
 extension MainViewController: UICollectionViewDelegateFlowLayout {
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
-        return CGSize(width: collectionView.frame.width / 2.5, height: 300)
+        return CGSize(width: collectionView.frame.width / 2.5, height: collectionView.frame.height)
     }
     
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, minimumInteritemSpacingForSectionAt section: Int) -> CGFloat {

@@ -127,22 +127,16 @@ final class MainTabBarController: UITabBarController {
         imageView.frame = CGRect(x: 0, y: 0, width: 80, height: 30)
         navigationItem.leftBarButtonItem = UIBarButtonItem(customView: imageView)
         
-        let searchAction = UIAction { _ in
-            self.navigationController?.pushViewController(SearchTableViewController(), animated: true)
-        }
         let bellAction = UIAction { _ in
             //TODO: 알림 리스트 전환으로 변경
             print("CoreData 추가")
             Gift.addSampleData()
         }
         
-//        let searchSFSymbol = UIImage(systemName: "magnifyingglass")
-//        navigationItem.leftBarButtonItem = UIBarButtonItem(image: searchSFSymbol,
-//                                                           primaryAction: searchAction)
         let bellSFSymbol = UIImage(systemName: "bell.fill")
         navigationItem.rightBarButtonItem = UIBarButtonItem(image: bellSFSymbol,
                                                             primaryAction: bellAction)
-        navigationController?.navigationBar.tintColor = .black
+        navigationItem.rightBarButtonItem?.tintColor = .black
     }
 }
 
