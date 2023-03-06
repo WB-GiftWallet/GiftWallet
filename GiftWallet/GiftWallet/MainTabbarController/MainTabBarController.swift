@@ -82,7 +82,6 @@ final class MainTabBarController: UITabBarController {
         
         setupNavigation()
         configureEachViewControllers()
-        setupNavigation()
     }
     
     override func tabBar(_ tabBar: UITabBar, didSelect item: UITabBarItem) {
@@ -102,8 +101,31 @@ final class MainTabBarController: UITabBarController {
         viewControllers = [mainViewController, blankViewController, settingViewController]
     }
     
+    func setNCBI() {
+        let view = UIView(frame: CGRect(x: 0, y: 0, width: 200, height: 40))
+        view.backgroundColor = .red
+        view.layer.borderWidth = 2
+        
+        let leftBarBtn = UIBarButtonItem(customView: view)
+        
+        let rightView = UIView(frame: CGRect(x: 0, y: 0, width: 200, height: 40))
+        rightView.backgroundColor = .blue
+        rightView.layer.borderWidth = 2
+        
+        let rightBtn = UIBarButtonItem(customView: rightView)
+        
+        self.navigationItem.rightBarButtonItem = rightBtn
+        self.navigationItem.leftBarButtonItem = leftBarBtn
+    }
+    
     private func setupNavigation() {
-        title = ""
+        // TODO: SampleLogo 수정필요
+        let image = UIImage(named: "SampleLogoWow")
+        let imageView = UIImageView()
+        imageView.image = image
+        imageView.contentMode = .scaleAspectFit
+        imageView.frame = CGRect(x: 0, y: 0, width: 80, height: 30)
+        navigationItem.leftBarButtonItem = UIBarButtonItem(customView: imageView)
         
         let searchAction = UIAction { _ in
             self.navigationController?.pushViewController(SearchTableViewController(), animated: true)
@@ -114,9 +136,9 @@ final class MainTabBarController: UITabBarController {
             Gift.addSampleData()
         }
         
-        let searchSFSymbol = UIImage(systemName: "magnifyingglass")
-        navigationItem.leftBarButtonItem = UIBarButtonItem(image: searchSFSymbol,
-                                                           primaryAction: searchAction)
+//        let searchSFSymbol = UIImage(systemName: "magnifyingglass")
+//        navigationItem.leftBarButtonItem = UIBarButtonItem(image: searchSFSymbol,
+//                                                           primaryAction: searchAction)
         let bellSFSymbol = UIImage(systemName: "bell.fill")
         navigationItem.rightBarButtonItem = UIBarButtonItem(image: bellSFSymbol,
                                                             primaryAction: bellAction)
