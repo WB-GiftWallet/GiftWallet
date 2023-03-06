@@ -294,7 +294,8 @@ extension MainViewController: UICollectionViewDataSource, UICollectionViewDelega
     }
     
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
-        let detailViewController = DetailViewController()
+        // TODO: detailViewController, send Number
+        let detailViewController = DetailViewController(coreDataIndexNumber: 0)
         navigationController?.pushViewController(detailViewController, animated: true)
     }
     

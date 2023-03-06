@@ -82,6 +82,7 @@ final class MainTabBarController: UITabBarController {
         
         setupNavigation()
         configureEachViewControllers()
+        setupNavigation()
     }
     
     override func tabBar(_ tabBar: UITabBar, didSelect item: UITabBarItem) {
@@ -105,7 +106,7 @@ final class MainTabBarController: UITabBarController {
         title = ""
         
         let searchAction = UIAction { _ in
-            print("검색창 전환")
+            self.navigationController?.pushViewController(SearchTableViewController(), animated: true)
         }
         let bellAction = UIAction { _ in
             //TODO: 알림 리스트 전환으로 변경
