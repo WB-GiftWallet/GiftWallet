@@ -13,8 +13,8 @@ struct Gift {
     let category: Category?
     let brandName: String?
     let productName: String?
-    let memo: String?
-    let useableState: Bool
+    var memo: String?
+    var useableState: Bool
     let expireDate: Date?
     let useDate: Date?
 

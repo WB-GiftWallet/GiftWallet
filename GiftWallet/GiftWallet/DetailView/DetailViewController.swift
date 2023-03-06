@@ -9,7 +9,7 @@ import UIKit
 
 final class DetailViewController: UIViewController {
     
-    private let coreDataIndexNumber: Int
+    private var coreGiftData: Gift?
     
     private let scrollView: UIScrollView = {
         let view = UIScrollView(frame: .zero)
@@ -63,6 +63,7 @@ final class DetailViewController: UIViewController {
         textField.font = .preferredFont(forTextStyle: .title2)
         textField.borderStyle = .roundedRect
         textField.placeholder = "메모입력란입니다."
+        textField.addTarget(nil, action: #selector(textFieldDidChange), for: .editingChanged)
         
         return textField
     }()
@@ -87,10 +88,8 @@ final class DetailViewController: UIViewController {
         return imageView
     }()
     
-    private var isUseableGift = true
-    
-    init(coreDataIndexNumber: Int, isUseableGift: Bool = true) {
-        self.coreDataIndexNumber = coreDataIndexNumber
+    init(giftData: Gift?) {
+        self.coreGiftData = giftData
         super.init(nibName: nil, bundle: nil)
     }
     
@@ -107,6 +106,26 @@ final class DetailViewController: UIViewController {
         configureContentView()
         configureInnerContents()
         configureImageTapGesture()
+        
+        setupGiftData()
+    }
+    
+    private func setupGiftData() {
+        brandLabel.text = coreGiftData?.brandName
+        productNameLabel.text = coreGiftData?.productName
+        dateDueLabel.text = coreGiftData?.expireDate?.setupDateStyleForDisplay()
+        memoTextField.text = coreGiftData?.memo
+        giftImageView.image = coreGiftData?.image
+        
+        guard let useableState = coreGiftData?.useableState else { return }
+        
+        if useableState {
+            coreGiftData?.useableState = true
+            selectedButton.backgroundColor = .systemPurple
+        } else {
+            coreGiftData?.useableState = false
+            selectedButton.backgroundColor = .systemGray
+        }
     }
     
     private func configureScrollView() {
@@ -180,10 +199,12 @@ final class DetailViewController: UIViewController {
     }
     
     @objc private func tapSeletedButton() {
-        //TODO: Seleted Button Tapped
         let alert = UIAlertController(title: nil, message: nil, preferredStyle: .alert)
+        guard let useableState = coreGiftData?.useableState else {
+            return
+        }
         
-        if isUseableGift {
+        if useableState {
             alert.title = "사용 완료 처리할까요?"
         } else {
             alert.title = "사용 가능한 기프티콘인가요?"
@@ -194,12 +215,13 @@ final class DetailViewController: UIViewController {
         }
         
         let done = UIAlertAction(title: "네", style: .default) { _ in
-            // TODO: CoreData Update구현
-            if self.isUseableGift {
+            if useableState {
                 self.changeGiftState(true)
             } else {
                 self.changeGiftState(false)
             }
+            
+            self.coreDataUpdate()
         }
         
         alert.addAction(cancel)
@@ -208,23 +230,38 @@ final class DetailViewController: UIViewController {
         present(alert, animated: true)
     }
     
-    //TODO: 사용불가, 가능 변경
     private func changeGiftState(_ seleted: Bool) {
-        isUseableGift.toggle()
+        coreGiftData?.useableState.toggle()
         
         if seleted {
             selectedButton.backgroundColor = .systemGray
         } else {
             selectedButton.backgroundColor = .systemPurple
         }
+        
         dismiss(animated: true)
     }
     
-    //TODO: ImageView Tapped
+    private func coreDataUpdate() {
+        guard let coreGiftData = coreGiftData else { return }
+        
+        do {
+            try CoreDataManager.shared.updateData(coreGiftData)
+        } catch {
+            print(error.localizedDescription)
+        }
+    }
+    
     @objc private func tapImageView(sender: UITapGestureRecognizer) {
         guard let image = giftImageView.image else { return }
         
         present(GiftImageViewController(image: image), animated: true)
+    }
+    
+    // MARK: Memo Text Field Changed Method
+    @objc private func textFieldDidChange() {
+        coreGiftData?.memo = memoTextField.text
+        coreDataUpdate()
     }
 }
 
@@ -259,11 +296,6 @@ extension DetailViewController {
             return
         }
         memoTextField.text = name
-    }
-    
-    // TODO: 사용완료 버튼
-    func changeSelectedButton(bool: Bool) {
-        
     }
     
     func changeGiftImageView(image: UIImage) {

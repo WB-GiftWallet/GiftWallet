@@ -62,9 +62,8 @@ final class CoreDataManager {
         guard let context = appDelegate?.persistentContainer.viewContext else {
             throw CoreDataError.contextInvalid
         }
-        
         let fetchRequest = NSFetchRequest<NSFetchRequestResult>.init(entityName: "GiftData")
-        fetchRequest.predicate = NSPredicate(format: "number = %@", giftData.number as CVarArg)
+        fetchRequest.predicate = NSPredicate(format: "number = %@", String(giftData.number) as CVarArg)
 
         do {
             let test = try context.fetch(fetchRequest)
@@ -80,10 +79,13 @@ final class CoreDataManager {
             updatingData.setValue(giftData.expireDate, forKey: "expireDate")
             updatingData.setValue(giftData.useDate, forKey: "useDate")
             
-            do {
-                try context.save()
-            } catch {
-                print(error.localizedDescription)
+            if context.hasChanges {
+                do {
+                    try context.save()
+                    return
+                } catch {
+                    print(error.localizedDescription)
+                }
             }
         } catch {
             print(error.localizedDescription)

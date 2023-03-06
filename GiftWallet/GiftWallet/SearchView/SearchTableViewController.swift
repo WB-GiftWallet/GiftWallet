@@ -95,7 +95,7 @@ extension SearchTableViewController {
             indexGiftsData = allGiftData[indexPath.row]
         }
         
-        let detailViewController = DetailViewController(coreDataIndexNumber: indexGiftsData.number)
+        let detailViewController = DetailViewController(giftData: indexGiftsData)
         
         detailViewController.changeBrandLabel(name: indexGiftsData.brandName)
         detailViewController.changeProductNameLabel(name: indexGiftsData.productName)
