@@ -21,7 +21,7 @@ final class MainTabBarController: UITabBarController {
         var systemName: String {
             switch self {
             case .detail:
-                return "list.clipboard.fill"
+                return "house"
             case .addGift:
                 return "plus.circle.fill"
             case .setting:
@@ -35,6 +35,7 @@ final class MainTabBarController: UITabBarController {
         
         viewController.tabBarItem.image = UIImage(systemName: tag.detail.systemName)
         viewController.tabBarItem.tag = tag.detail.rawValue
+        viewController.tabBarItem.selectedImage = UIImage(systemName: "house.fill")
         
         return viewController
     }()
@@ -60,6 +61,7 @@ final class MainTabBarController: UITabBarController {
         
         viewController.tabBarItem.image = UIImage(systemName: tag.setting.systemName)
         viewController.tabBarItem.tag = tag.setting.rawValue
+        viewController.tabBarItem.selectedImage = UIImage(systemName: "gearshape.fill")
         
         return viewController
     }()
@@ -95,27 +97,13 @@ final class MainTabBarController: UITabBarController {
     
     private func configureEachViewControllers() {
         // TODO: Color 변경
-        self.tabBar.tintColor = .label
-        self.tabBar.unselectedItemTintColor = .systemPink
+        tabBar.tintColor = .black
+        tabBar.unselectedItemTintColor = .black
+        
+        tabBar.isTranslucent = false
+        tabBar.barTintColor = .white
         
         viewControllers = [mainViewController, blankViewController, settingViewController]
-    }
-    
-    func setNCBI() {
-        let view = UIView(frame: CGRect(x: 0, y: 0, width: 200, height: 40))
-        view.backgroundColor = .red
-        view.layer.borderWidth = 2
-        
-        let leftBarBtn = UIBarButtonItem(customView: view)
-        
-        let rightView = UIView(frame: CGRect(x: 0, y: 0, width: 200, height: 40))
-        rightView.backgroundColor = .blue
-        rightView.layer.borderWidth = 2
-        
-        let rightBtn = UIBarButtonItem(customView: rightView)
-        
-        self.navigationItem.rightBarButtonItem = rightBtn
-        self.navigationItem.leftBarButtonItem = leftBarBtn
     }
     
     private func setupNavigation() {

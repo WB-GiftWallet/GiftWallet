@@ -194,7 +194,7 @@ class MainViewController: UIViewController, UISearchBarDelegate, UISearchControl
             contentView.trailingAnchor.constraint(equalTo: contentScrollView.contentLayoutGuide.trailingAnchor),
             contentView.bottomAnchor.constraint(equalTo: contentScrollView.contentLayoutGuide.bottomAnchor),
             contentView.widthAnchor.constraint(equalTo: contentScrollView.widthAnchor),
-            contentView.heightAnchor.constraint(equalTo: contentScrollView.heightAnchor),
+            contentView.heightAnchor.constraint(equalTo: contentScrollView.heightAnchor, multiplier: 1.2),
             
             searchButton.topAnchor.constraint(equalTo: safeArea.topAnchor, constant: 10),
             searchButton.centerXAnchor.constraint(equalTo: contentView.centerXAnchor),
