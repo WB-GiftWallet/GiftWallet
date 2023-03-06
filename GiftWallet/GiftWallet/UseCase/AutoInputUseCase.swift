@@ -9,6 +9,7 @@ import Foundation
 
 struct AutoInputUseCase {
     
+    //MARK: Texts To Brand
     func processImageTextsToBrandNameText(imageTexts: [String]?) -> String? {
         var brandName: String?
         let brandList = BrandList()
@@ -51,7 +52,8 @@ struct AutoInputUseCase {
         let filteredTexts = texts.filter {
             let isContainNumberInTexts = !regex.matches(in: $0,
                                                         options: [],
-                                                        range: NSRange(location: 0, length: $0.utf16.count)).isEmpty
+                                                        range: NSRange(location: 0,
+                                                                       length: $0.utf16.count)).isEmpty
             return isContainNumberInTexts
         }
         return filteredTexts

@@ -80,7 +80,7 @@ class AddViewController: UIViewController {
     }
     
     private func setuptextInTextField() {
-//        inputTextField.text = viewModel.getBrandNameFromSeletedImage()
+        inputTextField.text = viewModel.getTextsFromSeletedImage(page: page)
     }
     
     private func setupButton() {
@@ -154,7 +154,6 @@ class AddViewController: UIViewController {
     }
 }
 
-
 //MARK: Keyboard 관련
 extension AddViewController {
     private func hideKeyboardWhenTappedAround() {
@@ -177,18 +176,26 @@ extension AddViewController {
     private func setupDatePicekrAttributes() {
         let datePickerView = UIDatePicker()
         var components = DateComponents()
+        let dateFormatter = DateFormatter()
         
+        dateFormatter.dateFormat = "yyyy. MM. dd"
+        components.day = 0
+
         datePickerView.sizeToFit()
         datePickerView.preferredDatePickerStyle = .inline
         datePickerView.locale = Locale(identifier: "ko-KR")
-        datePickerView.setDate(Date(), animated: true)
-        components.day = 0
+                
         let minimumDate = Calendar.autoupdatingCurrent.date(byAdding: components, to: Date())
         datePickerView.minimumDate = minimumDate
         
         datePickerView.addTarget(self,
                                  action: #selector(valueChangedDatePicker(sender:)),
                                  for: .valueChanged)
+
+        if let dateText = inputTextField.text,
+           let date = dateFormatter.date(from: dateText){
+            datePickerView.setDate(date, animated: true)
+        }
         
         inputTextField.inputView = datePickerView
         inputTextField.inputView?.backgroundColor = .white

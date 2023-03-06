@@ -23,7 +23,7 @@ class AddViewModel {
         self.selectedImage = seletedImage
     }
     
-    func 가져와라텍스트필드데이터를(page: Page) -> String? {
+    func getTextsFromSeletedImage(page: Page) -> String? {
         let texts = visionManager.vnRecognizeRequest(image: selectedImage)
         
         switch page {
