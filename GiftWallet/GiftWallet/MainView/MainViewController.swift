@@ -154,6 +154,14 @@ class MainViewController: UIViewController, UISearchBarDelegate, UISearchControl
 
     }
     
+//    private func setupShadow(cell: MainCollectionViewCell) {
+//        cell.layer.shadowColor = UIColor.black.cgColor //색상
+//        cell.layer.shadowOpacity = 0.3 //alpha값
+//        cell.layer.shadowRadius = 5 //반경
+//        cell.layer.shadowOffset = CGSize(width: 0, height: 10) //위치조정
+//        cell.layer.masksToBounds = false
+//    }
+    
     private func setupButton() {
         let searchButtonAction = UIAction { _ in
             let searchTableViewController = SearchTableViewController()
@@ -235,12 +243,15 @@ extension MainViewController: UICollectionViewDataSource, UICollectionViewDelega
                                                                 for: indexPath) as? MainCollectionViewCell ?? MainCollectionViewCell()
             let expireGift = viewModel.expireGifts.value[indexPath.row]
             cell.configureCell(data: expireGift)
+//            cell.configureShadow()
             return cell
+            
         case recentCollectionView:
             let cell = recentCollectionView.dequeueReusableCell(withReuseIdentifier: MainCollectionViewCell.reuseIdentifier,
                                                                 for: indexPath) as? MainCollectionViewCell ?? MainCollectionViewCell()
             let recentGift = viewModel.recentGifts.value[indexPath.row]
             cell.configureCell(data: recentGift)
+//            cell.configureShadow()
             return cell
         default:
             print("셀 반환 실패")
