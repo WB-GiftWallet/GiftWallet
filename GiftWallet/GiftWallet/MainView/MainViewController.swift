@@ -163,6 +163,7 @@ AAAA 님의
         setupProfileButton()
         setupViews()
         bind()
+        
     }
     
     override func viewWillAppear(_ animated: Bool) {
