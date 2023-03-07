@@ -80,10 +80,12 @@ class MainCollectionViewCell: UICollectionViewCell, ReusableView {
     }
     
     func configureCell(data: Gift) {
+        guard let expireDate = data.expireDate else { return }
+        
         giftImageView.image = data.image
         brandLabel.text = data.brandName
         productNameLabel.text = data.productName
-        expireDateLabel.text = DateFormatter.convertToDisplayString(date: data.expireDate ?? Date()) // 이거 임시임 수정해야함.
+        expireDateLabel.text = DateFormatter.convertToDisplayString(date: expireDate)
     }
     
     private func setupShadow() {
@@ -109,6 +111,8 @@ class MainCollectionViewCell: UICollectionViewCell, ReusableView {
             shadowView.trailingAnchor.constraint(equalTo: giftImageView.trailingAnchor),
             shadowView.widthAnchor.constraint(equalTo: giftImageView.widthAnchor),
             shadowView.heightAnchor.constraint(equalTo: giftImageView.heightAnchor),
+            
+            subLabelVerticalStackView.heightAnchor.constraint(equalTo: allContentsVerticalStackView.heightAnchor, multiplier: 0.18),
             
             allContentsVerticalStackView.topAnchor.constraint(equalTo: safeArea.topAnchor),
             allContentsVerticalStackView.leadingAnchor.constraint(equalTo: safeArea.leadingAnchor),
