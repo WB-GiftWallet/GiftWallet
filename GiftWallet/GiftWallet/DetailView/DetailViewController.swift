@@ -70,7 +70,7 @@ final class DetailViewController: UIViewController {
         button.setTitle("사용 완료", for: .normal)
         button.backgroundColor = .systemPurple
         button.layer.cornerRadius = 5
-        button.addTarget(nil, action: #selector(tapSeletedButton), for: .touchUpInside)
+        button.addTarget(DetailViewController.self, action: #selector(tapSeletedButton), for: .touchUpInside)
         
         return button
     }()
@@ -185,27 +185,14 @@ final class DetailViewController: UIViewController {
     
     @objc private func tapSeletedButton() {
         let alert = UIAlertController(title: nil, message: nil, preferredStyle: .alert)
-        guard let useableState = coreGiftData?.useableState else {
-            return
-        }
-        
-        if useableState {
-            alert.title = "사용 완료 처리할까요?"
-        } else {
-            alert.title = "사용 가능한 기프티콘인가요?"
-        }
+        alert.title = "사용 완료 처리할까요?"
         
         let cancel = UIAlertAction(title: "아니요", style: .destructive) { _ in
             self.dismiss(animated: true)
         }
         
         let done = UIAlertAction(title: "네", style: .default) { _ in
-            if useableState {
-                self.changeGiftState(true)
-            } else {
-                self.changeGiftState(false)
-            }
-            
+            self.changeGiftState()
             self.coreDataUpdate()
         }
         
@@ -215,15 +202,9 @@ final class DetailViewController: UIViewController {
         present(alert, animated: true)
     }
     
-    private func changeGiftState(_ seleted: Bool) {
-        coreGiftData?.useableState.toggle()
-        
-        if seleted {
-            selectedButton.backgroundColor = .systemGray
-        } else {
-            selectedButton.backgroundColor = .systemPurple
-        }
-        
+    private func changeGiftState() {
+        viewModel.toggleToUnUsableState()
+        selectedButton.backgroundColor = .systemGray
         dismiss(animated: true)
     }
     

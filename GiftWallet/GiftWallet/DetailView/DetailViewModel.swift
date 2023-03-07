@@ -9,7 +9,7 @@ import Foundation
 
 class DetailViewModel {
     
-    let gift: Gift
+    var gift: Gift
     
     init(gift: Gift) {
         self.gift = gift
@@ -29,6 +29,10 @@ class DetailViewModel {
     
     var memo: String? {
         return gift.memo
+    }
+    
+    func toggleToUnUsableState() {
+        gift.useableState.toggle()
     }
     
 }
