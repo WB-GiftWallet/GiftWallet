@@ -69,7 +69,7 @@ final class DetailViewController: UIViewController {
         button.setTitle("사용 완료", for: .normal)
         button.backgroundColor = .systemPurple
         button.layer.cornerRadius = 5
-        button.addTarget(DetailViewController.self,
+        button.addTarget(nil,
                          action: #selector(tapSeletedButton),
                          for: .touchUpInside)
         
@@ -96,6 +96,7 @@ final class DetailViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         configureImageTapGesture()
+        setupNavigation()
         setupViews()
         configureGiftData()
     }
@@ -106,6 +107,10 @@ final class DetailViewController: UIViewController {
         dateDueLabel.text = viewModel.expirdDate
         memoTextField.text = viewModel.memo
         giftImageView.image = viewModel.gift.image
+    }
+    
+    private func setupNavigation() {
+        navigationController?.navigationBar.tintColor = .black
     }
     
     private func configureImageTapGesture() {
