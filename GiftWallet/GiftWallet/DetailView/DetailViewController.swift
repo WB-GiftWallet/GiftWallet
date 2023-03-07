@@ -69,7 +69,9 @@ final class DetailViewController: UIViewController {
         button.setTitle("사용 완료", for: .normal)
         button.backgroundColor = .systemPurple
         button.layer.cornerRadius = 5
-        button.addTarget(DetailViewController.self, action: #selector(tapSeletedButton), for: .touchUpInside)
+        button.addTarget(DetailViewController.self,
+                         action: #selector(tapSeletedButton),
+                         for: .touchUpInside)
         
         return button
     }()
@@ -93,13 +95,12 @@ final class DetailViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        
         configureImageTapGesture()
         setupViews()
-        setupGiftData()
+        configureGiftData()
     }
     
-    private func setupGiftData() {
+    private func configureGiftData() {
         brandLabel.text = viewModel.brandName
         productNameLabel.text = viewModel.productName
         dateDueLabel.text = viewModel.expirdDate
