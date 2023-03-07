@@ -98,11 +98,11 @@ extension SearchTableViewController {
         let detailViewModel = DetailViewModel(gift: indexGiftData)
         let detailViewController = DetailViewController(viewModel: detailViewModel)
         
-        detailViewController.changeBrandLabel(name: indexGiftData.brandName)
-        detailViewController.changeProductNameLabel(name: indexGiftData.productName)
-        detailViewController.changeDateDueLabel(date: indexGiftData.expireDate)
-        detailViewController.changeMemoTextField(name: indexGiftData.memo)
-        detailViewController.changeGiftImageView(image: indexGiftData.image)
+//        detailViewController.changeBrandLabel(name: indexGiftData.brandName)
+//        detailViewController.changeProductNameLabel(name: indexGiftData.productName)
+//        detailViewController.changeDateDueLabel(date: indexGiftData.expireDate)
+//        detailViewController.changeMemoTextField(name: indexGiftData.memo)
+//        detailViewController.changeGiftImageView(image: indexGiftData.image)
         
         navigationController?.pushViewController(detailViewController, animated: true)
         

@@ -15,4 +15,20 @@ class DetailViewModel {
         self.gift = gift
     }
     
+    var brandName: String? {
+        return gift.brandName
+    }
+    
+    var productName: String? {
+        return gift.productName
+    }
+    
+    var expirdDate: String? {
+        return gift.expireDate?.setupDateStyleForDisplay()
+    }
+    
+    var memo: String? {
+        return gift.memo
+    }
+    
 }

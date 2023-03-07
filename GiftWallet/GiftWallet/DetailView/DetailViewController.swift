@@ -112,13 +112,13 @@ final class DetailViewController: UIViewController {
     }
     
     private func setupGiftData() {
-        brandLabel.text = coreGiftData?.brandName
-        productNameLabel.text = coreGiftData?.productName
-        dateDueLabel.text = coreGiftData?.expireDate?.setupDateStyleForDisplay()
-        memoTextField.text = coreGiftData?.memo
-        giftImageView.image = coreGiftData?.image
-        
-        guard let useableState = coreGiftData?.useableState else { return }
+        brandLabel.text = viewModel.brandName
+        productNameLabel.text = viewModel.productName
+        dateDueLabel.text = viewModel.expirdDate
+        memoTextField.text = viewModel.memo
+        giftImageView.image = viewModel.gift.image
+  
+        viewModel.gift.useableState
         
         if useableState {
             coreGiftData?.useableState = true
@@ -263,43 +263,5 @@ final class DetailViewController: UIViewController {
     @objc private func textFieldDidChange() {
         coreGiftData?.memo = memoTextField.text
         coreDataUpdate()
-    }
-}
-
-// MARK: ValueChange
-extension DetailViewController {
-    func changeBrandLabel(name: String?) {
-        guard let name = name else {
-            brandLabel.text = "Name is Nill"
-            return
-        }
-        brandLabel.text = name
-    }
-    
-    func changeProductNameLabel(name: String?) {
-        guard let name = name else {
-            productNameLabel.text = "Name is Nill"
-            return
-        }
-        productNameLabel.text = name
-    }
-    
-    func changeDateDueLabel(date: Date?) {
-        guard let date = date else {
-            brandLabel.text = "Date is Nil"
-            return
-        }
-        dateDueLabel.text = date.setupDateStyleForDisplay()
-    }
-    
-    func changeMemoTextField(name: String?) {
-        guard let name = name else {
-            return
-        }
-        memoTextField.text = name
-    }
-    
-    func changeGiftImageView(image: UIImage) {
-        giftImageView.image = image
     }
 }
