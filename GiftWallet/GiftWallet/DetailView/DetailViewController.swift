@@ -193,7 +193,7 @@ final class DetailViewController: UIViewController {
         
         let done = UIAlertAction(title: "네", style: .default) { _ in
             self.changeGiftState()
-            self.coreDataUpdate()
+            self.viewModel.coreDataUpdate()
         }
         
         alert.addAction(cancel)
@@ -206,16 +206,6 @@ final class DetailViewController: UIViewController {
         viewModel.toggleToUnUsableState()
         selectedButton.backgroundColor = .systemGray
         dismiss(animated: true)
-    }
-    
-    private func coreDataUpdate() {
-        guard let coreGiftData = coreGiftData else { return }
-        
-        do {
-            try CoreDataManager.shared.updateData(coreGiftData)
-        } catch {
-            print(error.localizedDescription)
-        }
     }
     
     @objc private func tapImageView(sender: UITapGestureRecognizer) {

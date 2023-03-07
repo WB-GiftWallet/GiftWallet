@@ -9,6 +9,8 @@ import Foundation
 
 class DetailViewModel {
     
+    private let coredataManager = CoreDataManager.shared
+    
     var gift: Gift
     
     init(gift: Gift) {
@@ -33,6 +35,14 @@ class DetailViewModel {
     
     func toggleToUnUsableState() {
         gift.useableState.toggle()
+    }
+    
+    func coreDataUpdate() {
+        do {
+            try coredataManager.updateData(gift)
+        } catch {
+            print(error.localizedDescription)
+        }
     }
     
 }
