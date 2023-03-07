@@ -8,7 +8,7 @@
 import UIKit
 
 class MainViewController: UIViewController, UISearchBarDelegate, UISearchControllerDelegate {
-
+    
     private let viewModel: MainViewModel
     
     private lazy var contentScrollView: UIScrollView = {
@@ -23,10 +23,43 @@ class MainViewController: UIViewController, UISearchBarDelegate, UISearchControl
     
     private let contentView = {
         let view = UIView()
-
+        
         view.translatesAutoresizingMaskIntoConstraints = false
         
         return view
+    }()
+    
+    private let emptyImageView = {
+        let imageView = UIImageView()
+        
+        imageView.image = UIImage(named: "emptyBoxResize")
+        imageView.contentMode = .center
+        
+        return imageView
+    }()
+    
+    private let emptyLabel = {
+       let label = UILabel()
+        
+        label.text = "쿠폰을 등록해주세요!"
+        label.numberOfLines = 0
+        label.textAlignment = .center
+        label.font = UIFont(style: .bmJua, size: 30)
+        
+        return label
+    }()
+    
+    private let emptyVerticalStackView = {
+       let stackView = UIStackView()
+        
+        stackView.axis = .vertical
+        stackView.spacing = 20
+        stackView.isHidden = true
+        stackView.alignment = .center
+        stackView.distribution = .fillEqually
+        stackView.translatesAutoresizingMaskIntoConstraints = false
+        
+        return stackView
     }()
     
     private lazy var searchButton = {
@@ -120,19 +153,17 @@ class MainViewController: UIViewController, UISearchBarDelegate, UISearchControl
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        
         setupViews()
         setupButton()
-        
         bind()
-        
     }
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
-        
         viewModel.fetchCoreData()
-        viewModel.sortOutInGlobalThread()
+        viewModel.sortOutInGlobalThread {
+            self.setupCollectionViewIsHiddenAndHeightConstraint()
+        }
     }
     
     private func bind() {
@@ -151,7 +182,6 @@ class MainViewController: UIViewController, UISearchBarDelegate, UISearchControl
     
     override func viewWillLayoutSubviews() {
         super.viewWillLayoutSubviews()
-
     }
     
     private func setupButton() {
@@ -163,7 +193,10 @@ class MainViewController: UIViewController, UISearchBarDelegate, UISearchControl
     }
     
     private func setupViews() {
-
+        
+        [emptyImageView, emptyLabel].forEach(emptyVerticalStackView.addArrangedSubview(_:))
+        contentView.addSubview(emptyVerticalStackView)
+        
         contentView.addSubview(searchButton)
         contentView.addSubview(expireCollectionViewHeaderLabel)
         contentView.addSubview(expireCollectionView)
@@ -176,6 +209,11 @@ class MainViewController: UIViewController, UISearchBarDelegate, UISearchControl
         let safeArea = contentView.safeAreaLayoutGuide
         
         NSLayoutConstraint.activate([
+            emptyVerticalStackView.widthAnchor.constraint(equalTo: view.widthAnchor),
+            emptyVerticalStackView.heightAnchor.constraint(equalTo: view.heightAnchor, multiplier: 0.4),
+            emptyVerticalStackView.centerXAnchor.constraint(equalTo: view.centerXAnchor),
+            emptyVerticalStackView.centerYAnchor.constraint(equalTo: view.centerYAnchor),
+            
             contentScrollView.topAnchor.constraint(equalTo: view.topAnchor),
             contentScrollView.leadingAnchor.constraint(equalTo: view.leadingAnchor),
             contentScrollView.trailingAnchor.constraint(equalTo: view.trailingAnchor),
@@ -200,7 +238,6 @@ class MainViewController: UIViewController, UISearchBarDelegate, UISearchControl
             expireCollectionView.leadingAnchor.constraint(equalTo: expireCollectionViewHeaderLabel.leadingAnchor),
             expireCollectionView.trailingAnchor.constraint(equalTo: expireCollectionViewHeaderLabel.trailingAnchor),
             expireCollectionView.widthAnchor.constraint(equalTo: contentView.widthAnchor),
-            expireCollectionView.heightAnchor.constraint(equalTo: expireCollectionView.widthAnchor, multiplier: 0.85),
             
             recentCollectionViewHeaderLabel.topAnchor.constraint(equalTo: expireCollectionView.bottomAnchor, constant: 25),
             recentCollectionViewHeaderLabel.leadingAnchor.constraint(equalTo: expireCollectionViewHeaderLabel.leadingAnchor),
@@ -208,10 +245,41 @@ class MainViewController: UIViewController, UISearchBarDelegate, UISearchControl
             recentCollectionView.topAnchor.constraint(equalTo: recentCollectionViewHeaderLabel.bottomAnchor, constant: 15),
             recentCollectionView.leadingAnchor.constraint(equalTo: recentCollectionViewHeaderLabel.leadingAnchor),
             recentCollectionView.trailingAnchor.constraint(equalTo: recentCollectionViewHeaderLabel.trailingAnchor),
-            recentCollectionView.widthAnchor.constraint(equalTo: contentView.widthAnchor),
-            recentCollectionView.heightAnchor.constraint(equalTo: recentCollectionView.widthAnchor, multiplier: 0.85),
-            
+            recentCollectionView.widthAnchor.constraint(equalTo: contentView.widthAnchor)
         ])
+    }
+    
+    private func setupCollectionViewIsHiddenAndHeightConstraint() {
+        if viewModel.allGifts.isEmpty {
+            emptyVerticalStackView.isHidden = false
+            expireCollectionViewHeaderLabel.isHidden = true
+            recentCollectionViewHeaderLabel.isHidden = true
+            recentCollectionView.heightAnchor.constraint(equalToConstant: .zero).isActive = true
+            expireCollectionView.heightAnchor.constraint(equalToConstant: .zero).isActive = true
+        }
+        
+        let expireGifts = viewModel.expireGifts.value
+        let recentGifts = viewModel.recentGifts.value
+        
+        if expireGifts.isEmpty && !recentGifts.isEmpty {
+            emptyVerticalStackView.isHidden = true
+            expireCollectionViewHeaderLabel.isHidden = true
+            expireCollectionView.heightAnchor.constraint(equalToConstant: .zero).isActive = true
+            recentCollectionViewHeaderLabel.isHidden = false
+            recentCollectionView.heightAnchor.constraint(equalTo: recentCollectionView.widthAnchor, multiplier: 0.85).isActive = true
+        } else if !expireGifts.isEmpty && recentGifts.isEmpty {
+            emptyVerticalStackView.isHidden = true
+            recentCollectionViewHeaderLabel.isHidden = true
+            recentCollectionView.heightAnchor.constraint(equalToConstant: .zero).isActive = true
+            expireCollectionViewHeaderLabel.isHidden = false
+            expireCollectionView.heightAnchor.constraint(equalTo: expireCollectionView.widthAnchor, multiplier: 0.85).isActive = true
+        } else if !expireGifts.isEmpty && !recentGifts.isEmpty {
+            emptyVerticalStackView.isHidden = true
+            expireCollectionViewHeaderLabel.isHidden = false
+            expireCollectionView.heightAnchor.constraint(equalTo: expireCollectionView.widthAnchor, multiplier: 0.85).isActive = true
+            recentCollectionViewHeaderLabel.isHidden = false
+            recentCollectionView.heightAnchor.constraint(equalTo: expireCollectionView.widthAnchor, multiplier: 0.85).isActive = true
+        }
     }
 }
 

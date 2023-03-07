@@ -15,6 +15,7 @@ extension UIFont {
 
 enum FontStyle {
     case black, bold, light, medium, regular, thin
+    case bmJua
     
     var description: String {
         switch self {
@@ -30,6 +31,8 @@ enum FontStyle {
             return "NotoSansKR-Regular"
         case .thin:
             return "NotoSansKR-Thin"
+        case .bmJua:
+            return "BMJUA"
         }
     }
 }
