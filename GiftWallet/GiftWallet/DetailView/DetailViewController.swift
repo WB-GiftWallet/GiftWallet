@@ -117,16 +117,6 @@ final class DetailViewController: UIViewController {
         dateDueLabel.text = viewModel.expirdDate
         memoTextField.text = viewModel.memo
         giftImageView.image = viewModel.gift.image
-  
-        viewModel.gift.useableState
-        
-        if useableState {
-            coreGiftData?.useableState = true
-            selectedButton.backgroundColor = .systemPurple
-        } else {
-            coreGiftData?.useableState = false
-            selectedButton.backgroundColor = .systemGray
-        }
     }
     
     private func configureScrollView() {
