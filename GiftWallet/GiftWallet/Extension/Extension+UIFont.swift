@@ -32,7 +32,7 @@ enum FontStyle {
         case .thin:
             return "NotoSansKR-Thin"
         case .bmJua:
-            return "BMJUA"
+            return "BMJUAOTF"
         }
     }
 }

@@ -10,7 +10,7 @@
 		<string>NotoSansKR-Medium.otf</string>
 		<string>NotoSansKR-Thin.otf</string>
 		<string>NotoSansKR-Regular.otf</string>
-		<string>BMJUA.ttf</string>
+		<string>BMJUA_otf.otf</string>
 	</array>
 	<key>UIApplicationSceneManifest</key>
 	<dict>
