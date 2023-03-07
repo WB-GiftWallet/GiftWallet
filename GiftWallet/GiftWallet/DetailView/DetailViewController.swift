@@ -59,7 +59,6 @@ final class DetailViewController: UIViewController {
         
         textField.font = .preferredFont(forTextStyle: .title2)
         textField.borderStyle = .roundedRect
-        textField.addTarget(nil, action: #selector(textFieldDidChange), for: .editingChanged)
         
         return textField
     }()
@@ -95,13 +94,8 @@ final class DetailViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        view.backgroundColor = .systemBackground
-        
-        configureScrollView()
-        configureContentView()
-        configureInnerContents()
         configureImageTapGesture()
-        
+        setupViews()
         setupGiftData()
     }
     
@@ -111,6 +105,59 @@ final class DetailViewController: UIViewController {
         dateDueLabel.text = viewModel.expirdDate
         memoTextField.text = viewModel.memo
         giftImageView.image = viewModel.gift.image
+    }
+    
+    private func configureImageTapGesture() {
+        let gestureRecognizer = UITapGestureRecognizer(target: self, action: #selector(tapImageView))
+        
+        giftImageView.isUserInteractionEnabled = true
+        giftImageView.addGestureRecognizer(gestureRecognizer)
+    }
+    
+    @objc private func tapSeletedButton() {
+        let alert = UIAlertController(title: nil, message: nil, preferredStyle: .alert)
+        alert.title = "사용 완료 처리할까요?"
+        
+        let cancel = UIAlertAction(title: "아니요", style: .destructive) { _ in
+            self.dismiss(animated: true)
+        }
+        
+        let done = UIAlertAction(title: "네", style: .default) { _ in
+            self.doneAction()
+        }
+
+        [cancel, done].forEach(alert.addAction(_:))
+        present(alert, animated: true)
+    }
+    
+    private func doneAction() {
+        changeGiftState()
+        viewModel.writeMemo(memoTextField.text)
+        viewModel.coreDataUpdate()
+    }
+    
+    private func changeGiftState() {
+        viewModel.toggleToUnUsableState()
+        selectedButton.backgroundColor = .systemGray
+        dismiss(animated: true)
+    }
+        
+    @objc private func tapImageView(sender: UITapGestureRecognizer) {
+        guard let image = giftImageView.image else { return }
+        
+        present(GiftImageViewController(image: image), animated: true)
+    }
+    
+}
+
+// MARK: AutoLayout 관련 메서드
+extension DetailViewController {
+    private func setupViews() {
+        view.backgroundColor = .systemBackground
+        
+        configureScrollView()
+        configureContentView()
+        configureInnerContents()
     }
     
     private func configureScrollView() {
@@ -174,49 +221,5 @@ final class DetailViewController: UIViewController {
             giftImageView.bottomAnchor.constraint(equalTo: contentsView.bottomAnchor),
             giftImageView.heightAnchor.constraint(lessThanOrEqualTo: giftImageView.widthAnchor, multiplier: 2)
         ])
-    }
-    
-    private func configureImageTapGesture() {
-        let gestureRecognizer = UITapGestureRecognizer(target: self, action: #selector(tapImageView))
-        
-        giftImageView.isUserInteractionEnabled = true
-        giftImageView.addGestureRecognizer(gestureRecognizer)
-    }
-    
-    @objc private func tapSeletedButton() {
-        let alert = UIAlertController(title: nil, message: nil, preferredStyle: .alert)
-        alert.title = "사용 완료 처리할까요?"
-        
-        let cancel = UIAlertAction(title: "아니요", style: .destructive) { _ in
-            self.dismiss(animated: true)
-        }
-        
-        let done = UIAlertAction(title: "네", style: .default) { _ in
-            self.changeGiftState()
-            self.viewModel.coreDataUpdate()
-        }
-        
-        alert.addAction(cancel)
-        alert.addAction(done)
-        
-        present(alert, animated: true)
-    }
-    
-    private func changeGiftState() {
-        viewModel.toggleToUnUsableState()
-        selectedButton.backgroundColor = .systemGray
-        dismiss(animated: true)
-    }
-    
-    @objc private func tapImageView(sender: UITapGestureRecognizer) {
-        guard let image = giftImageView.image else { return }
-        
-        present(GiftImageViewController(image: image), animated: true)
-    }
-    
-    // MARK: Memo Text Field Changed Method
-    @objc private func textFieldDidChange() {
-        coreGiftData?.memo = memoTextField.text
-        coreDataUpdate()
     }
 }

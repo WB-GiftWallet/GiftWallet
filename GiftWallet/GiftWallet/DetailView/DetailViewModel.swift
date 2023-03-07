@@ -37,6 +37,11 @@ class DetailViewModel {
         gift.useableState.toggle()
     }
     
+    func writeMemo(_ text: String?) {
+        gift.memo = text
+    }
+    
+    
     func coreDataUpdate() {
         do {
             try coredataManager.updateData(gift)
