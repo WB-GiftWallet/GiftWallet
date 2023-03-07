@@ -17,5 +17,7 @@ extension UIColor {
     static let serachButton = UIColor(r: 238, g: 238, b: 238)
     static let searchLabel = UIColor(r: 189, g: 189, b: 189)
     static let tabbarItemColor = UIColor(r: 196, g: 196, b: 196)
+    
+    static let cellTagView = UIColor(r: 255, g: 70, b: 2)
+    static let cellTagShadow = UIColor(r: 176, g: 203, b: 214)
 }
-

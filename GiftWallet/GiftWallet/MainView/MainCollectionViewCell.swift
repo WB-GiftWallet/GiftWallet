@@ -22,7 +22,28 @@ class MainCollectionViewCell: UICollectionViewCell, ReusableView {
         imageView.layer.cornerRadius = 10.0
         imageView.clipsToBounds = true
         imageView.translatesAutoresizingMaskIntoConstraints = false
+        
         return imageView
+    }()
+    
+    private let tagView: CustomGiftTagUIView = {
+       let view = CustomGiftTagUIView(frame: CGRect(x: 0, y: 0, width: 100, height: 100))
+        
+        view.backgroundColor = .cellTagShadow
+        view.translatesAutoresizingMaskIntoConstraints = false
+        
+        return view
+    }()
+    
+    private let tagLabel = {
+        let label = UILabel()
+        
+        label.font = UIFont(style: .bmJua, size: 12)
+        label.translatesAutoresizingMaskIntoConstraints = false
+        label.textColor = .white
+        label.text = "10일"
+        
+        return label
     }()
     
     private let brandLabel = {
@@ -88,6 +109,14 @@ class MainCollectionViewCell: UICollectionViewCell, ReusableView {
         expireDateLabel.text = DateFormatter.convertToDisplayString(date: expireDate)
     }
     
+    func setupTagViewIsHidden() {
+        tagView.isHidden = true
+    }
+    
+    func configureTagLabel(_ value: Int) {
+        tagLabel.text = "\(value)일"
+    }
+    
     private func setupShadow() {
         shadowView.layer.shadowColor = UIColor.black.cgColor
         shadowView.layer.shadowOpacity = 1.0
@@ -97,6 +126,9 @@ class MainCollectionViewCell: UICollectionViewCell, ReusableView {
     }
     
     private func setupViews() {
+        giftImageView.addSubview(tagView)
+        tagView.addSubview(tagLabel)
+        
         contentView.addSubview(shadowView)
         [brandLabel, productNameLabel, expireDateLabel].forEach(subLabelVerticalStackView.addArrangedSubview(_:))
         [giftImageView, subLabelVerticalStackView].forEach(allContentsVerticalStackView.addArrangedSubview(_:))
@@ -105,6 +137,14 @@ class MainCollectionViewCell: UICollectionViewCell, ReusableView {
         let safeArea = contentView.safeAreaLayoutGuide
         
         NSLayoutConstraint.activate([
+            tagLabel.centerXAnchor.constraint(equalTo: tagView.centerXAnchor),
+            tagLabel.centerYAnchor.constraint(equalTo: tagView.centerYAnchor),
+            
+            tagView.widthAnchor.constraint(equalTo: giftImageView.widthAnchor, multiplier: 0.18),
+            tagView.heightAnchor.constraint(equalTo: giftImageView.heightAnchor, multiplier: 0.15),
+            tagView.trailingAnchor.constraint(equalTo: giftImageView.trailingAnchor, constant: -10),
+            tagView.topAnchor.constraint(equalTo: giftImageView.topAnchor),
+            
             shadowView.topAnchor.constraint(equalTo: giftImageView.topAnchor),
             shadowView.bottomAnchor.constraint(equalTo: giftImageView.bottomAnchor),
             shadowView.leadingAnchor.constraint(equalTo: giftImageView.leadingAnchor),

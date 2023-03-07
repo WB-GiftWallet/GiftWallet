@@ -302,14 +302,19 @@ extension MainViewController: UICollectionViewDataSource, UICollectionViewDelega
             let cell = expireCollectionView.dequeueReusableCell(withReuseIdentifier: MainCollectionViewCell.reuseIdentifier,
                                                                 for: indexPath) as? MainCollectionViewCell ?? MainCollectionViewCell()
             let expireGift = viewModel.expireGifts.value[indexPath.row]
+            let subtractionResult = viewModel.subtractionOfDays(expireDate: expireGift.expireDate)
+
             cell.configureCell(data: expireGift)
+            cell.configureTagLabel(subtractionResult)
             return cell
             
         case recentCollectionView:
             let cell = recentCollectionView.dequeueReusableCell(withReuseIdentifier: MainCollectionViewCell.reuseIdentifier,
                                                                 for: indexPath) as? MainCollectionViewCell ?? MainCollectionViewCell()
             let recentGift = viewModel.recentGifts.value[indexPath.row]
+            
             cell.configureCell(data: recentGift)
+            cell.setupTagViewIsHidden()
             return cell
         default:
             print("셀 반환 실패")

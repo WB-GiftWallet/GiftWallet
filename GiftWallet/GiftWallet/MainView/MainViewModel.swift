@@ -34,6 +34,11 @@ class MainViewModel {
         }
     }
     
+    func subtractionOfDays(expireDate: Date?) -> Int {
+        guard let expireDate = expireDate else { return 0 }
+        return useCase.subtractionOftheDays(expireDate: expireDate, today: Date())
+    }
+    
     private func sortOutAsTodaysDate() {
         useCase.sortOutRecentDate(recentGifts, allGifts)
         useCase.sortOutExpireDate(expireGifts, allGifts)
