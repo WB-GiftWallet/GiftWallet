@@ -30,7 +30,6 @@ final class DetailViewController: UIViewController {
     private let brandLabel: UILabel = {
         let label = UILabel()
         
-        label.text = "스타벅스 커피"
         label.font = .preferredFont(forTextStyle: .title1)
         label.numberOfLines = 1
         
@@ -40,7 +39,6 @@ final class DetailViewController: UIViewController {
     private let productNameLabel: UILabel = {
         let label = UILabel()
         
-        label.text = "아이스 아메리카노 (tall)"
         label.font = .preferredFont(forTextStyle: .title2)
         label.numberOfLines = 1
         
@@ -50,7 +48,6 @@ final class DetailViewController: UIViewController {
     private let dateDueLabel: UILabel = {
         let label = UILabel()
         
-        label.text = "2024. 04. 14 까지"
         label.font = .preferredFont(forTextStyle: .title2)
         label.numberOfLines = 1
         
@@ -62,7 +59,6 @@ final class DetailViewController: UIViewController {
         
         textField.font = .preferredFont(forTextStyle: .title2)
         textField.borderStyle = .roundedRect
-        textField.placeholder = "메모입력란입니다."
         textField.addTarget(nil, action: #selector(textFieldDidChange), for: .editingChanged)
         
         return textField
@@ -82,14 +78,12 @@ final class DetailViewController: UIViewController {
     private let giftImageView: UIImageView = {
         let imageView = UIImageView()
         
-        imageView.image = UIImage(named: "tempImages")
         imageView.contentMode = .scaleAspectFit
         
         return imageView
     }()
     
     init(viewModel: DetailViewModel) {
-//        self.coreGiftData = giftData
         self.viewModel = viewModel
         super.init(nibName: nil, bundle: nil)
     }
