@@ -18,6 +18,7 @@
 		D24002D529B752DB00635FFC /* NotoSansKR-Light.otf in Resources */ = {isa = PBXBuildFile; fileRef = D24002CF29B752DB00635FFC /* NotoSansKR-Light.otf */; };
 		D24002D629B752DB00635FFC /* NotoSansKR-Medium.otf in Resources */ = {isa = PBXBuildFile; fileRef = D24002D029B752DB00635FFC /* NotoSansKR-Medium.otf */; };
 		D24002D829B7536B00635FFC /* BMJUA_otf.otf in Resources */ = {isa = PBXBuildFile; fileRef = D24002D729B7536B00635FFC /* BMJUA_otf.otf */; };
+		D24002DB29B75B5200635FFC /* DetailViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = D24002DA29B75B5200635FFC /* DetailViewModel.swift */; };
 		D295E4B529A5E2F400E12CAF /* UserInfoModifyViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D295E4B429A5E2F400E12CAF /* UserInfoModifyViewController.swift */; };
 		D295E4B729A5E31400E12CAF /* UserInfoModifyViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = D295E4B629A5E31400E12CAF /* UserInfoModifyViewModel.swift */; };
 		D295E4B929A5F64200E12CAF /* FormSheetViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D295E4B829A5F64200E12CAF /* FormSheetViewController.swift */; };
@@ -91,6 +92,7 @@
 		D24002CF29B752DB00635FFC /* NotoSansKR-Light.otf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "NotoSansKR-Light.otf"; sourceTree = "<group>"; };
 		D24002D029B752DB00635FFC /* NotoSansKR-Medium.otf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "NotoSansKR-Medium.otf"; sourceTree = "<group>"; };
 		D24002D729B7536B00635FFC /* BMJUA_otf.otf */ = {isa = PBXFileReference; lastKnownFileType = file; path = BMJUA_otf.otf; sourceTree = "<group>"; };
+		D24002DA29B75B5200635FFC /* DetailViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DetailViewModel.swift; sourceTree = "<group>"; };
 		D295E4B429A5E2F400E12CAF /* UserInfoModifyViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserInfoModifyViewController.swift; sourceTree = "<group>"; };
 		D295E4B629A5E31400E12CAF /* UserInfoModifyViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserInfoModifyViewModel.swift; sourceTree = "<group>"; };
 		D295E4B829A5F64200E12CAF /* FormSheetViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FormSheetViewController.swift; sourceTree = "<group>"; };
@@ -309,6 +311,7 @@
 			children = (
 				F6A4AB4929A5DA1C009AEB78 /* DetailViewController.swift */,
 				F6A4AB4829A5DA1C009AEB78 /* GiftImageViewController.swift */,
+				D24002DA29B75B5200635FFC /* DetailViewModel.swift */,
 			);
 			path = DetailView;
 			sourceTree = "<group>";
@@ -534,6 +537,7 @@
 			files = (
 				D2CDDBE729AF487600E000E3 /* BrandList.swift in Sources */,
 				D2C7A45929A9DA6C00EB6D56 /* EtcSettingViewController.swift in Sources */,
+				D24002DB29B75B5200635FFC /* DetailViewModel.swift in Sources */,
 				D2A282B829A85EF2002CCF5A /* Observable.swift in Sources */,
 				D295E4B929A5F64200E12CAF /* FormSheetViewController.swift in Sources */,
 				D2CDDBE029AF3CD300E000E3 /* VisionManager.swift in Sources */,

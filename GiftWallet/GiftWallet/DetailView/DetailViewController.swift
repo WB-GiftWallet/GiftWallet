@@ -8,8 +8,8 @@
 import UIKit
 
 final class DetailViewController: UIViewController {
-    
-    private var coreGiftData: Gift?
+        
+    private let viewModel: DetailViewModel
     
     private let scrollView: UIScrollView = {
         let view = UIScrollView(frame: .zero)
@@ -88,8 +88,9 @@ final class DetailViewController: UIViewController {
         return imageView
     }()
     
-    init(giftData: Gift?) {
-        self.coreGiftData = giftData
+    init(viewModel: DetailViewModel) {
+//        self.coreGiftData = giftData
+        self.viewModel = viewModel
         super.init(nibName: nil, bundle: nil)
     }
     
