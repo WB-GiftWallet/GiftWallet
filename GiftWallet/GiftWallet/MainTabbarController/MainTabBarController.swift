@@ -21,7 +21,7 @@ final class MainTabBarController: UITabBarController {
         var systemName: String {
             switch self {
             case .detail:
-                return "list.clipboard.fill"
+                return "house"
             case .addGift:
                 return "plus.circle.fill"
             case .setting:
@@ -35,6 +35,7 @@ final class MainTabBarController: UITabBarController {
         
         viewController.tabBarItem.image = UIImage(systemName: tag.detail.systemName)
         viewController.tabBarItem.tag = tag.detail.rawValue
+        viewController.tabBarItem.selectedImage = UIImage(systemName: "house.fill")
         
         return viewController
     }()
@@ -60,6 +61,7 @@ final class MainTabBarController: UITabBarController {
         
         viewController.tabBarItem.image = UIImage(systemName: tag.setting.systemName)
         viewController.tabBarItem.tag = tag.setting.rawValue
+        viewController.tabBarItem.selectedImage = UIImage(systemName: "gearshape.fill")
         
         return viewController
     }()
@@ -82,7 +84,6 @@ final class MainTabBarController: UITabBarController {
         
         setupNavigation()
         configureEachViewControllers()
-        setupNavigation()
     }
     
     override func tabBar(_ tabBar: UITabBar, didSelect item: UITabBarItem) {
@@ -96,31 +97,34 @@ final class MainTabBarController: UITabBarController {
     
     private func configureEachViewControllers() {
         // TODO: Color 변경
-        self.tabBar.tintColor = .label
-        self.tabBar.unselectedItemTintColor = .systemPink
+        tabBar.tintColor = .black
+        tabBar.unselectedItemTintColor = .black
+        
+        tabBar.isTranslucent = false
+        tabBar.barTintColor = .white
         
         viewControllers = [mainViewController, blankViewController, settingViewController]
     }
     
     private func setupNavigation() {
-        title = ""
+        // TODO: SampleLogo 수정필요
+        let image = UIImage(named: "SampleLogoWow")
+        let imageView = UIImageView()
+        imageView.image = image
+        imageView.contentMode = .scaleAspectFit
+        imageView.frame = CGRect(x: 0, y: 0, width: 80, height: 30)
+        navigationItem.leftBarButtonItem = UIBarButtonItem(customView: imageView)
         
-        let searchAction = UIAction { _ in
-            self.navigationController?.pushViewController(SearchTableViewController(), animated: true)
-        }
         let bellAction = UIAction { _ in
             //TODO: 알림 리스트 전환으로 변경
             print("CoreData 추가")
             Gift.addSampleData()
         }
         
-        let searchSFSymbol = UIImage(systemName: "magnifyingglass")
-        navigationItem.leftBarButtonItem = UIBarButtonItem(image: searchSFSymbol,
-                                                           primaryAction: searchAction)
         let bellSFSymbol = UIImage(systemName: "bell.fill")
         navigationItem.rightBarButtonItem = UIBarButtonItem(image: bellSFSymbol,
                                                             primaryAction: bellAction)
-        navigationController?.navigationBar.tintColor = .black
+        navigationItem.rightBarButtonItem?.tintColor = .black
     }
 }
 

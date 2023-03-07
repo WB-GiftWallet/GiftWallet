@@ -18,6 +18,8 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
         let mainViewModel = MainViewModel()
         let etcSettingViewModel = EtcSettingViewModel()
         
+        check()
+        
         let mainTabBarController = MainTabBarController(mainViewModel: mainViewModel,
                                                         etcSettingViewModel: etcSettingViewModel)
         let navigationMainController = UINavigationController(rootViewController: mainTabBarController)
@@ -25,5 +27,15 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
         window.rootViewController = navigationMainController
         window.makeKeyAndVisible()
         self.window = window
+    }
+    
+    func check() {
+        UIFont.familyNames.sorted().forEach { familyName in
+            print("*** \(familyName) ***")
+            UIFont.fontNames(forFamilyName: familyName).forEach { fontName in
+                print("\(fontName)")
+            }
+            print("---------------------")
+        }
     }
 }

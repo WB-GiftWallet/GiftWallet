@@ -55,13 +55,18 @@ class AddViewModel {
         case .productName:
             userInput.makeProductName(value)
         case .expireDate:
-            userInput.makeExpireDate(Date())
+            userInput.makeExpireDate(value)
             makeGiftInstance(userInput)
         }
     }
     
     private func makeGiftInstance(_ data: UserInput) {
-        let inputtedGift = Gift(image: selectedImage, category: nil, brandName: userInput.brandName, productName: userInput.productName, memo: nil, expireDate: userInput.expireDate)
+        let inputtedGift = Gift(image: selectedImage,
+                                category: nil,
+                                brandName: userInput.brandName,
+                                productName: userInput.productName,
+                                memo: nil,
+                                expireDate: userInput.expireDate)
         gift = .init(inputtedGift)
     }
 }
@@ -108,8 +113,12 @@ struct UserInput {
         productName = value
     }
     
-    mutating func makeExpireDate(_ value: Date) {
-        expireDate = value
+    mutating func makeExpireDate(_ value: String) {
+        let dateFormatter = DateFormatter()
+        dateFormatter.dateFormat = "yyyy. MM. dd"
+        if let dateValue = dateFormatter.date(from: value) {
+            expireDate = dateValue
+        }
     }
 }
 

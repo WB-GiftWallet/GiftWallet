@@ -25,10 +25,18 @@ class MainViewModel {
         }
     }
     
-    func sortOutInGlobalThread() {
+    func sortOutInGlobalThread(completion: @escaping () -> Void) {
         DispatchQueue.global().async { [self] in
             sortOutAsTodaysDate()
+            DispatchQueue.main.async {
+                completion()
+            }
         }
+    }
+    
+    func subtractionOfDays(expireDate: Date?) -> Int {
+        guard let expireDate = expireDate else { return 0 }
+        return useCase.subtractionOftheDays(expireDate: expireDate, today: Date())
     }
     
     private func sortOutAsTodaysDate() {
