@@ -150,6 +150,8 @@ class PagingCollectionViewCell: UICollectionViewCell, ReusableView {
         ])
     }
     
+    //MARK: 작동안되는 셀 발견됨 추후 로직에 대한 수정이 필요하다. (어느 시점에 계산을 해줄 것인지도 고민해봐야함.
+    // 현재 생각으로 Usecase에서 이미지의 비율을 계산하는 로직을 구현해서 cell이 configure되기 전에 비율을 갖고 있는 것도 좋아보인다.
     private func calculateImageViewSize() {
         containterView.layoutIfNeeded()
         guard let image = giftImageView.image else { return }
@@ -157,5 +159,13 @@ class PagingCollectionViewCell: UICollectionViewCell, ReusableView {
         let newImageViewHeight = containterView.frame.width * imageAspectRatio
         
         giftImageView.heightAnchor.constraint(equalToConstant: newImageViewHeight).isActive = true
+    }
+}
+
+extension PagingCollectionViewCell {
+    private func setupButton() {
+        let buttonAction = UIAction { [weak self] _ in
+            
+        }
     }
 }

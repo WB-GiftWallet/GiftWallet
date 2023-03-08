@@ -334,13 +334,15 @@ extension MainViewController: UICollectionViewDataSource, UICollectionViewDelega
                 break
         }
         guard let sendGifts = sendGifts else { return }
-        
         let detailViewModel = DetailViewModel(gifts: sendGifts,
                                               indexPahtRow: indexPath.row)
         let detailViewController = DetailViewController(viewModel: detailViewModel)
-        detailViewController.modalTransitionStyle = .coverVertical
-        detailViewController.modalPresentationStyle = .fullScreen
-        present(detailViewController, animated: true)
+        let navigationDetailViewController = UINavigationController(rootViewController: detailViewController)
+        navigationDetailViewController.modalTransitionStyle = .coverVertical
+        navigationDetailViewController.modalPresentationStyle = .overFullScreen
+//        navigationDetailViewController.isModalInPresentation = true
+
+        present(navigationDetailViewController, animated: true)
     }
 }
 

@@ -8,8 +8,9 @@
 import UIKit
 
 final class DetailViewController: UIViewController {
-        
+    
     private let viewModel: DetailViewModel
+    var viewTranslation = CGPoint(x: 0, y: 0)
     
     private let pagingCollectionView = {
         let flowLayout = UICollectionViewFlowLayout()
@@ -34,7 +35,8 @@ final class DetailViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-//        configureImageTapGesture()
+        
+        setupPanGestureRecognizerAttributes()
         setupCollectionViewAttributes()
         setupNavigation()
         setupViews()
@@ -44,19 +46,22 @@ final class DetailViewController: UIViewController {
         pagingCollectionView.dataSource = self
         pagingCollectionView.delegate = self
         pagingCollectionView.isPagingEnabled = true
-
     }
     
     private func setupNavigation() {
         navigationController?.navigationBar.tintColor = .black
+        navigationItem.leftBarButtonItem = UIBarButtonItem(image: UIImage(systemName: "multiply"),
+                                                           style: .plain,
+                                                           target: self,
+                                                           action: nil)
     }
     
-//    private func configureImageTapGesture() {
-//        let gestureRecognizer = UITapGestureRecognizer(target: self, action: #selector(tapImageView))
-//
-//        giftImageView.isUserInteractionEnabled = true
-//        giftImageView.addGestureRecognizer(gestureRecognizer)
-//    }
+    //    private func configureImageTapGesture() {
+    //        let gestureRecognizer = UITapGestureRecognizer(target: self, action: #selector(tapImageView))
+    //
+    //        giftImageView.isUserInteractionEnabled = true
+    //        giftImageView.addGestureRecognizer(gestureRecognizer)
+    //    }
     
     @objc private func tapSeletedButton() {
         let alert = UIAlertController(title: nil, message: nil, preferredStyle: .alert)
@@ -67,25 +72,25 @@ final class DetailViewController: UIViewController {
         }
         
         let done = UIAlertAction(title: "네", style: .default) { _ in
-//            self.doneAction()
+            //            self.doneAction()
         }
-
+        
         [cancel, done].forEach(alert.addAction(_:))
         present(alert, animated: true)
     }
     
-//    private func doneAction() {
-//        changeGiftState()
-//        viewModel.writeMemo(memoTextField.text)
-//        viewModel.coreDataUpdate()
-//    }
+    //    private func doneAction() {
+    //        changeGiftState()
+    //        viewModel.writeMemo(memoTextField.text)
+    //        viewModel.coreDataUpdate()
+    //    }
     
-//    private func changeGiftState() {
-//        viewModel.toggleToUnUsableState()
-//        selectedButton.backgroundColor = .systemGray
-//        dismiss(animated: true)
-//    }
-
+    //    private func changeGiftState() {
+    //        viewModel.toggleToUnUsableState()
+    //        selectedButton.backgroundColor = .systemGray
+    //        dismiss(animated: true)
+    //    }
+    
     private func setupViews() {
         view.backgroundColor = .systemBackground
         
@@ -100,14 +105,14 @@ final class DetailViewController: UIViewController {
         
     }
     
-//    @objc private func tapImageView(sender: UITapGestureRecognizer) {
-//        let gift = viewModel.gift
-//        
-//        let viewModel = GiftImageViewModel(gift: gift)
-//        let giftImageViewController = GiftImageViewController(viewModel: viewModel)
-//        giftImageViewController.modalPresentationStyle = .fullScreen
-//        present(giftImageViewController, animated: true)
-//    }
+    //    @objc private func tapImageView(sender: UITapGestureRecognizer) {
+    //        let gift = viewModel.gift
+    //
+    //        let viewModel = GiftImageViewModel(gift: gift)
+    //        let giftImageViewController = GiftImageViewController(viewModel: viewModel)
+    //        giftImageViewController.modalPresentationStyle = .fullScreen
+    //        present(giftImageViewController, animated: true)
+    //    }
     
 }
 
@@ -128,9 +133,47 @@ extension DetailViewController: UICollectionViewDataSource {
 extension DetailViewController: UICollectionViewDelegate {
 }
 
-
+// MARK: UICollectionViewDelegateFlowLayout 관련
 extension DetailViewController: UICollectionViewDelegateFlowLayout{
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
         return CGSize(width: view.frame.width, height: view.frame.height)
+    }
+    
+    
+}
+
+// MARK: UIGestureRecognizer 관련
+extension DetailViewController: UIGestureRecognizerDelegate {
+    
+    private func setupPanGestureRecognizerAttributes() {
+        let panGesture = UIPanGestureRecognizer(target: self, action: #selector(handlePanGesture))
+        panGesture.delegate = self
+        self.view.addGestureRecognizer(panGesture)
+    }
+    
+    @objc
+    private func handlePanGesture(sender: UIPanGestureRecognizer) {
+        switch sender.state {
+        case .changed:
+            viewTranslation = sender.translation(in: view)
+            UIView.animate(withDuration: 0.5, delay: 0, usingSpringWithDamping: 0.7, initialSpringVelocity: 1, options: .curveEaseOut, animations: {
+                self.view.transform = CGAffineTransform(translationX: 0, y: self.viewTranslation.y)
+            })
+        case .ended:
+            if viewTranslation.y < 200 {
+                UIView.animate(withDuration: 0.5, delay: 0, usingSpringWithDamping: 0.7, initialSpringVelocity: 1, options: .curveEaseOut, animations: {
+                    self.view.transform = .identity
+                })
+            } else {
+                dismiss(animated: true, completion: nil)
+            }
+        default:
+            break
+        }
+    }
+    
+    func gestureRecognizer(_ gestureRecognizer: UIGestureRecognizer, shouldRecognizeSimultaneouslyWith otherGestureRecognizer: UIGestureRecognizer) -> Bool {
+        // 다른 Gesture Recognizer와 함께 사용할 수 있도록 true 반환
+        return true
     }
 }
