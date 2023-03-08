@@ -63,34 +63,6 @@ final class DetailViewController: UIViewController {
     //        giftImageView.addGestureRecognizer(gestureRecognizer)
     //    }
     
-    @objc private func tapSeletedButton() {
-        let alert = UIAlertController(title: nil, message: nil, preferredStyle: .alert)
-        alert.title = "사용 완료 처리할까요?"
-        
-        let cancel = UIAlertAction(title: "아니요", style: .destructive) { _ in
-            self.dismiss(animated: true)
-        }
-        
-        let done = UIAlertAction(title: "네", style: .default) { _ in
-            //            self.doneAction()
-        }
-        
-        [cancel, done].forEach(alert.addAction(_:))
-        present(alert, animated: true)
-    }
-    
-    //    private func doneAction() {
-    //        changeGiftState()
-    //        viewModel.writeMemo(memoTextField.text)
-    //        viewModel.coreDataUpdate()
-    //    }
-    
-    //    private func changeGiftState() {
-    //        viewModel.toggleToUnUsableState()
-    //        selectedButton.backgroundColor = .systemGray
-    //        dismiss(animated: true)
-    //    }
-    
     private func setupViews() {
         view.backgroundColor = .systemBackground
         
@@ -113,10 +85,12 @@ final class DetailViewController: UIViewController {
     //        giftImageViewController.modalPresentationStyle = .fullScreen
     //        present(giftImageViewController, animated: true)
     //    }
+    var delegate: GiftStateSendable?
     
 }
 
 extension DetailViewController: UICollectionViewDataSource {
+    
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
         return viewModel.gifts.count
     }
@@ -125,6 +99,7 @@ extension DetailViewController: UICollectionViewDataSource {
         let cell = pagingCollectionView.dequeueReusableCell(withReuseIdentifier: PagingCollectionViewCell.reuseIdentifier,
                                                             for: indexPath) as? PagingCollectionViewCell ?? PagingCollectionViewCell()
         let gift = viewModel.gifts[indexPath.row]
+        cell.delegate = self
         cell.configureCell(data: gift)
         return cell
     }
@@ -177,5 +152,32 @@ extension DetailViewController: UIGestureRecognizerDelegate {
     func gestureRecognizer(_ gestureRecognizer: UIGestureRecognizer, shouldRecognizeSimultaneouslyWith otherGestureRecognizer: UIGestureRecognizer) -> Bool {
         // 다른 Gesture Recognizer와 함께 사용할 수 있도록 true 반환
         return true
+    }
+}
+
+extension DetailViewController: GiftStateSendable {
+    func sendCellInformation(indexPathRow: Int, text: String?) {
+        showAlert(indexPathRow, text)
+    }
+    
+    private func showAlert(_ indexPathRow: Int, _ text: String?) {
+        let alertController = UIAlertController(title: "사용 완료 처리할까요?",
+                                      message: nil,
+                                      preferredStyle: .alert)
+        
+        let noAction = UIAlertAction(title: "아니요", style: .destructive)
+        let okAction = UIAlertAction(title: "네", style: .default) { _ in
+            self.doneAction(indexPathRow, text)
+        }
+        
+        [okAction, noAction].forEach(alertController.addAction(_:))
+        present(alertController, animated: true)
+    }
+    
+    private func doneAction(_ indexPathRow: Int, _ text: String?) {
+        viewModel.writeMemo(indexPathRow, text)
+        viewModel.toggleToUnUsableState(indexPathRow)
+        viewModel.coreDataUpdate(indexPathRow)
+        self.dismiss(animated: true)
     }
 }

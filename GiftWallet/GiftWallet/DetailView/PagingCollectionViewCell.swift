@@ -9,6 +9,7 @@ import UIKit
 
 class PagingCollectionViewCell: UICollectionViewCell, ReusableView {
     
+    var delegate: GiftStateSendable?
     private let scrollView: UIScrollView = {
         let scrollView = UIScrollView(frame: .zero)
         
@@ -73,10 +74,19 @@ class PagingCollectionViewCell: UICollectionViewCell, ReusableView {
         let button = CustomButton()
         
         button.setTitle("사용하기", for: .normal)
+        button.addTarget(nil, action: #selector(tappedButton), for: .touchUpInside)
         button.translatesAutoresizingMaskIntoConstraints = false
         
         return button
     }()
+    
+    @objc
+    func tappedButton() {
+        guard let collectionView = superview as? UICollectionView else { return }
+        guard let indexPath = collectionView.indexPath(for: self) else { return }
+
+        delegate?.sendCellInformation(indexPathRow: indexPath.row, text: memoTextField.text)
+    }
     
     private let giftImageView: UIImageView = {
         let imageView = UIImageView()
@@ -160,4 +170,8 @@ class PagingCollectionViewCell: UICollectionViewCell, ReusableView {
         
         giftImageView.heightAnchor.constraint(equalToConstant: newImageViewHeight).isActive = true
     }
+}
+
+protocol GiftStateSendable {
+    func sendCellInformation(indexPathRow: Int, text: String?)
 }
