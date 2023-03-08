@@ -8,10 +8,13 @@
 import UIKit
 
 final class GiftImageViewController: UIViewController {
+    
+    private let viewModel: GiftImageViewModel
+    
     let giftImageView = UIImageView()
     
-    init(image: UIImage) {
-        self.giftImageView.image = image
+    init(viewModel: GiftImageViewModel) {
+        self.viewModel = viewModel
         super.init(nibName: nil, bundle: nil)
     }
     

@@ -149,9 +149,12 @@ final class DetailViewController: UIViewController {
     }
         
     @objc private func tapImageView(sender: UITapGestureRecognizer) {
-        guard let image = giftImageView.image else { return }
+        let gift = viewModel.gift
         
-        present(GiftImageViewController(image: image), animated: true)
+        let viewModel = GiftImageViewModel(gift: gift)
+        let giftImageViewController = GiftImageViewController(viewModel: viewModel)
+        giftImageViewController.modalPresentationStyle = .fullScreen
+        present(giftImageViewController, animated: true)
     }
     
 }
