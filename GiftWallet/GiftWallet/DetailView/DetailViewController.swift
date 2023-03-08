@@ -21,23 +21,6 @@ final class DetailViewController: UIViewController {
         return collectionView
     }()
     
-    
-    private let scrollView: UIScrollView = {
-        let view = UIScrollView(frame: .zero)
-        
-        view.translatesAutoresizingMaskIntoConstraints = false
-        
-        return view
-    }()
-    
-    private let contentsView: UIView = {
-        let view = UIView()
-        
-        view.translatesAutoresizingMaskIntoConstraints = false
-        
-        return view
-    }()
-    
     private let brandLabel: UILabel = {
         let label = UILabel()
         
@@ -190,32 +173,6 @@ extension DetailViewController {
         
     }
     
-    private func configureScrollView() {
-        view.addSubview(scrollView)
-        
-        NSLayoutConstraint.activate([
-            scrollView.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor),
-            scrollView.leadingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.leadingAnchor),
-            scrollView.trailingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.trailingAnchor),
-            scrollView.bottomAnchor.constraint(equalTo: view.safeAreaLayoutGuide.bottomAnchor)
-        ])
-    }
-    
-    private func configureContentView() {
-        scrollView.addSubview(contentsView)
-        
-        NSLayoutConstraint.activate([
-            contentsView.topAnchor.constraint(equalTo: scrollView.contentLayoutGuide.topAnchor),
-            contentsView.leadingAnchor.constraint(equalTo: scrollView.contentLayoutGuide.leadingAnchor),
-            contentsView.trailingAnchor.constraint(equalTo: scrollView.contentLayoutGuide.trailingAnchor),
-            contentsView.bottomAnchor.constraint(equalTo: scrollView.contentLayoutGuide.bottomAnchor),
-            contentsView.widthAnchor.constraint(equalTo: scrollView.widthAnchor)
-        ])
-        
-        let contentViewHeight = contentsView.heightAnchor.constraint(greaterThanOrEqualTo: view.heightAnchor)
-        contentViewHeight.priority = .defaultLow
-        contentViewHeight.isActive = true
-    }
     
     private func configureInnerContents() {
         [brandLabel, productNameLabel, dateDueLabel, memoTextField, selectedButton, giftImageView].forEach {
