@@ -11,6 +11,17 @@ final class DetailViewController: UIViewController {
         
     private let viewModel: DetailViewModel
     
+    private let pagingCollectionView = {
+       let collectionView = UICollectionView()
+        
+        collectionView.register(PagingCollectionViewCell.self,
+                                forCellWithReuseIdentifier: PagingCollectionViewCell.reuseIdentifier)
+        collectionView.isPagingEnabled = true
+        
+        return collectionView
+    }()
+    
+    
     private let scrollView: UIScrollView = {
         let view = UIScrollView(frame: .zero)
         
@@ -164,9 +175,19 @@ extension DetailViewController {
     private func setupViews() {
         view.backgroundColor = .systemBackground
         
-        configureScrollView()
-        configureContentView()
-        configureInnerContents()
+//        configureScrollView()
+//        configureContentView()
+//        configureInnerContents()
+        
+        view.addSubview(pagingCollectionView)
+        
+        NSLayoutConstraint.activate([
+            pagingCollectionView.topAnchor.constraint(equalTo: view.topAnchor),
+            pagingCollectionView.leadingAnchor.constraint(equalTo: view.leadingAnchor),
+            pagingCollectionView.trailingAnchor.constraint(equalTo: view.trailingAnchor),
+            pagingCollectionView.bottomAnchor.constraint(equalTo: view.bottomAnchor)
+        ])
+        
     }
     
     private func configureScrollView() {
