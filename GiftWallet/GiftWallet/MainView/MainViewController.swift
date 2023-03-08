@@ -323,17 +323,20 @@ extension MainViewController: UICollectionViewDataSource, UICollectionViewDelega
     }
     
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
-        var sendGift: Gift
+        var sendGifts: [Gift]?
         
         switch collectionView {
             case expireCollectionView:
-                sendGift = viewModel.expireGifts.value[indexPath.row]
+                sendGifts = viewModel.expireGifts.value
             case recentCollectionView:
-                sendGift = viewModel.recentGifts.value[indexPath.row]
+                sendGifts = viewModel.recentGifts.value
             default:
-            sendGift = Gift(image: UIImage(systemName: "cloud")!, category: nil, brandName: nil, productName: nil, memo: nil, expireDate: nil)
+                break
         }
-        let detailViewModel = DetailViewModel(gift: sendGift)
+        guard let sendGifts = sendGifts else { return }
+        
+        let detailViewModel = DetailViewModel(gifts: sendGifts,
+                                              indexPahtRow: indexPath.row)
         let detailViewController = DetailViewController(viewModel: detailViewModel)
         detailViewController.modalTransitionStyle = .coverVertical
         detailViewController.modalPresentationStyle = .fullScreen

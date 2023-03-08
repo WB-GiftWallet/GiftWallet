@@ -20,4 +20,6 @@ extension UIColor {
     
     static let cellTagView = UIColor(r: 255, g: 70, b: 2)
     static let cellTagShadow = UIColor(r: 176, g: 203, b: 214)
+    
+    static let customButton = UIColor(r: 76, g: 76, b: 76)
 }

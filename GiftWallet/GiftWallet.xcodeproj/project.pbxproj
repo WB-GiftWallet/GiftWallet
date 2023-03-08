@@ -21,6 +21,7 @@
 		D24002DB29B75B5200635FFC /* DetailViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = D24002DA29B75B5200635FFC /* DetailViewModel.swift */; };
 		D27CA42929B84F6F00EC5FC7 /* GiftImageViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = D27CA42829B84F6F00EC5FC7 /* GiftImageViewModel.swift */; };
 		D27CA42B29B86ABF00EC5FC7 /* PagingCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = D27CA42A29B86ABF00EC5FC7 /* PagingCollectionViewCell.swift */; };
+		D27CA42D29B89F1900EC5FC7 /* CustomButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = D27CA42C29B89F1900EC5FC7 /* CustomButton.swift */; };
 		D295E4B529A5E2F400E12CAF /* UserInfoModifyViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D295E4B429A5E2F400E12CAF /* UserInfoModifyViewController.swift */; };
 		D295E4B729A5E31400E12CAF /* UserInfoModifyViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = D295E4B629A5E31400E12CAF /* UserInfoModifyViewModel.swift */; };
 		D295E4B929A5F64200E12CAF /* FormSheetViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D295E4B829A5F64200E12CAF /* FormSheetViewController.swift */; };
@@ -97,6 +98,7 @@
 		D24002DA29B75B5200635FFC /* DetailViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DetailViewModel.swift; sourceTree = "<group>"; };
 		D27CA42829B84F6F00EC5FC7 /* GiftImageViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GiftImageViewModel.swift; sourceTree = "<group>"; };
 		D27CA42A29B86ABF00EC5FC7 /* PagingCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PagingCollectionViewCell.swift; sourceTree = "<group>"; };
+		D27CA42C29B89F1900EC5FC7 /* CustomButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomButton.swift; sourceTree = "<group>"; };
 		D295E4B429A5E2F400E12CAF /* UserInfoModifyViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserInfoModifyViewController.swift; sourceTree = "<group>"; };
 		D295E4B629A5E31400E12CAF /* UserInfoModifyViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserInfoModifyViewModel.swift; sourceTree = "<group>"; };
 		D295E4B829A5F64200E12CAF /* FormSheetViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FormSheetViewController.swift; sourceTree = "<group>"; };
@@ -272,6 +274,7 @@
 			children = (
 				D2CDDBF329B0716000E000E3 /* CustomTextField.swift */,
 				D2B7AE6029B7301A000AC592 /* CustomGiftTagUIView.swift */,
+				D27CA42C29B89F1900EC5FC7 /* CustomButton.swift */,
 			);
 			path = CustomUI;
 			sourceTree = "<group>";
@@ -581,6 +584,7 @@
 				D2B951B529B63545002E7C08 /* Extension+UIFont.swift in Sources */,
 				D27CA42B29B86ABF00EC5FC7 /* PagingCollectionViewCell.swift in Sources */,
 				F6A4AB4B29A5DA1C009AEB78 /* DetailViewController.swift in Sources */,
+				D27CA42D29B89F1900EC5FC7 /* CustomButton.swift in Sources */,
 				D2CDDBEC29AF4C0700E000E3 /* AddViewModel.swift in Sources */,
 				171695B129B1B8CA00CF3E41 /* SearchTableViewModel.swift in Sources */,
 				FCAD20A529A91A55004214FD /* CoreDataError.swift in Sources */,

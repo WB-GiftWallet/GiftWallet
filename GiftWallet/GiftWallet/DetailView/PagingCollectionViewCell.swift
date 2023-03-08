@@ -68,8 +68,8 @@ class PagingCollectionViewCell: UICollectionViewCell, ReusableView {
         return textField
     }()
     
-    private let selectedButton: UIButton = {
-        let button = UIButton()
+    private let selectedButton: CustomButton = {
+        let button = CustomButton()
         
         button.setTitle("사용 완료", for: .normal)
         button.translatesAutoresizingMaskIntoConstraints = false
@@ -106,8 +106,6 @@ class PagingCollectionViewCell: UICollectionViewCell, ReusableView {
     }
     
     private func setupViews() {
-        scrollView.isScrollEnabled = true
-        
         [brandLabel, productNameLabel, expireDateLabel].forEach(labelVerticalStackView.addArrangedSubview(_:))
         
         scrollView.addSubview(containterView)
@@ -140,9 +138,10 @@ class PagingCollectionViewCell: UICollectionViewCell, ReusableView {
             memoTextField.leadingAnchor.constraint(equalTo: containterView.leadingAnchor, constant: 15),
             memoTextField.trailingAnchor.constraint(equalTo: containterView.trailingAnchor, constant: -15),
             
-            selectedButton.topAnchor.constraint(equalTo: memoTextField.bottomAnchor, constant: 10),
-            selectedButton.leadingAnchor.constraint(equalTo: containterView.leadingAnchor, constant: 15),
-            selectedButton.trailingAnchor.constraint(equalTo: containterView.trailingAnchor, constant: -15),
+            selectedButton.topAnchor.constraint(equalTo: memoTextField.bottomAnchor, constant: 20),
+            selectedButton.centerXAnchor.constraint(equalTo: contentView.centerXAnchor),
+            selectedButton.heightAnchor.constraint(equalTo: contentView.heightAnchor, multiplier: 0.05),
+            selectedButton.widthAnchor.constraint(equalTo: contentView.widthAnchor, multiplier: 0.95),
             
             giftImageView.topAnchor.constraint(equalTo: selectedButton.bottomAnchor, constant: 20),
             giftImageView.leadingAnchor.constraint(equalTo: containterView.leadingAnchor),
@@ -159,8 +158,4 @@ class PagingCollectionViewCell: UICollectionViewCell, ReusableView {
         
         giftImageView.heightAnchor.constraint(equalToConstant: newImageViewHeight).isActive = true
     }
-}
-
-extension PagingCollectionViewCell: UIScrollViewDelegate {
-    
 }
