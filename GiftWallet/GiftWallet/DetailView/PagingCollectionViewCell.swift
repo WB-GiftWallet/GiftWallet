@@ -46,7 +46,7 @@ class PagingCollectionViewCell: UICollectionViewCell, ReusableView {
     private let expireDateLabel: UILabel = {
         let label = UILabel()
         
-        label.font = UIFont(style: .light, size: 19)
+        label.font = UIFont(style: .light, size: 18)
         
         return label
     }()
@@ -63,6 +63,7 @@ class PagingCollectionViewCell: UICollectionViewCell, ReusableView {
     private let memoTextField: CustomTextField = {
         let textField = CustomTextField(frame: .zero)
         
+        textField.placeholder = "메모가 필요하시면 입력해주세요"
         textField.translatesAutoresizingMaskIntoConstraints = false
         
         return textField
@@ -71,7 +72,7 @@ class PagingCollectionViewCell: UICollectionViewCell, ReusableView {
     private let selectedButton: CustomButton = {
         let button = CustomButton()
         
-        button.setTitle("사용 완료", for: .normal)
+        button.setTitle("사용하기", for: .normal)
         button.translatesAutoresizingMaskIntoConstraints = false
         
         return button
@@ -86,7 +87,6 @@ class PagingCollectionViewCell: UICollectionViewCell, ReusableView {
         return imageView
     }()
         
-    
     override init(frame: CGRect) {
         super.init(frame: frame)
         setupViews()
@@ -112,7 +112,7 @@ class PagingCollectionViewCell: UICollectionViewCell, ReusableView {
         [labelVerticalStackView, memoTextField, selectedButton, giftImageView].forEach(containterView.addSubview(_:))
         contentView.addSubview(scrollView)
         
-        let containerViewHeightConstraint = containterView.heightAnchor.constraint(equalTo: giftImageView.heightAnchor, multiplier: 1.3)
+        let containerViewHeightConstraint = containterView.heightAnchor.constraint(equalTo: giftImageView.heightAnchor, multiplier: 1.6)
             containerViewHeightConstraint.priority = .defaultHigh
         
         let contentLayoutGuide = scrollView.contentLayoutGuide
@@ -130,11 +130,11 @@ class PagingCollectionViewCell: UICollectionViewCell, ReusableView {
             containterView.widthAnchor.constraint(equalTo: scrollView.widthAnchor),
             containerViewHeightConstraint,
             
-            labelVerticalStackView.topAnchor.constraint(equalTo: containterView.safeAreaLayoutGuide.topAnchor, constant: 15),
+            labelVerticalStackView.topAnchor.constraint(equalTo: containterView.safeAreaLayoutGuide.topAnchor, constant: 100),
             labelVerticalStackView.leadingAnchor.constraint(equalTo: containterView.leadingAnchor, constant: 15),
             labelVerticalStackView.trailingAnchor.constraint(equalTo: containterView.trailingAnchor, constant: -15),
             
-            memoTextField.topAnchor.constraint(equalTo: labelVerticalStackView.bottomAnchor, constant: 10),
+            memoTextField.topAnchor.constraint(equalTo: labelVerticalStackView.bottomAnchor, constant: 30),
             memoTextField.leadingAnchor.constraint(equalTo: containterView.leadingAnchor, constant: 15),
             memoTextField.trailingAnchor.constraint(equalTo: containterView.trailingAnchor, constant: -15),
             
@@ -159,13 +159,5 @@ class PagingCollectionViewCell: UICollectionViewCell, ReusableView {
         let newImageViewHeight = containterView.frame.width * imageAspectRatio
         
         giftImageView.heightAnchor.constraint(equalToConstant: newImageViewHeight).isActive = true
-    }
-}
-
-extension PagingCollectionViewCell {
-    private func setupButton() {
-        let buttonAction = UIAction { [weak self] _ in
-            
-        }
     }
 }

@@ -10,7 +10,7 @@ import UIKit
 final class DetailViewController: UIViewController {
     
     private let viewModel: DetailViewModel
-    var viewTranslation = CGPoint(x: 0, y: 0)
+    private var viewTranslation = CGPoint(x: 0, y: 0)
     
     private let pagingCollectionView = {
         let flowLayout = UICollectionViewFlowLayout()
@@ -19,6 +19,7 @@ final class DetailViewController: UIViewController {
         
         collectionView.register(PagingCollectionViewCell.self,
                                 forCellWithReuseIdentifier: PagingCollectionViewCell.reuseIdentifier)
+        collectionView.backgroundColor = .white
         collectionView.translatesAutoresizingMaskIntoConstraints = false
         
         return collectionView
@@ -35,7 +36,6 @@ final class DetailViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        
         setupPanGestureRecognizerAttributes()
         setupCollectionViewAttributes()
         setupNavigation()
@@ -139,7 +139,9 @@ extension DetailViewController: UICollectionViewDelegateFlowLayout{
         return CGSize(width: view.frame.width, height: view.frame.height)
     }
     
-    
+    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, minimumLineSpacingForSectionAt section: Int) -> CGFloat {
+        return .zero
+    }
 }
 
 // MARK: UIGestureRecognizer 관련
