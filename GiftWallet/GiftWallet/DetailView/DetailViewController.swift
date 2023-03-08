@@ -38,16 +38,7 @@ final class DetailViewController: UIViewController {
         setupCollectionViewAttributes()
         setupNavigation()
         setupViews()
-//        configureGiftData()
     }
-    
-//    private func configureGiftData() {
-//        brandLabel.text = viewModel.brandName
-//        productNameLabel.text = viewModel.productName
-//        dateDueLabel.text = viewModel.expirdDate
-//        memoTextField.text = viewModel.memo
-//        giftImageView.image = viewModel.gift.image
-//    }
     
     private func setupCollectionViewAttributes() {
         pagingCollectionView.dataSource = self
@@ -109,27 +100,27 @@ final class DetailViewController: UIViewController {
         
     }
     
-    @objc private func tapImageView(sender: UITapGestureRecognizer) {
-        let gift = viewModel.gift
-        
-        let viewModel = GiftImageViewModel(gift: gift)
-        let giftImageViewController = GiftImageViewController(viewModel: viewModel)
-        giftImageViewController.modalPresentationStyle = .fullScreen
-        present(giftImageViewController, animated: true)
-    }
+//    @objc private func tapImageView(sender: UITapGestureRecognizer) {
+//        let gift = viewModel.gift
+//        
+//        let viewModel = GiftImageViewModel(gift: gift)
+//        let giftImageViewController = GiftImageViewController(viewModel: viewModel)
+//        giftImageViewController.modalPresentationStyle = .fullScreen
+//        present(giftImageViewController, animated: true)
+//    }
     
 }
 
 extension DetailViewController: UICollectionViewDataSource {
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        return 2
+        return viewModel.gifts.count
     }
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         let cell = pagingCollectionView.dequeueReusableCell(withReuseIdentifier: PagingCollectionViewCell.reuseIdentifier,
                                                             for: indexPath) as? PagingCollectionViewCell ?? PagingCollectionViewCell()
-        cell.sampleConfigure()
-        
+        let gift = viewModel.gifts[indexPath.row]
+        cell.configureCell(data: gift)
         return cell
     }
 }

@@ -95,8 +95,8 @@ extension SearchTableViewController {
             indexGiftData = allGiftData[indexPath.row]
         }
         
-        let detailViewModel = DetailViewModel(gift: indexGiftData)
-        let detailViewController = DetailViewController(viewModel: detailViewModel)
+//        let detailViewModel = DetailViewModel(gifts: indexGiftData)
+//        let detailViewController = DetailViewController(viewModel: detailViewModel)
         
 //        detailViewController.changeBrandLabel(name: indexGiftData.brandName)
 //        detailViewController.changeProductNameLabel(name: indexGiftData.productName)
@@ -104,7 +104,7 @@ extension SearchTableViewController {
 //        detailViewController.changeMemoTextField(name: indexGiftData.memo)
 //        detailViewController.changeGiftImageView(image: indexGiftData.image)
         
-        navigationController?.pushViewController(detailViewController, animated: true)
+//        navigationController?.pushViewController(detailViewController, animated: true)
         
         tableView.deselectRow(at: indexPath, animated: true)
         

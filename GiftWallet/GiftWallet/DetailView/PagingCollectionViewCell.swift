@@ -97,11 +97,11 @@ class PagingCollectionViewCell: UICollectionViewCell, ReusableView {
         fatalError("init(coder:) has not been implemented")
     }
     
-    func sampleConfigure() {
-        brandLabel.text = "안녕"
-        productNameLabel.text = "프로덕네임"
-        expireDateLabel.text = "안녕라벨"
-        giftImageView.image = UIImage(named: "testImageEDIYA")
+    func configureCell(data: Gift) {
+        brandLabel.text = data.brandName
+        productNameLabel.text = data.productName
+        expireDateLabel.text = data.expireDate?.setupDateStyleForDisplay()
+        giftImageView.image = data.image
         calculateImageViewSize()
     }
     
