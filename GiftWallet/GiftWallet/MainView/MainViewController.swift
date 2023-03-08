@@ -186,8 +186,8 @@ class MainViewController: UIViewController, UISearchBarDelegate, UISearchControl
     
     private func setupButton() {
         let searchButtonAction = UIAction { _ in
-            let searchTableViewController = SearchTableViewController()
-            self.navigationController?.pushViewController(searchTableViewController, animated: true)
+            let searchViewController = SearchViewController()
+            self.navigationController?.pushViewController(searchViewController, animated: true)
         }
         searchButton.addAction(searchButtonAction, for: .touchUpInside)
     }

@@ -9,9 +9,10 @@ import UIKit
 
 final class SearchViewController: UIViewController {
     
-    private let searchBar = UISearchBar(frame: .zero)
-    
     private let giftSearchController = UISearchController(searchResultsController: nil)
+    private let searchTableView = UITableView()
+    private let scrollView = UIScrollView()
+    private let recommendView = RecommendView()
     
     private var allGiftData = [Gift]()
     private var filteringGifts = [Gift]()
@@ -22,34 +23,32 @@ final class SearchViewController: UIViewController {
         return isActive && isSearchBarHasText
     }
     
-    private let scrollView = UIScrollView()
-    private let recommendView = RecommendView()
-    
-    private let searchTableView = UITableView()
-    
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        searchTableView.delegate = self
-        searchTableView.dataSource = self
         fetchGiftCoreData()
         setSearchController()
         
+        searchTableView.delegate = self
+        searchTableView.dataSource = self
+        setLayout()
+    }
+    
+    private func setLayout() {
         view.addSubview(scrollView)
+        view.addSubview(searchTableView)
         scrollView.addSubview(recommendView)
         
-        view.addSubview(searchTableView)
         searchTableView.translatesAutoresizingMaskIntoConstraints = false
-        
         recommendView.translatesAutoresizingMaskIntoConstraints = false
         scrollView.translatesAutoresizingMaskIntoConstraints = false
+        
         scrollView.showsHorizontalScrollIndicator = false
         
         NSLayoutConstraint.activate([
-            //scrollView
             scrollView.frameLayoutGuide.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor),
-            scrollView.frameLayoutGuide.leadingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.leadingAnchor),
-            scrollView.frameLayoutGuide.trailingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.trailingAnchor),
+            scrollView.frameLayoutGuide.leadingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.leadingAnchor, constant: 10),
+            scrollView.frameLayoutGuide.trailingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.trailingAnchor, constant: 10),
             scrollView.frameLayoutGuide.heightAnchor.constraint(equalTo: recommendView.heightAnchor),
             
             recommendView.topAnchor.constraint(equalTo: scrollView.contentLayoutGuide.topAnchor),
@@ -63,6 +62,7 @@ final class SearchViewController: UIViewController {
             searchTableView.bottomAnchor.constraint(equalTo: view.safeAreaLayoutGuide.bottomAnchor),
         ])
     }
+    
     private func fetchGiftCoreData() {
         
         switch CoreDataManager.shared.fetchData() {
@@ -90,14 +90,9 @@ final class SearchViewController: UIViewController {
         
         searchTableView.register(CustomCell.self, forCellReuseIdentifier: "giftCustomCell")
     }
-    
 }
 
-extension SearchViewController: UITableViewDelegate {
-    
-}
-
-extension SearchViewController: UITableViewDataSource {
+extension SearchViewController: UITableViewDataSource, UITableViewDelegate {
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         return self.isFiltering ? self.filteringGifts.count : self.allGiftData.count
     }
@@ -150,7 +145,7 @@ extension SearchViewController: UITableViewDataSource {
     }
     
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
-        return self.view.frame.height / 5.5
+        return self.view.frame.height / 7
     }
 }
 
