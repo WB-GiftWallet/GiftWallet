@@ -132,8 +132,6 @@ extension DetailViewController: UICollectionViewDataSource {
         
         return cell
     }
-    
-
 }
 
 extension DetailViewController: UICollectionViewDelegate {

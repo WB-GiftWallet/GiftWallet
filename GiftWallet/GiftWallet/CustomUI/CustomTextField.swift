@@ -18,6 +18,7 @@ class CustomTextField: UITextField {
     }
     
     func setupTextFieldBottomBorder() {
+        self.layoutIfNeeded()
         let borderColor: UIColor = .systemGray
         let border = CALayer()
         border.frame = CGRect(x: 0,
@@ -27,4 +28,5 @@ class CustomTextField: UITextField {
         border.backgroundColor = borderColor.cgColor
         self.layer.addSublayer(border)
     }
+    
 }

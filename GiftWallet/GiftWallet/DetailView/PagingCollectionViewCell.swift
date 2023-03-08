@@ -10,11 +10,13 @@ import UIKit
 class PagingCollectionViewCell: UICollectionViewCell, ReusableView {
     
     private let scrollView: UIScrollView = {
-        let view = UIScrollView(frame: .zero)
+        let scrollView = UIScrollView(frame: .zero)
         
-        view.translatesAutoresizingMaskIntoConstraints = false
+        scrollView.translatesAutoresizingMaskIntoConstraints = false
+        scrollView.isScrollEnabled = true
+        scrollView.showsVerticalScrollIndicator = true
         
-        return view
+        return scrollView
     }()
     
     private let containterView: UIView = {
@@ -59,7 +61,7 @@ class PagingCollectionViewCell: UICollectionViewCell, ReusableView {
     }()
     
     private let memoTextField: CustomTextField = {
-        let textField = CustomTextField()
+        let textField = CustomTextField(frame: .zero)
         
         textField.translatesAutoresizingMaskIntoConstraints = false
         
@@ -78,17 +80,17 @@ class PagingCollectionViewCell: UICollectionViewCell, ReusableView {
     private let giftImageView: UIImageView = {
         let imageView = UIImageView()
         
-        imageView.image = UIImage(named: "testImageEDIYA")
-        imageView.contentMode = .scaleAspectFit
+        imageView.contentMode = .scaleToFill
         imageView.translatesAutoresizingMaskIntoConstraints = false
         
         return imageView
     }()
-    
+        
     
     override init(frame: CGRect) {
         super.init(frame: frame)
         setupViews()
+        memoTextField.setupTextFieldBottomBorder()
     }
     
     required init?(coder: NSCoder) {
@@ -100,17 +102,23 @@ class PagingCollectionViewCell: UICollectionViewCell, ReusableView {
         productNameLabel.text = "프로덕네임"
         expireDateLabel.text = "안녕라벨"
         giftImageView.image = UIImage(named: "testImageEDIYA")
+        calculateImageViewSize()
     }
     
     private func setupViews() {
+        scrollView.isScrollEnabled = true
+        
         [brandLabel, productNameLabel, expireDateLabel].forEach(labelVerticalStackView.addArrangedSubview(_:))
         
         scrollView.addSubview(containterView)
         [labelVerticalStackView, memoTextField, selectedButton, giftImageView].forEach(containterView.addSubview(_:))
         contentView.addSubview(scrollView)
         
-        let contentLayoutGuide = scrollView.contentLayoutGuide
+        let containerViewHeightConstraint = containterView.heightAnchor.constraint(equalTo: giftImageView.heightAnchor, multiplier: 1.3)
+            containerViewHeightConstraint.priority = .defaultHigh
         
+        let contentLayoutGuide = scrollView.contentLayoutGuide
+
         NSLayoutConstraint.activate([
             scrollView.topAnchor.constraint(equalTo: contentView.topAnchor),
             scrollView.leadingAnchor.constraint(equalTo: contentView.leadingAnchor),
@@ -122,12 +130,11 @@ class PagingCollectionViewCell: UICollectionViewCell, ReusableView {
             containterView.trailingAnchor.constraint(equalTo: contentLayoutGuide.trailingAnchor),
             containterView.bottomAnchor.constraint(equalTo: contentLayoutGuide.bottomAnchor),
             containterView.widthAnchor.constraint(equalTo: scrollView.widthAnchor),
-            containterView.heightAnchor.constraint(equalTo: scrollView.heightAnchor),
+            containerViewHeightConstraint,
             
-            labelVerticalStackView.topAnchor.constraint(equalTo: contentView.safeAreaLayoutGuide.topAnchor, constant: 15),
+            labelVerticalStackView.topAnchor.constraint(equalTo: containterView.safeAreaLayoutGuide.topAnchor, constant: 15),
             labelVerticalStackView.leadingAnchor.constraint(equalTo: containterView.leadingAnchor, constant: 15),
             labelVerticalStackView.trailingAnchor.constraint(equalTo: containterView.trailingAnchor, constant: -15),
-            labelVerticalStackView.heightAnchor.constraint(equalTo: containterView.heightAnchor, multiplier: 0.3),
             
             memoTextField.topAnchor.constraint(equalTo: labelVerticalStackView.bottomAnchor, constant: 10),
             memoTextField.leadingAnchor.constraint(equalTo: containterView.leadingAnchor, constant: 15),
@@ -138,12 +145,22 @@ class PagingCollectionViewCell: UICollectionViewCell, ReusableView {
             selectedButton.trailingAnchor.constraint(equalTo: containterView.trailingAnchor, constant: -15),
             
             giftImageView.topAnchor.constraint(equalTo: selectedButton.bottomAnchor, constant: 20),
-//            giftImageView.leadingAnchor.constraint(equalTo: containterView.leadingAnchor, constant: 15),
-//            giftImageView.trailingAnchor.constraint(equalTo: containterView.trailingAnchor, constant: -15),
-//            giftImageView.bottomAnchor.constraint(equalTo: contentView.bottomAnchor, constant: 0),
-            giftImageView.widthAnchor.constraint(equalTo: containterView.widthAnchor),
-            giftImageView.heightAnchor.constraint(equalTo: giftImageView.widthAnchor)
+            giftImageView.leadingAnchor.constraint(equalTo: containterView.leadingAnchor),
+            giftImageView.trailingAnchor.constraint(equalTo: containterView.trailingAnchor),
+            giftImageView.widthAnchor.constraint(equalTo: scrollView.widthAnchor),
         ])
     }
+    
+    private func calculateImageViewSize() {
+        containterView.layoutIfNeeded()
+        guard let image = giftImageView.image else { return }
+        let imageAspectRatio = image.size.height / image.size.width
+        let newImageViewHeight = containterView.frame.width * imageAspectRatio
+        
+        giftImageView.heightAnchor.constraint(equalToConstant: newImageViewHeight).isActive = true
+    }
+}
+
+extension PagingCollectionViewCell: UIScrollViewDelegate {
     
 }
