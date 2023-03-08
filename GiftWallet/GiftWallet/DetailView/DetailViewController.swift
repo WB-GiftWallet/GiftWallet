@@ -12,11 +12,13 @@ final class DetailViewController: UIViewController {
     private let viewModel: DetailViewModel
     
     private let pagingCollectionView = {
-       let collectionView = UICollectionView()
+        let flowLayout = UICollectionViewFlowLayout()
+        flowLayout.scrollDirection = .horizontal
+        let collectionView = UICollectionView(frame: .zero, collectionViewLayout: flowLayout)
         
         collectionView.register(PagingCollectionViewCell.self,
                                 forCellWithReuseIdentifier: PagingCollectionViewCell.reuseIdentifier)
-        collectionView.isPagingEnabled = true
+        collectionView.translatesAutoresizingMaskIntoConstraints = false
         
         return collectionView
     }()
@@ -33,6 +35,7 @@ final class DetailViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
 //        configureImageTapGesture()
+        setupCollectionViewAttributes()
         setupNavigation()
         setupViews()
 //        configureGiftData()
@@ -45,6 +48,13 @@ final class DetailViewController: UIViewController {
 //        memoTextField.text = viewModel.memo
 //        giftImageView.image = viewModel.gift.image
 //    }
+    
+    private func setupCollectionViewAttributes() {
+        pagingCollectionView.dataSource = self
+        pagingCollectionView.delegate = self
+        pagingCollectionView.isPagingEnabled = true
+
+    }
     
     private func setupNavigation() {
         navigationController?.navigationBar.tintColor = .black
@@ -110,15 +120,15 @@ final class DetailViewController: UIViewController {
     
 }
 
-// MARK: AutoLayout 관련 메서드
 extension DetailViewController: UICollectionViewDataSource {
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        return 5
+        return 2
     }
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         let cell = pagingCollectionView.dequeueReusableCell(withReuseIdentifier: PagingCollectionViewCell.reuseIdentifier,
-                                                            for: indexPath)
+                                                            for: indexPath) as? PagingCollectionViewCell ?? PagingCollectionViewCell()
+        cell.sampleConfigure()
         
         return cell
     }
@@ -127,5 +137,11 @@ extension DetailViewController: UICollectionViewDataSource {
 }
 
 extension DetailViewController: UICollectionViewDelegate {
-    
+}
+
+
+extension DetailViewController: UICollectionViewDelegateFlowLayout{
+    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
+        return CGSize(width: view.frame.width, height: view.frame.height)
+    }
 }

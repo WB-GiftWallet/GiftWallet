@@ -41,7 +41,7 @@ class PagingCollectionViewCell: UICollectionViewCell, ReusableView {
         return label
     }()
     
-    private let dateDueLabel: UILabel = {
+    private let expireDateLabel: UILabel = {
         let label = UILabel()
         
         label.font = UIFont(style: .light, size: 19)
@@ -49,20 +49,28 @@ class PagingCollectionViewCell: UICollectionViewCell, ReusableView {
         return label
     }()
     
+    private let labelVerticalStackView = {
+       let stackView = UIStackView()
+        
+        stackView.axis = .vertical
+        stackView.translatesAutoresizingMaskIntoConstraints = false
+        
+        return stackView
+    }()
+    
     private let memoTextField: CustomTextField = {
         let textField = CustomTextField()
+        
+        textField.translatesAutoresizingMaskIntoConstraints = false
         
         return textField
     }()
     
-    private lazy var button: UIButton = {
+    private let selectedButton: UIButton = {
+        let button = UIButton()
         
         button.setTitle("사용 완료", for: .normal)
-        button.backgroundColor = .systemPurple
-        button.layer.cornerRadius = 5
-//        button.addTarget(nil,
-//                         action: #selector(tapSeletedButton),
-//                         for: .touchUpInside)
+        button.translatesAutoresizingMaskIntoConstraints = false
         
         return button
     }()
@@ -70,7 +78,9 @@ class PagingCollectionViewCell: UICollectionViewCell, ReusableView {
     private let giftImageView: UIImageView = {
         let imageView = UIImageView()
         
+        imageView.image = UIImage(named: "testImageEDIYA")
         imageView.contentMode = .scaleAspectFit
+        imageView.translatesAutoresizingMaskIntoConstraints = false
         
         return imageView
     }()
@@ -85,11 +95,18 @@ class PagingCollectionViewCell: UICollectionViewCell, ReusableView {
         fatalError("init(coder:) has not been implemented")
     }
     
-    
+    func sampleConfigure() {
+        brandLabel.text = "안녕"
+        productNameLabel.text = "프로덕네임"
+        expireDateLabel.text = "안녕라벨"
+        giftImageView.image = UIImage(named: "testImageEDIYA")
+    }
     
     private func setupViews() {
+        [brandLabel, productNameLabel, expireDateLabel].forEach(labelVerticalStackView.addArrangedSubview(_:))
+        
         scrollView.addSubview(containterView)
-        [].forEach(containterView.addSubview(_:))
+        [labelVerticalStackView, memoTextField, selectedButton, giftImageView].forEach(containterView.addSubview(_:))
         contentView.addSubview(scrollView)
         
         let contentLayoutGuide = scrollView.contentLayoutGuide
@@ -104,8 +121,28 @@ class PagingCollectionViewCell: UICollectionViewCell, ReusableView {
             containterView.leadingAnchor.constraint(equalTo: contentLayoutGuide.leadingAnchor),
             containterView.trailingAnchor.constraint(equalTo: contentLayoutGuide.trailingAnchor),
             containterView.bottomAnchor.constraint(equalTo: contentLayoutGuide.bottomAnchor),
-            containterView.widthAnchor.constraint(equalTo: contentLayoutGuide.widthAnchor),
-            containterView.heightAnchor.constraint(equalTo: contentLayoutGuide.heightAnchor)
+            containterView.widthAnchor.constraint(equalTo: scrollView.widthAnchor),
+            containterView.heightAnchor.constraint(equalTo: scrollView.heightAnchor),
+            
+            labelVerticalStackView.topAnchor.constraint(equalTo: contentView.safeAreaLayoutGuide.topAnchor, constant: 15),
+            labelVerticalStackView.leadingAnchor.constraint(equalTo: containterView.leadingAnchor, constant: 15),
+            labelVerticalStackView.trailingAnchor.constraint(equalTo: containterView.trailingAnchor, constant: -15),
+            labelVerticalStackView.heightAnchor.constraint(equalTo: containterView.heightAnchor, multiplier: 0.3),
+            
+            memoTextField.topAnchor.constraint(equalTo: labelVerticalStackView.bottomAnchor, constant: 10),
+            memoTextField.leadingAnchor.constraint(equalTo: containterView.leadingAnchor, constant: 15),
+            memoTextField.trailingAnchor.constraint(equalTo: containterView.trailingAnchor, constant: -15),
+            
+            selectedButton.topAnchor.constraint(equalTo: memoTextField.bottomAnchor, constant: 10),
+            selectedButton.leadingAnchor.constraint(equalTo: containterView.leadingAnchor, constant: 15),
+            selectedButton.trailingAnchor.constraint(equalTo: containterView.trailingAnchor, constant: -15),
+            
+            giftImageView.topAnchor.constraint(equalTo: selectedButton.bottomAnchor, constant: 20),
+//            giftImageView.leadingAnchor.constraint(equalTo: containterView.leadingAnchor, constant: 15),
+//            giftImageView.trailingAnchor.constraint(equalTo: containterView.trailingAnchor, constant: -15),
+//            giftImageView.bottomAnchor.constraint(equalTo: contentView.bottomAnchor, constant: 0),
+            giftImageView.widthAnchor.constraint(equalTo: containterView.widthAnchor),
+            giftImageView.heightAnchor.constraint(equalTo: giftImageView.widthAnchor)
         ])
     }
     

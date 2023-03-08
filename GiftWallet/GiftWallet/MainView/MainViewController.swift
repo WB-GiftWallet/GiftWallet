@@ -335,7 +335,9 @@ extension MainViewController: UICollectionViewDataSource, UICollectionViewDelega
         }
         let detailViewModel = DetailViewModel(gift: sendGift)
         let detailViewController = DetailViewController(viewModel: detailViewModel)
-        navigationController?.pushViewController(detailViewController, animated: true)
+        detailViewController.modalTransitionStyle = .coverVertical
+        detailViewController.modalPresentationStyle = .fullScreen
+        present(detailViewController, animated: true)
     }
 }
 
