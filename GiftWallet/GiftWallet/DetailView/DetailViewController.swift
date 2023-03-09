@@ -41,13 +41,36 @@ final class DetailViewController: UIViewController {
         setupNavigation()
         setupViews()
     }
+  
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        scrollBySelectedIndex()
+    }
+    
+    private func scrollBySelectedIndex() {
+        pagingCollectionView.layoutIfNeeded()
+        guard let scrollTargetIndex = viewModel.indexPathRow else { return }
+        
+        let cgFloatTargetIndex = CGFloat(scrollTargetIndex)
+        let collectionViewAllContentsWidth = pagingCollectionView.contentSize.width
+        let oneContentWidth = view.frame.width
+        
+        let targetScrollPoint = collectionViewAllContentsWidth - oneContentWidth * cgFloatTargetIndex
+        
+        let rect = CGRect(x: targetScrollPoint,
+                          y: .zero,
+                          width: pagingCollectionView.bounds.size.width,
+                          height: pagingCollectionView.bounds.size.height)
+        
+        pagingCollectionView.scrollRectToVisible(rect, animated: true)
+    }
     
     private func setupCollectionViewAttributes() {
         pagingCollectionView.dataSource = self
         pagingCollectionView.delegate = self
         pagingCollectionView.isPagingEnabled = true
     }
-    
+        
     private func setupNavigation() {
         navigationController?.navigationBar.tintColor = .black
         navigationItem.leftBarButtonItem = UIBarButtonItem(image: UIImage(systemName: "multiply"),
