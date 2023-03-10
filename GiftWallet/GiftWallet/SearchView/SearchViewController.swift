@@ -93,28 +93,43 @@ final class SearchViewController: UIViewController {
     }
     
     private func setupRecommendData() {
-            var brandCounts = Dictionary<String, Int>()
+        var brandCounts = Dictionary<String, Int>()
+        
+        allGiftData.forEach { data in
+            guard let brandName = data.brandName else { return }
+            print(brandName)
             
-            allGiftData.forEach { data in
-                guard let brandName = data.brandName else { return }
-                print(brandName)
-                
-                if brandCounts[brandName] == nil {
-                    brandCounts.updateValue(1, forKey: brandName)
-                } else if brandCounts[brandName] != nil {
-                    guard let value = brandCounts[brandName] else { return }
-                    brandCounts.updateValue(value + 1, forKey: brandName)
-                }
+            if brandCounts[brandName] == nil {
+                brandCounts.updateValue(1, forKey: brandName)
+            } else if brandCounts[brandName] != nil {
+                guard let value = brandCounts[brandName] else { return }
+                brandCounts.updateValue(value + 1, forKey: brandName)
             }
-            
-            let sortedCounts = brandCounts.sorted { $0.1 > $1.1 }
-            
-            recommendView.firstRecommendButton.setTitle(sortedCounts[0].key, for: .normal)
-            recommendView.secondRecommendButton.setTitle(sortedCounts[1].key, for: .normal)
-            recommendView.thirdRecommendButton.setTitle(sortedCounts[2].key, for: .normal)
-            recommendView.fourthRecommendButton.setTitle(sortedCounts[3].key, for: .normal)
-            recommendView.fifthRecommendButton.setTitle(sortedCounts[4].key, for: .normal)
         }
+        
+        let sortedCounts = brandCounts.sorted { $0.1 > $1.1 }
+        
+        recommendView.firstRecommendButton.setTitle(sortedCounts[0].key, for: .normal)
+        recommendView.secondRecommendButton.setTitle(sortedCounts[1].key, for: .normal)
+        recommendView.thirdRecommendButton.setTitle(sortedCounts[2].key, for: .normal)
+        recommendView.fourthRecommendButton.setTitle(sortedCounts[3].key, for: .normal)
+        recommendView.fifthRecommendButton.setTitle(sortedCounts[4].key, for: .normal)
+        
+        addTargetButtons()
+    }
+    
+    private func addTargetButtons() {
+        recommendView.firstRecommendButton.addTarget(nil, action: #selector(tapRecommendButton), for: .touchUpInside)
+        recommendView.secondRecommendButton.addTarget(nil, action: #selector(tapRecommendButton), for: .touchUpInside)
+        recommendView.thirdRecommendButton.addTarget(nil, action: #selector(tapRecommendButton), for: .touchUpInside)
+        recommendView.fourthRecommendButton.addTarget(nil, action: #selector(tapRecommendButton), for: .touchUpInside)
+        recommendView.fifthRecommendButton.addTarget(nil, action: #selector(tapRecommendButton), for: .touchUpInside)
+    }
+    
+    @objc private func tapRecommendButton(_ sender: UIButton) {
+        giftSearchController.searchBar.text = sender.titleLabel?.text
+        giftSearchController.searchBar.becomeFirstResponder()
+    }
 }
 
 extension SearchViewController: UITableViewDataSource, UITableViewDelegate {
