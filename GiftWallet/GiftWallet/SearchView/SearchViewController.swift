@@ -32,6 +32,7 @@ final class SearchViewController: UIViewController {
         searchTableView.delegate = self
         searchTableView.dataSource = self
         setLayout()
+        setupRecommendData()
     }
     
     private func setLayout() {
@@ -90,6 +91,30 @@ final class SearchViewController: UIViewController {
         
         searchTableView.register(CustomCell.self, forCellReuseIdentifier: "giftCustomCell")
     }
+    
+    private func setupRecommendData() {
+            var brandCounts = Dictionary<String, Int>()
+            
+            allGiftData.forEach { data in
+                guard let brandName = data.brandName else { return }
+                print(brandName)
+                
+                if brandCounts[brandName] == nil {
+                    brandCounts.updateValue(1, forKey: brandName)
+                } else if brandCounts[brandName] != nil {
+                    guard let value = brandCounts[brandName] else { return }
+                    brandCounts.updateValue(value + 1, forKey: brandName)
+                }
+            }
+            
+            let sortedCounts = brandCounts.sorted { $0.1 > $1.1 }
+            
+            recommendView.firstRecommendButton.setTitle(sortedCounts[0].key, for: .normal)
+            recommendView.secondRecommendButton.setTitle(sortedCounts[1].key, for: .normal)
+            recommendView.thirdRecommendButton.setTitle(sortedCounts[2].key, for: .normal)
+            recommendView.fourthRecommendButton.setTitle(sortedCounts[3].key, for: .normal)
+            recommendView.fifthRecommendButton.setTitle(sortedCounts[4].key, for: .normal)
+        }
 }
 
 extension SearchViewController: UITableViewDataSource, UITableViewDelegate {
