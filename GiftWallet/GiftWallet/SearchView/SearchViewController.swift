@@ -98,7 +98,6 @@ final class SearchViewController: UIViewController {
         
         allGiftData.forEach { data in
             guard let brandName = data.brandName else { return }
-            print(brandName)
             
             if brandCounts[brandName] == nil {
                 brandCounts.updateValue(1, forKey: brandName)
