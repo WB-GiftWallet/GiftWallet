@@ -10,6 +10,8 @@ import UIKit
 class PagingCollectionViewCell: UICollectionViewCell, ReusableView {
     
     var delegate: GiftStateSendable?
+    private var giftImageViewHeightConstraint: NSLayoutConstraint?
+    
     private let scrollView: UIScrollView = {
         let scrollView = UIScrollView(frame: .zero)
         
@@ -20,7 +22,7 @@ class PagingCollectionViewCell: UICollectionViewCell, ReusableView {
         return scrollView
     }()
     
-    private let containterView: UIView = {
+    private let containerView: UIView = {
         let view = UIView()
         
         view.translatesAutoresizingMaskIntoConstraints = false
@@ -53,7 +55,7 @@ class PagingCollectionViewCell: UICollectionViewCell, ReusableView {
     }()
     
     private let labelVerticalStackView = {
-       let stackView = UIStackView()
+        let stackView = UIStackView()
         
         stackView.axis = .vertical
         stackView.translatesAutoresizingMaskIntoConstraints = false
@@ -84,7 +86,7 @@ class PagingCollectionViewCell: UICollectionViewCell, ReusableView {
     func tappedButton() {
         guard let collectionView = superview as? UICollectionView else { return }
         guard let indexPath = collectionView.indexPath(for: self) else { return }
-
+        
         delegate?.sendCellInformation(indexPathRow: indexPath.row, text: memoTextField.text)
     }
     
@@ -96,7 +98,7 @@ class PagingCollectionViewCell: UICollectionViewCell, ReusableView {
         
         return imageView
     }()
-        
+    
     override init(frame: CGRect) {
         super.init(frame: frame)
         setupViews()
@@ -107,46 +109,62 @@ class PagingCollectionViewCell: UICollectionViewCell, ReusableView {
         fatalError("init(coder:) has not been implemented")
     }
     
+    override func prepareForReuse() {
+        super.prepareForReuse()
+        brandLabel.text = nil
+        productNameLabel.text = nil
+        expireDateLabel.text = nil
+        giftImageView.image = nil
+    }
+    
     func configureCell(data: Gift) {
         brandLabel.text = data.brandName
         productNameLabel.text = data.productName
         expireDateLabel.text = data.expireDate?.setupDateStyleForDisplay()
         giftImageView.image = data.image
-        calculateImageViewSize()
+        
+        configureGiftImageViewHeightConstraint(size: data.image.size)
+    }
+    
+    private func configureGiftImageViewHeightConstraint(size: CGSize) {
+        let imageRatio = size.height / size.width
+        let imageHeight = contentView.frame.width * imageRatio
+        
+        giftImageViewHeightConstraint?.constant = imageHeight
     }
     
     private func setupViews() {
         [brandLabel, productNameLabel, expireDateLabel].forEach(labelVerticalStackView.addArrangedSubview(_:))
         
-        scrollView.addSubview(containterView)
-        [labelVerticalStackView, memoTextField, selectedButton, giftImageView].forEach(containterView.addSubview(_:))
+        scrollView.addSubview(containerView)
+        [labelVerticalStackView, memoTextField, selectedButton, giftImageView].forEach(containerView.addSubview(_:))
         contentView.addSubview(scrollView)
         
-        let containerViewHeightConstraint = containterView.heightAnchor.constraint(equalTo: giftImageView.heightAnchor, multiplier: 1.6)
-            containerViewHeightConstraint.priority = .defaultHigh
+        let containerViewHeightConstraint = containerView.heightAnchor.constraint(equalTo: giftImageView.heightAnchor, multiplier: 1.6)
+        containerViewHeightConstraint.priority = .defaultHigh
         
         let contentLayoutGuide = scrollView.contentLayoutGuide
-
+        
         NSLayoutConstraint.activate([
             scrollView.topAnchor.constraint(equalTo: contentView.topAnchor),
             scrollView.leadingAnchor.constraint(equalTo: contentView.leadingAnchor),
             scrollView.trailingAnchor.constraint(equalTo: contentView.trailingAnchor),
             scrollView.bottomAnchor.constraint(equalTo: contentView.bottomAnchor),
             
-            containterView.topAnchor.constraint(equalTo: contentLayoutGuide.topAnchor),
-            containterView.leadingAnchor.constraint(equalTo: contentLayoutGuide.leadingAnchor),
-            containterView.trailingAnchor.constraint(equalTo: contentLayoutGuide.trailingAnchor),
-            containterView.bottomAnchor.constraint(equalTo: contentLayoutGuide.bottomAnchor),
-            containterView.widthAnchor.constraint(equalTo: scrollView.widthAnchor),
+            containerView.topAnchor.constraint(equalTo: contentLayoutGuide.topAnchor),
+            containerView.leadingAnchor.constraint(equalTo: contentLayoutGuide.leadingAnchor),
+            containerView.trailingAnchor.constraint(equalTo: contentLayoutGuide.trailingAnchor),
+            containerView.bottomAnchor.constraint(equalTo: contentLayoutGuide.bottomAnchor),
+            containerView.widthAnchor.constraint(equalTo: scrollView.widthAnchor),
             containerViewHeightConstraint,
             
-            labelVerticalStackView.topAnchor.constraint(equalTo: containterView.safeAreaLayoutGuide.topAnchor, constant: 100),
-            labelVerticalStackView.leadingAnchor.constraint(equalTo: containterView.leadingAnchor, constant: 15),
-            labelVerticalStackView.trailingAnchor.constraint(equalTo: containterView.trailingAnchor, constant: -15),
+            labelVerticalStackView.topAnchor.constraint(equalTo: containerView.safeAreaLayoutGuide.topAnchor, constant: 100),
+            labelVerticalStackView.leadingAnchor.constraint(equalTo: containerView.leadingAnchor, constant: 15),
+            labelVerticalStackView.trailingAnchor.constraint(equalTo: containerView.trailingAnchor, constant: -15),
             
             memoTextField.topAnchor.constraint(equalTo: labelVerticalStackView.bottomAnchor, constant: 30),
-            memoTextField.leadingAnchor.constraint(equalTo: containterView.leadingAnchor, constant: 15),
-            memoTextField.trailingAnchor.constraint(equalTo: containterView.trailingAnchor, constant: -15),
+            memoTextField.leadingAnchor.constraint(equalTo: containerView.leadingAnchor, constant: 15),
+            memoTextField.trailingAnchor.constraint(equalTo: containerView.trailingAnchor, constant: -15),
             
             selectedButton.topAnchor.constraint(equalTo: memoTextField.bottomAnchor, constant: 20),
             selectedButton.centerXAnchor.constraint(equalTo: contentView.centerXAnchor),
@@ -154,21 +172,15 @@ class PagingCollectionViewCell: UICollectionViewCell, ReusableView {
             selectedButton.widthAnchor.constraint(equalTo: contentView.widthAnchor, multiplier: 0.95),
             
             giftImageView.topAnchor.constraint(equalTo: selectedButton.bottomAnchor, constant: 20),
-            giftImageView.leadingAnchor.constraint(equalTo: containterView.leadingAnchor),
-            giftImageView.trailingAnchor.constraint(equalTo: containterView.trailingAnchor),
-            giftImageView.widthAnchor.constraint(equalTo: scrollView.widthAnchor),
+            giftImageView.widthAnchor.constraint(equalTo: containerView.widthAnchor),
         ])
-    }
-    
-    //MARK: 작동안되는 셀 발견됨 추후 로직에 대한 수정이 필요하다. (어느 시점에 계산을 해줄 것인지도 고민해봐야함.
-    // 현재 생각으로 Usecase에서 이미지의 비율을 계산하는 로직을 구현해서 cell이 configure되기 전에 비율을 갖고 있는 것도 좋아보인다.
-    private func calculateImageViewSize() {
-        containterView.layoutIfNeeded()
-        guard let image = giftImageView.image else { return }
-        let imageAspectRatio = image.size.height / image.size.width
-        let newImageViewHeight = containterView.frame.width * imageAspectRatio
         
-        giftImageView.heightAnchor.constraint(equalToConstant: newImageViewHeight).isActive = true
+        giftImageViewHeightConstraint = giftImageView.heightAnchor.constraint(equalToConstant: .zero)
+        
+        NSLayoutConstraint.activate([
+            giftImageViewHeightConstraint
+        ].compactMap{ $0 })
+        
     }
 }
 
