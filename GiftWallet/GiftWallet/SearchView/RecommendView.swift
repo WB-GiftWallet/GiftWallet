@@ -9,60 +9,11 @@ import UIKit
 
 class RecommendView: UIView {
     
-    let firstRecommendButton: UIButton = {
-        let button = UIButton()
-        
-        button.contentEdgeInsets = .init(top: 5, left: 5, bottom: 5, right: 5)
-        button.setTitle("상위 1번째", for: .normal)
-        button.layer.borderWidth = 1
-        button.layer.cornerRadius = 10
-        
-        return button
-    }()
-    
-    let secondRecommendButton: UIButton = {
-        let button = UIButton()
-        
-        button.contentEdgeInsets = .init(top: 5, left: 5, bottom: 5, right: 5)
-        button.setTitle("상위 2번째", for: .normal)
-        button.layer.borderWidth = 1
-        button.layer.cornerRadius = 10
-        
-        return button
-    }()
-    
-    let thirdRecommendButton: UIButton = {
-        let button = UIButton()
-        
-        button.contentEdgeInsets = .init(top: 5, left: 5, bottom: 5, right: 5)
-        button.setTitle("상위 3번째", for: .normal)
-        button.layer.borderWidth = 1
-        button.layer.cornerRadius = 10
-        
-        return button
-    }()
-    
-    let fourthRecommendButton: UIButton = {
-        let button = UIButton()
-        
-        button.contentEdgeInsets = .init(top: 5, left: 5, bottom: 5, right: 5)
-        button.setTitle("상위 4번째", for: .normal)
-        button.layer.borderWidth = 1
-        button.layer.cornerRadius = 10
-        
-        return button
-    }()
-    
-    let fifthRecommendButton: UIButton = {
-        let button = UIButton()
-        
-        button.contentEdgeInsets = .init(top: 5, left: 5, bottom: 5, right: 5)
-        button.setTitle("상위 5번째", for: .normal)
-        button.layer.borderWidth = 1
-        button.layer.cornerRadius = 10
-        
-        return button
-    }()
+    let firstRecommendButton = UIButton(title: "상위 1번째")
+    let secondRecommendButton = UIButton(title: "상위 2번째")
+    let thirdRecommendButton = UIButton(title: "상위 3번째")
+    let fourthRecommendButton = UIButton(title: "상위 4번째")
+    let fifthRecommendButton = UIButton(title: "상위 5번째")
     
     let recommendStackView: UIStackView = {
         let stackView = UIStackView()
@@ -76,9 +27,23 @@ class RecommendView: UIView {
         return stackView
     }()
     
+    override func draw(_ rect: CGRect) {
+        super.draw(rect)
+        
+        [firstRecommendButton,
+         secondRecommendButton,
+         thirdRecommendButton,
+         fourthRecommendButton,
+         fifthRecommendButton].forEach {
+            $0.layer.cornerRadius = $0.frame.height/2
+            $0.setTitleColor(.systemGray2, for: .normal)
+            $0.layer.borderColor = UIColor.systemGray2.cgColor
+        }
+    }
+    
     override init(frame: CGRect) {
         super.init(frame: frame)
-        
+        self.backgroundColor = .systemBackground
         
         setLayout()
     }
@@ -90,9 +55,6 @@ class RecommendView: UIView {
     private func setLayout() {
         self.addSubview(recommendStackView)
         [firstRecommendButton, secondRecommendButton, thirdRecommendButton, fourthRecommendButton, fifthRecommendButton].forEach(recommendStackView.addArrangedSubview(_:))
-        [firstRecommendButton, secondRecommendButton, thirdRecommendButton, fourthRecommendButton, fifthRecommendButton].forEach {
-            $0.setTitleColor(.label, for: .normal)
-        }
         
         NSLayoutConstraint.activate([
             recommendStackView.topAnchor.constraint(equalTo: self.topAnchor),
@@ -103,5 +65,11 @@ class RecommendView: UIView {
     }
 }
 
-
-//sort manger 정의하면 좋을듯?
+private extension UIButton {
+    convenience init(title: String) {
+        self.init()
+        self.contentEdgeInsets = .init(top: 5, left: 5, bottom: 5, right: 5)
+        self.setTitle(title, for: .normal)
+        self.layer.borderWidth = 1
+    }
+}

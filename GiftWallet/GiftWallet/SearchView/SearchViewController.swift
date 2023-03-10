@@ -25,6 +25,7 @@ final class SearchViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        view.backgroundColor = .systemBackground
         
         fetchGiftCoreData()
         setSearchController()
@@ -47,9 +48,9 @@ final class SearchViewController: UIViewController {
         scrollView.showsHorizontalScrollIndicator = false
         
         NSLayoutConstraint.activate([
-            scrollView.frameLayoutGuide.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor),
+            scrollView.frameLayoutGuide.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor, constant: 4),
             scrollView.frameLayoutGuide.leadingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.leadingAnchor, constant: 10),
-            scrollView.frameLayoutGuide.trailingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.trailingAnchor, constant: 10),
+            scrollView.frameLayoutGuide.trailingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.trailingAnchor, constant: -10),
             scrollView.frameLayoutGuide.heightAnchor.constraint(equalTo: recommendView.heightAnchor),
             
             recommendView.topAnchor.constraint(equalTo: scrollView.contentLayoutGuide.topAnchor),
@@ -57,7 +58,7 @@ final class SearchViewController: UIViewController {
             recommendView.trailingAnchor.constraint(equalTo: scrollView.contentLayoutGuide.trailingAnchor),
             recommendView.bottomAnchor.constraint(equalTo: scrollView.contentLayoutGuide.bottomAnchor),
             
-            searchTableView.topAnchor.constraint(equalTo: scrollView.contentLayoutGuide.bottomAnchor),
+            searchTableView.topAnchor.constraint(equalTo: scrollView.contentLayoutGuide.bottomAnchor, constant: 4),
             searchTableView.leadingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.leadingAnchor),
             searchTableView.trailingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.trailingAnchor),
             searchTableView.bottomAnchor.constraint(equalTo: view.safeAreaLayoutGuide.bottomAnchor),
