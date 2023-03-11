@@ -10,6 +10,7 @@ import UIKit
 final class DetailViewController: UIViewController {
     
     private let viewModel: DetailViewModel
+    var delegate: GiftStateSendable?
     private var viewTranslation = CGPoint(x: 0, y: 0)
     
     private let pagingCollectionView = {
@@ -97,7 +98,6 @@ final class DetailViewController: UIViewController {
     //        giftImageViewController.modalPresentationStyle = .fullScreen
     //        present(giftImageViewController, animated: true)
     //    }
-    var delegate: GiftStateSendable?
     
 }
 
