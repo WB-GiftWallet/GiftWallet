@@ -54,6 +54,16 @@ class PagingCollectionViewCell: UICollectionViewCell, ReusableView {
         return label
     }()
     
+    private let barcodeButton: UIButton = {
+       let button = UIButton()
+        
+        button.setImage(UIImage(named: "barcodeButtonIcon"), for: .normal)
+        button.translatesAutoresizingMaskIntoConstraints = false
+        
+        return button
+    }()
+    
+    
     private let labelVerticalStackView = {
         let stackView = UIStackView()
         
@@ -137,11 +147,8 @@ class PagingCollectionViewCell: UICollectionViewCell, ReusableView {
         [brandLabel, productNameLabel, expireDateLabel].forEach(labelVerticalStackView.addArrangedSubview(_:))
         
         scrollView.addSubview(containerView)
-        [labelVerticalStackView, memoTextField, selectedButton, giftImageView].forEach(containerView.addSubview(_:))
+        [labelVerticalStackView, barcodeButton, memoTextField, selectedButton, giftImageView].forEach(containerView.addSubview(_:))
         contentView.addSubview(scrollView)
-        
-        let containerViewHeightConstraint = containerView.heightAnchor.constraint(equalTo: giftImageView.heightAnchor, multiplier: 1.6)
-        containerViewHeightConstraint.priority = .defaultHigh
         
         let contentLayoutGuide = scrollView.contentLayoutGuide
         
@@ -156,11 +163,16 @@ class PagingCollectionViewCell: UICollectionViewCell, ReusableView {
             containerView.trailingAnchor.constraint(equalTo: contentLayoutGuide.trailingAnchor),
             containerView.bottomAnchor.constraint(equalTo: contentLayoutGuide.bottomAnchor),
             containerView.widthAnchor.constraint(equalTo: scrollView.widthAnchor),
-            containerViewHeightConstraint,
+            containerView.heightAnchor.constraint(equalTo: giftImageView.heightAnchor, multiplier: 1.5),
             
             labelVerticalStackView.topAnchor.constraint(equalTo: containerView.safeAreaLayoutGuide.topAnchor, constant: 100),
             labelVerticalStackView.leadingAnchor.constraint(equalTo: containerView.leadingAnchor, constant: 15),
-            labelVerticalStackView.trailingAnchor.constraint(equalTo: containerView.trailingAnchor, constant: -15),
+            
+            barcodeButton.leadingAnchor.constraint(equalTo: labelVerticalStackView.trailingAnchor, constant: 10),
+            barcodeButton.trailingAnchor.constraint(equalTo: containerView.trailingAnchor, constant: -35),
+            barcodeButton.centerYAnchor.constraint(equalTo: labelVerticalStackView.centerYAnchor),
+            barcodeButton.widthAnchor.constraint(equalTo: containerView.widthAnchor, multiplier: 0.12),
+            barcodeButton.heightAnchor.constraint(equalTo: barcodeButton.widthAnchor, multiplier: 0.8),
             
             memoTextField.topAnchor.constraint(equalTo: labelVerticalStackView.bottomAnchor, constant: 30),
             memoTextField.leadingAnchor.constraint(equalTo: containerView.leadingAnchor, constant: 15),
