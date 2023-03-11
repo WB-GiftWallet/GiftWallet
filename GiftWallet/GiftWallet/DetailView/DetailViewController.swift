@@ -156,9 +156,12 @@ extension DetailViewController: UIGestureRecognizerDelegate {
         switch sender.state {
         case .changed:
             viewTranslation = sender.translation(in: view)
-            UIView.animate(withDuration: 0.5, delay: 0, usingSpringWithDamping: 0.7, initialSpringVelocity: 1, options: .curveEaseOut, animations: {
-                self.view.transform = CGAffineTransform(translationX: 0, y: self.viewTranslation.y)
-            })
+            if viewTranslation.y > 0 {
+                UIView.animate(withDuration: 0.5, delay: 0, usingSpringWithDamping: 0.7, initialSpringVelocity: 1, options: .curveEaseOut, animations: {
+                    self.view.transform = CGAffineTransform(translationX: 0, y: self.viewTranslation.y)
+                })
+                break
+            }
         case .ended:
             if viewTranslation.y < 200 {
                 UIView.animate(withDuration: 0.5, delay: 0, usingSpringWithDamping: 0.7, initialSpringVelocity: 1, options: .curveEaseOut, animations: {
@@ -167,6 +170,7 @@ extension DetailViewController: UIGestureRecognizerDelegate {
             } else {
                 dismiss(animated: true, completion: nil)
             }
+            break
         default:
             break
         }
