@@ -89,6 +89,14 @@ class MainCollectionViewCell: UICollectionViewCell, ReusableView {
         return stackView
     }()
 
+    override func prepareForReuse() {
+        super.prepareForReuse()
+        giftImageView.image = nil
+        brandLabel.text = nil
+        productNameLabel.text = nil
+        expireDateLabel.text = nil
+    }
+    
     override init(frame: CGRect) {
         super.init(frame: frame)
         setupShadow()
@@ -160,8 +168,4 @@ class MainCollectionViewCell: UICollectionViewCell, ReusableView {
             allContentsVerticalStackView.bottomAnchor.constraint(equalTo: safeArea.bottomAnchor)
         ])
     }
-    
-    
-    
-    
 }
