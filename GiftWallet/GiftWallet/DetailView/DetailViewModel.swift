@@ -12,11 +12,11 @@ class DetailViewModel {
     private let coredataManager = CoreDataManager.shared
     
     var gifts: [Gift]
-    var indexPathRow: Int?
+    var indexPathItem: Int?
     
     init(gifts: [Gift], indexPahtRow: Int) {
         self.gifts = gifts
-        self.indexPathRow = indexPahtRow
+        self.indexPathItem = indexPahtRow
     }
     
 //    var brandName: String? {

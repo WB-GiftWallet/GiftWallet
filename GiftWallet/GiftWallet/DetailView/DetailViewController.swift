@@ -49,17 +49,9 @@ final class DetailViewController: UIViewController {
     
     private func scrollBySelectedIndex() {
         pagingCollectionView.layoutIfNeeded()
-        guard let scrollTargetIndex = viewModel.indexPathRow else { return }
-        let cgFloatTargetIndex = CGFloat(scrollTargetIndex)
-        let oneContentWidth = view.frame.width
-        let targetScrollPoint = oneContentWidth * cgFloatTargetIndex
-        
-        let rect = CGRect(x: targetScrollPoint,
-                          y: .zero,
-                          width: pagingCollectionView.bounds.size.width,
-                          height: pagingCollectionView.bounds.size.height)
-        
-        pagingCollectionView.scrollRectToVisible(rect, animated: true)
+        guard let scrollTargetIndex = viewModel.indexPathItem else { return }
+        let indexPath = IndexPath(item: scrollTargetIndex, section: 0)
+        pagingCollectionView.scrollToItem(at: indexPath, at: .right, animated: true)
     }
     
     private func setupCollectionViewAttributes() {
