@@ -340,7 +340,6 @@ extension MainViewController: UICollectionViewDataSource, UICollectionViewDelega
         let navigationDetailViewController = UINavigationController(rootViewController: detailViewController)
         navigationDetailViewController.modalTransitionStyle = .coverVertical
         navigationDetailViewController.modalPresentationStyle = .overFullScreen
-//        navigationDetailViewController.isModalInPresentation = true
 
         present(navigationDetailViewController, animated: true)
     }

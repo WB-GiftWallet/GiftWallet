@@ -10,7 +10,7 @@ import UIKit
 class PagingCollectionViewCell: UICollectionViewCell, ReusableView {
     
     var delegate: GiftStateSendable?
-    var provider: ScrollViewOffSetProvider?
+    var provider: CellUIInteractionProvider?
     private var giftImageViewHeightConstraint: NSLayoutConstraint?
     
     private let scrollView: UIScrollView = {
@@ -59,11 +59,11 @@ class PagingCollectionViewCell: UICollectionViewCell, ReusableView {
        let button = UIButton()
         
         button.setImage(UIImage(named: "barcodeButtonIcon"), for: .normal)
+        button.addTarget(nil, action: #selector(tapImageOrBarCodeButtonForZoom(sender:)), for: .touchUpInside)
         button.translatesAutoresizingMaskIntoConstraints = false
         
         return button
     }()
-    
     
     private let labelVerticalStackView = {
         let stackView = UIStackView()
@@ -113,6 +113,7 @@ class PagingCollectionViewCell: UICollectionViewCell, ReusableView {
     override init(frame: CGRect) {
         super.init(frame: frame)
         scrollView.delegate = self
+        setupGestureRecognizer()
         setupViews()
         memoTextField.setupTextFieldBottomBorder()
     }
@@ -143,6 +144,24 @@ class PagingCollectionViewCell: UICollectionViewCell, ReusableView {
         let imageHeight = contentView.frame.width * imageRatio
 
         giftImageViewHeightConstraint?.constant = imageHeight
+    }
+    
+    private func setupGestureRecognizer() {
+        let gestureRecognizer = UITapGestureRecognizer(target: self,
+                                                       action: #selector(tapImageOrBarCodeButtonForZoom(sender:)))
+        giftImageView.isUserInteractionEnabled = true
+        giftImageView.addGestureRecognizer(gestureRecognizer)
+    }
+    
+    @objc private func tapImageOrBarCodeButtonForZoom(sender: Any) {
+        var mode: Mode?
+        
+        if sender is UIButton {
+            mode = .barcode
+        } else if sender is UIGestureRecognizer {
+            mode = .image
+        }
+        provider?.touchedBarcodeButtonOrImageViewForZoom(mode: mode ?? .image)
     }
     
     private func setupViews() {
@@ -202,16 +221,16 @@ class PagingCollectionViewCell: UICollectionViewCell, ReusableView {
 extension PagingCollectionViewCell: UIScrollViewDelegate {
     func scrollViewDidScroll(_ scrollView: UIScrollView) {
         if scrollView.contentOffset.y <= .zero {
-            provider?.configureIsRequireDismissScene()
+            provider?.checkScrollViewContentOffSetForDismissScene()
         }
     }
 }
-
 
 protocol GiftStateSendable {
     func sendCellInformation(indexPathRow: Int, text: String?)
 }
 
-protocol ScrollViewOffSetProvider {
-    func configureIsRequireDismissScene()
+protocol CellUIInteractionProvider {
+    func checkScrollViewContentOffSetForDismissScene()
+    func touchedBarcodeButtonOrImageViewForZoom(mode: Mode)
 }
