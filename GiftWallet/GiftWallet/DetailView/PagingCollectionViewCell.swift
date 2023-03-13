@@ -10,6 +10,7 @@ import UIKit
 class PagingCollectionViewCell: UICollectionViewCell, ReusableView {
     
     var delegate: GiftStateSendable?
+    var provider: ScrollViewOffSetProvider?
     private var giftImageViewHeightConstraint: NSLayoutConstraint?
     
     private let scrollView: UIScrollView = {
@@ -111,6 +112,7 @@ class PagingCollectionViewCell: UICollectionViewCell, ReusableView {
     
     override init(frame: CGRect) {
         super.init(frame: frame)
+        scrollView.delegate = self
         setupViews()
         memoTextField.setupTextFieldBottomBorder()
     }
@@ -139,7 +141,7 @@ class PagingCollectionViewCell: UICollectionViewCell, ReusableView {
     private func configureGiftImageViewHeightConstraint(size: CGSize) {
         let imageRatio = size.height / size.width
         let imageHeight = contentView.frame.width * imageRatio
-        
+
         giftImageViewHeightConstraint?.constant = imageHeight
     }
     
@@ -163,7 +165,8 @@ class PagingCollectionViewCell: UICollectionViewCell, ReusableView {
             containerView.trailingAnchor.constraint(equalTo: contentLayoutGuide.trailingAnchor),
             containerView.bottomAnchor.constraint(equalTo: contentLayoutGuide.bottomAnchor),
             containerView.widthAnchor.constraint(equalTo: scrollView.widthAnchor),
-            containerView.heightAnchor.constraint(equalTo: giftImageView.heightAnchor, multiplier: 1.5),
+            containerView.heightAnchor.constraint(equalTo: containerView.widthAnchor, multiplier: 3),
+            containerView.heightAnchor.constraint(greaterThanOrEqualTo: contentView.heightAnchor),
             
             labelVerticalStackView.topAnchor.constraint(equalTo: containerView.safeAreaLayoutGuide.topAnchor, constant: 100),
             labelVerticalStackView.leadingAnchor.constraint(equalTo: containerView.leadingAnchor, constant: 15),
@@ -196,6 +199,19 @@ class PagingCollectionViewCell: UICollectionViewCell, ReusableView {
     }
 }
 
+extension PagingCollectionViewCell: UIScrollViewDelegate {
+    func scrollViewDidScroll(_ scrollView: UIScrollView) {
+        if scrollView.contentOffset.y <= .zero {
+            provider?.configureIsRequireDismissScene()
+        }
+    }
+}
+
+
 protocol GiftStateSendable {
     func sendCellInformation(indexPathRow: Int, text: String?)
+}
+
+protocol ScrollViewOffSetProvider {
+    func configureIsRequireDismissScene()
 }

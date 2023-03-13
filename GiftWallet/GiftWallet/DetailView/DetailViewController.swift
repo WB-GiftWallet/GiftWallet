@@ -10,8 +10,8 @@ import UIKit
 final class DetailViewController: UIViewController {
     
     private let viewModel: DetailViewModel
-    var delegate: GiftStateSendable?
     private var viewTranslation = CGPoint(x: 0, y: 0)
+    private var isRequireDismissScene = false
     
     private let pagingCollectionView = {
         let flowLayout = UICollectionViewFlowLayout()
@@ -112,6 +112,7 @@ extension DetailViewController: UICollectionViewDataSource {
                                                             for: indexPath) as? PagingCollectionViewCell ?? PagingCollectionViewCell()
         let gift = viewModel.gifts[indexPath.row]
         cell.delegate = self
+        cell.provider = self
         cell.configureCell(data: gift)
         return cell
     }
@@ -132,7 +133,11 @@ extension DetailViewController: UICollectionViewDelegateFlowLayout{
 }
 
 // MARK: UIGestureRecognizer 관련
-extension DetailViewController: UIGestureRecognizerDelegate {
+extension DetailViewController: UIGestureRecognizerDelegate, ScrollViewOffSetProvider {
+    func configureIsRequireDismissScene() {
+        isRequireDismissScene = true
+    }
+    
     
     private func setupPanGestureRecognizerAttributes() {
         let panGesture = UIPanGestureRecognizer(target: self, action: #selector(handlePanGesture))
@@ -142,26 +147,29 @@ extension DetailViewController: UIGestureRecognizerDelegate {
     
     @objc
     private func handlePanGesture(sender: UIPanGestureRecognizer) {
-        switch sender.state {
-        case .changed:
-            viewTranslation = sender.translation(in: view)
-            if viewTranslation.y > 0 {
-                UIView.animate(withDuration: 0.5, delay: 0, usingSpringWithDamping: 0.7, initialSpringVelocity: 1, options: .curveEaseOut, animations: {
-                    self.view.transform = CGAffineTransform(translationX: 0, y: self.viewTranslation.y)
-                })
+        if isRequireDismissScene {
+            switch sender.state {
+            case .changed:
+                viewTranslation = sender.translation(in: view)
+                if viewTranslation.y > 0 {
+                    UIView.animate(withDuration: 0.5, delay: 0, usingSpringWithDamping: 0.7, initialSpringVelocity: 1, options: .curveEaseOut, animations: {
+                        self.view.transform = CGAffineTransform(translationX: 0, y: self.viewTranslation.y)
+                    })
+                    break
+                }
+                isRequireDismissScene = false
+            case .ended:
+                if viewTranslation.y < 200 {
+                    UIView.animate(withDuration: 0.5, delay: 0, usingSpringWithDamping: 0.7, initialSpringVelocity: 1, options: .curveEaseOut, animations: {
+                        self.view.transform = .identity
+                    })
+                } else {
+                    dismiss(animated: true, completion: nil)
+                }
+                break
+            default:
                 break
             }
-        case .ended:
-            if viewTranslation.y < 200 {
-                UIView.animate(withDuration: 0.5, delay: 0, usingSpringWithDamping: 0.7, initialSpringVelocity: 1, options: .curveEaseOut, animations: {
-                    self.view.transform = .identity
-                })
-            } else {
-                dismiss(animated: true, completion: nil)
-            }
-            break
-        default:
-            break
         }
     }
     
