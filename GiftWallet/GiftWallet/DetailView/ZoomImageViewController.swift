@@ -113,6 +113,7 @@ extension ZoomImageViewController: UIGestureRecognizerDelegate {
                     self.view.transform = .identity
                 })
             } else {
+                modalTransitionStyle = .coverVertical
                 dismiss(animated: true, completion: nil)
             }
             break

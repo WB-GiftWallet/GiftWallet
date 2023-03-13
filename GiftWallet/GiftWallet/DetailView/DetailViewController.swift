@@ -69,22 +69,6 @@ final class DetailViewController: UIViewController {
                                                            action: nil)
     }
     
-//    private func configureImageTapGesture() {
-//            let gestureRecognizer = UITapGestureRecognizer(target: self, action: #selector(tapImageView))
-//
-//            giftImageView.isUserInteractionEnabled = true
-//            giftImageView.addGestureRecognizer(gestureRecognizer)
-//        }
-//    
-//    @objc private func tapImageView(sender: UITapGestureRecognizer) {
-//        let gift = viewModel.gift
-//
-//        let viewModel = GiftImageViewModel(gift: gift)
-//        let giftImageViewController = GiftImageViewController(viewModel: viewModel)
-//        giftImageViewController.modalPresentationStyle = .fullScreen
-//        present(giftImageViewController, animated: true)
-//    }
-    
     private func setupViews() {
         view.backgroundColor = .systemBackground
         
@@ -134,11 +118,15 @@ extension DetailViewController: UICollectionViewDelegateFlowLayout{
 // MARK: UIGestureRecognizer 관련
 extension DetailViewController: UIGestureRecognizerDelegate, CellUIInteractionProvider {
     func touchedBarcodeButtonOrImageViewForZoom(mode: Mode) {
-        guard let indexPathItem = viewModel.indexPathItem else { return }
-        let gift = viewModel.gifts[indexPathItem]
+        guard let indexPath = pagingCollectionView.indexPathsForVisibleItems.first else { return }
+        
+        let gift = viewModel.gifts[indexPath.row]
         let zoomingViewModel = ZoomingImageViewModel(gift: gift, mode: mode)
         let zoomingViewController = ZoomImageViewController(viewModel: zoomingViewModel)
+        
+        zoomingViewController.modalTransitionStyle = .crossDissolve
         zoomingViewController.modalPresentationStyle = .overFullScreen
+        
         present(zoomingViewController, animated: true)
     }
     

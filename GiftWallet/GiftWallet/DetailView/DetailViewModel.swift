@@ -19,22 +19,6 @@ class DetailViewModel {
         self.indexPathItem = indexPahtRow
     }
     
-//    var brandName: String? {
-//        return gift.brandName
-//    }
-//
-//    var productName: String? {
-//        return gift.productName
-//    }
-//
-//    var expirdDate: String? {
-//        return gift.expireDate?.setupDateStyleForDisplay()
-//    }
-//
-//    var memo: String? {
-//        return gift.memo
-//    }
-//
     func toggleToUnUsableState(_ indexPathRow: Int) {
         gifts[indexPathRow].useableState.toggle()
     }
@@ -51,5 +35,4 @@ class DetailViewModel {
             print(error.localizedDescription)
         }
     }
-    // 기프트 업데이트 메서드 다시봐야할듯? 뭔가 약간 .. 이상한데?
 }
