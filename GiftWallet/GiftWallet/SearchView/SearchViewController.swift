@@ -9,7 +9,9 @@ import UIKit
 
 final class SearchViewController: UIViewController {
     
-    private let giftSearchController = UISearchController(searchResultsController: nil)
+    private let searchResultController = SearchTableViewController()
+    private lazy var giftSearchController = UISearchController(searchResultsController: searchResultController)
+    
     private let searchTableView = UITableView()
     private let scrollView = UIScrollView()
     private let recommendView = RecommendView()
@@ -32,6 +34,9 @@ final class SearchViewController: UIViewController {
         
         searchTableView.delegate = self
         searchTableView.dataSource = self
+        searchResultController.tableView.delegate = self
+        searchResultController.tableView.dataSource = self
+        
         setLayout()
         setupRecommendData()
     }
@@ -81,8 +86,8 @@ final class SearchViewController: UIViewController {
     
     private func setSearchController() {
         
+        giftSearchController.view.backgroundColor = .systemBackground
         giftSearchController.searchResultsUpdater = self
-        
         giftSearchController.searchBar.placeholder = "브랜드 이름으로 검색하세요!"
         giftSearchController.hidesBottomBarWhenPushed = true
         giftSearchController.searchBar.showsSearchResultsButton = true
@@ -196,6 +201,6 @@ extension SearchViewController: UISearchResultsUpdating {
         guard let text = searchController.searchBar.text else { return }
         self.filteringGifts = self.allGiftData.filter { $0.brandName!.contains(text) }
         
-        self.searchTableView.reloadData()
+        self.searchResultController.tableView.reloadData()
     }
 }
