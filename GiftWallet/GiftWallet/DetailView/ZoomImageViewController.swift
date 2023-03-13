@@ -22,7 +22,7 @@ class ZoomImageViewController: UIViewController {
     private let giftImageView = {
         let imageView = UIImageView()
         
-        imageView.image = UIImage(named: "testImageEDIYA")
+        imageView.contentMode = .scaleAspectFit
         imageView.translatesAutoresizingMaskIntoConstraints = false
         
         return imageView
@@ -41,7 +41,12 @@ class ZoomImageViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         scrollViewAttributes()
+        configureImageView()
         setupViews()
+    }
+    
+    private func configureImageView() {
+        giftImageView.image = viewModel.gift.image
     }
 
     private func scrollViewAttributes() {
@@ -52,18 +57,27 @@ class ZoomImageViewController: UIViewController {
     }
     
     private func setupViews() {
+        view.backgroundColor = .black
+        
         scrollView.addSubview(giftImageView)
         view.addSubview(scrollView)
+        
+        let contentLayoutGuide = scrollView.contentLayoutGuide
         
         NSLayoutConstraint.activate([
             scrollView.topAnchor.constraint(equalTo: view.topAnchor),
             scrollView.leadingAnchor.constraint(equalTo: view.leadingAnchor),
             scrollView.trailingAnchor.constraint(equalTo: view.trailingAnchor),
-            scrollView.bottomAnchor.constraint(equalTo: view.bottomAnchor)
+            scrollView.bottomAnchor.constraint(equalTo: view.bottomAnchor),
+            
+            giftImageView.topAnchor.constraint(equalTo: contentLayoutGuide.topAnchor),
+            giftImageView.leadingAnchor.constraint(equalTo: contentLayoutGuide.leadingAnchor),
+            giftImageView.trailingAnchor.constraint(equalTo: contentLayoutGuide.trailingAnchor),
+            giftImageView.bottomAnchor.constraint(equalTo: contentLayoutGuide.bottomAnchor),
+            giftImageView.widthAnchor.constraint(equalTo: scrollView.frameLayoutGuide.widthAnchor),
+            giftImageView.heightAnchor.constraint(equalTo: scrollView.frameLayoutGuide.heightAnchor)
         ])
     }
-    
-    
 }
 
 extension ZoomImageViewController: UIScrollViewDelegate {
