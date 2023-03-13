@@ -8,11 +8,12 @@
 import UIKit
 
 class ZoomImageViewController: UIViewController {
-
+    
     private let viewModel: ZoomingImageViewModel
+    private var viewTranslation = CGPoint(x: 0, y: 0)
     
     private let scrollView = {
-       let scrollView = UIScrollView()
+        let scrollView = UIScrollView()
         
         scrollView.translatesAutoresizingMaskIntoConstraints = false
         
@@ -41,6 +42,7 @@ class ZoomImageViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         scrollViewAttributes()
+        setupPanGestureRecognizerAttributes()
         configureImageView()
         setupViews()
     }
@@ -48,7 +50,7 @@ class ZoomImageViewController: UIViewController {
     private func configureImageView() {
         giftImageView.image = viewModel.gift.image
     }
-
+    
     private func scrollViewAttributes() {
         scrollView.delegate = self
         scrollView.zoomScale = 1.0
@@ -83,5 +85,39 @@ class ZoomImageViewController: UIViewController {
 extension ZoomImageViewController: UIScrollViewDelegate {
     func viewForZooming(in scrollView: UIScrollView) -> UIView? {
         return self.giftImageView
+    }
+}
+
+// MARK: UIGesture관련
+extension ZoomImageViewController: UIGestureRecognizerDelegate {
+    private func setupPanGestureRecognizerAttributes() {
+        let panGesture = UIPanGestureRecognizer(target: self, action: #selector(handlePanGesture))
+        panGesture.delegate = self
+        self.view.addGestureRecognizer(panGesture)
+    }
+    
+    @objc
+    private func handlePanGesture(sender: UIPanGestureRecognizer) {
+        switch sender.state {
+        case .changed:
+            viewTranslation = sender.translation(in: view)
+            if viewTranslation.y > 0 {
+                UIView.animate(withDuration: 0.5, delay: 0, usingSpringWithDamping: 0.7, initialSpringVelocity: 1, options: .curveEaseOut, animations: {
+                    self.view.transform = CGAffineTransform(translationX: 0, y: self.viewTranslation.y)
+                })
+                break
+            }
+        case .ended:
+            if viewTranslation.y < 200 {
+                UIView.animate(withDuration: 0.5, delay: 0, usingSpringWithDamping: 0.7, initialSpringVelocity: 1, options: .curveEaseOut, animations: {
+                    self.view.transform = .identity
+                })
+            } else {
+                dismiss(animated: true, completion: nil)
+            }
+            break
+        default:
+            break
+        }
     }
 }
