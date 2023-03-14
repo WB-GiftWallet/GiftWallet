@@ -90,7 +90,8 @@ final class SearchViewController: UIViewController {
         giftSearchController.searchResultsUpdater = self
         giftSearchController.searchBar.placeholder = "브랜드 이름으로 검색하세요!"
         giftSearchController.hidesBottomBarWhenPushed = true
-        giftSearchController.searchBar.showsSearchResultsButton = true
+        giftSearchController.searchBar.showsSearchResultsButton = false
+        giftSearchController.searchBar.setValue("취소", forKey: "cancelButtonText")
         
         self.navigationItem.hidesSearchBarWhenScrolling = false
         self.navigationItem.searchController = giftSearchController
