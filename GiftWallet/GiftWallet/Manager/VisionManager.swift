@@ -10,7 +10,7 @@ import Vision
 
 // MARK: 이미지에서 String을 추출해서 반환하는 함수
 struct VisionManager {    
-    func vnRecognizeRequest(image: UIImage) -> [String]? {
+    func textsRecognizeRequest(image: UIImage) -> [String]? {
         guard let cgImage = image.cgImage else { return nil }
         var result: [String]? = []
         
@@ -40,7 +40,7 @@ struct VisionManager {
 
 // MARK: 이미지에서 바코드 영역을 CGRect로 반환해주는 나타내주는 함수 관련
 extension VisionManager {
-    func detectBarcode(in image: UIImage, completion: @escaping (UIImage?) -> Void) {
+    func barcodeRecognizeRequest(in image: UIImage, completion: @escaping (Data?) -> Void) {
         guard let cgImage = image.cgImage else {
             completion(nil)
             return
@@ -62,7 +62,7 @@ extension VisionManager {
     private func recognizeBarcodeImageHandler(cgImage: CGImage,
                                               request: VNRequest,
                                               error: Error?,
-                                              completion: @escaping (UIImage?) -> Void) {
+                                              completion: @escaping (Data?) -> Void) {
         guard error == nil else {
             completion(nil)
             return
@@ -81,11 +81,16 @@ extension VisionManager {
                              y: (1 - boundingBox.maxY) * CGFloat(cgImage.height))
         let rect = CGRect(origin: origin, size: size)
         
-        if let croppedCgImage = cgImage.cropping(to: rect) {
-            let croppedUIImage = UIImage(cgImage: croppedCgImage)
-            completion(croppedUIImage)
-        }
+        cropCgImage(cgImage: cgImage, cgRect: rect, completion: completion)
     }
     
+    private func cropCgImage(cgImage: CGImage, cgRect: CGRect, completion: @escaping (Data?) -> Void) {
+        if let croppedCgImage = cgImage.cropping(to: cgRect) {
+            let croppedUIImage = UIImage(cgImage: croppedCgImage)
+            let pngData = croppedUIImage.pngData()
+            
+            completion(pngData)
+        }
+    }
 }
 

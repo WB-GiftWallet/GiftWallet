@@ -9,6 +9,7 @@ import UIKit
 
 class BarcodeViewController: UIViewController {
 
+    private let appDelegate = UIApplication.shared.delegate as! AppDelegate
     private let viewModel: BarcodeViewModel
 
     private let imageView = {
@@ -28,39 +29,37 @@ class BarcodeViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         viewModel.loadOriginBrightness(UIScreen.main.brightness)
-        
-        viewModel.detectBarcodeInGiftImage { image in
-            self.imageView.image = image
-        }
+        configureImageView()
         setupNavigation()
         setupViews()
     }
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
-        viewModel.lotateScreen(of: .barcodeScene)
-        changeBrightness(screen: .barcodeScene)
+        setupUISetting(screen: .barcodeScene)
     }
     
     override func viewWillDisappear(_ animated: Bool) {
         super.viewWillDisappear(animated)
-        viewModel.lotateScreen(of: .originScene)
-        changeBrightness(screen: .originScene)
+        setupUISetting(screen: .originScene)
     }
     
     required init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
     
-    private func changeBrightness(screen: UISetting) {
-        switch screen {
-        case .originScene:
-            UIScreen.main.brightness = viewModel.brightness
-        case .barcodeScene:
-            UIScreen.main.brightness = 1.0
+    private func configureImageView() {
+        viewModel.detectBarcodeInGiftImage { pngData in
+            guard let pngData = pngData else { return }
+            self.imageView.image = UIImage(data: pngData)
         }
     }
     
+    private func setupUISetting(screen: UISetting) {
+        lotateScreen(screen)
+        changeBrightness(screen)
+    }
+        
     private func setupNavigation() {
         navigationController?.navigationBar.tintColor = .black
         navigationItem.leftBarButtonItem = UIBarButtonItem(image: UIImage(systemName: "multiply"),
@@ -88,5 +87,25 @@ class BarcodeViewController: UIViewController {
             imageView.bottomAnchor.constraint(equalTo: safeArea.bottomAnchor)
         ])
     }
+}
+
+// MARK: Screen Setting 메서드
+extension BarcodeViewController {
+    private func lotateScreen(_ screen: UISetting) {
+        switch screen {
+        case .originScene:
+            appDelegate.shouldSupportAllOrientation = false
+        case .barcodeScene:
+            appDelegate.shouldSupportAllOrientation = true
+        }
+    }
     
+    private func changeBrightness(_ screen: UISetting) {
+        switch screen {
+        case .originScene:
+            UIScreen.main.brightness = viewModel.originBrightness
+        case .barcodeScene:
+            UIScreen.main.brightness = 1.0
+        }
+    }
 }
