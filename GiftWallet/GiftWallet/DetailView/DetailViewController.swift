@@ -131,7 +131,8 @@ extension DetailViewController: UIGestureRecognizerDelegate, CellUIInteractionPr
         case is UIButton:
             let barcodeViewModel = BarcodeViewModel(gift: gift)
             let barcodeViewController = BarcodeViewController(viewModel: barcodeViewModel)
-            sceneConversion(viewController: barcodeViewController)
+            let barcoeNavigationViewController = UINavigationController(rootViewController: barcodeViewController)
+            sceneConversion(viewController: barcoeNavigationViewController)
         default:
             break
         }

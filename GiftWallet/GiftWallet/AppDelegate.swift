@@ -50,4 +50,15 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
             }
         }
     }
+    
+    // MARK: 화면방향 설정 관련
+    var shouldSupportAllOrientation = false
+    
+    func application(_ application: UIApplication, supportedInterfaceOrientationsFor window: UIWindow?) -> UIInterfaceOrientationMask {
+        if shouldSupportAllOrientation {
+            return [.landscapeRight]
+        } else {
+            return [.portrait]
+        }
+    }
 }
