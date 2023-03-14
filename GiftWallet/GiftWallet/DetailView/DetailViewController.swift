@@ -84,6 +84,7 @@ final class DetailViewController: UIViewController {
     }
 }
 
+//MARK: UIColelctionViewDataSource 관련
 extension DetailViewController: UICollectionViewDataSource {
     
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
@@ -115,25 +116,38 @@ extension DetailViewController: UICollectionViewDelegateFlowLayout{
     }
 }
 
-// MARK: UIGestureRecognizer 관련
+// MARK: UIGestureRecognizer 및 CellUIInteractionProvider 델리게이트 메소드 관련
 extension DetailViewController: UIGestureRecognizerDelegate, CellUIInteractionProvider {
-    func touchedBarcodeButtonOrImageViewForZoom(mode: Mode) {
+    // CellUIInteractionProvider
+    func touchedBarcodeButtonOrImageViewForZoom(sender: Any) {
         guard let indexPath = pagingCollectionView.indexPathsForVisibleItems.first else { return }
-        
         let gift = viewModel.gifts[indexPath.row]
-        let zoomingViewModel = ZoomingImageViewModel(gift: gift, mode: mode)
-        let zoomingViewController = ZoomImageViewController(viewModel: zoomingViewModel)
-        
-        zoomingViewController.modalTransitionStyle = .crossDissolve
-        zoomingViewController.modalPresentationStyle = .overFullScreen
-        
-        present(zoomingViewController, animated: true)
+                
+        switch sender {
+        case is UIGestureRecognizer:
+            let zoomViewModel = ZoomImageViewModel(gift: gift )
+            let zoomImageViewController = ZoomImageViewController(viewModel: zoomViewModel)
+            sceneConversion(viewController: zoomImageViewController)
+        case is UIButton:
+            let barcodeViewModel = BarcodeViewModel(gift: gift)
+            let barcodeViewController = BarcodeViewController(viewModel: barcodeViewModel)
+            sceneConversion(viewController: barcodeViewController)
+        default:
+            break
+        }
     }
     
+    private func sceneConversion(viewController: UIViewController) {
+        let conversionTargetViewController = viewController
+        conversionTargetViewController.modalTransitionStyle = .crossDissolve
+        conversionTargetViewController.modalPresentationStyle = .overFullScreen
+        present(conversionTargetViewController, animated: true)
+    }
+    
+    // UIGestureRecognizerDelegate : drag to dismiss
     func checkScrollViewContentOffSetForDismissScene() {
         isRequireDismissScene = true
     }
-    
     
     private func setupPanGestureRecognizerAttributes() {
         let panGesture = UIPanGestureRecognizer(target: self, action: #selector(handlePanGesture))
@@ -175,6 +189,7 @@ extension DetailViewController: UIGestureRecognizerDelegate, CellUIInteractionPr
     }
 }
 
+//MARK: Gift의 Useable 상태에 따른 Alert 관련
 extension DetailViewController: GiftStateSendable {
     func sendCellInformation(indexPathRow: Int, text: String?) {
         showAlert(indexPathRow, text)

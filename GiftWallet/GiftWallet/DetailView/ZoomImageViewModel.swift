@@ -7,18 +7,11 @@
 
 import Foundation
 
-class ZoomingImageViewModel {
+class ZoomImageViewModel {
+        
     let gift: Gift
-    let mode: Mode
     
-    init(gift: Gift, mode: Mode) {
+    init(gift: Gift) {
         self.gift = gift
-        self.mode = mode
     }
-}
-
-
-enum Mode {
-    case barcode
-    case image
 }

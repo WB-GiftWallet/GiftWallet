@@ -9,7 +9,7 @@ import UIKit
 
 class ZoomImageViewController: UIViewController {
     
-    private let viewModel: ZoomingImageViewModel
+    private let viewModel: ZoomImageViewModel
     private var viewTranslation = CGPoint(x: 0, y: 0)
     
     private let scrollView = {
@@ -29,7 +29,7 @@ class ZoomImageViewController: UIViewController {
         return imageView
     }()
     
-    init(viewModel: ZoomingImageViewModel) {
+    init(viewModel: ZoomImageViewModel) {
         self.viewModel = viewModel
         super.init(nibName: nil, bundle: nil)
     }
@@ -82,13 +82,14 @@ class ZoomImageViewController: UIViewController {
     }
 }
 
+// MARK: UIScrollViewDelegate
 extension ZoomImageViewController: UIScrollViewDelegate {
     func viewForZooming(in scrollView: UIScrollView) -> UIView? {
         return self.giftImageView
     }
 }
 
-// MARK: UIGesture관련
+// MARK: UIGestureRecognizerDelegate 관련: drag to dismiss
 extension ZoomImageViewController: UIGestureRecognizerDelegate {
     private func setupPanGestureRecognizerAttributes() {
         let panGesture = UIPanGestureRecognizer(target: self, action: #selector(handlePanGesture))

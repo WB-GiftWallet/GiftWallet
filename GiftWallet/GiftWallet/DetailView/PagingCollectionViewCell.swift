@@ -154,14 +154,7 @@ class PagingCollectionViewCell: UICollectionViewCell, ReusableView {
     }
     
     @objc private func tapImageOrBarCodeButtonForZoom(sender: Any) {
-        var mode: Mode?
-        
-        if sender is UIButton {
-            mode = .barcode
-        } else if sender is UIGestureRecognizer {
-            mode = .image
-        }
-        provider?.touchedBarcodeButtonOrImageViewForZoom(mode: mode ?? .image)
+        provider?.touchedBarcodeButtonOrImageViewForZoom(sender: sender)
     }
     
     private func setupViews() {
@@ -232,5 +225,5 @@ protocol GiftStateSendable {
 
 protocol CellUIInteractionProvider {
     func checkScrollViewContentOffSetForDismissScene()
-    func touchedBarcodeButtonOrImageViewForZoom(mode: Mode)
+    func touchedBarcodeButtonOrImageViewForZoom(sender: Any)
 }
