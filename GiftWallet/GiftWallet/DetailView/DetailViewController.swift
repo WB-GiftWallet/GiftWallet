@@ -66,7 +66,12 @@ final class DetailViewController: UIViewController {
         navigationItem.leftBarButtonItem = UIBarButtonItem(image: UIImage(systemName: "multiply"),
                                                            style: .plain,
                                                            target: self,
-                                                           action: nil)
+                                                           action: #selector(dismissViewControlelr))
+    }
+    
+    @objc
+    private func dismissViewControlelr() {
+        dismiss(animated: true, completion: nil)
     }
     
     private func setupViews() {
