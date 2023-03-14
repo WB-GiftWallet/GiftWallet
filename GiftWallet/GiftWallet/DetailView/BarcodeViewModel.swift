@@ -10,30 +10,39 @@ import UIKit
 
 class BarcodeViewModel {
 
-    let appDelegate = UIApplication.shared.delegate as! AppDelegate
-
-    let visionManager = VisionManager()
+    private let appDelegate = UIApplication.shared.delegate as! AppDelegate
+    private let visionManager = VisionManager()
+    private var screenBrightness: CGFloat = 1.0
+    
     var gift: Gift
     
     init(gift: Gift) {
         self.gift = gift
     }
     
+    var brightness: CGFloat {
+        return screenBrightness
+    }
+    
     func detectBarcodeInGiftImage(completion: @escaping (UIImage?) -> Void) {
         visionManager.detectBarcode(in: gift.image, completion: completion)
     }
     
-    func lotateScreen(of direction: ScreenLotation) {
+    func lotateScreen(of direction: UISetting) {
         switch direction {
-        case .normal:
+        case .originScene:
             appDelegate.shouldSupportAllOrientation = false
-        case .barcode:
+        case .barcodeScene:
             appDelegate.shouldSupportAllOrientation = true
         }        
     }
+    
+    func loadOriginBrightness(_ value: CGFloat) {
+        screenBrightness = value
+    }
 }
 
-enum ScreenLotation {
-    case normal
-    case barcode
+enum UISetting {
+    case originScene
+    case barcodeScene
 }

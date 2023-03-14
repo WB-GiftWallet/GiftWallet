@@ -27,6 +27,8 @@ class BarcodeViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        viewModel.loadOriginBrightness(UIScreen.main.brightness)
+        
         viewModel.detectBarcodeInGiftImage { image in
             self.imageView.image = image
         }
@@ -36,16 +38,27 @@ class BarcodeViewController: UIViewController {
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
-        viewModel.lotateScreen(of: .barcode)
+        viewModel.lotateScreen(of: .barcodeScene)
+        changeBrightness(screen: .barcodeScene)
     }
     
     override func viewWillDisappear(_ animated: Bool) {
         super.viewWillDisappear(animated)
-        viewModel.lotateScreen(of: .normal)
+        viewModel.lotateScreen(of: .originScene)
+        changeBrightness(screen: .originScene)
     }
     
     required init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
+    }
+    
+    private func changeBrightness(screen: UISetting) {
+        switch screen {
+        case .originScene:
+            UIScreen.main.brightness = viewModel.brightness
+        case .barcodeScene:
+            UIScreen.main.brightness = 1.0
+        }
     }
     
     private func setupNavigation() {
