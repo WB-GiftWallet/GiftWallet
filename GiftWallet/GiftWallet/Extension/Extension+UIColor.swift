@@ -22,4 +22,7 @@ extension UIColor {
     static let cellTagShadow = UIColor(r: 176, g: 203, b: 214)
     
     static let customButton = UIColor(r: 254, g: 223, b: 33)
+    
+    static let modifyButtonBorder = UIColor(r: 220, g: 221, b: 220)
+    static let modifyButtonTitle = UIColor(r: 135, g: 135, b: 135)
 }

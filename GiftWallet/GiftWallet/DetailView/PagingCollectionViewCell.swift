@@ -59,10 +59,13 @@ class PagingCollectionViewCell: UICollectionViewCell, ReusableView {
        let button = UIButton()
         
         button.setTitle("정보수정", for: .normal)
-        button.setTitleColor(.black, for: .normal)
+        button.titleLabel?.font = UIFont(style: .regular, size: 12)
+        button.setTitleColor(.modifyButtonTitle, for: .normal)
+        button.layer.borderColor = UIColor.modifyButtonBorder.cgColor
+        button.layer.borderWidth = 1.5
+        button.layer.cornerRadius = 15
         button.translatesAutoresizingMaskIntoConstraints = false
-        button.backgroundColor = .yellow
-        
+
         return button
     }()
     
@@ -129,6 +132,8 @@ class PagingCollectionViewCell: UICollectionViewCell, ReusableView {
         setupGestureRecognizer()
         setupViews()
         memoTextField.setupTextFieldBottomBorder()
+//        modifyButton.layer.cornerRadius = 5
+
     }
     
     required init?(coder: NSCoder) {
@@ -197,7 +202,9 @@ class PagingCollectionViewCell: UICollectionViewCell, ReusableView {
             labelVerticalStackView.leadingAnchor.constraint(equalTo: containerView.leadingAnchor, constant: 15),
             
             modifyButton.centerXAnchor.constraint(equalTo: barcodeButton.centerXAnchor),
-            modifyButton.topAnchor.constraint(equalTo: labelVerticalStackView.topAnchor),
+            modifyButton.centerYAnchor.constraint(equalTo: brandLabel.centerYAnchor),
+            modifyButton.widthAnchor.constraint(equalTo: barcodeButton.widthAnchor, multiplier: 1.3),
+            modifyButton.heightAnchor.constraint(equalTo: modifyButton.widthAnchor, multiplier: 0.4),
             
             barcodeButton.leadingAnchor.constraint(equalTo: labelVerticalStackView.trailingAnchor, constant: 10),
             barcodeButton.trailingAnchor.constraint(equalTo: containerView.trailingAnchor, constant: -35),
