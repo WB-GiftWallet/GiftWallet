@@ -64,12 +64,11 @@ class PagingCollectionViewCell: UICollectionViewCell, ReusableView {
         button.layer.borderColor = UIColor.modifyButtonBorder.cgColor
         button.layer.borderWidth = 1.5
         button.layer.cornerRadius = 15
+        button.addTarget(nil, action: #selector(tapModifyButton), for: .touchUpInside)
         button.translatesAutoresizingMaskIntoConstraints = false
-
+        
         return button
     }()
-    
-    
     
     private let barcodeButton: UIButton = {
        let button = UIButton()
@@ -103,7 +102,7 @@ class PagingCollectionViewCell: UICollectionViewCell, ReusableView {
         let button = CustomButton()
         
         button.setTitle("사용하기", for: .normal)
-        button.addTarget(nil, action: #selector(tappedSelectButton), for: .touchUpInside)
+        button.addTarget(nil, action: #selector(tapSelectButton), for: .touchUpInside)
         button.translatesAutoresizingMaskIntoConstraints = false
         
         return button
@@ -164,19 +163,28 @@ class PagingCollectionViewCell: UICollectionViewCell, ReusableView {
     }
     
     @objc
-    func tappedSelectButton() {
+    private func tapModifyButton() {
+        guard let indexPath = getIndexPath() else { return }
+        
+        tapElementDelegate?.tappedModifyButton(indexPathRow: indexPath.row)
+    }
+    
+    @objc
+    private func tapSelectButton() {
         guard let indexPath = getIndexPath() else { return }
         
         tapElementDelegate?.tappedUseGiftButton(indexPathRow: indexPath.row, text: memoTextField.text)
     }
     
-    @objc private func tapBarcodeButton() {
+    @objc
+    private func tapBarcodeButton() {
         guard let indexPath = getIndexPath() else { return }
 
         tapElementDelegate?.tappedbarcodeButton(indexPathRow: indexPath.row)
     }
     
-    @objc private func tapImageView() {
+    @objc
+    private func tapImageView() {
         guard let indexPath = getIndexPath() else { return }
 
         tapElementDelegate?.tappedImageView(indexPathRow: indexPath.row)
