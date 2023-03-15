@@ -186,14 +186,14 @@
 			path = SearchView;
 			sourceTree = "<group>";
 		};
-		D295E4B329A5E2D700E12CAF /* UserInfoModifyView */ = {
+		D295E4B329A5E2D700E12CAF /* ModifyView */ = {
 			isa = PBXGroup;
 			children = (
+				D295E4B829A5F64200E12CAF /* FormSheetViewController.swift */,
 				D295E4B429A5E2F400E12CAF /* UserInfoModifyViewController.swift */,
 				D295E4B629A5E31400E12CAF /* UserInfoModifyViewModel.swift */,
-				D295E4B829A5F64200E12CAF /* FormSheetViewController.swift */,
 			);
-			path = UserInfoModifyView;
+			path = ModifyView;
 			sourceTree = "<group>";
 		};
 		D2A282BE29A8702B002CCF5A /* MainViewModelTests */ = {
@@ -327,6 +327,7 @@
 				D2C90B5729BF4DC1003C3611 /* ZoomImageViewController.swift */,
 				D2BB131429C0507300A2440B /* BarcodeViewController.swift */,
 				D2BB131629C0507D00A2440B /* BarcodeViewModel.swift */,
+				D295E4B329A5E2D700E12CAF /* ModifyView */,
 			);
 			path = DetailView;
 			sourceTree = "<group>";
@@ -374,7 +375,6 @@
 				D2B6333E29ACD17500EE9ACE /* EtcUsageHistoryView */,
 				D2C7A45729A9DA3300EB6D56 /* EtcSettingView */,
 				FC62FF1129A77B77003E63B0 /* MainTabbarController */,
-				D295E4B329A5E2D700E12CAF /* UserInfoModifyView */,
 				D2D6B74D29A3DE6A00E6188C /* MainView */,
 				F6A4AB4729A5D9F1009AEB78 /* DetailView */,
 				D2DAAA1E29A44B3200D70E8C /* Model */,

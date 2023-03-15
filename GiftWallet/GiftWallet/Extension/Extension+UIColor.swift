@@ -25,4 +25,6 @@ extension UIColor {
     
     static let modifyButtonBorder = UIColor(r: 220, g: 221, b: 220)
     static let modifyButtonTitle = UIColor(r: 135, g: 135, b: 135)
+    
+    static let formSheetViewBlankView = UIColor(r: 248, g: 248, b: 248)
 }
