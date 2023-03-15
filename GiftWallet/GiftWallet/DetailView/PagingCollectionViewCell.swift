@@ -9,8 +9,8 @@ import UIKit
 
 class PagingCollectionViewCell: UICollectionViewCell, ReusableView {
     
-    var delegate: GiftStateSendable?
-    var provider: CellUIInteractionProvider?
+    var tapElementDelegate: CellElementTappedDelegate?
+    var scrollViewDidTopDelegate: CellScrollToTopDelegate?
     private var giftImageViewHeightConstraint: NSLayoutConstraint?
     
     private let scrollView: UIScrollView = {
@@ -75,7 +75,7 @@ class PagingCollectionViewCell: UICollectionViewCell, ReusableView {
        let button = UIButton()
         
         button.setImage(UIImage(named: "barcodeButtonIcon"), for: .normal)
-        button.addTarget(nil, action: #selector(tapImageOrBarCodeButtonForZoom(sender:)), for: .touchUpInside)
+        button.addTarget(nil, action: #selector(tapBarcodeButton), for: .touchUpInside)
         button.translatesAutoresizingMaskIntoConstraints = false
         
         return button
@@ -103,19 +103,11 @@ class PagingCollectionViewCell: UICollectionViewCell, ReusableView {
         let button = CustomButton()
         
         button.setTitle("사용하기", for: .normal)
-        button.addTarget(nil, action: #selector(tappedButton), for: .touchUpInside)
+        button.addTarget(nil, action: #selector(tappedSelectButton), for: .touchUpInside)
         button.translatesAutoresizingMaskIntoConstraints = false
         
         return button
     }()
-    
-    @objc
-    func tappedButton() {
-        guard let collectionView = superview as? UICollectionView else { return }
-        guard let indexPath = collectionView.indexPath(for: self) else { return }
-        
-        delegate?.sendCellInformation(indexPathRow: indexPath.row, text: memoTextField.text)
-    }
     
     private let giftImageView: UIImageView = {
         let imageView = UIImageView()
@@ -166,14 +158,37 @@ class PagingCollectionViewCell: UICollectionViewCell, ReusableView {
     
     private func setupGestureRecognizer() {
         let gestureRecognizer = UITapGestureRecognizer(target: self,
-                                                       action: #selector(tapImageOrBarCodeButtonForZoom(sender:)))
+                                                       action: #selector(tapImageView))
         giftImageView.isUserInteractionEnabled = true
         giftImageView.addGestureRecognizer(gestureRecognizer)
     }
     
-    @objc private func tapImageOrBarCodeButtonForZoom(sender: Any) {
-        provider?.touchedBarcodeButtonOrImageViewForZoom(sender: sender)
+    @objc
+    func tappedSelectButton() {
+        guard let indexPath = getIndexPath() else { return }
+        
+        tapElementDelegate?.tappedUseGiftButton(indexPathRow: indexPath.row, text: memoTextField.text)
     }
+    
+    @objc private func tapBarcodeButton() {
+        guard let indexPath = getIndexPath() else { return }
+
+        tapElementDelegate?.tappedbarcodeButton(indexPathRow: indexPath.row)
+    }
+    
+    @objc private func tapImageView() {
+        guard let indexPath = getIndexPath() else { return }
+
+        tapElementDelegate?.tappedImageView(indexPathRow: indexPath.row)
+    }
+    
+    private func getIndexPath() -> IndexPath? {
+        guard let collectionView = superview as? UICollectionView,
+              let indexPath = collectionView.indexPath(for: self) else { return nil }
+        
+        return indexPath
+    }
+    
     
     private func setupViews() {
         [brandLabel, productNameLabel, expireDateLabel].forEach(labelVerticalStackView.addArrangedSubview(_:))
@@ -234,19 +249,22 @@ class PagingCollectionViewCell: UICollectionViewCell, ReusableView {
     }
 }
 
+// MARK: UIScrollViewDelegate 관련
 extension PagingCollectionViewCell: UIScrollViewDelegate {
     func scrollViewDidScroll(_ scrollView: UIScrollView) {
         if scrollView.contentOffset.y <= .zero {
-            provider?.checkScrollViewContentOffSetForDismissScene()
+            scrollViewDidTopDelegate?.scrollViewDidTop()
         }
     }
 }
 
-protocol GiftStateSendable {
-    func sendCellInformation(indexPathRow: Int, text: String?)
+protocol CellElementTappedDelegate {
+    func tappedModifyButton(indexPathRow: Int)
+    func tappedbarcodeButton(indexPathRow: Int)
+    func tappedImageView(indexPathRow: Int)
+    func tappedUseGiftButton(indexPathRow: Int, text: String?)
 }
 
-protocol CellUIInteractionProvider {
-    func checkScrollViewContentOffSetForDismissScene()
-    func touchedBarcodeButtonOrImageViewForZoom(sender: Any)
+protocol CellScrollToTopDelegate {
+    func scrollViewDidTop()
 }
