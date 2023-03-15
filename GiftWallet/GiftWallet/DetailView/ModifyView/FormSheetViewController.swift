@@ -6,8 +6,11 @@
 //
 
 import UIKit
+import PhotosUI
 
 class FormSheetViewController: UIViewController {
+    
+    private let viewModel: FormSheetViewModel
     
     private let contentView = {
         let view = UIView()
@@ -134,6 +137,15 @@ class FormSheetViewController: UIViewController {
         return indicator
     }()
     
+    init(viewModel: FormSheetViewModel) {
+        self.viewModel = viewModel
+        super.init(nibName: nil, bundle: nil)
+    }
+    
+    required init?(coder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
+    }
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         setupViews()
@@ -148,13 +160,7 @@ class FormSheetViewController: UIViewController {
     private func setupButton() {
         let photoAction = UIAction { [weak self] _ in
             self?.activityIndicator.isHidden = false
-            let imagePickerController = UIImagePickerController()
-            imagePickerController.sourceType = .savedPhotosAlbum
-            imagePickerController.delegate = self
-            imagePickerController.modalPresentationStyle = .fullScreen
-            self?.present(imagePickerController, animated: true, completion: {
-                self?.activityIndicator.isHidden = true
-            })
+            self?.presentPHPicekrViewController()
         }
         photoImageButton.addAction(photoAction, for: .touchUpInside)
         
@@ -214,21 +220,61 @@ class FormSheetViewController: UIViewController {
     
 }
 
-extension FormSheetViewController {
-    override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
-        super.touchesBegan(touches, with: event)
-        
-        guard let touch = touches.first else { return }
-        let touchLocation = touch.location(in: view)
-        
-        if !view.subviews.contains(where: { $0.frame.contains(touchLocation) }) {
+extension FormSheetViewController: PHPickerViewControllerDelegate {
+    func picker(_ picker: PHPickerViewController, didFinishPicking results: [PHPickerResult]) {
+        if results.isEmpty {
             self.dismiss(animated: true)
+        } else {
+            self.dismiss(animated: true) {
+                guard let formattedImage = self.getImage(results: results) else { return }
+                self.viewModel.gift.image = formattedImage
+                self.viewModel.coreDataUpdate()
+                self.dismiss(animated: true)
+            }
         }
+    }
+    
+    private func presentPHPicekrViewController() {
+        let configuration = setupPHPicekrConfiguration()
+        let pickerViewController = PHPickerViewController(configuration: configuration)
+        
+        pickerViewController.delegate = self
+        pickerViewController.modalPresentationStyle = .fullScreen
+        
+        present(pickerViewController, animated: true)
+    }
+    
+    private func setupPHPicekrConfiguration() -> PHPickerConfiguration {
+        var configuration = PHPickerConfiguration(photoLibrary: .shared())
+        
+        configuration.filter = .images
+        configuration.preferredAssetRepresentationMode = .current
+        configuration.selectionLimit = 1
+        
+        return configuration
+    }
+    
+    private func getImage(results: [PHPickerResult]) -> UIImage? {
+        var formattedImage: UIImage?
+        guard let itemProvider = results.first?.itemProvider else { return nil }
+
+        let semaphore = DispatchSemaphore(value: 0)
+        if itemProvider.canLoadObject(ofClass: UIImage.self) {
+            itemProvider.loadObject(ofClass: UIImage.self, completionHandler: { image, error in
+                if let error = error {
+                    print(error.localizedDescription)
+                } else {
+                    formattedImage = image as? UIImage
+                }
+                semaphore.signal()
+            })
+        }
+        semaphore.wait()
+        
+        return formattedImage
     }
 }
 
-extension FormSheetViewController: UIImagePickerControllerDelegate,
-                                   UINavigationControllerDelegate {
-    // 이미지 선택 구현
-    
+protocol InformationUpdateDelegate {
+    func didUpdateImage(image: UIImage)
 }

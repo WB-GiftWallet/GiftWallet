@@ -110,10 +110,10 @@ class UserInfoModifyViewController: UIViewController {
     
     private func setupButton() {
         let modifyAction = UIAction { [weak self] _ in
-            let formSheetViewController = FormSheetViewController()
-            formSheetViewController.modalPresentationStyle = .overFullScreen
-            formSheetViewController.modalTransitionStyle = .crossDissolve
-            self?.present(formSheetViewController, animated: true)
+//            let formSheetViewController = FormSheetViewController()
+//            formSheetViewController.modalPresentationStyle = .overFullScreen
+//            formSheetViewController.modalTransitionStyle = .crossDissolve
+//            self?.present(formSheetViewController, animated: true)
         }
         userProfileImageButton.addAction(modifyAction, for: .touchUpInside)
     }

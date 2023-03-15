@@ -9,7 +9,7 @@ import UIKit
 
 struct Gift {
     var number: Int = 0
-    let image: UIImage
+    var image: UIImage
     let category: Category?
     let brandName: String?
     let productName: String?

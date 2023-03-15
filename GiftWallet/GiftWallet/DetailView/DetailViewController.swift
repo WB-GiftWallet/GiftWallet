@@ -170,7 +170,9 @@ extension DetailViewController: UIGestureRecognizerDelegate, CellScrollToTopDele
 //MARK: CellElementTappedDelegate 관련
 extension DetailViewController: CellElementTappedDelegate {
     func tappedModifyButton(indexPathRow: Int) {
-        let formSheetViewController = FormSheetViewController()
+        let gift = viewModel.gifts[indexPathRow]
+        let formSheetViewModel = FormSheetViewModel(gift: gift)
+        let formSheetViewController = FormSheetViewController(viewModel: formSheetViewModel)
         sceneConversion(viewController: formSheetViewController)
     }
     
