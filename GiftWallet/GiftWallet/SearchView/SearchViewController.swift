@@ -193,6 +193,37 @@ extension SearchViewController: UITableViewDataSource, UITableViewDelegate {
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
         return self.view.frame.height / 7
     }
+    
+    func tableView(_ tableView: UITableView, trailingSwipeActionsConfigurationForRowAt indexPath: IndexPath) -> UISwipeActionsConfiguration? {
+        let delete = UIContextualAction(style: .destructive, title: "삭제") { action, view, completionHaldler in
+            let dataNumber: Int
+            
+            if self.isFiltering {
+                dataNumber = self.filteringGifts[indexPath.row].number
+                self.filteringGifts.remove(at: indexPath.row)
+            } else {
+                dataNumber = self.allGiftData[indexPath.row].number
+            }
+            
+            do {
+                try CoreDataManager.shared.deleteDate(id: Int16(dataNumber))
+            } catch {
+                print(error.localizedDescription)
+            }
+            
+            for (index, data) in self.allGiftData.enumerated() {
+                if data.number == dataNumber {
+                    self.allGiftData.remove(at: index)
+                    break
+                }
+            }
+            
+            completionHaldler(true)
+            tableView.reloadData()
+        }
+        
+        return UISwipeActionsConfiguration(actions: [delete])
+    }
 }
 
 extension SearchViewController: UISearchResultsUpdating {
