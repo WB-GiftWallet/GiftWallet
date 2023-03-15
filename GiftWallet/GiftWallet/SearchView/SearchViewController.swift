@@ -92,6 +92,8 @@ final class SearchViewController: UIViewController {
         giftSearchController.hidesBottomBarWhenPushed = true
         giftSearchController.searchBar.showsSearchResultsButton = false
         giftSearchController.searchBar.setValue("취소", forKey: "cancelButtonText")
+        giftSearchController.searchBar.searchTextField.clearButtonMode = .always
+        giftSearchController.searchBar.searchTextField.clearsOnBeginEditing = true
         
         self.navigationItem.hidesSearchBarWhenScrolling = false
         self.navigationItem.searchController = giftSearchController
