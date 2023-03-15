@@ -98,7 +98,7 @@ final class CoreDataManager {
         }
         
         let fetchRequest = NSFetchRequest<NSFetchRequestResult>.init(entityName: "GiftData")
-        fetchRequest.predicate = NSPredicate(format: "number = %@", number as CVarArg)
+        fetchRequest.predicate = NSPredicate(format: "number = %@", String(number) as CVarArg)
         
         do {
             let test = try context.fetch(fetchRequest)
