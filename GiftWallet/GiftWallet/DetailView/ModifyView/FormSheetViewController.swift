@@ -275,6 +275,16 @@ extension FormSheetViewController: PHPickerViewControllerDelegate {
     }
 }
 
-protocol InformationUpdateDelegate {
-    func didUpdateImage(image: UIImage)
+// MARK: Touch To Dismiss 관련
+extension FormSheetViewController {
+    override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
+        super.touchesBegan(touches, with: event)
+        
+        guard let touch = touches.first else { return }
+        let touchLocation = touch.location(in: view)
+        
+        if !view.subviews.contains(where: { $0.frame.contains(touchLocation) }) {
+            self.dismiss(animated: true)
+        }
+    }
 }
