@@ -24,7 +24,7 @@ class AddViewModel {
     }
     
     func getTextsFromSeletedImage(page: Page) -> String? {
-        let texts = visionManager.vnRecognizeRequest(image: selectedImage)
+        let texts = visionManager.textsRecognizeRequest(image: selectedImage)
         
         switch page {
         case .brand:

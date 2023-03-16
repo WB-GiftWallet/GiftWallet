@@ -323,18 +323,25 @@ extension MainViewController: UICollectionViewDataSource, UICollectionViewDelega
     }
     
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
-        var sendingGiftData: Gift?
+        var sendGifts: [Gift]?
         
         switch collectionView {
             case expireCollectionView:
-                sendingGiftData = viewModel.expireGifts.value[indexPath.row]
+                sendGifts = viewModel.expireGifts.value
             case recentCollectionView:
-                sendingGiftData = viewModel.recentGifts.value[indexPath.row]
+                sendGifts = viewModel.recentGifts.value
             default:
-                sendingGiftData = nil
+                break
         }
-        let detailViewController = DetailViewController(giftData: sendingGiftData)
-        navigationController?.pushViewController(detailViewController, animated: true)
+        guard let sendGifts = sendGifts else { return }
+        let detailViewModel = DetailViewModel(gifts: sendGifts,
+                                              indexPahtRow: indexPath.row)
+        let detailViewController = DetailViewController(viewModel: detailViewModel)
+        let navigationDetailViewController = UINavigationController(rootViewController: detailViewController)
+        navigationDetailViewController.modalTransitionStyle = .coverVertical
+        navigationDetailViewController.modalPresentationStyle = .overFullScreen
+
+        present(navigationDetailViewController, animated: true)
     }
 }
 

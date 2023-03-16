@@ -9,87 +9,25 @@ import UIKit
 
 final class DetailViewController: UIViewController {
     
-    private var coreGiftData: Gift?
+    private let viewModel: DetailViewModel
+    private var viewTranslation = CGPoint(x: 0, y: 0)
+    private var isRequireDismissScene = false
     
-    private let scrollView: UIScrollView = {
-        let view = UIScrollView(frame: .zero)
+    private let pagingCollectionView = {
+        let flowLayout = UICollectionViewFlowLayout()
+        flowLayout.scrollDirection = .horizontal
+        let collectionView = UICollectionView(frame: .zero, collectionViewLayout: flowLayout)
         
-        view.translatesAutoresizingMaskIntoConstraints = false
+        collectionView.register(PagingCollectionViewCell.self,
+                                forCellWithReuseIdentifier: PagingCollectionViewCell.reuseIdentifier)
+        collectionView.backgroundColor = .white
+        collectionView.translatesAutoresizingMaskIntoConstraints = false
         
-        return view
+        return collectionView
     }()
     
-    private let contentsView: UIView = {
-        let view = UIView()
-        
-        view.translatesAutoresizingMaskIntoConstraints = false
-        
-        return view
-    }()
-    
-    private let brandLabel: UILabel = {
-        let label = UILabel()
-        
-        label.text = "스타벅스 커피"
-        label.font = .preferredFont(forTextStyle: .title1)
-        label.numberOfLines = 1
-        
-        return label
-    }()
-    
-    private let productNameLabel: UILabel = {
-        let label = UILabel()
-        
-        label.text = "아이스 아메리카노 (tall)"
-        label.font = .preferredFont(forTextStyle: .title2)
-        label.numberOfLines = 1
-        
-        return label
-    }()
-    
-    private let dateDueLabel: UILabel = {
-        let label = UILabel()
-        
-        label.text = "2024. 04. 14 까지"
-        label.font = .preferredFont(forTextStyle: .title2)
-        label.numberOfLines = 1
-        
-        return label
-    }()
-        
-    private let memoTextField: UITextField = {
-        let textField = UITextField()
-        
-        textField.font = .preferredFont(forTextStyle: .title2)
-        textField.borderStyle = .roundedRect
-        textField.placeholder = "메모입력란입니다."
-        textField.addTarget(nil, action: #selector(textFieldDidChange), for: .editingChanged)
-        
-        return textField
-    }()
-    
-    private let selectedButton: UIButton = {
-        let button = UIButton()
-        
-        button.setTitle("사용 완료", for: .normal)
-        button.backgroundColor = .systemPurple
-        button.layer.cornerRadius = 5
-        button.addTarget(nil, action: #selector(tapSeletedButton), for: .touchUpInside)
-        
-        return button
-    }()
-    
-    private let giftImageView: UIImageView = {
-        let imageView = UIImageView()
-        
-        imageView.image = UIImage(named: "tempImages")
-        imageView.contentMode = .scaleAspectFit
-        
-        return imageView
-    }()
-    
-    init(giftData: Gift?) {
-        self.coreGiftData = giftData
+    init(viewModel: DetailViewModel) {
+        self.viewModel = viewModel
         super.init(nibName: nil, bundle: nil)
     }
     
@@ -99,206 +37,188 @@ final class DetailViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        setupPanGestureRecognizerAttributes()
+        setupCollectionViewAttributes()
+        setupNavigation()
+        setupViews()
+    }
+  
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        scrollBySelectedIndex()
+    }
+    
+    private func scrollBySelectedIndex() {
+        pagingCollectionView.layoutIfNeeded()
+        guard let scrollTargetIndex = viewModel.indexPathItem else { return }
+        let indexPath = IndexPath(item: scrollTargetIndex, section: 0)
+        pagingCollectionView.scrollToItem(at: indexPath, at: .right, animated: true)
+    }
+    
+    private func setupCollectionViewAttributes() {
+        pagingCollectionView.dataSource = self
+        pagingCollectionView.delegate = self
+        pagingCollectionView.isPagingEnabled = true
+    }
         
+    private func setupNavigation() {
+        navigationController?.navigationBar.tintColor = .black
+        navigationItem.leftBarButtonItem = UIBarButtonItem(image: UIImage(systemName: "multiply"),
+                                                           style: .plain,
+                                                           target: self,
+                                                           action: #selector(dismissViewControlelr))
+    }
+    
+    @objc
+    private func dismissViewControlelr() {
+        dismiss(animated: true, completion: nil)
+    }
+    
+    private func setupViews() {
         view.backgroundColor = .systemBackground
         
-        configureScrollView()
-        configureContentView()
-        configureInnerContents()
-        configureImageTapGesture()
-        
-        setupGiftData()
-    }
-    
-    private func setupGiftData() {
-        brandLabel.text = coreGiftData?.brandName
-        productNameLabel.text = coreGiftData?.productName
-        dateDueLabel.text = coreGiftData?.expireDate?.setupDateStyleForDisplay()
-        memoTextField.text = coreGiftData?.memo
-        giftImageView.image = coreGiftData?.image
-        
-        guard let useableState = coreGiftData?.useableState else { return }
-        
-        if useableState {
-            coreGiftData?.useableState = true
-            selectedButton.backgroundColor = .systemPurple
-        } else {
-            coreGiftData?.useableState = false
-            selectedButton.backgroundColor = .systemGray
-        }
-    }
-    
-    private func configureScrollView() {
-        view.addSubview(scrollView)
+        view.addSubview(pagingCollectionView)
         
         NSLayoutConstraint.activate([
-            scrollView.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor),
-            scrollView.leadingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.leadingAnchor),
-            scrollView.trailingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.trailingAnchor),
-            scrollView.bottomAnchor.constraint(equalTo: view.safeAreaLayoutGuide.bottomAnchor)
-        ])
-    }
-    
-    private func configureContentView() {
-        scrollView.addSubview(contentsView)
-        
-        NSLayoutConstraint.activate([
-            contentsView.topAnchor.constraint(equalTo: scrollView.contentLayoutGuide.topAnchor),
-            contentsView.leadingAnchor.constraint(equalTo: scrollView.contentLayoutGuide.leadingAnchor),
-            contentsView.trailingAnchor.constraint(equalTo: scrollView.contentLayoutGuide.trailingAnchor),
-            contentsView.bottomAnchor.constraint(equalTo: scrollView.contentLayoutGuide.bottomAnchor),
-            contentsView.widthAnchor.constraint(equalTo: scrollView.widthAnchor)
+            pagingCollectionView.topAnchor.constraint(equalTo: view.topAnchor),
+            pagingCollectionView.leadingAnchor.constraint(equalTo: view.leadingAnchor),
+            pagingCollectionView.trailingAnchor.constraint(equalTo: view.trailingAnchor),
+            pagingCollectionView.bottomAnchor.constraint(equalTo: view.bottomAnchor)
         ])
         
-        let contentViewHeight = contentsView.heightAnchor.constraint(greaterThanOrEqualTo: view.heightAnchor)
-        contentViewHeight.priority = .defaultLow
-        contentViewHeight.isActive = true
-    }
-    
-    private func configureInnerContents() {
-        [brandLabel, productNameLabel, dateDueLabel, memoTextField, selectedButton, giftImageView].forEach {
-            $0.translatesAutoresizingMaskIntoConstraints = false
-            contentsView.addSubview($0)
-        }
-        
-        NSLayoutConstraint.activate([
-            brandLabel.topAnchor.constraint(equalTo: contentsView.topAnchor, constant: 10),
-            brandLabel.leadingAnchor.constraint(equalTo: contentsView.leadingAnchor, constant: view.frame.width / 20),
-            brandLabel.trailingAnchor.constraint(equalTo: contentsView.trailingAnchor, constant: -view.frame.width / 20),
-
-            productNameLabel.topAnchor.constraint(equalTo: brandLabel.bottomAnchor, constant: 10),
-            productNameLabel.leadingAnchor.constraint(equalTo: contentsView.leadingAnchor, constant: view.frame.width / 20),
-            productNameLabel.trailingAnchor.constraint(equalTo: contentsView.trailingAnchor, constant: -view.frame.width / 20),
-
-            dateDueLabel.topAnchor.constraint(equalTo: productNameLabel.bottomAnchor, constant: 5),
-            dateDueLabel.leadingAnchor.constraint(equalTo: contentsView.leadingAnchor, constant: view.frame.width / 20),
-            dateDueLabel.trailingAnchor.constraint(equalTo: contentsView.trailingAnchor, constant: -view.frame.width / 20),
-
-            memoTextField.topAnchor.constraint(equalTo: dateDueLabel.bottomAnchor, constant: 10),
-            memoTextField.leadingAnchor.constraint(equalTo: contentsView.leadingAnchor, constant: view.frame.width / 20),
-            memoTextField.trailingAnchor.constraint(equalTo: contentsView.trailingAnchor, constant: -view.frame.width / 20),
-            
-            selectedButton.topAnchor.constraint(equalTo: memoTextField.bottomAnchor, constant: 20),
-            selectedButton.leadingAnchor.constraint(equalTo: contentsView.leadingAnchor, constant: view.frame.width / 20),
-            selectedButton.trailingAnchor.constraint(equalTo: contentsView.trailingAnchor, constant: -view.frame.width / 20),
-            selectedButton.heightAnchor.constraint(equalToConstant: view.frame.height / 20),
-
-            giftImageView.topAnchor.constraint(equalTo: selectedButton.bottomAnchor, constant: view.frame.width / 20),
-            giftImageView.leadingAnchor.constraint(equalTo: contentsView.leadingAnchor),
-            giftImageView.trailingAnchor.constraint(equalTo: contentsView.trailingAnchor),
-            giftImageView.bottomAnchor.constraint(equalTo: contentsView.bottomAnchor),
-            giftImageView.heightAnchor.constraint(lessThanOrEqualTo: giftImageView.widthAnchor, multiplier: 2)
-        ])
-    }
-    
-    private func configureImageTapGesture() {
-        let gestureRecognizer = UITapGestureRecognizer(target: self, action: #selector(tapImageView))
-        
-        giftImageView.isUserInteractionEnabled = true
-        giftImageView.addGestureRecognizer(gestureRecognizer)
-    }
-    
-    @objc private func tapSeletedButton() {
-        let alert = UIAlertController(title: nil, message: nil, preferredStyle: .alert)
-        guard let useableState = coreGiftData?.useableState else {
-            return
-        }
-        
-        if useableState {
-            alert.title = "사용 완료 처리할까요?"
-        } else {
-            alert.title = "사용 가능한 기프티콘인가요?"
-        }
-        
-        let cancel = UIAlertAction(title: "아니요", style: .destructive) { _ in
-            self.dismiss(animated: true)
-        }
-        
-        let done = UIAlertAction(title: "네", style: .default) { _ in
-            if useableState {
-                self.changeGiftState(true)
-            } else {
-                self.changeGiftState(false)
-            }
-            
-            self.coreDataUpdate()
-        }
-        
-        alert.addAction(cancel)
-        alert.addAction(done)
-        
-        present(alert, animated: true)
-    }
-    
-    private func changeGiftState(_ seleted: Bool) {
-        coreGiftData?.useableState.toggle()
-        
-        if seleted {
-            selectedButton.backgroundColor = .systemGray
-        } else {
-            selectedButton.backgroundColor = .systemPurple
-        }
-        
-        dismiss(animated: true)
-    }
-    
-    private func coreDataUpdate() {
-        guard let coreGiftData = coreGiftData else { return }
-        
-        do {
-            try CoreDataManager.shared.updateData(coreGiftData)
-        } catch {
-            print(error.localizedDescription)
-        }
-    }
-    
-    @objc private func tapImageView(sender: UITapGestureRecognizer) {
-        guard let image = giftImageView.image else { return }
-        
-        present(GiftImageViewController(image: image), animated: true)
-    }
-    
-    // MARK: Memo Text Field Changed Method
-    @objc private func textFieldDidChange() {
-        coreGiftData?.memo = memoTextField.text
-        coreDataUpdate()
     }
 }
 
-// MARK: ValueChange
-extension DetailViewController {
-    func changeBrandLabel(name: String?) {
-        guard let name = name else {
-            brandLabel.text = "Name is Nill"
-            return
-        }
-        brandLabel.text = name
+//MARK: UIColelctionViewDataSource 관련
+extension DetailViewController: UICollectionViewDataSource {
+    
+    func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
+        return viewModel.gifts.count
     }
     
-    func changeProductNameLabel(name: String?) {
-        guard let name = name else {
-            productNameLabel.text = "Name is Nill"
-            return
-        }
-        productNameLabel.text = name
+    func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
+        let cell = pagingCollectionView.dequeueReusableCell(withReuseIdentifier: PagingCollectionViewCell.reuseIdentifier,
+                                                            for: indexPath) as? PagingCollectionViewCell ?? PagingCollectionViewCell()
+        let gift = viewModel.gifts[indexPath.row]
+        cell.delegate = self
+        cell.provider = self
+        cell.configureCell(data: gift)
+        return cell
+    }
+}
+
+extension DetailViewController: UICollectionViewDelegate {
+}
+
+// MARK: UICollectionViewDelegateFlowLayout 관련
+extension DetailViewController: UICollectionViewDelegateFlowLayout{
+    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
+        return CGSize(width: view.frame.width, height: view.frame.height)
     }
     
-    func changeDateDueLabel(date: Date?) {
-        guard let date = date else {
-            brandLabel.text = "Date is Nil"
-            return
+    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, minimumLineSpacingForSectionAt section: Int) -> CGFloat {
+        return .zero
+    }
+}
+
+// MARK: UIGestureRecognizer 및 CellUIInteractionProvider 델리게이트 메소드 관련
+extension DetailViewController: UIGestureRecognizerDelegate, CellUIInteractionProvider {
+    // CellUIInteractionProvider
+    func touchedBarcodeButtonOrImageViewForZoom(sender: Any) {
+        guard let indexPath = pagingCollectionView.indexPathsForVisibleItems.first else { return }
+        let gift = viewModel.gifts[indexPath.row]
+                
+        switch sender {
+        case is UIGestureRecognizer:
+            let zoomViewModel = ZoomImageViewModel(gift: gift )
+            let zoomImageViewController = ZoomImageViewController(viewModel: zoomViewModel)
+            sceneConversion(viewController: zoomImageViewController)
+        case is UIButton:
+            let barcodeViewModel = BarcodeViewModel(gift: gift)
+            let barcodeViewController = BarcodeViewController(viewModel: barcodeViewModel)
+            let barcoeNavigationViewController = UINavigationController(rootViewController: barcodeViewController)
+            sceneConversion(viewController: barcoeNavigationViewController)
+        default:
+            break
         }
-        dateDueLabel.text = date.setupDateStyleForDisplay()
     }
     
-    func changeMemoTextField(name: String?) {
-        guard let name = name else {
-            return
-        }
-        memoTextField.text = name
+    private func sceneConversion(viewController: UIViewController) {
+        let conversionTargetViewController = viewController
+        conversionTargetViewController.modalTransitionStyle = .crossDissolve
+        conversionTargetViewController.modalPresentationStyle = .overFullScreen
+        present(conversionTargetViewController, animated: true)
     }
     
-    func changeGiftImageView(image: UIImage) {
-        giftImageView.image = image
+    // UIGestureRecognizerDelegate : drag to dismiss
+    func checkScrollViewContentOffSetForDismissScene() {
+        isRequireDismissScene = true
+    }
+    
+    private func setupPanGestureRecognizerAttributes() {
+        let panGesture = UIPanGestureRecognizer(target: self, action: #selector(handlePanGesture))
+        panGesture.delegate = self
+        self.view.addGestureRecognizer(panGesture)
+    }
+    
+    @objc
+    private func handlePanGesture(sender: UIPanGestureRecognizer) {
+        if isRequireDismissScene {
+            switch sender.state {
+            case .changed:
+                viewTranslation = sender.translation(in: view)
+                if viewTranslation.y > 0 {
+                    UIView.animate(withDuration: 0.5, delay: 0, usingSpringWithDamping: 0.7, initialSpringVelocity: 1, options: .curveEaseOut, animations: {
+                        self.view.transform = CGAffineTransform(translationX: 0, y: self.viewTranslation.y)
+                    })
+                    break
+                }
+                isRequireDismissScene = false
+            case .ended:
+                if viewTranslation.y < 200 {
+                    UIView.animate(withDuration: 0.5, delay: 0, usingSpringWithDamping: 0.7, initialSpringVelocity: 1, options: .curveEaseOut, animations: {
+                        self.view.transform = .identity
+                    })
+                } else {
+                    dismiss(animated: true, completion: nil)
+                }
+                break
+            default:
+                break
+            }
+        }
+    }
+    
+    func gestureRecognizer(_ gestureRecognizer: UIGestureRecognizer, shouldRecognizeSimultaneouslyWith otherGestureRecognizer: UIGestureRecognizer) -> Bool {
+        // 다른 Gesture Recognizer와 함께 사용할 수 있도록 true 반환
+        return true
+    }
+}
+
+//MARK: Gift의 Useable 상태에 따른 Alert 관련
+extension DetailViewController: GiftStateSendable {
+    func sendCellInformation(indexPathRow: Int, text: String?) {
+        showAlert(indexPathRow, text)
+    }
+    
+    private func showAlert(_ indexPathRow: Int, _ text: String?) {
+        let alertController = UIAlertController(title: "사용 완료 처리할까요?",
+                                      message: nil,
+                                      preferredStyle: .alert)
+        
+        let noAction = UIAlertAction(title: "아니요", style: .destructive)
+        let okAction = UIAlertAction(title: "네", style: .default) { _ in
+            self.doneAction(indexPathRow, text)
+        }
+        
+        [okAction, noAction].forEach(alertController.addAction(_:))
+        present(alertController, animated: true)
+    }
+    
+    private func doneAction(_ indexPathRow: Int, _ text: String?) {
+        viewModel.writeMemo(indexPathRow, text)
+        viewModel.toggleToUnUsableState(indexPathRow)
+        viewModel.coreDataUpdate(indexPathRow)
+        self.dismiss(animated: true)
     }
 }

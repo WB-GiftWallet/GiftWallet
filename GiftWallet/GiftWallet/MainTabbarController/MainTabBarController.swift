@@ -108,6 +108,8 @@ final class MainTabBarController: UITabBarController {
     
     private func setupNavigation() {
         // TODO: SampleLogo 수정필요
+        title = ""
+        
         let image = UIImage(named: "SampleLogoWow")
         let imageView = UIImageView()
         imageView.image = image
