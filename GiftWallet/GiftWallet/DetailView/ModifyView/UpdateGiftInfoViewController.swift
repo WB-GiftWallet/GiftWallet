@@ -120,6 +120,17 @@ class UpdateGiftInfoViewController: UIViewController {
     
     private func setupNavigation() {
         title = "프로필 편집"
+        
+        navigationController?.navigationBar.tintColor = .black
+        navigationItem.leftBarButtonItem = UIBarButtonItem(image: UIImage(systemName: "multiply"),
+                                                           style: .plain,
+                                                           target: self,
+                                                           action: #selector(dismissViewController))
+    }
+    
+    @objc
+    private func dismissViewController() {
+        self.dismiss(animated: true)
     }
     
     private func setupViews() {
