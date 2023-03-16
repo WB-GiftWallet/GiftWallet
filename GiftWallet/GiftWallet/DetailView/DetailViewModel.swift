@@ -32,7 +32,7 @@ class DetailViewModel {
         gifts[index] = updatedGift
     }
     
-    private func findIndexForGiftWithNumber(_ updatedGiftNumber: Int) -> Int? {
+    func findIndexForGiftWithNumber(_ updatedGiftNumber: Int) -> Int? {
         let index = gifts.firstIndex (where: { $0.number == updatedGiftNumber })
         return index
     }

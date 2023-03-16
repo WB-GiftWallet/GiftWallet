@@ -7,9 +7,9 @@
 
 import UIKit
 
-class UserInfoModifyViewController: UIViewController {
+class UpdateGiftInfoViewController: UIViewController {
     
-    private let userInfoModifyViewModel: UserInfoModifyViewModel
+    private let viewModel: UpdateViewModel
     
     private let userProfileImageButton = {
         let button = UIButton()
@@ -84,8 +84,8 @@ class UserInfoModifyViewController: UIViewController {
         return button
     }()
     
-    init(userInfoModifyViewModel: UserInfoModifyViewModel) {
-        self.userInfoModifyViewModel = userInfoModifyViewModel
+    init(viewModel: UpdateViewModel) {
+        self.viewModel = viewModel
         super.init(nibName: nil, bundle: nil)
     }
     
@@ -166,6 +166,6 @@ class UserInfoModifyViewController: UIViewController {
 }
 
 // MARK: Notification 관련
-extension UserInfoModifyViewController {
+extension UpdateGiftInfoViewController {
     
 }

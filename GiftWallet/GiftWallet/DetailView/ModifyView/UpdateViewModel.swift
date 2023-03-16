@@ -7,7 +7,7 @@
 
 import Foundation
 
-class FormSheetViewModel {
+class UpdateViewModel {
     
     private let coredataManager = CoreDataManager.shared
     

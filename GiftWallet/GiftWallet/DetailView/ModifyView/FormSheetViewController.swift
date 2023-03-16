@@ -10,7 +10,7 @@ import PhotosUI
 
 class FormSheetViewController: UIViewController {
     
-    private let viewModel: FormSheetViewModel
+    private let viewModel: UpdateViewModel
     var delegate: GiftDidUpdateDelegate?
     
     private let contentView = {
@@ -138,7 +138,7 @@ class FormSheetViewController: UIViewController {
         return indicator
     }()
     
-    init(viewModel: FormSheetViewModel) {
+    init(viewModel: UpdateViewModel) {
         self.viewModel = viewModel
         super.init(nibName: nil, bundle: nil)
     }
@@ -159,6 +159,14 @@ class FormSheetViewController: UIViewController {
     }
     
     private func setupButton() {
+        let pencilAction = UIAction { [weak self] _ in
+            guard let self = self else { return }
+            self.dismiss(animated: true) {
+                self.delegate?.tapModifyInfo(gift: self.viewModel.gift)
+            }
+        }
+        pencilImageButton.addAction(pencilAction, for: .touchUpInside)
+        
         let photoAction = UIAction { [weak self] _ in
             self?.activityIndicator.isHidden = false
             self?.presentPHPicekrViewController()
@@ -297,5 +305,6 @@ extension FormSheetViewController {
 
 // MARK: Gift 정보 수정 시, 호출
 protocol GiftDidUpdateDelegate {
+    func tapModifyInfo(gift: Gift)
     func didUpdateImage(updatedGift: Gift)
 }

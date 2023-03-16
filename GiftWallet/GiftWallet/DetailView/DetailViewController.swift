@@ -171,7 +171,7 @@ extension DetailViewController: UIGestureRecognizerDelegate, CellScrollToTopDele
 extension DetailViewController: CellElementTappedDelegate {
     func tappedModifyButton(indexPathRow: Int) {
         let gift = viewModel.gifts[indexPathRow]
-        let formSheetViewModel = FormSheetViewModel(gift: gift)
+        let formSheetViewModel = UpdateViewModel(gift: gift)
         let formSheetViewController = FormSheetViewController(viewModel: formSheetViewModel)
         formSheetViewController.delegate = self
         sceneConversion(viewController: formSheetViewController)
@@ -227,6 +227,14 @@ extension DetailViewController: CellElementTappedDelegate {
 
 
 extension DetailViewController: GiftDidUpdateDelegate {
+    func tapModifyInfo(gift: Gift) {
+        guard let index = self.viewModel.findIndexForGiftWithNumber(gift.number) else { return }
+        let updateViewModel = UpdateViewModel(gift: viewModel.gifts[index])
+        let updateGiftInfoViewController = UpdateGiftInfoViewController(viewModel: updateViewModel)
+        let navigationUpdateGiftInfoViewController = UINavigationController(rootViewController: updateGiftInfoViewController)
+        sceneConversion(viewController: navigationUpdateGiftInfoViewController)
+    }
+    
     func didUpdateImage(updatedGift: Gift) {
         viewModel.updateGifts(updatedGift)
         pagingCollectionView.reloadData()
