@@ -87,6 +87,7 @@
 
 /* Begin PBXFileReference section */
 		171695B029B1B8CA00CF3E41 /* SearchTableViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchTableViewModel.swift; sourceTree = "<group>"; };
+		17BCD46B29C2ED2200F9FC9C /* Package */ = {isa = PBXFileReference; lastKnownFileType = wrapper; path = Package; sourceTree = "<group>"; };
 		17D5963629AF6F9800AFE039 /* SearchTableViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchTableViewController.swift; sourceTree = "<group>"; };
 		17D5963829B02CBD00AFE039 /* SearchGiftCustomCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchGiftCustomCell.swift; sourceTree = "<group>"; };
 		17D5963A29B0835800AFE039 /* Extension+Date.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Extension+Date.swift"; sourceTree = "<group>"; };
@@ -385,6 +386,7 @@
 				FC1E747329A207DA0010A4BA /* SceneDelegate.swift */,
 				FC1E748229A207DC0010A4BA /* Info.plist */,
 				FC1E747A29A207DA0010A4BA /* GiftWallet.xcdatamodeld */,
+				17BCD46B29C2ED2200F9FC9C /* Package */,
 			);
 			path = GiftWallet;
 			sourceTree = "<group>";

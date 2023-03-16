@@ -80,6 +80,8 @@ class AddViewController: UIViewController {
     }
     
     private func setuptextInTextField() {
+        inputTextField.clearButtonMode = .always
+        inputTextField.clearsOnBeginEditing = true
         inputTextField.text = viewModel.getTextsFromSeletedImage(page: page)
     }
     
