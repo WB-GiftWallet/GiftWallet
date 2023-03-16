@@ -11,6 +11,7 @@ import PhotosUI
 class FormSheetViewController: UIViewController {
     
     private let viewModel: FormSheetViewModel
+    var delegate: GiftDidUpdateDelegate?
     
     private let contentView = {
         let view = UIView()
@@ -220,15 +221,20 @@ class FormSheetViewController: UIViewController {
     
 }
 
+// MARK: PHPickerViewController 관련
 extension FormSheetViewController: PHPickerViewControllerDelegate {
     func picker(_ picker: PHPickerViewController, didFinishPicking results: [PHPickerResult]) {
         if results.isEmpty {
-            self.dismiss(animated: true)
+            self.dismiss(animated: true) {
+                self.dismiss(animated: true)
+            }
         } else {
             self.dismiss(animated: true) {
                 guard let formattedImage = self.getImage(results: results) else { return }
-                self.viewModel.gift.image = formattedImage
+                var gift = self.viewModel.gift
+                gift.image = formattedImage
                 self.viewModel.coreDataUpdate()
+                self.delegate?.didUpdateImage(updatedGift: gift)
                 self.dismiss(animated: true)
             }
         }
@@ -287,4 +293,9 @@ extension FormSheetViewController {
             self.dismiss(animated: true)
         }
     }
+}
+
+// MARK: Gift 정보 수정 시, 호출
+protocol GiftDidUpdateDelegate {
+    func didUpdateImage(updatedGift: Gift)
 }

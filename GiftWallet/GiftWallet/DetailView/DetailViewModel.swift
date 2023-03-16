@@ -26,7 +26,16 @@ class DetailViewModel {
     func writeMemo(_ indexPathRow: Int, _ text: String?) {
         gifts[indexPathRow].memo = text
     }
-
+    
+    func updateGifts(_ updatedGift: Gift) {
+        guard let index = findIndexForGiftWithNumber(updatedGift.number) else { return }
+        gifts[index] = updatedGift
+    }
+    
+    private func findIndexForGiftWithNumber(_ updatedGiftNumber: Int) -> Int? {
+        let index = gifts.firstIndex (where: { $0.number == updatedGiftNumber })
+        return index
+    }
 
     func coreDataUpdate(_ indexPathRow: Int) {
         do {

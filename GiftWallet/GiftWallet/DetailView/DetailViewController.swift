@@ -71,7 +71,7 @@ final class DetailViewController: UIViewController {
     
     @objc
     private func dismissViewControlelr() {
-        dismiss(animated: true, completion: nil)
+        dismiss(animated: true)
     }
     
     private func setupViews() {
@@ -173,6 +173,7 @@ extension DetailViewController: CellElementTappedDelegate {
         let gift = viewModel.gifts[indexPathRow]
         let formSheetViewModel = FormSheetViewModel(gift: gift)
         let formSheetViewController = FormSheetViewController(viewModel: formSheetViewModel)
+        formSheetViewController.delegate = self
         sceneConversion(viewController: formSheetViewController)
     }
     
@@ -223,3 +224,12 @@ extension DetailViewController: CellElementTappedDelegate {
         present(conversionTargetViewController, animated: true)
     }
 }
+
+
+extension DetailViewController: GiftDidUpdateDelegate {
+    func didUpdateImage(updatedGift: Gift) {
+        viewModel.updateGifts(updatedGift)
+        pagingCollectionView.reloadData()
+    }
+}
+
