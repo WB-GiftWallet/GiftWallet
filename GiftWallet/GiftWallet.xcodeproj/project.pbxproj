@@ -8,6 +8,7 @@
 
 /* Begin PBXBuildFile section */
 		171695B129B1B8CA00CF3E41 /* SearchTableViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 171695B029B1B8CA00CF3E41 /* SearchTableViewModel.swift */; };
+		1723BE8529C3142600AE06F9 /* IQKeyboardManagerSwift in Frameworks */ = {isa = PBXBuildFile; productRef = 1723BE8429C3142600AE06F9 /* IQKeyboardManagerSwift */; };
 		17A950FF29B74DA2001E6D4F /* SearchViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 17A950FE29B74DA2001E6D4F /* SearchViewController.swift */; };
 		17A9510129B75101001E6D4F /* RecommendView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 17A9510029B75101001E6D4F /* RecommendView.swift */; };
 		17D5963729AF6F9800AFE039 /* SearchTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 17D5963629AF6F9800AFE039 /* SearchTableViewController.swift */; };
@@ -91,6 +92,7 @@
 		171695B029B1B8CA00CF3E41 /* SearchTableViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchTableViewModel.swift; sourceTree = "<group>"; };
 		17A950FE29B74DA2001E6D4F /* SearchViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchViewController.swift; sourceTree = "<group>"; };
 		17A9510029B75101001E6D4F /* RecommendView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RecommendView.swift; sourceTree = "<group>"; };
+		17BCD48129C30F8900F9FC9C /* Package */ = {isa = PBXFileReference; lastKnownFileType = wrapper; path = Package; sourceTree = "<group>"; };
 		17D5963629AF6F9800AFE039 /* SearchTableViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchTableViewController.swift; sourceTree = "<group>"; };
 		17D5963829B02CBD00AFE039 /* SearchGiftCustomCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchGiftCustomCell.swift; sourceTree = "<group>"; };
 		17D5963A29B0835800AFE039 /* Extension+Date.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Extension+Date.swift"; sourceTree = "<group>"; };
@@ -174,6 +176,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				1723BE8529C3142600AE06F9 /* IQKeyboardManagerSwift in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -354,6 +357,7 @@
 				FC1E747029A207DA0010A4BA /* GiftWallet */,
 				D2A282BE29A8702B002CCF5A /* MainViewModelTests */,
 				D2CDDBD329ADFE7700E000E3 /* DateCalculateUseCaseTest */,
+				17BCD48129C30F8900F9FC9C /* Package */,
 				FC1E746F29A207DA0010A4BA /* Products */,
 			);
 			sourceTree = "<group>";
@@ -455,6 +459,9 @@
 			dependencies = (
 			);
 			name = GiftWallet;
+			packageProductDependencies = (
+				1723BE8429C3142600AE06F9 /* IQKeyboardManagerSwift */,
+			);
 			productName = GiftWallet;
 			productReference = FC1E746E29A207DA0010A4BA /* GiftWallet.app */;
 			productType = "com.apple.product-type.application";
@@ -491,6 +498,9 @@
 				Base,
 			);
 			mainGroup = FC1E746529A207DA0010A4BA;
+			packageReferences = (
+				1723BE8329C3142600AE06F9 /* XCRemoteSwiftPackageReference "IQKeyboardManager" */,
+			);
 			productRefGroup = FC1E746F29A207DA0010A4BA /* Products */;
 			projectDirPath = "";
 			projectRoot = "";
@@ -928,6 +938,26 @@
 			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
+
+/* Begin XCRemoteSwiftPackageReference section */
+		1723BE8329C3142600AE06F9 /* XCRemoteSwiftPackageReference "IQKeyboardManager" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/hackiftekhar/IQKeyboardManager.git";
+			requirement = {
+				kind = versionRange;
+				maximumVersion = 7.0.0;
+				minimumVersion = 6.0.0;
+			};
+		};
+/* End XCRemoteSwiftPackageReference section */
+
+/* Begin XCSwiftPackageProductDependency section */
+		1723BE8429C3142600AE06F9 /* IQKeyboardManagerSwift */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 1723BE8329C3142600AE06F9 /* XCRemoteSwiftPackageReference "IQKeyboardManager" */;
+			productName = IQKeyboardManagerSwift;
+		};
+/* End XCSwiftPackageProductDependency section */
 
 /* Begin XCVersionGroup section */
 		FC1E747A29A207DA0010A4BA /* GiftWallet.xcdatamodeld */ = {
