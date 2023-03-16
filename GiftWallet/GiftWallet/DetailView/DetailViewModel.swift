@@ -14,7 +14,7 @@ class DetailViewModel {
     var gifts: [Gift]
     var indexPathItem: Int?
     
-    init(gifts: [Gift], indexPahtRow: Int) {
+    init(gifts: [Gift], indexPahtRow: Int = 0) {
         self.gifts = gifts
         self.indexPathItem = indexPahtRow
     }

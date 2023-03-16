@@ -177,15 +177,12 @@ extension SearchViewController: UITableViewDataSource, UITableViewDelegate {
             indexGiftsData = allGiftData[indexPath.row]
         }
         
-        let detailViewController = DetailViewController(giftData: indexGiftsData)
+        let viewmodel = DetailViewModel(gifts: [indexGiftsData])
+        let detailViewController = DetailViewController(viewModel: viewmodel)
         
-        detailViewController.changeBrandLabel(name: indexGiftsData.brandName)
-        detailViewController.changeProductNameLabel(name: indexGiftsData.productName)
-        detailViewController.changeDateDueLabel(date: indexGiftsData.expireDate)
-        detailViewController.changeMemoTextField(name: indexGiftsData.memo)
-        detailViewController.changeGiftImageView(image: indexGiftsData.image)
-        
-        navigationController?.pushViewController(detailViewController, animated: true)
+        let naviDV = UINavigationController(rootViewController: detailViewController)
+        naviDV.modalPresentationStyle = .overFullScreen
+        present(naviDV, animated: true)
         
         tableView.deselectRow(at: indexPath, animated: true)
         
