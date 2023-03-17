@@ -14,10 +14,11 @@ class UpdateGiftInfoViewController: UIViewController {
     private let userProfileImageButton = {
         let button = UIButton()
         
-        button.setImage(UIImage(named: "testImagewoongPhoto"), for: .normal)
         button.contentVerticalAlignment = .fill
         button.contentHorizontalAlignment = .fill
-        button.tintColor = .red
+        button.imageView?.contentMode = .scaleAspectFit
+        button.layer.borderWidth = 0.8
+        button.layer.borderColor = UIColor.imageViewbackground.cgColor
         button.translatesAutoresizingMaskIntoConstraints = false
         
         return button
@@ -43,27 +44,63 @@ class UpdateGiftInfoViewController: UIViewController {
         return label
     }()
     
-    private let profileInfoLabel = {
+    private let defaultSmallTitleLabel = {
        let label = UILabel()
         
         label.font = .boldSystemFont(ofSize: 20)
-        label.text = "프로필 정보"
+        label.text = "상세 정보"
         label.translatesAutoresizingMaskIntoConstraints = false
         
         return label
     }()
     
-    private let nameLabel = {
+    private let inputBrandLabel = {
        let label = UILabel()
         
         label.font = .boldSystemFont(ofSize: 15)
-        label.text = "이름"
+        label.text = "브랜드"
         label.translatesAutoresizingMaskIntoConstraints = false
         
         return label
     }()
     
-    private let inputNameTextField = {
+    private let inputBrandTextField = {
+        let textField = CustomTextField()
+        
+        textField.translatesAutoresizingMaskIntoConstraints = false
+        
+        return textField
+    }()
+    
+    private let inputProductNameLabel = {
+       let label = UILabel()
+        
+        label.font = .boldSystemFont(ofSize: 15)
+        label.text = "상품명"
+        label.translatesAutoresizingMaskIntoConstraints = false
+        
+        return label
+    }()
+    
+    private let inputProductNameTextField = {
+        let textField = CustomTextField()
+        
+        textField.translatesAutoresizingMaskIntoConstraints = false
+        
+        return textField
+    }()
+    
+    private let inputExpireDateLabel = {
+       let label = UILabel()
+        
+        label.font = .boldSystemFont(ofSize: 15)
+        label.text = "유효기간"
+        label.translatesAutoresizingMaskIntoConstraints = false
+        
+        return label
+    }()
+    
+    private let inputExpireDateTextField = {
         let textField = CustomTextField()
         
         textField.translatesAutoresizingMaskIntoConstraints = false
@@ -99,13 +136,22 @@ class UpdateGiftInfoViewController: UIViewController {
         setupNavigation()
         setupViews()
         setupButton()
+        configureImage()
     }
     
     override func viewWillLayoutSubviews() {
         super.viewWillLayoutSubviews()
         userProfileImageButton.layer.cornerRadius = userProfileImageButton.frame.width / 2
         userProfileImageButton.clipsToBounds = true
-        inputNameTextField.setupTextFieldBottomBorder()
+        // TODO: 수정
+        inputBrandTextField.setupTextFieldBottomBorder()
+        inputProductNameTextField.setupTextFieldBottomBorder()
+        inputExpireDateTextField.setupTextFieldBottomBorder()
+    }
+    
+    private func configureImage() {
+        let image = viewModel.gift.image
+        userProfileImageButton.setImage(image, for: .normal)
     }
     
     private func setupButton() {
@@ -136,43 +182,62 @@ class UpdateGiftInfoViewController: UIViewController {
     private func setupViews() {
         view.backgroundColor = .white
         
-        [userProfileImageButton, profileInfoLabel, nameLabel, inputNameTextField, completeButton].forEach(view.addSubview(_:))
         userProfileImageButton.addSubview(buttonLineView)
         buttonLineView.addSubview(buttonLineLabel)
         
+        [inputBrandLabel, inputBrandTextField, inputProductNameLabel, inputProductNameTextField, inputExpireDateLabel, inputExpireDateTextField].forEach(view.addSubview(_:))
+        [userProfileImageButton, defaultSmallTitleLabel].forEach(view.addSubview(_:))
+        
         let safeArea = view.safeAreaLayoutGuide
         
+        
         NSLayoutConstraint.activate([
-            
-            userProfileImageButton.topAnchor.constraint(equalTo: safeArea.topAnchor, constant: 10),
-            userProfileImageButton.centerXAnchor.constraint(equalTo: safeArea.centerXAnchor),
-            userProfileImageButton.widthAnchor.constraint(equalTo: safeArea.widthAnchor, multiplier: 0.4),
-            userProfileImageButton.heightAnchor.constraint(equalTo: userProfileImageButton.widthAnchor),
-            
-            buttonLineView.heightAnchor.constraint(equalTo: userProfileImageButton.heightAnchor, multiplier: 0.2),
-            buttonLineView.widthAnchor.constraint(equalTo: userProfileImageButton.widthAnchor),
-            buttonLineView.bottomAnchor.constraint(equalTo: userProfileImageButton.bottomAnchor, constant: 0),
-            buttonLineView.centerXAnchor.constraint(equalTo: userProfileImageButton.centerXAnchor),
-            
-            buttonLineLabel.centerXAnchor.constraint(equalTo: buttonLineView.centerXAnchor),
-            buttonLineLabel.centerYAnchor.constraint(equalTo: buttonLineView.centerYAnchor),
-            
-            profileInfoLabel.topAnchor.constraint(equalTo: userProfileImageButton.bottomAnchor, constant: 30),
-            profileInfoLabel.leadingAnchor.constraint(equalTo: safeArea.leadingAnchor, constant: 10),
-            
-            nameLabel.topAnchor.constraint(equalTo: profileInfoLabel.bottomAnchor, constant: 30),
-            nameLabel.leadingAnchor.constraint(equalTo: profileInfoLabel.leadingAnchor),
-            
-            inputNameTextField.topAnchor.constraint(equalTo: nameLabel.bottomAnchor, constant: 15),
-            inputNameTextField.leadingAnchor.constraint(equalTo: nameLabel.leadingAnchor),
-            inputNameTextField.trailingAnchor.constraint(equalTo: safeArea.trailingAnchor, constant: -10),
-            inputNameTextField.heightAnchor.constraint(equalTo: safeArea.heightAnchor, multiplier: 0.05),
-            
-            completeButton.centerXAnchor.constraint(equalTo: safeArea.centerXAnchor),
-            completeButton.widthAnchor.constraint(equalTo: safeArea.widthAnchor, multiplier: 0.9),
-            completeButton.heightAnchor.constraint(equalTo: safeArea.heightAnchor, multiplier: 0.07),
-            completeButton.bottomAnchor.constraint(equalTo: safeArea.bottomAnchor, constant: -30)
+                userProfileImageButton.topAnchor.constraint(equalTo: safeArea.topAnchor, constant: 10),
+                userProfileImageButton.centerXAnchor.constraint(equalTo: safeArea.centerXAnchor),
+                userProfileImageButton.widthAnchor.constraint(equalTo: safeArea.widthAnchor, multiplier: 0.4),
+                userProfileImageButton.heightAnchor.constraint(equalTo: userProfileImageButton.widthAnchor),
+
+                buttonLineLabel.centerXAnchor.constraint(equalTo: buttonLineView.centerXAnchor),
+                buttonLineLabel.centerYAnchor.constraint(equalTo: buttonLineView.centerYAnchor),
+
+                buttonLineView.heightAnchor.constraint(equalTo: userProfileImageButton.heightAnchor, multiplier: 0.2),
+                buttonLineView.widthAnchor.constraint(equalTo: userProfileImageButton.widthAnchor),
+                buttonLineView.bottomAnchor.constraint(equalTo: userProfileImageButton.bottomAnchor, constant: 0),
+                buttonLineView.centerXAnchor.constraint(equalTo: userProfileImageButton.centerXAnchor),
+
+                defaultSmallTitleLabel.topAnchor.constraint(equalTo: userProfileImageButton.bottomAnchor, constant: 10),
+                defaultSmallTitleLabel.leadingAnchor.constraint(equalTo: safeArea.leadingAnchor, constant: 15),
+                
+                inputBrandLabel.topAnchor.constraint(equalTo: defaultSmallTitleLabel.bottomAnchor, constant: 15),
+                inputBrandLabel.leadingAnchor.constraint(equalTo: defaultSmallTitleLabel.leadingAnchor),
+                
+                inputBrandTextField.topAnchor.constraint(equalTo: inputBrandLabel.bottomAnchor, constant: 5),
+                inputBrandTextField.leadingAnchor.constraint(equalTo: inputBrandLabel.leadingAnchor),
+                
+                inputProductNameLabel.topAnchor.constraint(equalTo: inputBrandTextField.bottomAnchor, constant: 30),
+                inputProductNameLabel.leadingAnchor.constraint(equalTo: inputBrandLabel.leadingAnchor),
+                
+                inputProductNameTextField.topAnchor.constraint(equalTo: inputProductNameLabel.bottomAnchor, constant: 5),
+                inputProductNameTextField.leadingAnchor.constraint(equalTo: inputBrandLabel.leadingAnchor),
+                
+                inputExpireDateLabel.topAnchor.constraint(equalTo: inputProductNameTextField.bottomAnchor, constant: 30),
+                inputExpireDateLabel.leadingAnchor.constraint(equalTo: inputBrandLabel.leadingAnchor),
+                
+                inputExpireDateTextField.topAnchor.constraint(equalTo: inputExpireDateLabel.bottomAnchor, constant: 5),
+                inputExpireDateTextField.leadingAnchor.constraint(equalTo: inputBrandLabel.leadingAnchor),
+                
+                inputBrandTextField.widthAnchor.constraint(equalTo: safeArea.widthAnchor, multiplier: 0.9),
+                inputBrandTextField.heightAnchor.constraint(equalTo: safeArea.heightAnchor, multiplier: 0.05),
+                inputProductNameTextField.widthAnchor.constraint(equalTo: safeArea.widthAnchor, multiplier: 0.9),
+                inputProductNameTextField.heightAnchor.constraint(equalTo: safeArea.heightAnchor, multiplier: 0.05),
+                inputExpireDateTextField.widthAnchor.constraint(equalTo: safeArea.widthAnchor, multiplier: 0.9),
+                inputExpireDateTextField.heightAnchor.constraint(equalTo: safeArea.heightAnchor, multiplier: 0.05),
+
+        
         ])
+        
+
+        
     }
 }
 

@@ -225,7 +225,7 @@ extension DetailViewController: CellElementTappedDelegate {
     }
 }
 
-
+// MARK: Update 후, 업데이트 관련
 extension DetailViewController: GiftDidUpdateDelegate {
     func tapModifyInfo(gift: Gift) {
         guard let index = self.viewModel.findIndexForGiftWithNumber(gift.number) else { return }

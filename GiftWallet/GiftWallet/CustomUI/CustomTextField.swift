@@ -11,6 +11,8 @@ class CustomTextField: UITextField {
     
     override init(frame: CGRect) {
         super.init(frame: frame)
+        self.clearButtonMode = .always
+
     }
     
     required init?(coder: NSCoder) {
