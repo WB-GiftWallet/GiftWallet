@@ -14,4 +14,10 @@ extension DateFormatter {
         dateFormatter.locale = Locale(identifier: "ko_KR")
         return dateFormatter.string(from: date)
     }
+    
+    static func convertToDisplyStringToExpireDate(dateText: String) -> Date? {
+        let dateFormatter = DateFormatter()
+        dateFormatter.dateFormat = "yyyy년 MM월 dd일까지"
+        return dateFormatter.date(from: dateText)
+    }
 }

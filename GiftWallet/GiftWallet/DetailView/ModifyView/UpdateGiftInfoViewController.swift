@@ -10,6 +10,7 @@ import UIKit
 class UpdateGiftInfoViewController: UIViewController {
     
     private let viewModel: UpdateViewModel
+    var delegate: GiftDidUpdateDelegate?
     
     private let userProfileImageButton = {
         let button = UIButton()
@@ -109,17 +110,26 @@ class UpdateGiftInfoViewController: UIViewController {
     }()
     
     private let completeButton = {
-        let button = UIButton(type: .roundedRect)
+        let button = CustomButton()
         
         button.setTitle("변경하기", for: .normal)
-        button.setTitleColor(UIColor.white, for: .normal)
-        button.titleLabel?.font = UIFont.boldSystemFont(ofSize: 20)
-        button.backgroundColor = .systemPurple
-        button.layer.cornerRadius = 5
         button.translatesAutoresizingMaskIntoConstraints = false
+        button.addTarget(nil, action: #selector(tapCompleteButton), for: .touchUpInside)
         
         return button
     }()
+    
+    @objc
+    private func tapCompleteButton() {
+        var gift = viewModel.gift
+        gift.brandName = inputBrandTextField.text
+        gift.productName = inputBrandTextField.text
+        gift.expireDate = DateFormatter.convertToDisplyStringToExpireDate(dateText: inputBrandTextField.text!)
+
+        dismiss(animated: true) { [self] in
+            self.delegate?.didUpdateGift(updatedGift: gift)
+        }
+    }
     
     init(viewModel: UpdateViewModel) {
         self.viewModel = viewModel
@@ -135,8 +145,8 @@ class UpdateGiftInfoViewController: UIViewController {
         super.viewDidLoad()
         setupNavigation()
         setupViews()
-        setupButton()
         configureImage()
+        configureTextField()
     }
     
     override func viewWillLayoutSubviews() {
@@ -154,14 +164,10 @@ class UpdateGiftInfoViewController: UIViewController {
         userProfileImageButton.setImage(image, for: .normal)
     }
     
-    private func setupButton() {
-        let modifyAction = UIAction { [weak self] _ in
-//            let formSheetViewController = FormSheetViewController()
-//            formSheetViewController.modalPresentationStyle = .overFullScreen
-//            formSheetViewController.modalTransitionStyle = .crossDissolve
-//            self?.present(formSheetViewController, animated: true)
-        }
-        userProfileImageButton.addAction(modifyAction, for: .touchUpInside)
+    private func configureTextField() {
+        inputBrandTextField.text = viewModel.gift.brandName
+        inputProductNameTextField.text = viewModel.gift.productName
+        inputExpireDateTextField.text = viewModel.gift.expireDate?.setupDateStyleForDisplay()
     }
     
     private func setupNavigation() {
@@ -186,7 +192,7 @@ class UpdateGiftInfoViewController: UIViewController {
         buttonLineView.addSubview(buttonLineLabel)
         
         [inputBrandLabel, inputBrandTextField, inputProductNameLabel, inputProductNameTextField, inputExpireDateLabel, inputExpireDateTextField].forEach(view.addSubview(_:))
-        [userProfileImageButton, defaultSmallTitleLabel].forEach(view.addSubview(_:))
+        [userProfileImageButton, defaultSmallTitleLabel, completeButton].forEach(view.addSubview(_:))
         
         let safeArea = view.safeAreaLayoutGuide
         
@@ -233,7 +239,10 @@ class UpdateGiftInfoViewController: UIViewController {
                 inputExpireDateTextField.widthAnchor.constraint(equalTo: safeArea.widthAnchor, multiplier: 0.9),
                 inputExpireDateTextField.heightAnchor.constraint(equalTo: safeArea.heightAnchor, multiplier: 0.05),
 
-        
+                completeButton.topAnchor.constraint(equalTo: safeArea.bottomAnchor, constant: -50),
+                completeButton.centerXAnchor.constraint(equalTo: safeArea.centerXAnchor),
+                completeButton.heightAnchor.constraint(equalTo: safeArea.heightAnchor, multiplier: 0.07),
+                completeButton.widthAnchor.constraint(equalTo: safeArea.widthAnchor, multiplier: 0.95),
         ])
         
 

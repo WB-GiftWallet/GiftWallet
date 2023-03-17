@@ -242,7 +242,7 @@ extension FormSheetViewController: PHPickerViewControllerDelegate {
                 var gift = self.viewModel.gift
                 gift.image = formattedImage
                 self.viewModel.coreDataUpdate()
-                self.delegate?.didUpdateImage(updatedGift: gift)
+                self.delegate?.didUpdateGift(updatedGift: gift)
                 self.dismiss(animated: true)
             }
         }
@@ -306,5 +306,5 @@ extension FormSheetViewController {
 // MARK: Gift 정보 수정 시, 호출
 protocol GiftDidUpdateDelegate {
     func tapModifyInfo(gift: Gift)
-    func didUpdateImage(updatedGift: Gift)
+    func didUpdateGift(updatedGift: Gift)
 }

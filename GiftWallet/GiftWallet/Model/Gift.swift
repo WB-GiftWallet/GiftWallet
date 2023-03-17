@@ -11,11 +11,11 @@ struct Gift {
     var number: Int = 0
     var image: UIImage
     let category: Category?
-    let brandName: String?
-    let productName: String?
+    var brandName: String?
+    var productName: String?
     var memo: String?
     var useableState: Bool
-    let expireDate: Date?
+    var expireDate: Date?
     let useDate: Date?
 
     init(image: UIImage,

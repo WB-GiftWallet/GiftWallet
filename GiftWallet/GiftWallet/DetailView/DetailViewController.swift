@@ -231,13 +231,15 @@ extension DetailViewController: GiftDidUpdateDelegate {
         guard let index = self.viewModel.findIndexForGiftWithNumber(gift.number) else { return }
         let updateViewModel = UpdateViewModel(gift: viewModel.gifts[index])
         let updateGiftInfoViewController = UpdateGiftInfoViewController(viewModel: updateViewModel)
+        updateGiftInfoViewController.delegate = self
         let navigationUpdateGiftInfoViewController = UINavigationController(rootViewController: updateGiftInfoViewController)
         sceneConversion(viewController: navigationUpdateGiftInfoViewController)
     }
     
-    func didUpdateImage(updatedGift: Gift) {
+    func didUpdateGift(updatedGift: Gift) {
         viewModel.updateGifts(updatedGift)
         pagingCollectionView.reloadData()
     }
+    
 }
 
