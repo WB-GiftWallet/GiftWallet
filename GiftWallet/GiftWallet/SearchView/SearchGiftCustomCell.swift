@@ -90,4 +90,23 @@ class CustomCell: UITableViewCell {
             labelStackView.centerYAnchor.constraint(equalTo: giftImageView.centerYAnchor)
         ])
     }
+    func changeCell(_ giftData: Gift) {
+        giftImageView.image = giftData.image
+        brandNameLabel.text = giftData.brandName
+        productNameLabel.text = giftData.productName
+        expireDateLabel.text = giftData.expireDate?.setupDateStyleForDisplay()
+    }
+    
+    func changeGiftImageView(_ image: UIImage) {
+        giftImageView.image = image
+    }
+    func changeBrandNameLabel(_ brandName: String) {
+        brandNameLabel.text = brandName
+    }
+    func changeProductNameLabel(_ productName: String) {
+        productNameLabel.text = productName
+    }
+    func changeExpireDateLabel(_ expireDate: Date) {
+        expireDateLabel.text = expireDate.setupDateStyleForDisplay()
+    }
 }

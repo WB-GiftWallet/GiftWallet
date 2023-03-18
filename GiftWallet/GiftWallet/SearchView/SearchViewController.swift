@@ -151,17 +151,9 @@ extension SearchViewController: UITableViewDataSource, UITableViewDelegate {
         }
         
         if self.isFiltering {
-            let indexGiftsData = filteringGifts[indexPath.row]
-            cell.giftImageView.image = indexGiftsData.image
-            cell.brandNameLabel.text = indexGiftsData.brandName
-            cell.productNameLabel.text = indexGiftsData.productName
-            cell.expireDateLabel.text = indexGiftsData.expireDate?.setupDateStyleForDisplay()
+            cell.changeCell(filteringGifts[indexPath.row])
         } else {
-            let indexGiftsData = allGiftData[indexPath.row]
-            cell.giftImageView.image = indexGiftsData.image
-            cell.brandNameLabel.text = indexGiftsData.brandName
-            cell.productNameLabel.text = indexGiftsData.productName
-            cell.expireDateLabel.text = indexGiftsData.expireDate?.setupDateStyleForDisplay()
+            cell.changeCell(allGiftData[indexPath.row])
         }
         
         return cell
