@@ -9,6 +9,8 @@ import UIKit
 
 final class SearchViewController: UIViewController {
     
+    let viewModel = SearchTableViewModel()
+    
     private let searchResultController = SearchTableViewController()
     private lazy var giftSearchController = UISearchController(searchResultsController: searchResultController)
     
@@ -16,8 +18,6 @@ final class SearchViewController: UIViewController {
     private let scrollView = UIScrollView()
     private let recommendView = RecommendView()
     
-    private var allGiftData = [Gift]()
-    private var filteringGifts = [Gift]()
     private var isFiltering: Bool {
         let searchController = self.navigationItem.searchController
         let isActive = searchController?.isActive ?? false
@@ -29,7 +29,6 @@ final class SearchViewController: UIViewController {
         super.viewDidLoad()
         view.backgroundColor = .systemBackground
         
-        fetchGiftCoreData()
         setSearchController()
         
         searchTableView.delegate = self
@@ -39,6 +38,8 @@ final class SearchViewController: UIViewController {
         
         setLayout()
         setupRecommendData()
+        addTargetButtons()
+        bind()
     }
     
     private func setLayout() {
@@ -70,20 +71,6 @@ final class SearchViewController: UIViewController {
         ])
     }
     
-    private func fetchGiftCoreData() {
-        
-        switch CoreDataManager.shared.fetchData() {
-            case .success(let data):
-                data.forEach { giftData in
-                    allGiftData.append(giftData)
-                }
-            case .failure(let error):
-                print(error.localizedDescription)
-        }
-        
-        self.filteringGifts = self.allGiftData.sorted(by: {$0.number < $1.number})
-    }
-    
     private func setSearchController() {
         
         giftSearchController.view.backgroundColor = .systemBackground
@@ -101,29 +88,13 @@ final class SearchViewController: UIViewController {
         searchTableView.register(CustomCell.self, forCellReuseIdentifier: "giftCustomCell")
     }
     
+    //MARK: ✅ Complete
     private func setupRecommendData() {
-        var brandCounts = Dictionary<String, Int>()
-        
-        allGiftData.forEach { data in
-            guard let brandName = data.brandName else { return }
-            
-            if brandCounts[brandName] == nil {
-                brandCounts.updateValue(1, forKey: brandName)
-            } else if brandCounts[brandName] != nil {
-                guard let value = brandCounts[brandName] else { return }
-                brandCounts.updateValue(value + 1, forKey: brandName)
-            }
-        }
-        
-        let sortedCounts = brandCounts.sorted { $0.1 > $1.1 }
-        
-        recommendView.firstRecommendButton.setTitle(sortedCounts[0].key, for: .normal)
-        recommendView.secondRecommendButton.setTitle(sortedCounts[1].key, for: .normal)
-        recommendView.thirdRecommendButton.setTitle(sortedCounts[2].key, for: .normal)
-        recommendView.fourthRecommendButton.setTitle(sortedCounts[3].key, for: .normal)
-        recommendView.fifthRecommendButton.setTitle(sortedCounts[4].key, for: .normal)
-        
-        addTargetButtons()
+        recommendView.firstRecommendButton.setTitle(viewModel.sortedRecommendData[0], for: .normal)
+        recommendView.secondRecommendButton.setTitle(viewModel.sortedRecommendData[1], for: .normal)
+        recommendView.thirdRecommendButton.setTitle(viewModel.sortedRecommendData[2], for: .normal)
+        recommendView.fourthRecommendButton.setTitle(viewModel.sortedRecommendData[3], for: .normal)
+        recommendView.fifthRecommendButton.setTitle(viewModel.sortedRecommendData[4], for: .normal)
     }
     
     private func addTargetButtons() {
@@ -138,11 +109,27 @@ final class SearchViewController: UIViewController {
         giftSearchController.searchBar.text = sender.titleLabel?.text
         giftSearchController.searchBar.becomeFirstResponder()
     }
+    
+    private func bind() {
+        viewModel.allGiftData.bind { [weak self] _ in
+            DispatchQueue.main.async {
+                self?.searchResultController.tableView.reloadData()
+                print("외않돼1")
+            }
+        }
+        
+        viewModel.filteringGifts.bind { [weak self] _ in
+            DispatchQueue.main.async {
+                self?.searchResultController.tableView.reloadData()
+                print("외않돼2")
+            }
+        }
+    }
 }
 
 extension SearchViewController: UITableViewDataSource, UITableViewDelegate {
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return self.isFiltering ? self.filteringGifts.count : self.allGiftData.count
+        return self.isFiltering ? self.viewModel.filteringGifts.value.count : self.viewModel.allGiftData.value.count
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
@@ -151,9 +138,9 @@ extension SearchViewController: UITableViewDataSource, UITableViewDelegate {
         }
         
         if self.isFiltering {
-            cell.changeCell(filteringGifts[indexPath.row])
+            cell.changeCell(viewModel.filteringGifts.value[indexPath.row])
         } else {
-            cell.changeCell(allGiftData[indexPath.row])
+            cell.changeCell(viewModel.allGiftData.value[indexPath.row])
         }
         
         return cell
@@ -164,9 +151,9 @@ extension SearchViewController: UITableViewDataSource, UITableViewDelegate {
         var indexGiftsData: Gift
         
         if self.isFiltering {
-            indexGiftsData = filteringGifts[indexPath.row]
+            indexGiftsData = viewModel.filteringGifts.value[indexPath.row]
         } else {
-            indexGiftsData = allGiftData[indexPath.row]
+            indexGiftsData = viewModel.allGiftData.value[indexPath.row]
         }
         
         let viewmodel = DetailViewModel(gifts: [indexGiftsData])
@@ -181,6 +168,7 @@ extension SearchViewController: UITableViewDataSource, UITableViewDelegate {
         return
     }
     
+    //TODO: Height조정 필요
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
         return self.view.frame.height / 7
     }
@@ -190,10 +178,10 @@ extension SearchViewController: UITableViewDataSource, UITableViewDelegate {
             let dataNumber: Int
             
             if self.isFiltering {
-                dataNumber = self.filteringGifts[indexPath.row].number
-                self.filteringGifts.remove(at: indexPath.row)
+                dataNumber = self.viewModel.filteringGifts.value[indexPath.row].number
+                self.viewModel.filteringGifts.value.remove(at: indexPath.row)
             } else {
-                dataNumber = self.allGiftData[indexPath.row].number
+                dataNumber = self.viewModel.allGiftData.value[indexPath.row].number
             }
             
             do {
@@ -202,9 +190,9 @@ extension SearchViewController: UITableViewDataSource, UITableViewDelegate {
                 print(error.localizedDescription)
             }
             
-            for (index, data) in self.allGiftData.enumerated() {
+            for (index, data) in self.viewModel.allGiftData.value.enumerated() {
                 if data.number == dataNumber {
-                    self.allGiftData.remove(at: index)
+                    self.viewModel.allGiftData.value.remove(at: index)
                     break
                 }
             }
@@ -222,7 +210,7 @@ extension SearchViewController: UISearchResultsUpdating {
     func updateSearchResults(for searchController: UISearchController) {
         
         guard let text = searchController.searchBar.text else { return }
-        self.filteringGifts = self.allGiftData.filter { $0.brandName!.contains(text) }
+        self.viewModel.filteringGifts.value = self.viewModel.allGiftData.value.filter { $0.brandName!.contains(text) }
         
         self.searchResultController.tableView.reloadData()
     }
