@@ -12,9 +12,30 @@ final class SearchViewController: UIViewController {
     let viewModel = SearchTableViewModel()
     
     private let searchResultController = SearchTableViewController()
-    private lazy var giftSearchController = UISearchController(searchResultsController: searchResultController)
+    private lazy var giftSearchController: UISearchController = {
+        let searchController = UISearchController(searchResultsController: searchResultController)
+        
+        searchController.view.backgroundColor = .systemBackground
+        searchController.searchResultsUpdater = self
+        searchController.hidesBottomBarWhenPushed = true
+        
+        searchController.searchBar.placeholder = "브랜드 이름으로 검색하세요!"
+        searchController.searchBar.showsSearchResultsButton = false
+        searchController.searchBar.setValue("취소", forKey: "cancelButtonText")
+        searchController.searchBar.searchTextField.clearButtonMode = .always
+        searchController.searchBar.searchTextField.clearsOnBeginEditing = true
+        
+        return searchController
+    }()
     
-    private let searchTableView = UITableView()
+    private let searchTableView: UITableView = {
+        let tableView = UITableView()
+        
+        tableView.register(CustomCell.self, forCellReuseIdentifier: "giftCustomCell")
+        
+        return tableView
+    }()
+    
     private let scrollView = UIScrollView()
     private let recommendView = RecommendView()
     
@@ -29,7 +50,7 @@ final class SearchViewController: UIViewController {
         super.viewDidLoad()
         view.backgroundColor = .systemBackground
         
-        setSearchController()
+        setNavigation()
         
         searchTableView.delegate = self
         searchTableView.dataSource = self
@@ -47,9 +68,9 @@ final class SearchViewController: UIViewController {
         view.addSubview(searchTableView)
         scrollView.addSubview(recommendView)
         
-        searchTableView.translatesAutoresizingMaskIntoConstraints = false
-        recommendView.translatesAutoresizingMaskIntoConstraints = false
-        scrollView.translatesAutoresizingMaskIntoConstraints = false
+        [searchTableView, recommendView, scrollView].forEach {
+            $0.translatesAutoresizingMaskIntoConstraints = false
+        }
         
         scrollView.showsHorizontalScrollIndicator = false
         
@@ -71,24 +92,11 @@ final class SearchViewController: UIViewController {
         ])
     }
     
-    private func setSearchController() {
-        
-        giftSearchController.view.backgroundColor = .systemBackground
-        giftSearchController.searchResultsUpdater = self
-        giftSearchController.searchBar.placeholder = "브랜드 이름으로 검색하세요!"
-        giftSearchController.hidesBottomBarWhenPushed = true
-        giftSearchController.searchBar.showsSearchResultsButton = false
-        giftSearchController.searchBar.setValue("취소", forKey: "cancelButtonText")
-        giftSearchController.searchBar.searchTextField.clearButtonMode = .always
-        giftSearchController.searchBar.searchTextField.clearsOnBeginEditing = true
-        
+    private func setNavigation() {
         self.navigationItem.hidesSearchBarWhenScrolling = false
         self.navigationItem.searchController = giftSearchController
-        
-        searchTableView.register(CustomCell.self, forCellReuseIdentifier: "giftCustomCell")
     }
     
-    //MARK: ✅ Complete
     private func setupRecommendData() {
         recommendView.firstRecommendButton.setTitle(viewModel.sortedRecommendData[0], for: .normal)
         recommendView.secondRecommendButton.setTitle(viewModel.sortedRecommendData[1], for: .normal)
@@ -98,11 +106,13 @@ final class SearchViewController: UIViewController {
     }
     
     private func addTargetButtons() {
-        recommendView.firstRecommendButton.addTarget(nil, action: #selector(tapRecommendButton), for: .touchUpInside)
-        recommendView.secondRecommendButton.addTarget(nil, action: #selector(tapRecommendButton), for: .touchUpInside)
-        recommendView.thirdRecommendButton.addTarget(nil, action: #selector(tapRecommendButton), for: .touchUpInside)
-        recommendView.fourthRecommendButton.addTarget(nil, action: #selector(tapRecommendButton), for: .touchUpInside)
-        recommendView.fifthRecommendButton.addTarget(nil, action: #selector(tapRecommendButton), for: .touchUpInside)
+        [recommendView.firstRecommendButton,
+        recommendView.secondRecommendButton,
+        recommendView.thirdRecommendButton,
+        recommendView.fourthRecommendButton,
+         recommendView.fifthRecommendButton].forEach {
+            $0.addTarget(nil, action: #selector(tapRecommendButton), for: .touchUpInside)
+        }
     }
     
     @objc private func tapRecommendButton(_ sender: UIButton) {
@@ -114,14 +124,12 @@ final class SearchViewController: UIViewController {
         viewModel.allGiftData.bind { [weak self] _ in
             DispatchQueue.main.async {
                 self?.searchResultController.tableView.reloadData()
-                print("외않돼1")
             }
         }
         
         viewModel.filteringGifts.bind { [weak self] _ in
             DispatchQueue.main.async {
                 self?.searchResultController.tableView.reloadData()
-                print("외않돼2")
             }
         }
     }
@@ -159,13 +167,11 @@ extension SearchViewController: UITableViewDataSource, UITableViewDelegate {
         let viewmodel = DetailViewModel(gifts: [indexGiftsData])
         let detailViewController = DetailViewController(viewModel: viewmodel)
         
-        let naviDV = UINavigationController(rootViewController: detailViewController)
-        naviDV.modalPresentationStyle = .overFullScreen
-        present(naviDV, animated: true)
+        let detailNavigationController = UINavigationController(rootViewController: detailViewController)
+        detailNavigationController.modalPresentationStyle = .overFullScreen
+        present(detailNavigationController, animated: true)
         
         tableView.deselectRow(at: indexPath, animated: true)
-        
-        return
     }
     
     //TODO: Height조정 필요
