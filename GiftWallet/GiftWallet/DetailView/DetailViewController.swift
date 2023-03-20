@@ -10,6 +10,7 @@ import UIKit
 final class DetailViewController: UIViewController {
     
     private let viewModel: DetailViewModel
+    var delegate: GiftDidDismissDelegate?
     private var viewTranslation = CGPoint(x: 0, y: 0)
     private var isRequireDismissScene = false
     
@@ -71,7 +72,9 @@ final class DetailViewController: UIViewController {
     
     @objc
     private func dismissViewControlelr() {
-        dismiss(animated: true)
+        dismiss(animated: true) {
+            self.delegate?.didDismissDetailViewController()
+        }
     }
     
     private func setupViews() {
@@ -152,7 +155,9 @@ extension DetailViewController: UIGestureRecognizerDelegate, CellScrollToTopDele
                         self.view.transform = .identity
                     })
                 } else {
-                    dismiss(animated: true, completion: nil)
+                    dismiss(animated: true) {
+                        self.delegate?.didDismissDetailViewController()
+                    }
                 }
                 break
             default:
@@ -243,3 +248,6 @@ extension DetailViewController: GiftDidUpdateDelegate {
     
 }
 
+protocol GiftDidDismissDelegate {
+    func didDismissDetailViewController()
+}

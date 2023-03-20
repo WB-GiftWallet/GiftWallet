@@ -169,7 +169,7 @@ class UpdateGiftInfoViewController: UIViewController {
               let inputExpireDate = inputExpireDateTextField.text else { return }
         
         viewModel.gift.brandName = inputBrandTextField.text
-        viewModel.gift.productName = inputBrandTextField.text
+        viewModel.gift.productName = inputProductNameTextField.text
         viewModel.gift.expireDate = DateFormatter.convertToDisplyStringToExpireDate(dateText: inputExpireDate)
         viewModel.gift.image = settedButtonImage
     }
