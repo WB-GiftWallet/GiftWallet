@@ -26,29 +26,27 @@ class AddViewController: UIViewController {
     private lazy var inputDescriptionLabel = {
         let label = UILabel()
         
-        label.font = .boldSystemFont(ofSize: 15)
+        label.font = UIFont(style: .medium, size: 15)
         label.text = page.labelDescription
         label.translatesAutoresizingMaskIntoConstraints = false
         
         return label
     }()
     
-    private let inputTextField = {
+    private lazy var inputTextField = {
         let textField = CustomTextField()
         
+        textField.delegate = self
+        textField.clearButtonMode = .always
         textField.translatesAutoresizingMaskIntoConstraints = false
         
         return textField
     }()
     
     private lazy var actionButton = {
-        let button = UIButton(type: .roundedRect)
+        let button = CustomButton()
         
         button.setTitle(page.buttonDescription, for: .normal)
-        button.setTitleColor(UIColor.white, for: .normal)
-        button.titleLabel?.font = UIFont.boldSystemFont(ofSize: 20)
-        button.backgroundColor = .systemPurple
-        button.layer.cornerRadius = 5
         button.translatesAutoresizingMaskIntoConstraints = false
         
         return button
@@ -71,6 +69,7 @@ class AddViewController: UIViewController {
         setupButton()
         setuptextInTextField()
         setupDatePicekrInputViewWhenPageIsExpireDate()
+        updateButtonForTextFieldState()
     }
     
     override func viewDidLayoutSubviews() {
@@ -79,8 +78,6 @@ class AddViewController: UIViewController {
     }
     
     private func setuptextInTextField() {
-        inputTextField.clearButtonMode = .always
-        inputTextField.clearsOnBeginEditing = true
         inputTextField.text = viewModel.getTextsFromSeletedImage(page: page)
     }
     
@@ -155,7 +152,7 @@ class AddViewController: UIViewController {
     }
 }
 
-//MARK: Keyboard 관련
+//MARK: ExpireDate(DatePicker) Keyboard 관련
 extension AddViewController {
     private func setupDatePicekrInputViewWhenPageIsExpireDate() {
         if page == .expireDate {
@@ -170,18 +167,18 @@ extension AddViewController {
         
         dateFormatter.dateFormat = "yyyy. MM. dd"
         components.day = 0
-
+        
         datePickerView.sizeToFit()
         datePickerView.preferredDatePickerStyle = .inline
         datePickerView.locale = Locale(identifier: "ko-KR")
-                
+        
         let minimumDate = Calendar.autoupdatingCurrent.date(byAdding: components, to: Date())
         datePickerView.minimumDate = minimumDate
         
         datePickerView.addTarget(self,
                                  action: #selector(valueChangedDatePicker(sender:)),
                                  for: .valueChanged)
-
+        
         if let dateText = inputTextField.text,
            let date = dateFormatter.date(from: dateText){
             datePickerView.setDate(date, animated: true)
@@ -199,6 +196,49 @@ extension AddViewController {
         
         if inputTextField.isFirstResponder {
             inputTextField.text = dateFormatter.string(from: sender.date)
+            updateButtonForTextFieldState()
+        }
+    }
+}
+
+// MARK: 텍스트필드 비활성화 관련
+extension AddViewController: UITextFieldDelegate {
+    func textField(_ textField: UITextField, shouldChangeCharactersIn range: NSRange, replacementString string: String) -> Bool {
+        if range.location == 0 && string.first == " " {
+            return false
+        }
+        
+        let trimmingText = (textField.text! as NSString).replacingCharacters(in: range, with: string)
+        
+        if trimmingText.isEmpty {
+            setActionButtonEnabled(false)
+        } else {
+            setActionButtonEnabled(true)
+        }
+        return true
+    }
+    
+    func textFieldShouldClear(_ textField: UITextField) -> Bool {
+        setActionButtonEnabled(false)
+        return true
+    }
+    
+    private func updateButtonForTextFieldState() {
+        if inputTextField.text?.isEmpty == true {
+            setActionButtonEnabled(false)
+        } else {
+            setActionButtonEnabled(true)
+        }
+    }
+    
+    private func setActionButtonEnabled(_ isEnabled: Bool) {
+        if isEnabled {
+            actionButton.isEnabled = true
+            actionButton.backgroundColor = .customButton
+            actionButton.setTitleColor(.black, for: .normal)
+        } else {
+            actionButton.isEnabled = false
+            actionButton.backgroundColor = .unenableButton
         }
     }
 }
