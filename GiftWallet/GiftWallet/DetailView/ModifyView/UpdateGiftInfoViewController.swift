@@ -142,6 +142,7 @@ class UpdateGiftInfoViewController: UIViewController {
         setupViews()
         configureImage()
         configureTextField()
+        setupExpireDateTextField()
     }
     
     override func viewWillLayoutSubviews() {
@@ -180,8 +181,48 @@ class UpdateGiftInfoViewController: UIViewController {
     private func configureTextField() {
         inputBrandTextField.text = viewModel.gift.brandName
         inputProductNameTextField.text = viewModel.gift.productName
-        inputExpireDateTextField.text = viewModel.gift.expireDate?.setupDateStyleForDisplay()
+        inputExpireDateTextField.text = viewModel.gift.expireDate?.setupDateStyleForInputDisplay()
     }
+    
+    private func setupExpireDateTextField() {
+        let datePickerView = UIDatePicker()
+        var components = DateComponents()
+        let dateFormatter = DateFormatter()
+        
+        dateFormatter.dateFormat = "yyyy. MM. dd"
+        components.day = 0
+
+        datePickerView.sizeToFit()
+        datePickerView.preferredDatePickerStyle = .inline
+        datePickerView.locale = Locale(identifier: "ko-KR")
+                
+        let minimumDate = Calendar.autoupdatingCurrent.date(byAdding: components, to: Date())
+        datePickerView.minimumDate = minimumDate
+        
+        datePickerView.addTarget(self,
+                                 action: #selector(valueChangedDatePicker(sender:)),
+                                 for: .valueChanged)
+
+        if let dateText = inputExpireDateTextField.text,
+           let date = dateFormatter.date(from: dateText){
+            datePickerView.setDate(date, animated: true)
+        }
+        
+        inputExpireDateTextField.inputView = datePickerView
+        inputExpireDateTextField.inputView?.backgroundColor = .white
+    }
+    
+    @objc
+    private func valueChangedDatePicker(sender: UIDatePicker) {
+        let dateFormatter = DateFormatter()
+        dateFormatter.dateFormat = "yyyy. MM. dd"
+        dateFormatter.locale = Locale(identifier: "ko_KR")
+        
+        if inputExpireDateTextField.isFirstResponder {
+            inputExpireDateTextField.text = dateFormatter.string(from: sender.date)
+        }
+    }
+    
     
     private func setupNavigation() {
         title = "프로필 편집"
