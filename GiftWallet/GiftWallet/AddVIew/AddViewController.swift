@@ -71,7 +71,6 @@ class AddViewController: UIViewController {
         setupButton()
         setuptextInTextField()
         setupDatePicekrInputViewWhenPageIsExpireDate()
-        hideKeyboardWhenTappedAround()
     }
     
     override func viewDidLayoutSubviews() {
@@ -158,17 +157,6 @@ class AddViewController: UIViewController {
 
 //MARK: Keyboard 관련
 extension AddViewController {
-    private func hideKeyboardWhenTappedAround() {
-        let tap = UITapGestureRecognizer(target: self, action: #selector(dismissKeyboard))
-        tap.cancelsTouchesInView = false
-        view.addGestureRecognizer(tap)
-    }
-    
-    @objc
-    private func dismissKeyboard() {
-        view.endEditing(true)
-    }
-
     private func setupDatePicekrInputViewWhenPageIsExpireDate() {
         if page == .expireDate {
             setupDatePicekrAttributes()
