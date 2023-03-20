@@ -71,7 +71,7 @@ final class DetailViewController: UIViewController {
     
     @objc
     private func dismissViewControlelr() {
-        dismiss(animated: true, completion: nil)
+        dismiss(animated: true)
     }
     
     private func setupViews() {
@@ -100,8 +100,8 @@ extension DetailViewController: UICollectionViewDataSource {
         let cell = pagingCollectionView.dequeueReusableCell(withReuseIdentifier: PagingCollectionViewCell.reuseIdentifier,
                                                             for: indexPath) as? PagingCollectionViewCell ?? PagingCollectionViewCell()
         let gift = viewModel.gifts[indexPath.row]
-        cell.delegate = self
-        cell.provider = self
+        cell.tapElementDelegate = self
+        cell.scrollViewDidTopDelegate = self
         cell.configureCell(data: gift)
         return cell
     }
@@ -121,37 +121,9 @@ extension DetailViewController: UICollectionViewDelegateFlowLayout{
     }
 }
 
-// MARK: UIGestureRecognizer 및 CellUIInteractionProvider 델리게이트 메소드 관련
-extension DetailViewController: UIGestureRecognizerDelegate, CellUIInteractionProvider {
-    // CellUIInteractionProvider
-    func touchedBarcodeButtonOrImageViewForZoom(sender: Any) {
-        guard let indexPath = pagingCollectionView.indexPathsForVisibleItems.first else { return }
-        let gift = viewModel.gifts[indexPath.row]
-                
-        switch sender {
-        case is UIGestureRecognizer:
-            let zoomViewModel = ZoomImageViewModel(gift: gift )
-            let zoomImageViewController = ZoomImageViewController(viewModel: zoomViewModel)
-            sceneConversion(viewController: zoomImageViewController)
-        case is UIButton:
-            let barcodeViewModel = BarcodeViewModel(gift: gift)
-            let barcodeViewController = BarcodeViewController(viewModel: barcodeViewModel)
-            let barcoeNavigationViewController = UINavigationController(rootViewController: barcodeViewController)
-            sceneConversion(viewController: barcoeNavigationViewController)
-        default:
-            break
-        }
-    }
-    
-    private func sceneConversion(viewController: UIViewController) {
-        let conversionTargetViewController = viewController
-        conversionTargetViewController.modalTransitionStyle = .crossDissolve
-        conversionTargetViewController.modalPresentationStyle = .overFullScreen
-        present(conversionTargetViewController, animated: true)
-    }
-    
-    // UIGestureRecognizerDelegate : drag to dismiss
-    func checkScrollViewContentOffSetForDismissScene() {
+// MARK: UIGestureRecognizer 및 CellScrollToTopDelegate 델리게이트 메소드 관련
+extension DetailViewController: UIGestureRecognizerDelegate, CellScrollToTopDelegate {
+    func scrollViewDidTop() {
         isRequireDismissScene = true
     }
     
@@ -195,9 +167,32 @@ extension DetailViewController: UIGestureRecognizerDelegate, CellUIInteractionPr
     }
 }
 
-//MARK: Gift의 Useable 상태에 따른 Alert 관련
-extension DetailViewController: GiftStateSendable {
-    func sendCellInformation(indexPathRow: Int, text: String?) {
+//MARK: CellElementTappedDelegate 관련
+extension DetailViewController: CellElementTappedDelegate {
+    func tappedModifyButton(indexPathRow: Int) {
+        let gift = viewModel.gifts[indexPathRow]
+        let formSheetViewModel = UpdateViewModel(gift: gift)
+        let formSheetViewController = FormSheetViewController(viewModel: formSheetViewModel)
+        formSheetViewController.delegate = self
+        sceneConversion(viewController: formSheetViewController)
+    }
+    
+    func tappedbarcodeButton(indexPathRow: Int) {
+        let gift = viewModel.gifts[indexPathRow]
+        let barcodeViewModel = BarcodeViewModel(gift: gift)
+        let barcodeViewController = BarcodeViewController(viewModel: barcodeViewModel)
+        let navigationBarcodeViewController = UINavigationController(rootViewController: barcodeViewController)
+        sceneConversion(viewController: navigationBarcodeViewController)
+    }
+    
+    func tappedImageView(indexPathRow: Int) {
+        let gift = viewModel.gifts[indexPathRow]
+        let zoomViewModel = ZoomImageViewModel(gift: gift)
+        let zoomImageViewController = ZoomImageViewController(viewModel: zoomViewModel)
+        sceneConversion(viewController: zoomImageViewController)
+    }
+    
+    func tappedUseGiftButton(indexPathRow: Int, text: String?) {
         showAlert(indexPathRow, text)
     }
     
@@ -221,4 +216,30 @@ extension DetailViewController: GiftStateSendable {
         viewModel.coreDataUpdate(indexPathRow)
         self.dismiss(animated: true)
     }
+    
+    private func sceneConversion(viewController: UIViewController) {
+        let conversionTargetViewController = viewController
+        conversionTargetViewController.modalTransitionStyle = .crossDissolve
+        conversionTargetViewController.modalPresentationStyle = .overFullScreen
+        present(conversionTargetViewController, animated: true)
+    }
 }
+
+// MARK: Update 후, 업데이트 관련
+extension DetailViewController: GiftDidUpdateDelegate {
+    func tapModifyInfo(gift: Gift) {
+        guard let index = self.viewModel.findIndexForGiftWithNumber(gift.number) else { return }
+        let updateViewModel = UpdateViewModel(gift: viewModel.gifts[index])
+        let updateGiftInfoViewController = UpdateGiftInfoViewController(viewModel: updateViewModel)
+        updateGiftInfoViewController.delegate = self
+        let navigationUpdateGiftInfoViewController = UINavigationController(rootViewController: updateGiftInfoViewController)
+        sceneConversion(viewController: navigationUpdateGiftInfoViewController)
+    }
+    
+    func didUpdateGift(updatedGift: Gift) {
+        viewModel.updateGifts(updatedGift)
+        pagingCollectionView.reloadData()
+    }
+    
+}
+

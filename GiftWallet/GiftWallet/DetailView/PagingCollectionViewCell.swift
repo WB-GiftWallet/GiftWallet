@@ -9,8 +9,8 @@ import UIKit
 
 class PagingCollectionViewCell: UICollectionViewCell, ReusableView {
     
-    var delegate: GiftStateSendable?
-    var provider: CellUIInteractionProvider?
+    var tapElementDelegate: CellElementTappedDelegate?
+    var scrollViewDidTopDelegate: CellScrollToTopDelegate?
     private var giftImageViewHeightConstraint: NSLayoutConstraint?
     
     private let scrollView: UIScrollView = {
@@ -59,20 +59,22 @@ class PagingCollectionViewCell: UICollectionViewCell, ReusableView {
        let button = UIButton()
         
         button.setTitle("정보수정", for: .normal)
-        button.setTitleColor(.black, for: .normal)
+        button.titleLabel?.font = UIFont(style: .regular, size: 12)
+        button.setTitleColor(.modifyButtonTitle, for: .normal)
+        button.layer.borderColor = UIColor.modifyButtonBorder.cgColor
+        button.layer.borderWidth = 1.5
+        button.layer.cornerRadius = 15
+        button.addTarget(nil, action: #selector(tapModifyButton), for: .touchUpInside)
         button.translatesAutoresizingMaskIntoConstraints = false
-        button.backgroundColor = .yellow
         
         return button
     }()
-    
-    
     
     private let barcodeButton: UIButton = {
        let button = UIButton()
         
         button.setImage(UIImage(named: "barcodeButtonIcon"), for: .normal)
-        button.addTarget(nil, action: #selector(tapImageOrBarCodeButtonForZoom(sender:)), for: .touchUpInside)
+        button.addTarget(nil, action: #selector(tapBarcodeButton), for: .touchUpInside)
         button.translatesAutoresizingMaskIntoConstraints = false
         
         return button
@@ -100,19 +102,11 @@ class PagingCollectionViewCell: UICollectionViewCell, ReusableView {
         let button = CustomButton()
         
         button.setTitle("사용하기", for: .normal)
-        button.addTarget(nil, action: #selector(tappedButton), for: .touchUpInside)
+        button.addTarget(nil, action: #selector(tapSelectButton), for: .touchUpInside)
         button.translatesAutoresizingMaskIntoConstraints = false
         
         return button
     }()
-    
-    @objc
-    func tappedButton() {
-        guard let collectionView = superview as? UICollectionView else { return }
-        guard let indexPath = collectionView.indexPath(for: self) else { return }
-        
-        delegate?.sendCellInformation(indexPathRow: indexPath.row, text: memoTextField.text)
-    }
     
     private let giftImageView: UIImageView = {
         let imageView = UIImageView()
@@ -129,6 +123,8 @@ class PagingCollectionViewCell: UICollectionViewCell, ReusableView {
         setupGestureRecognizer()
         setupViews()
         memoTextField.setupTextFieldBottomBorder()
+//        modifyButton.layer.cornerRadius = 5
+
     }
     
     required init?(coder: NSCoder) {
@@ -161,14 +157,46 @@ class PagingCollectionViewCell: UICollectionViewCell, ReusableView {
     
     private func setupGestureRecognizer() {
         let gestureRecognizer = UITapGestureRecognizer(target: self,
-                                                       action: #selector(tapImageOrBarCodeButtonForZoom(sender:)))
+                                                       action: #selector(tapImageView))
         giftImageView.isUserInteractionEnabled = true
         giftImageView.addGestureRecognizer(gestureRecognizer)
     }
     
-    @objc private func tapImageOrBarCodeButtonForZoom(sender: Any) {
-        provider?.touchedBarcodeButtonOrImageViewForZoom(sender: sender)
+    @objc
+    private func tapModifyButton() {
+        guard let indexPath = getIndexPath() else { return }
+        
+        tapElementDelegate?.tappedModifyButton(indexPathRow: indexPath.row)
     }
+    
+    @objc
+    private func tapSelectButton() {
+        guard let indexPath = getIndexPath() else { return }
+        
+        tapElementDelegate?.tappedUseGiftButton(indexPathRow: indexPath.row, text: memoTextField.text)
+    }
+    
+    @objc
+    private func tapBarcodeButton() {
+        guard let indexPath = getIndexPath() else { return }
+
+        tapElementDelegate?.tappedbarcodeButton(indexPathRow: indexPath.row)
+    }
+    
+    @objc
+    private func tapImageView() {
+        guard let indexPath = getIndexPath() else { return }
+
+        tapElementDelegate?.tappedImageView(indexPathRow: indexPath.row)
+    }
+    
+    private func getIndexPath() -> IndexPath? {
+        guard let collectionView = superview as? UICollectionView,
+              let indexPath = collectionView.indexPath(for: self) else { return nil }
+        
+        return indexPath
+    }
+    
     
     private func setupViews() {
         [brandLabel, productNameLabel, expireDateLabel].forEach(labelVerticalStackView.addArrangedSubview(_:))
@@ -197,7 +225,9 @@ class PagingCollectionViewCell: UICollectionViewCell, ReusableView {
             labelVerticalStackView.leadingAnchor.constraint(equalTo: containerView.leadingAnchor, constant: 15),
             
             modifyButton.centerXAnchor.constraint(equalTo: barcodeButton.centerXAnchor),
-            modifyButton.topAnchor.constraint(equalTo: labelVerticalStackView.topAnchor),
+            modifyButton.centerYAnchor.constraint(equalTo: brandLabel.centerYAnchor),
+            modifyButton.widthAnchor.constraint(equalTo: barcodeButton.widthAnchor, multiplier: 1.3),
+            modifyButton.heightAnchor.constraint(equalTo: modifyButton.widthAnchor, multiplier: 0.4),
             
             barcodeButton.leadingAnchor.constraint(equalTo: labelVerticalStackView.trailingAnchor, constant: 10),
             barcodeButton.trailingAnchor.constraint(equalTo: containerView.trailingAnchor, constant: -35),
@@ -227,19 +257,22 @@ class PagingCollectionViewCell: UICollectionViewCell, ReusableView {
     }
 }
 
+// MARK: UIScrollViewDelegate 관련
 extension PagingCollectionViewCell: UIScrollViewDelegate {
     func scrollViewDidScroll(_ scrollView: UIScrollView) {
         if scrollView.contentOffset.y <= .zero {
-            provider?.checkScrollViewContentOffSetForDismissScene()
+            scrollViewDidTopDelegate?.scrollViewDidTop()
         }
     }
 }
 
-protocol GiftStateSendable {
-    func sendCellInformation(indexPathRow: Int, text: String?)
+protocol CellElementTappedDelegate {
+    func tappedModifyButton(indexPathRow: Int)
+    func tappedbarcodeButton(indexPathRow: Int)
+    func tappedImageView(indexPathRow: Int)
+    func tappedUseGiftButton(indexPathRow: Int, text: String?)
 }
 
-protocol CellUIInteractionProvider {
-    func checkScrollViewContentOffSetForDismissScene()
-    func touchedBarcodeButtonOrImageViewForZoom(sender: Any)
+protocol CellScrollToTopDelegate {
+    func scrollViewDidTop()
 }
