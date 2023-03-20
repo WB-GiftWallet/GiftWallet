@@ -225,7 +225,7 @@ class UpdateGiftInfoViewController: UIViewController {
     
     
     private func setupNavigation() {
-        title = "프로필 편집"
+        title = "정보수정"
         
         navigationController?.navigationBar.tintColor = .black
         navigationItem.leftBarButtonItem = UIBarButtonItem(image: UIImage(systemName: "multiply"),
