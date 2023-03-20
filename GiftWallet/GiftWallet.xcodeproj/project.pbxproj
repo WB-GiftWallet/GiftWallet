@@ -186,11 +186,11 @@
 		17D5963529AF6F7300AFE039 /* SearchView */ = {
 			isa = PBXGroup;
 			children = (
-				17D5963629AF6F9800AFE039 /* SearchTableViewController.swift */,
 				17A950FE29B74DA2001E6D4F /* SearchViewController.swift */,
-				17A9510029B75101001E6D4F /* RecommendView.swift */,
 				171695B029B1B8CA00CF3E41 /* SearchTableViewModel.swift */,
+				17D5963629AF6F9800AFE039 /* SearchTableViewController.swift */,
 				17D5963829B02CBD00AFE039 /* SearchGiftCustomCell.swift */,
+				17A9510029B75101001E6D4F /* RecommendView.swift */,
 			);
 			path = SearchView;
 			sourceTree = "<group>";

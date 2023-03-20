@@ -24,9 +24,7 @@ class SearchTableViewModel {
         
         switch CoreDataManager.shared.fetchData() {
             case .success(let data):
-                data.forEach { giftData in
-                    allGiftData.value.append(giftData)
-                }
+                allGiftData.value = data
             case .failure(let error):
                 print(error.localizedDescription)
         }
