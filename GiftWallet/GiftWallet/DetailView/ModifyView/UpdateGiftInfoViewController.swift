@@ -6,13 +6,14 @@
 //
 
 import UIKit
+import PhotosUI
 
 class UpdateGiftInfoViewController: UIViewController {
     
     private let viewModel: UpdateViewModel
     var delegate: GiftDidUpdateDelegate?
     
-    private let userProfileImageButton = {
+    private let giftImageButton = {
         let button = UIButton()
         
         button.contentVerticalAlignment = .fill
@@ -20,13 +21,19 @@ class UpdateGiftInfoViewController: UIViewController {
         button.imageView?.contentMode = .scaleAspectFit
         button.layer.borderWidth = 0.8
         button.layer.borderColor = UIColor.imageViewbackground.cgColor
+        button.addTarget(nil, action: #selector(tapImageButton), for: .touchUpInside)
         button.translatesAutoresizingMaskIntoConstraints = false
         
         return button
     }()
     
+    @objc
+    private func tapImageButton() {
+        presentPHPicekrViewController()
+    }
+    
     private let buttonLineView = {
-       let view = UIView()
+        let view = UIView()
         
         view.backgroundColor = .black.withAlphaComponent(0.8)
         view.translatesAutoresizingMaskIntoConstraints = false
@@ -35,7 +42,7 @@ class UpdateGiftInfoViewController: UIViewController {
     }()
     
     private let buttonLineLabel = {
-       let label = UILabel()
+        let label = UILabel()
         
         label.text = "편집"
         label.textColor = .white
@@ -46,7 +53,7 @@ class UpdateGiftInfoViewController: UIViewController {
     }()
     
     private let defaultSmallTitleLabel = {
-       let label = UILabel()
+        let label = UILabel()
         
         label.font = .boldSystemFont(ofSize: 20)
         label.text = "상세 정보"
@@ -56,7 +63,7 @@ class UpdateGiftInfoViewController: UIViewController {
     }()
     
     private let inputBrandLabel = {
-       let label = UILabel()
+        let label = UILabel()
         
         label.font = .boldSystemFont(ofSize: 15)
         label.text = "브랜드"
@@ -74,7 +81,7 @@ class UpdateGiftInfoViewController: UIViewController {
     }()
     
     private let inputProductNameLabel = {
-       let label = UILabel()
+        let label = UILabel()
         
         label.font = .boldSystemFont(ofSize: 15)
         label.text = "상품명"
@@ -92,7 +99,7 @@ class UpdateGiftInfoViewController: UIViewController {
     }()
     
     private let inputExpireDateLabel = {
-       let label = UILabel()
+        let label = UILabel()
         
         label.font = .boldSystemFont(ofSize: 15)
         label.text = "유효기간"
@@ -139,12 +146,8 @@ class UpdateGiftInfoViewController: UIViewController {
     
     override func viewWillLayoutSubviews() {
         super.viewWillLayoutSubviews()
-        userProfileImageButton.layer.cornerRadius = userProfileImageButton.frame.width / 2
-        userProfileImageButton.clipsToBounds = true
-        // TODO: 수정
-        inputBrandTextField.setupTextFieldBottomBorder()
-        inputProductNameTextField.setupTextFieldBottomBorder()
-        inputExpireDateTextField.setupTextFieldBottomBorder()
+        setupButtonStyle()
+        setupTextFieldStyle()
     }
     
     @objc
@@ -152,12 +155,13 @@ class UpdateGiftInfoViewController: UIViewController {
         inputtedTextsToGift()
         
         dismiss(animated: true) { [self] in
+            viewModel.coreDataUpdate()
             self.delegate?.didUpdateGift(updatedGift: viewModel.gift)
         }
     }
     
     private func inputtedTextsToGift() {
-        guard let buttonImageView = userProfileImageButton.imageView,
+        guard let buttonImageView = giftImageButton.imageView,
               let settedButtonImage = buttonImageView.image,
               let inputExpireDate = inputExpireDateTextField.text else { return }
         
@@ -170,7 +174,7 @@ class UpdateGiftInfoViewController: UIViewController {
     
     private func configureImage() {
         let image = viewModel.gift.image
-        userProfileImageButton.setImage(image, for: .normal)
+        giftImageButton.setImage(image, for: .normal)
     }
     
     private func configureTextField() {
@@ -197,69 +201,126 @@ class UpdateGiftInfoViewController: UIViewController {
     private func setupViews() {
         view.backgroundColor = .white
         
-        userProfileImageButton.addSubview(buttonLineView)
+        giftImageButton.addSubview(buttonLineView)
         buttonLineView.addSubview(buttonLineLabel)
         
         [inputBrandLabel, inputBrandTextField, inputProductNameLabel, inputProductNameTextField, inputExpireDateLabel, inputExpireDateTextField].forEach(view.addSubview(_:))
-        [userProfileImageButton, defaultSmallTitleLabel, completeButton].forEach(view.addSubview(_:))
+        [giftImageButton, defaultSmallTitleLabel, completeButton].forEach(view.addSubview(_:))
         
         let safeArea = view.safeAreaLayoutGuide
         
         
         NSLayoutConstraint.activate([
-                userProfileImageButton.topAnchor.constraint(equalTo: safeArea.topAnchor, constant: 10),
-                userProfileImageButton.centerXAnchor.constraint(equalTo: safeArea.centerXAnchor),
-                userProfileImageButton.widthAnchor.constraint(equalTo: safeArea.widthAnchor, multiplier: 0.4),
-                userProfileImageButton.heightAnchor.constraint(equalTo: userProfileImageButton.widthAnchor),
-
-                buttonLineLabel.centerXAnchor.constraint(equalTo: buttonLineView.centerXAnchor),
-                buttonLineLabel.centerYAnchor.constraint(equalTo: buttonLineView.centerYAnchor),
-
-                buttonLineView.heightAnchor.constraint(equalTo: userProfileImageButton.heightAnchor, multiplier: 0.2),
-                buttonLineView.widthAnchor.constraint(equalTo: userProfileImageButton.widthAnchor),
-                buttonLineView.bottomAnchor.constraint(equalTo: userProfileImageButton.bottomAnchor, constant: 0),
-                buttonLineView.centerXAnchor.constraint(equalTo: userProfileImageButton.centerXAnchor),
-
-                defaultSmallTitleLabel.topAnchor.constraint(equalTo: userProfileImageButton.bottomAnchor, constant: 10),
-                defaultSmallTitleLabel.leadingAnchor.constraint(equalTo: safeArea.leadingAnchor, constant: 15),
-                
-                inputBrandLabel.topAnchor.constraint(equalTo: defaultSmallTitleLabel.bottomAnchor, constant: 15),
-                inputBrandLabel.leadingAnchor.constraint(equalTo: defaultSmallTitleLabel.leadingAnchor),
-                
-                inputBrandTextField.topAnchor.constraint(equalTo: inputBrandLabel.bottomAnchor, constant: 5),
-                inputBrandTextField.leadingAnchor.constraint(equalTo: inputBrandLabel.leadingAnchor),
-                
-                inputProductNameLabel.topAnchor.constraint(equalTo: inputBrandTextField.bottomAnchor, constant: 30),
-                inputProductNameLabel.leadingAnchor.constraint(equalTo: inputBrandLabel.leadingAnchor),
-                
-                inputProductNameTextField.topAnchor.constraint(equalTo: inputProductNameLabel.bottomAnchor, constant: 5),
-                inputProductNameTextField.leadingAnchor.constraint(equalTo: inputBrandLabel.leadingAnchor),
-                
-                inputExpireDateLabel.topAnchor.constraint(equalTo: inputProductNameTextField.bottomAnchor, constant: 30),
-                inputExpireDateLabel.leadingAnchor.constraint(equalTo: inputBrandLabel.leadingAnchor),
-                
-                inputExpireDateTextField.topAnchor.constraint(equalTo: inputExpireDateLabel.bottomAnchor, constant: 5),
-                inputExpireDateTextField.leadingAnchor.constraint(equalTo: inputBrandLabel.leadingAnchor),
-                
-                inputBrandTextField.widthAnchor.constraint(equalTo: safeArea.widthAnchor, multiplier: 0.9),
-                inputBrandTextField.heightAnchor.constraint(equalTo: safeArea.heightAnchor, multiplier: 0.05),
-                inputProductNameTextField.widthAnchor.constraint(equalTo: safeArea.widthAnchor, multiplier: 0.9),
-                inputProductNameTextField.heightAnchor.constraint(equalTo: safeArea.heightAnchor, multiplier: 0.05),
-                inputExpireDateTextField.widthAnchor.constraint(equalTo: safeArea.widthAnchor, multiplier: 0.9),
-                inputExpireDateTextField.heightAnchor.constraint(equalTo: safeArea.heightAnchor, multiplier: 0.05),
-
-                completeButton.topAnchor.constraint(equalTo: safeArea.bottomAnchor, constant: -50),
-                completeButton.centerXAnchor.constraint(equalTo: safeArea.centerXAnchor),
-                completeButton.heightAnchor.constraint(equalTo: safeArea.heightAnchor, multiplier: 0.07),
-                completeButton.widthAnchor.constraint(equalTo: safeArea.widthAnchor, multiplier: 0.95),
+            giftImageButton.topAnchor.constraint(equalTo: safeArea.topAnchor, constant: 10),
+            giftImageButton.centerXAnchor.constraint(equalTo: safeArea.centerXAnchor),
+            giftImageButton.widthAnchor.constraint(equalTo: safeArea.widthAnchor, multiplier: 0.4),
+            giftImageButton.heightAnchor.constraint(equalTo: giftImageButton.widthAnchor),
+            
+            buttonLineLabel.centerXAnchor.constraint(equalTo: buttonLineView.centerXAnchor),
+            buttonLineLabel.centerYAnchor.constraint(equalTo: buttonLineView.centerYAnchor),
+            
+            buttonLineView.heightAnchor.constraint(equalTo: giftImageButton.heightAnchor, multiplier: 0.2),
+            buttonLineView.widthAnchor.constraint(equalTo: giftImageButton.widthAnchor),
+            buttonLineView.bottomAnchor.constraint(equalTo: giftImageButton.bottomAnchor, constant: 0),
+            buttonLineView.centerXAnchor.constraint(equalTo: giftImageButton.centerXAnchor),
+            
+            defaultSmallTitleLabel.topAnchor.constraint(equalTo: giftImageButton.bottomAnchor, constant: 10),
+            defaultSmallTitleLabel.leadingAnchor.constraint(equalTo: safeArea.leadingAnchor, constant: 15),
+            
+            inputBrandLabel.topAnchor.constraint(equalTo: defaultSmallTitleLabel.bottomAnchor, constant: 15),
+            inputBrandLabel.leadingAnchor.constraint(equalTo: defaultSmallTitleLabel.leadingAnchor),
+            
+            inputBrandTextField.topAnchor.constraint(equalTo: inputBrandLabel.bottomAnchor, constant: 5),
+            inputBrandTextField.leadingAnchor.constraint(equalTo: inputBrandLabel.leadingAnchor),
+            
+            inputProductNameLabel.topAnchor.constraint(equalTo: inputBrandTextField.bottomAnchor, constant: 30),
+            inputProductNameLabel.leadingAnchor.constraint(equalTo: inputBrandLabel.leadingAnchor),
+            
+            inputProductNameTextField.topAnchor.constraint(equalTo: inputProductNameLabel.bottomAnchor, constant: 5),
+            inputProductNameTextField.leadingAnchor.constraint(equalTo: inputBrandLabel.leadingAnchor),
+            
+            inputExpireDateLabel.topAnchor.constraint(equalTo: inputProductNameTextField.bottomAnchor, constant: 30),
+            inputExpireDateLabel.leadingAnchor.constraint(equalTo: inputBrandLabel.leadingAnchor),
+            
+            inputExpireDateTextField.topAnchor.constraint(equalTo: inputExpireDateLabel.bottomAnchor, constant: 5),
+            inputExpireDateTextField.leadingAnchor.constraint(equalTo: inputBrandLabel.leadingAnchor),
+            
+            inputBrandTextField.widthAnchor.constraint(equalTo: safeArea.widthAnchor, multiplier: 0.9),
+            inputBrandTextField.heightAnchor.constraint(equalTo: safeArea.heightAnchor, multiplier: 0.05),
+            inputProductNameTextField.widthAnchor.constraint(equalTo: safeArea.widthAnchor, multiplier: 0.9),
+            inputProductNameTextField.heightAnchor.constraint(equalTo: safeArea.heightAnchor, multiplier: 0.05),
+            inputExpireDateTextField.widthAnchor.constraint(equalTo: safeArea.widthAnchor, multiplier: 0.9),
+            inputExpireDateTextField.heightAnchor.constraint(equalTo: safeArea.heightAnchor, multiplier: 0.05),
+            
+            completeButton.topAnchor.constraint(equalTo: safeArea.bottomAnchor, constant: -50),
+            completeButton.centerXAnchor.constraint(equalTo: safeArea.centerXAnchor),
+            completeButton.heightAnchor.constraint(equalTo: safeArea.heightAnchor, multiplier: 0.07),
+            completeButton.widthAnchor.constraint(equalTo: safeArea.widthAnchor, multiplier: 0.95),
         ])
-        
-
-        
+    }
+    
+    private func setupTextFieldStyle() {
+        inputBrandTextField.setupTextFieldBottomBorder()
+        inputProductNameTextField.setupTextFieldBottomBorder()
+        inputExpireDateTextField.setupTextFieldBottomBorder()
+    }
+    
+    private func setupButtonStyle() {
+        giftImageButton.layer.cornerRadius = giftImageButton.frame.width / 2
+        giftImageButton.clipsToBounds = true
     }
 }
 
-// MARK: Notification 관련
-extension UpdateGiftInfoViewController {
+// MARK: PHPickerViewController 관련
+extension UpdateGiftInfoViewController: PHPickerViewControllerDelegate {
+    func picker(_ picker: PHPickerViewController, didFinishPicking results: [PHPickerResult]) {
+        if results.isEmpty {
+            self.dismiss(animated: true)
+        } else {
+            self.dismiss(animated: true) {
+                guard let formattedImage = self.getImage(results: results) else { return }
+                self.giftImageButton.setImage(formattedImage, for: .normal)
+            }
+        }
+    }
     
+    private func presentPHPicekrViewController() {
+        let configuration = setupPHPicekrConfiguration()
+        let pickerViewController = PHPickerViewController(configuration: configuration)
+        
+        pickerViewController.delegate = self
+        pickerViewController.modalPresentationStyle = .fullScreen
+        
+        present(pickerViewController, animated: true)
+    }
+    
+    private func setupPHPicekrConfiguration() -> PHPickerConfiguration {
+        var configuration = PHPickerConfiguration(photoLibrary: .shared())
+        
+        configuration.filter = .images
+        configuration.preferredAssetRepresentationMode = .current
+        configuration.selectionLimit = 1
+        
+        return configuration
+    }
+    
+    private func getImage(results: [PHPickerResult]) -> UIImage? {
+        var formattedImage: UIImage?
+        guard let itemProvider = results.first?.itemProvider else { return nil }
+        
+        let semaphore = DispatchSemaphore(value: 0)
+        if itemProvider.canLoadObject(ofClass: UIImage.self) {
+            itemProvider.loadObject(ofClass: UIImage.self, completionHandler: { image, error in
+                if let error = error {
+                    print(error.localizedDescription)
+                } else {
+                    formattedImage = image as? UIImage
+                }
+                semaphore.signal()
+            })
+        }
+        semaphore.wait()
+        
+        return formattedImage
+    }
 }
