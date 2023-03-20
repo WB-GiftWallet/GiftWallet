@@ -1,5 +1,5 @@
 //
-//  UserInfoModifyViewController.swift
+//  UpdateGiftInfoViewController.swift
 //  GiftWallet
 //
 //  Created by 서현웅 on 2023/02/22.
@@ -119,18 +119,6 @@ class UpdateGiftInfoViewController: UIViewController {
         return button
     }()
     
-    @objc
-    private func tapCompleteButton() {
-        var gift = viewModel.gift
-        gift.brandName = inputBrandTextField.text
-        gift.productName = inputBrandTextField.text
-        gift.expireDate = DateFormatter.convertToDisplyStringToExpireDate(dateText: inputBrandTextField.text!)
-
-        dismiss(animated: true) { [self] in
-            self.delegate?.didUpdateGift(updatedGift: gift)
-        }
-    }
-    
     init(viewModel: UpdateViewModel) {
         self.viewModel = viewModel
         super.init(nibName: nil, bundle: nil)
@@ -158,6 +146,27 @@ class UpdateGiftInfoViewController: UIViewController {
         inputProductNameTextField.setupTextFieldBottomBorder()
         inputExpireDateTextField.setupTextFieldBottomBorder()
     }
+    
+    @objc
+    private func tapCompleteButton() {
+        inputtedTextsToGift()
+        
+        dismiss(animated: true) { [self] in
+            self.delegate?.didUpdateGift(updatedGift: viewModel.gift)
+        }
+    }
+    
+    private func inputtedTextsToGift() {
+        guard let buttonImageView = userProfileImageButton.imageView,
+              let settedButtonImage = buttonImageView.image,
+              let inputExpireDate = inputExpireDateTextField.text else { return }
+        
+        viewModel.gift.brandName = inputBrandTextField.text
+        viewModel.gift.productName = inputBrandTextField.text
+        viewModel.gift.expireDate = DateFormatter.convertToDisplyStringToExpireDate(dateText: inputExpireDate)
+        viewModel.gift.image = settedButtonImage
+    }
+    
     
     private func configureImage() {
         let image = viewModel.gift.image

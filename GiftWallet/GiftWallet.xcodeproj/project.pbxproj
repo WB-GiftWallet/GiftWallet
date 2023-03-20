@@ -23,7 +23,6 @@
 		D27CA42B29B86ABF00EC5FC7 /* PagingCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = D27CA42A29B86ABF00EC5FC7 /* PagingCollectionViewCell.swift */; };
 		D27CA42D29B89F1900EC5FC7 /* CustomButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = D27CA42C29B89F1900EC5FC7 /* CustomButton.swift */; };
 		D295E4B529A5E2F400E12CAF /* UpdateGiftInfoViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D295E4B429A5E2F400E12CAF /* UpdateGiftInfoViewController.swift */; };
-		D295E4B729A5E31400E12CAF /* UserInfoModifyViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = D295E4B629A5E31400E12CAF /* UserInfoModifyViewModel.swift */; };
 		D295E4B929A5F64200E12CAF /* FormSheetViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D295E4B829A5F64200E12CAF /* FormSheetViewController.swift */; };
 		D2A282B629A85EBC002CCF5A /* Gift.swift in Sources */ = {isa = PBXBuildFile; fileRef = D2A282B529A85EBC002CCF5A /* Gift.swift */; };
 		D2A282B829A85EF2002CCF5A /* Observable.swift in Sources */ = {isa = PBXBuildFile; fileRef = D2A282B729A85EF2002CCF5A /* Observable.swift */; };
@@ -103,7 +102,6 @@
 		D27CA42A29B86ABF00EC5FC7 /* PagingCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PagingCollectionViewCell.swift; sourceTree = "<group>"; };
 		D27CA42C29B89F1900EC5FC7 /* CustomButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomButton.swift; sourceTree = "<group>"; };
 		D295E4B429A5E2F400E12CAF /* UpdateGiftInfoViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UpdateGiftInfoViewController.swift; sourceTree = "<group>"; };
-		D295E4B629A5E31400E12CAF /* UserInfoModifyViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserInfoModifyViewModel.swift; sourceTree = "<group>"; };
 		D295E4B829A5F64200E12CAF /* FormSheetViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FormSheetViewController.swift; sourceTree = "<group>"; };
 		D2A282B529A85EBC002CCF5A /* Gift.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Gift.swift; sourceTree = "<group>"; };
 		D2A282B729A85EF2002CCF5A /* Observable.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Observable.swift; sourceTree = "<group>"; };
@@ -194,7 +192,6 @@
 				D2BB131829C2082300A2440B /* UpdateViewModel.swift */,
 				D295E4B829A5F64200E12CAF /* FormSheetViewController.swift */,
 				D295E4B429A5E2F400E12CAF /* UpdateGiftInfoViewController.swift */,
-				D295E4B629A5E31400E12CAF /* UserInfoModifyViewModel.swift */,
 			);
 			path = ModifyView;
 			sourceTree = "<group>";
@@ -581,7 +578,6 @@
 				D2B6334229ACD1CB00EE9ACE /* UsageHistoryViewController.swift in Sources */,
 				D2B6334029ACD1A100EE9ACE /* UsageHistoryViewModel.swift in Sources */,
 				D2DAAA2529A47CD500D70E8C /* CustomCollectionView.swift in Sources */,
-				D295E4B729A5E31400E12CAF /* UserInfoModifyViewModel.swift in Sources */,
 				FC1E747C29A207DA0010A4BA /* GiftWallet.xcdatamodeld in Sources */,
 				17D5963B29B0835800AFE039 /* Extension+Date.swift in Sources */,
 				D2B6333D29ACCA4100EE9ACE /* Constant.swift in Sources */,
