@@ -141,8 +141,10 @@ class UpdateGiftInfoViewController: UIViewController {
         setupNavigation()
         setupViews()
         configureImage()
+        setupTextFieldAttributes()
         configureTextField()
         setupExpireDateTextField()
+        updateButtonForTextFieldState()
     }
     
     override func viewWillLayoutSubviews() {
@@ -182,6 +184,10 @@ class UpdateGiftInfoViewController: UIViewController {
         inputBrandTextField.text = viewModel.gift.brandName
         inputProductNameTextField.text = viewModel.gift.productName
         inputExpireDateTextField.text = viewModel.gift.expireDate?.setupDateStyleForInputDisplay()
+    }
+    
+    private func setupTextFieldAttributes() {
+        [inputBrandTextField, inputProductNameTextField, inputExpireDateTextField].forEach { $0.delegate = self }
     }
     
     private func setupExpireDateTextField() {
@@ -361,5 +367,52 @@ extension UpdateGiftInfoViewController: PHPickerViewControllerDelegate {
         semaphore.wait()
         
         return formattedImage
+    }
+}
+
+// MARK: TextFieldDelegate 관련
+
+extension UpdateGiftInfoViewController: UITextFieldDelegate {
+    
+    func textFieldDidEndEditing(_ textField: UITextField) {
+        let brandName = inputBrandTextField.text?.trimmingCharacters(in: .whitespacesAndNewlines) ?? ""
+        let productName = inputProductNameTextField.text?.trimmingCharacters(in: .whitespacesAndNewlines) ?? ""
+        let expireDate = inputExpireDateTextField.text?.trimmingCharacters(in: .whitespacesAndNewlines) ?? ""
+        
+        if brandName.isEmpty || productName.isEmpty || expireDate.isEmpty {
+            setActionButtonEnabled(false)
+        } else {
+            setActionButtonEnabled(true)
+        }
+    }
+    
+    func textField(_ textField: UITextField, shouldChangeCharactersIn range: NSRange, replacementString string: String) -> Bool {
+        if range.location == 0 && string.first == " " {
+            return false
+        }
+        return true
+    }
+    
+    func textFieldShouldClear(_ textField: UITextField) -> Bool {
+        setActionButtonEnabled(false)
+        return true
+    }
+    
+    private func updateButtonForTextFieldState() {
+        if inputBrandTextField.text?.isEmpty == true || inputProductNameTextField.text?.isEmpty == true || inputExpireDateTextField.text?.isEmpty == true {
+            setActionButtonEnabled(false)
+        } else {
+            setActionButtonEnabled(true)
+        }
+    }
+    
+    private func setActionButtonEnabled(_ isEnabled: Bool) {
+        if isEnabled {
+            completeButton.isEnabled = true
+            completeButton.backgroundColor = .customButton
+        } else {
+            completeButton.isEnabled = false
+            completeButton.backgroundColor = .unenableButton
+        }
     }
 }
