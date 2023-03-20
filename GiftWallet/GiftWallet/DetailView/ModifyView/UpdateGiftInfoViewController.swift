@@ -370,8 +370,7 @@ extension UpdateGiftInfoViewController: PHPickerViewControllerDelegate {
     }
 }
 
-// MARK: TextFieldDelegate 관련
-
+// MARK: 텍스트필드 비활성화 & 활성화 관련
 extension UpdateGiftInfoViewController: UITextFieldDelegate {
     
     func textFieldDidEndEditing(_ textField: UITextField) {

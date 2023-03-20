@@ -201,19 +201,21 @@ extension AddViewController {
     }
 }
 
-// MARK: 텍스트필드 비활성화 관련
+// MARK: 텍스트필드 비활성화 & 활성화 관련
 extension AddViewController: UITextFieldDelegate {
-    func textField(_ textField: UITextField, shouldChangeCharactersIn range: NSRange, replacementString string: String) -> Bool {
-        if range.location == 0 && string.first == " " {
-            return false
-        }
+    func textFieldDidEndEditing(_ textField: UITextField) {
+        let brandName = inputTextField.text?.trimmingCharacters(in: .whitespacesAndNewlines) ?? ""
         
-        let trimmingText = (textField.text! as NSString).replacingCharacters(in: range, with: string)
-        
-        if trimmingText.isEmpty {
+        if brandName.isEmpty {
             setActionButtonEnabled(false)
         } else {
             setActionButtonEnabled(true)
+        }
+    }
+    
+    func textField(_ textField: UITextField, shouldChangeCharactersIn range: NSRange, replacementString string: String) -> Bool {
+        if range.location == 0 && string.first == " " {
+            return false
         }
         return true
     }
@@ -235,7 +237,6 @@ extension AddViewController: UITextFieldDelegate {
         if isEnabled {
             actionButton.isEnabled = true
             actionButton.backgroundColor = .customButton
-            actionButton.setTitleColor(.black, for: .normal)
         } else {
             actionButton.isEnabled = false
             actionButton.backgroundColor = .unenableButton
