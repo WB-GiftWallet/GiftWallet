@@ -116,8 +116,8 @@ final class SearchViewController: UIViewController {
     }
     
     @objc private func tapRecommendButton(_ sender: UIButton) {
-        giftSearchController.searchBar.text = sender.titleLabel?.text
         giftSearchController.searchBar.becomeFirstResponder()
+        giftSearchController.searchBar.text = sender.titleLabel?.text
     }
     
     private func bind() {
@@ -145,9 +145,16 @@ extension SearchViewController: UITableViewDataSource, UITableViewDelegate {
             return UITableViewCell()
         }
         
+        //TODO: SearchBar 검색 후 isFiltering == true 상태에서 삭제한 뒤 false상태의 Tableview에서 index가 남아있어 오류발생
         if self.isFiltering {
+            if indexPath.row > viewModel.filteringGifts.value.count - 1   {
+                return cell
+            }
             cell.changeCell(viewModel.filteringGifts.value[indexPath.row])
         } else {
+            if indexPath.row > viewModel.allGiftData.value.count - 1 {
+                return cell
+            }
             cell.changeCell(viewModel.allGiftData.value[indexPath.row])
         }
         
