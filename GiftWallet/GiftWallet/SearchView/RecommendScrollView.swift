@@ -7,13 +7,15 @@
 
 import UIKit
 
-class RecommendView: UIView {
+class RecommendScrollView: UIScrollView {
     //TODO: Title 임시 Text 삭제
     let firstRecommendButton = UIButton(title: "상위 1번째")
     let secondRecommendButton = UIButton(title: "상위 2번째")
     let thirdRecommendButton = UIButton(title: "상위 3번째")
     let fourthRecommendButton = UIButton(title: "상위 4번째")
     let fifthRecommendButton = UIButton(title: "상위 5번째")
+    
+    let contentsView = UIView()
     
     let recommendStackView: UIStackView = {
         let stackView = UIStackView()
@@ -44,6 +46,7 @@ class RecommendView: UIView {
     override init(frame: CGRect) {
         super.init(frame: frame)
         self.backgroundColor = .systemBackground
+        self.showsHorizontalScrollIndicator = false
         
         setLayout()
     }
@@ -53,14 +56,23 @@ class RecommendView: UIView {
     }
     
     private func setLayout() {
-        self.addSubview(recommendStackView)
-        [firstRecommendButton, secondRecommendButton, thirdRecommendButton, fourthRecommendButton, fifthRecommendButton].forEach(recommendStackView.addArrangedSubview(_:))
+        
+        self.addSubview(contentsView)
+        contentsView.translatesAutoresizingMaskIntoConstraints = false
+        contentsView.addSubview(recommendStackView)
+
         
         NSLayoutConstraint.activate([
-            recommendStackView.topAnchor.constraint(equalTo: self.topAnchor),
-            recommendStackView.leadingAnchor.constraint(equalTo: self.leadingAnchor),
-            recommendStackView.trailingAnchor.constraint(equalTo: self.trailingAnchor),
-            recommendStackView.bottomAnchor.constraint(equalTo: self.bottomAnchor),
+            recommendStackView.topAnchor.constraint(equalTo: contentsView.topAnchor),
+            recommendStackView.leadingAnchor.constraint(equalTo: contentsView.leadingAnchor),
+            recommendStackView.trailingAnchor.constraint(equalTo: contentsView.trailingAnchor),
+            recommendStackView.bottomAnchor.constraint(equalTo: contentsView.bottomAnchor),
+            
+            contentsView.heightAnchor.constraint(equalTo: self.heightAnchor),
+            contentsView.topAnchor.constraint(equalTo: self.contentLayoutGuide.topAnchor),
+            contentsView.leadingAnchor.constraint(equalTo: self.contentLayoutGuide.leadingAnchor),
+            contentsView.trailingAnchor.constraint(equalTo: self.contentLayoutGuide.trailingAnchor),
+            contentsView.bottomAnchor.constraint(equalTo: self.contentLayoutGuide.bottomAnchor)
         ])
     }
 }

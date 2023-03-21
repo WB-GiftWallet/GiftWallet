@@ -35,8 +35,7 @@ final class SearchViewController: UIViewController {
         return tableView
     }()
     
-    private let scrollView = UIScrollView()
-    private let recommendView = RecommendView()
+    private let recommendScrollView = RecommendScrollView()
     
     private var isFiltering: Bool {
         let searchController = self.navigationItem.searchController
@@ -56,34 +55,26 @@ final class SearchViewController: UIViewController {
         searchResultController.tableView.delegate = self
         searchResultController.tableView.dataSource = self
         
-        setLayout()
         setupRecommendData()
+        setLayout()
+        
         bind()
     }
     
     private func setLayout() {
-        view.addSubview(scrollView)
         view.addSubview(searchTableView)
-        scrollView.addSubview(recommendView)
+        view.addSubview(recommendScrollView)
         
-        [searchTableView, recommendView, scrollView].forEach {
+        [searchTableView, recommendScrollView].forEach {
             $0.translatesAutoresizingMaskIntoConstraints = false
         }
         
-        scrollView.showsHorizontalScrollIndicator = false
-        
         NSLayoutConstraint.activate([
-            scrollView.frameLayoutGuide.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor, constant: 4),
-            scrollView.frameLayoutGuide.leadingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.leadingAnchor, constant: 10),
-            scrollView.frameLayoutGuide.trailingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.trailingAnchor, constant: -10),
-            scrollView.frameLayoutGuide.heightAnchor.constraint(equalTo: recommendView.heightAnchor),
-            
-            recommendView.topAnchor.constraint(equalTo: scrollView.contentLayoutGuide.topAnchor),
-            recommendView.leadingAnchor.constraint(equalTo: scrollView.contentLayoutGuide.leadingAnchor),
-            recommendView.trailingAnchor.constraint(equalTo: scrollView.contentLayoutGuide.trailingAnchor),
-            recommendView.bottomAnchor.constraint(equalTo: scrollView.contentLayoutGuide.bottomAnchor),
-            
-            searchTableView.topAnchor.constraint(equalTo: scrollView.contentLayoutGuide.bottomAnchor, constant: 4),
+            recommendScrollView.frameLayoutGuide.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor, constant: 4),
+            recommendScrollView.frameLayoutGuide.leadingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.leadingAnchor, constant: 10),
+            recommendScrollView.frameLayoutGuide.trailingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.trailingAnchor, constant: -10),
+
+            searchTableView.topAnchor.constraint(equalTo: recommendScrollView.contentLayoutGuide.bottomAnchor, constant: 4),
             searchTableView.leadingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.leadingAnchor),
             searchTableView.trailingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.trailingAnchor),
             searchTableView.bottomAnchor.constraint(equalTo: view.safeAreaLayoutGuide.bottomAnchor),
@@ -94,24 +85,30 @@ final class SearchViewController: UIViewController {
         self.navigationItem.hidesSearchBarWhenScrolling = false
         self.navigationItem.searchController = giftSearchController
     }
-    //            view.largeContentImage = UIImage(named: "emptyBoxResize")
+    
     private func setupRecommendData() {
         
         let buttons = [
-            recommendView.firstRecommendButton,
-            recommendView.secondRecommendButton,
-            recommendView.thirdRecommendButton,
-            recommendView.fourthRecommendButton,
-            recommendView.fifthRecommendButton
+            recommendScrollView.firstRecommendButton,
+            recommendScrollView.secondRecommendButton,
+            recommendScrollView.thirdRecommendButton,
+            recommendScrollView.fourthRecommendButton,
+            recommendScrollView.fifthRecommendButton
         ]
         
-        if viewModel.sortedRecommendData.count == 0 {
+        let viewModelData = viewModel.sortedRecommendData
+        
+        if viewModelData.count == 0 {
             return
-        } else if viewModel.sortedRecommendData.count <= 5 {
-            for (index, value) in viewModel.sortedRecommendData.enumerated() {
+        } else if viewModelData.count <= 5 {
+            for (index, value) in viewModelData.enumerated() {
                 buttons[index].setTitle(value, for: .normal)
-                
-                //TODO: RecommendView Tag 갯수에 맞게 수정
+                recommendScrollView.recommendStackView.addArrangedSubview(buttons[index])
+            }
+        } else {
+            for index in 0...4 {
+                buttons[index].setTitle(viewModelData[index], for: .normal)
+                recommendScrollView.recommendStackView.addArrangedSubview(buttons[index])
             }
         }
         
@@ -119,11 +116,11 @@ final class SearchViewController: UIViewController {
     }
     
     private func addTargetButtons() {
-        [recommendView.firstRecommendButton,
-        recommendView.secondRecommendButton,
-        recommendView.thirdRecommendButton,
-        recommendView.fourthRecommendButton,
-         recommendView.fifthRecommendButton].forEach {
+        [recommendScrollView.firstRecommendButton,
+        recommendScrollView.secondRecommendButton,
+        recommendScrollView.thirdRecommendButton,
+        recommendScrollView.fourthRecommendButton,
+         recommendScrollView.fifthRecommendButton].forEach {
             $0.addTarget(nil, action: #selector(tapRecommendButton), for: .touchUpInside)
         }
     }
