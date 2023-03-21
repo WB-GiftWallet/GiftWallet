@@ -374,7 +374,29 @@ extension MainViewController: GiftDidDismissDelegate {
 
 extension MainViewController: CollectionViewCellLongPressDelegate {
     func longPressed(_ sender: UILongPressGestureRecognizer) {
-        print("제스쳐완료")
+        guard let gift = dd(sender) else { return }
+        
+        let deleteSheetViewModel = DeleteSheetViewModel(gift: gift)
+        let deleteSheetViewControlelr = DeleteSheetViewController(viewModel: deleteSheetViewModel)
+        deleteSheetViewControlelr.modalPresentationStyle = .overFullScreen
+        deleteSheetViewControlelr.modalTransitionStyle = .crossDissolve
+        present(deleteSheetViewControlelr, animated: true)
     }
     
+    private func dd(_ sender: UILongPressGestureRecognizer) -> Gift? {
+        guard let collectionView = sender.view?.superview as? UICollectionView,
+              let viewPoint = sender.view?.convert(CGPoint.zero, to: collectionView),
+              let indexPath = collectionView.indexPathForItem(at: viewPoint) else { return nil }
+        
+        switch collectionView {
+        case expireCollectionView:
+            return viewModel.expireGifts.value[indexPath.row]
+        case recentCollectionView:
+            return viewModel.recentGifts.value[indexPath.row]
+        default:
+            break
+        }
+        return nil
+    }
+
 }
