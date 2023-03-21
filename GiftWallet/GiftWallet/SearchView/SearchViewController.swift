@@ -15,7 +15,6 @@ final class SearchViewController: UIViewController {
     private lazy var giftSearchController: UISearchController = {
         let searchController = UISearchController(searchResultsController: searchResultController)
         
-        searchController.view.backgroundColor = .systemBackground
         searchController.searchResultsUpdater = self
         searchController.hidesBottomBarWhenPushed = true
         
@@ -59,7 +58,6 @@ final class SearchViewController: UIViewController {
         
         setLayout()
         setupRecommendData()
-        addTargetButtons()
         bind()
     }
     
@@ -96,13 +94,28 @@ final class SearchViewController: UIViewController {
         self.navigationItem.hidesSearchBarWhenScrolling = false
         self.navigationItem.searchController = giftSearchController
     }
-    
+    //            view.largeContentImage = UIImage(named: "emptyBoxResize")
     private func setupRecommendData() {
-        recommendView.firstRecommendButton.setTitle(viewModel.sortedRecommendData[0], for: .normal)
-        recommendView.secondRecommendButton.setTitle(viewModel.sortedRecommendData[1], for: .normal)
-        recommendView.thirdRecommendButton.setTitle(viewModel.sortedRecommendData[2], for: .normal)
-        recommendView.fourthRecommendButton.setTitle(viewModel.sortedRecommendData[3], for: .normal)
-        recommendView.fifthRecommendButton.setTitle(viewModel.sortedRecommendData[4], for: .normal)
+        
+        let buttons = [
+            recommendView.firstRecommendButton,
+            recommendView.secondRecommendButton,
+            recommendView.thirdRecommendButton,
+            recommendView.fourthRecommendButton,
+            recommendView.fifthRecommendButton
+        ]
+        
+        if viewModel.sortedRecommendData.count == 0 {
+            return
+        } else if viewModel.sortedRecommendData.count <= 5 {
+            for (index, value) in viewModel.sortedRecommendData.enumerated() {
+                buttons[index].setTitle(value, for: .normal)
+                
+                //TODO: RecommendView Tag 갯수에 맞게 수정
+            }
+        }
+        
+        addTargetButtons()
     }
     
     private func addTargetButtons() {

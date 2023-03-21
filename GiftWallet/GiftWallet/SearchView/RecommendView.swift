@@ -8,7 +8,7 @@
 import UIKit
 
 class RecommendView: UIView {
-    
+    //TODO: Title 임시 Text 삭제
     let firstRecommendButton = UIButton(title: "상위 1번째")
     let secondRecommendButton = UIButton(title: "상위 2번째")
     let thirdRecommendButton = UIButton(title: "상위 3번째")
