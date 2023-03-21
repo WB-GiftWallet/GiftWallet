@@ -8,12 +8,11 @@
 import UIKit
 
 class RecommendScrollView: UIScrollView {
-    //TODO: Title 임시 Text 삭제
-    let firstRecommendButton = UIButton(title: "상위 1번째")
-    let secondRecommendButton = UIButton(title: "상위 2번째")
-    let thirdRecommendButton = UIButton(title: "상위 3번째")
-    let fourthRecommendButton = UIButton(title: "상위 4번째")
-    let fifthRecommendButton = UIButton(title: "상위 5번째")
+    let firstRecommendButton = UIButton()
+    let secondRecommendButton = UIButton()
+    let thirdRecommendButton = UIButton()
+    let fourthRecommendButton = UIButton()
+    let fifthRecommendButton = UIButton()
     
     let contentsView = UIView()
     
@@ -40,6 +39,8 @@ class RecommendScrollView: UIScrollView {
             $0.layer.cornerRadius = $0.frame.height/2
             $0.setTitleColor(.systemGray2, for: .normal)
             $0.layer.borderColor = UIColor.systemGray2.cgColor
+            $0.contentEdgeInsets = .init(top: 5, left: 5, bottom: 5, right: 5)
+            $0.layer.borderWidth = 1
         }
     }
     
@@ -74,14 +75,5 @@ class RecommendScrollView: UIScrollView {
             contentsView.trailingAnchor.constraint(equalTo: self.contentLayoutGuide.trailingAnchor),
             contentsView.bottomAnchor.constraint(equalTo: self.contentLayoutGuide.bottomAnchor)
         ])
-    }
-}
-
-private extension UIButton {
-    convenience init(title: String) {
-        self.init()
-        self.contentEdgeInsets = .init(top: 5, left: 5, bottom: 5, right: 5)
-        self.setTitle(title, for: .normal)
-        self.layer.borderWidth = 1
     }
 }
