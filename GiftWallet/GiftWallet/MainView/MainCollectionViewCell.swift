@@ -183,7 +183,7 @@ extension MainCollectionViewCell {
     
     @objc func handleLongPress(gestureRecognizer: UILongPressGestureRecognizer) {
         if gestureRecognizer.state == .began {
-            print("진동")
+            AudioServicesPlaySystemSound(1520)
         } else if gestureRecognizer.state == .ended {
             delegate?.longPressed(gestureRecognizer)
         }
