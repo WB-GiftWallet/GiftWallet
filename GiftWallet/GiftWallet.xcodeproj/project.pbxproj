@@ -14,6 +14,7 @@
 		17D5963729AF6F9800AFE039 /* SearchTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 17D5963629AF6F9800AFE039 /* SearchTableViewController.swift */; };
 		17D5963929B02CBD00AFE039 /* SearchGiftCustomCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 17D5963829B02CBD00AFE039 /* SearchGiftCustomCell.swift */; };
 		17D5963B29B0835800AFE039 /* Extension+Date.swift in Sources */ = {isa = PBXBuildFile; fileRef = 17D5963A29B0835800AFE039 /* Extension+Date.swift */; };
+		D218232C29C9855500855D15 /* AudioToolbox.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D218232B29C9855400855D15 /* AudioToolbox.framework */; };
 		D24002D129B752DB00635FFC /* NotoSansKR-Regular.otf in Resources */ = {isa = PBXBuildFile; fileRef = D24002CB29B752DA00635FFC /* NotoSansKR-Regular.otf */; };
 		D24002D229B752DB00635FFC /* NotoSansKR-Thin.otf in Resources */ = {isa = PBXBuildFile; fileRef = D24002CC29B752DB00635FFC /* NotoSansKR-Thin.otf */; };
 		D24002D329B752DB00635FFC /* NotoSansKR-Black.otf in Resources */ = {isa = PBXBuildFile; fileRef = D24002CD29B752DB00635FFC /* NotoSansKR-Black.otf */; };
@@ -96,6 +97,7 @@
 		17D5963629AF6F9800AFE039 /* SearchTableViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchTableViewController.swift; sourceTree = "<group>"; };
 		17D5963829B02CBD00AFE039 /* SearchGiftCustomCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchGiftCustomCell.swift; sourceTree = "<group>"; };
 		17D5963A29B0835800AFE039 /* Extension+Date.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Extension+Date.swift"; sourceTree = "<group>"; };
+		D218232B29C9855400855D15 /* AudioToolbox.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AudioToolbox.framework; path = System/Library/Frameworks/AudioToolbox.framework; sourceTree = SDKROOT; };
 		D24002CB29B752DA00635FFC /* NotoSansKR-Regular.otf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "NotoSansKR-Regular.otf"; sourceTree = "<group>"; };
 		D24002CC29B752DB00635FFC /* NotoSansKR-Thin.otf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "NotoSansKR-Thin.otf"; sourceTree = "<group>"; };
 		D24002CD29B752DB00635FFC /* NotoSansKR-Black.otf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "NotoSansKR-Black.otf"; sourceTree = "<group>"; };
@@ -177,6 +179,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				1723BE8529C3142600AE06F9 /* IQKeyboardManagerSwift in Frameworks */,
+				D218232C29C9855500855D15 /* AudioToolbox.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -193,6 +196,14 @@
 				17D5963829B02CBD00AFE039 /* SearchGiftCustomCell.swift */,
 			);
 			path = SearchView;
+			sourceTree = "<group>";
+		};
+		D218232A29C9855400855D15 /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				D218232B29C9855400855D15 /* AudioToolbox.framework */,
+			);
+			name = Frameworks;
 			sourceTree = "<group>";
 		};
 		D295E4B329A5E2D700E12CAF /* ModifyView */ = {
@@ -360,6 +371,7 @@
 				D2CDDBD329ADFE7700E000E3 /* DateCalculateUseCaseTest */,
 				17BCD48129C30F8900F9FC9C /* Package */,
 				FC1E746F29A207DA0010A4BA /* Products */,
+				D218232A29C9855400855D15 /* Frameworks */,
 			);
 			sourceTree = "<group>";
 		};

@@ -6,6 +6,7 @@
 //
 
 import UIKit
+import AudioToolbox
 
 class MainCollectionViewCell: UICollectionViewCell, ReusableView {
     
