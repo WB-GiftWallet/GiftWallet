@@ -160,10 +160,7 @@ class MainViewController: UIViewController, UISearchBarDelegate, UISearchControl
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
-        viewModel.fetchCoreData()
-        viewModel.sortOutInGlobalThread {
-            self.setupCollectionViewIsHiddenAndHeightConstraint()
-        }
+        updateCollectionViewData()
     }
     
     private func bind() {
@@ -183,6 +180,14 @@ class MainViewController: UIViewController, UISearchBarDelegate, UISearchControl
     override func viewWillLayoutSubviews() {
         super.viewWillLayoutSubviews()
     }
+    
+    private func updateCollectionViewData() {
+        viewModel.fetchCoreData()
+        viewModel.sortOutInGlobalThread {
+            self.setupCollectionViewIsHiddenAndHeightConstraint()
+        }
+    }
+    
     
     private func setupButton() {
         let searchButtonAction = UIAction { _ in
@@ -337,6 +342,7 @@ extension MainViewController: UICollectionViewDataSource, UICollectionViewDelega
         let detailViewModel = DetailViewModel(gifts: sendGifts,
                                               indexPahtRow: indexPath.row)
         let detailViewController = DetailViewController(viewModel: detailViewModel)
+        detailViewController.delegate = self
         let navigationDetailViewController = UINavigationController(rootViewController: detailViewController)
         navigationDetailViewController.modalTransitionStyle = .coverVertical
         navigationDetailViewController.modalPresentationStyle = .overFullScreen
@@ -352,5 +358,11 @@ extension MainViewController: UICollectionViewDelegateFlowLayout {
     
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, minimumInteritemSpacingForSectionAt section: Int) -> CGFloat {
         return 10
+    }
+}
+
+extension MainViewController: GiftDidDismissDelegate {
+    func didDismissDetailViewController() {
+        updateCollectionViewData()
     }
 }

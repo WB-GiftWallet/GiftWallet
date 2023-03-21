@@ -29,4 +29,6 @@ extension UIColor {
     static let formSheetViewBlankView = UIColor(r: 248, g: 248, b: 248)
     
     static let imageViewbackground = UIColor(r: 244, g: 244, b: 244)
+    
+    static let unenableButton = UIColor(r: 245, g: 245, b: 245)
 }
