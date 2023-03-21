@@ -385,11 +385,10 @@ extension UpdateGiftInfoViewController: UITextFieldDelegate {
         }
     }
     
-    func textField(_ textField: UITextField, shouldChangeCharactersIn range: NSRange, replacementString string: String) -> Bool {
-        if range.location == 0 && string.first == " " {
-            return false
+    func textFieldDidChangeSelection(_ textField: UITextField) {
+        if textField.text == " " {
+            textField.text = .init()
         }
-        return true
     }
     
     func textFieldShouldClear(_ textField: UITextField) -> Bool {
