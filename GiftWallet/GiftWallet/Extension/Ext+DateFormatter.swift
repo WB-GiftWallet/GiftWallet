@@ -17,7 +17,7 @@ extension DateFormatter {
     
     static func convertToDisplyStringToExpireDate(dateText: String) -> Date? {
         let dateFormatter = DateFormatter()
-        dateFormatter.dateFormat = "yyyy년 MM월 dd일까지"
+        dateFormatter.dateFormat = "yyyy. MM. dd"
         return dateFormatter.date(from: dateText)
     }
 }

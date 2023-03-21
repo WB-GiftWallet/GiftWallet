@@ -20,9 +20,11 @@ class CustomTextField: UITextField {
     }
     
     func setupTextFieldBottomBorder() {
+        guard layer.sublayers?.first(where: { $0.name == "textFieldBottomBorderLayerName" }) == nil else { return }
         self.layoutIfNeeded()
         let borderColor: UIColor = .systemGray
         let border = CALayer()
+        border.name = "textFieldBottomBorderLayerName"
         border.frame = CGRect(x: 0,
                               y: self.frame.size.height + 5,
                               width: self.frame.width,

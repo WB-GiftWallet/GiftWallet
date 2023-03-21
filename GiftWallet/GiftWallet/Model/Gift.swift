@@ -74,11 +74,11 @@ extension Gift {
         Gift(image: UIImage(named: "testImageEDIYA")!, category: nil, brandName: "양식", productName: "그냥커피 3리터", memo: "메모가없어", expireDate: Date().addFromTodayDate(100)),
         Gift(image: UIImage(named: "testImageEDIYA")!, category: nil, brandName: "중식", productName: "그냥커피 4리터", memo: nil, expireDate: Date().addFromTodayDate(150)),
         Gift(image: UIImage(named: "testImageEDIYA")!, category: nil, brandName: "김밥", productName: "그냥커피 5리터", memo: "여기도메모있고", expireDate: Date().addFromTodayDate(200)),
-        Gift(image: UIImage(named: "testImageSTARBUCKSSMALL")!, category: .cafe, brandName: "탐앤탐스", productName: "베이컨", memo: "이건 Nil값인데", expireDate: nil),
-        Gift(image: UIImage(named: "testImageSTARBUCKSSMALL")!, category: .cafe, brandName: "현대자동차", productName: "맛있는거", memo: "이건 Nil값인데", expireDate: nil),
-        Gift(image: UIImage(named: "testImageSTARBUCKSSMALL")!, category: .cafe, brandName: "칠칠소막창", productName: "선물받은거", memo: "이건 Nil값인데", expireDate: nil),
-        Gift(image: UIImage(named: "testImageSTARBUCKSSMALL")!, category: .cafe, brandName: "돼지막창", productName: "비싼거", memo: "이건 Nil값인데", expireDate: nil),
-        Gift(image: UIImage(named: "testImageSTARBUCKSSMALL")!, category: .cafe, brandName: "곱창", productName: "5000인분", memo: "이건 Nil값인데", expireDate: nil),
+        Gift(image: UIImage(named: "testImageSTARBUCKSSMALL")!, category: .cafe, brandName: "탐앤탐스", productName: "베이컨", memo: "이건 Nil값인데", expireDate: Date().addFromTodayDate(200)),
+        Gift(image: UIImage(named: "testImageSTARBUCKSSMALL")!, category: .cafe, brandName: "현대자동차", productName: "맛있는거", memo: "이건 Nil값인데", expireDate: Date().addFromTodayDate(200)),
+        Gift(image: UIImage(named: "testImageSTARBUCKSSMALL")!, category: .cafe, brandName: "칠칠소막창", productName: "선물받은거", memo: "이건 Nil값인데", expireDate: Date().addFromTodayDate(200)),
+        Gift(image: UIImage(named: "testImageSTARBUCKSSMALL")!, category: .cafe, brandName: "돼지막창", productName: "비싼거", memo: "이건 Nil값인데", expireDate: Date().addFromTodayDate(200)),
+        Gift(image: UIImage(named: "testImageSTARBUCKSSMALL")!, category: .cafe, brandName: "곱창", productName: "5000인분", memo: "이건 Nil값인데", expireDate: Date().addFromTodayDate(200)),
 
         
         // MARK: unavailableGifts (5개)

@@ -141,8 +141,10 @@ class UpdateGiftInfoViewController: UIViewController {
         setupNavigation()
         setupViews()
         configureImage()
+        setupTextFieldAttributes()
         configureTextField()
         setupExpireDateTextField()
+        updateButtonForTextFieldState()
     }
     
     override func viewWillLayoutSubviews() {
@@ -167,7 +169,7 @@ class UpdateGiftInfoViewController: UIViewController {
               let inputExpireDate = inputExpireDateTextField.text else { return }
         
         viewModel.gift.brandName = inputBrandTextField.text
-        viewModel.gift.productName = inputBrandTextField.text
+        viewModel.gift.productName = inputProductNameTextField.text
         viewModel.gift.expireDate = DateFormatter.convertToDisplyStringToExpireDate(dateText: inputExpireDate)
         viewModel.gift.image = settedButtonImage
     }
@@ -182,6 +184,10 @@ class UpdateGiftInfoViewController: UIViewController {
         inputBrandTextField.text = viewModel.gift.brandName
         inputProductNameTextField.text = viewModel.gift.productName
         inputExpireDateTextField.text = viewModel.gift.expireDate?.setupDateStyleForInputDisplay()
+    }
+    
+    private func setupTextFieldAttributes() {
+        [inputBrandTextField, inputProductNameTextField, inputExpireDateTextField].forEach { $0.delegate = self }
     }
     
     private func setupExpireDateTextField() {
@@ -293,17 +299,15 @@ class UpdateGiftInfoViewController: UIViewController {
             inputExpireDateTextField.widthAnchor.constraint(equalTo: safeArea.widthAnchor, multiplier: 0.9),
             inputExpireDateTextField.heightAnchor.constraint(equalTo: safeArea.heightAnchor, multiplier: 0.05),
             
-            completeButton.topAnchor.constraint(equalTo: safeArea.bottomAnchor, constant: -50),
             completeButton.centerXAnchor.constraint(equalTo: safeArea.centerXAnchor),
+            completeButton.bottomAnchor.constraint(equalTo: safeArea.bottomAnchor,constant: -30),
             completeButton.heightAnchor.constraint(equalTo: safeArea.heightAnchor, multiplier: 0.07),
-            completeButton.widthAnchor.constraint(equalTo: safeArea.widthAnchor, multiplier: 0.95),
+            completeButton.widthAnchor.constraint(equalTo: safeArea.widthAnchor, multiplier: 0.9),
         ])
     }
     
     private func setupTextFieldStyle() {
-        inputBrandTextField.setupTextFieldBottomBorder()
-        inputProductNameTextField.setupTextFieldBottomBorder()
-        inputExpireDateTextField.setupTextFieldBottomBorder()
+        [inputBrandTextField, inputProductNameTextField, inputExpireDateTextField].forEach { $0.setupTextFieldBottomBorder() }
     }
     
     private func setupButtonStyle() {
@@ -363,5 +367,50 @@ extension UpdateGiftInfoViewController: PHPickerViewControllerDelegate {
         semaphore.wait()
         
         return formattedImage
+    }
+}
+
+// MARK: 텍스트필드 비활성화 & 활성화 관련
+extension UpdateGiftInfoViewController: UITextFieldDelegate {
+    
+    func textFieldDidEndEditing(_ textField: UITextField) {
+        let brandName = inputBrandTextField.text?.trimmingCharacters(in: .whitespacesAndNewlines) ?? ""
+        let productName = inputProductNameTextField.text?.trimmingCharacters(in: .whitespacesAndNewlines) ?? ""
+        let expireDate = inputExpireDateTextField.text?.trimmingCharacters(in: .whitespacesAndNewlines) ?? ""
+        
+        if brandName.isEmpty || productName.isEmpty || expireDate.isEmpty {
+            setActionButtonEnabled(false)
+        } else {
+            setActionButtonEnabled(true)
+        }
+    }
+    
+    func textFieldDidChangeSelection(_ textField: UITextField) {
+        if textField.text == " " {
+            textField.text = .init()
+        }
+    }
+    
+    func textFieldShouldClear(_ textField: UITextField) -> Bool {
+        setActionButtonEnabled(false)
+        return true
+    }
+    
+    private func updateButtonForTextFieldState() {
+        if inputBrandTextField.text?.isEmpty == true || inputProductNameTextField.text?.isEmpty == true || inputExpireDateTextField.text?.isEmpty == true {
+            setActionButtonEnabled(false)
+        } else {
+            setActionButtonEnabled(true)
+        }
+    }
+    
+    private func setActionButtonEnabled(_ isEnabled: Bool) {
+        if isEnabled {
+            completeButton.isEnabled = true
+            completeButton.backgroundColor = .customButton
+        } else {
+            completeButton.isEnabled = false
+            completeButton.backgroundColor = .unenableButton
+        }
     }
 }

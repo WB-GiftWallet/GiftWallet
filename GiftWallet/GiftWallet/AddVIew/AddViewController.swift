@@ -26,29 +26,27 @@ class AddViewController: UIViewController {
     private lazy var inputDescriptionLabel = {
         let label = UILabel()
         
-        label.font = .boldSystemFont(ofSize: 15)
+        label.font = UIFont(style: .medium, size: 15)
         label.text = page.labelDescription
         label.translatesAutoresizingMaskIntoConstraints = false
         
         return label
     }()
     
-    private let inputTextField = {
+    private lazy var inputTextField = {
         let textField = CustomTextField()
         
+        textField.delegate = self
+        textField.clearButtonMode = .always
         textField.translatesAutoresizingMaskIntoConstraints = false
         
         return textField
     }()
     
     private lazy var actionButton = {
-        let button = UIButton(type: .roundedRect)
+        let button = CustomButton()
         
         button.setTitle(page.buttonDescription, for: .normal)
-        button.setTitleColor(UIColor.white, for: .normal)
-        button.titleLabel?.font = UIFont.boldSystemFont(ofSize: 20)
-        button.backgroundColor = .systemPurple
-        button.layer.cornerRadius = 5
         button.translatesAutoresizingMaskIntoConstraints = false
         
         return button
@@ -71,7 +69,7 @@ class AddViewController: UIViewController {
         setupButton()
         setuptextInTextField()
         setupDatePicekrInputViewWhenPageIsExpireDate()
-        hideKeyboardWhenTappedAround()
+        updateButtonForTextFieldState()
     }
     
     override func viewDidLayoutSubviews() {
@@ -80,8 +78,6 @@ class AddViewController: UIViewController {
     }
     
     private func setuptextInTextField() {
-        inputTextField.clearButtonMode = .always
-        inputTextField.clearsOnBeginEditing = true
         inputTextField.text = viewModel.getTextsFromSeletedImage(page: page)
     }
     
@@ -156,19 +152,8 @@ class AddViewController: UIViewController {
     }
 }
 
-//MARK: Keyboard 관련
+//MARK: ExpireDate(DatePicker) Keyboard 관련
 extension AddViewController {
-    private func hideKeyboardWhenTappedAround() {
-        let tap = UITapGestureRecognizer(target: self, action: #selector(dismissKeyboard))
-        tap.cancelsTouchesInView = false
-        view.addGestureRecognizer(tap)
-    }
-    
-    @objc
-    private func dismissKeyboard() {
-        view.endEditing(true)
-    }
-
     private func setupDatePicekrInputViewWhenPageIsExpireDate() {
         if page == .expireDate {
             setupDatePicekrAttributes()
@@ -182,18 +167,18 @@ extension AddViewController {
         
         dateFormatter.dateFormat = "yyyy. MM. dd"
         components.day = 0
-
+        
         datePickerView.sizeToFit()
         datePickerView.preferredDatePickerStyle = .inline
         datePickerView.locale = Locale(identifier: "ko-KR")
-                
+        
         let minimumDate = Calendar.autoupdatingCurrent.date(byAdding: components, to: Date())
         datePickerView.minimumDate = minimumDate
         
         datePickerView.addTarget(self,
                                  action: #selector(valueChangedDatePicker(sender:)),
                                  for: .valueChanged)
-
+        
         if let dateText = inputTextField.text,
            let date = dateFormatter.date(from: dateText){
             datePickerView.setDate(date, animated: true)
@@ -211,6 +196,49 @@ extension AddViewController {
         
         if inputTextField.isFirstResponder {
             inputTextField.text = dateFormatter.string(from: sender.date)
+            updateButtonForTextFieldState()
+        }
+    }
+}
+
+// MARK: 텍스트필드 비활성화 & 활성화 관련
+extension AddViewController: UITextFieldDelegate {
+    func textFieldDidEndEditing(_ textField: UITextField) {
+        let brandName = inputTextField.text?.trimmingCharacters(in: .whitespacesAndNewlines) ?? ""
+        
+        if brandName.isEmpty {
+            setActionButtonEnabled(false)
+        } else {
+            setActionButtonEnabled(true)
+        }
+    }
+    
+    func textFieldDidChangeSelection(_ textField: UITextField) {
+        if textField.text == " " {
+            textField.text = .init()
+        }
+    }
+    
+    func textFieldShouldClear(_ textField: UITextField) -> Bool {
+        setActionButtonEnabled(false)
+        return true
+    }
+    
+    private func updateButtonForTextFieldState() {
+        if inputTextField.text?.isEmpty == true {
+            setActionButtonEnabled(false)
+        } else {
+            setActionButtonEnabled(true)
+        }
+    }
+    
+    private func setActionButtonEnabled(_ isEnabled: Bool) {
+        if isEnabled {
+            actionButton.isEnabled = true
+            actionButton.backgroundColor = .customButton
+        } else {
+            actionButton.isEnabled = false
+            actionButton.backgroundColor = .unenableButton
         }
     }
 }
