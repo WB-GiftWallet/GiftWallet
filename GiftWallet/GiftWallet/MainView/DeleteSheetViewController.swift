@@ -44,7 +44,7 @@ class DeleteSheetViewController: UIViewController {
     
     private func configureGiftImageViewHeightConstraint(size: CGSize) {
         let imageRatio = size.height / size.width
-        let imageHeight = view.frame.width * 0.8 * imageRatio
+        let imageHeight = view.frame.width * imageRatio
         
         giftImageViewHeightConstraint?.constant = imageHeight
     }
@@ -56,7 +56,7 @@ class DeleteSheetViewController: UIViewController {
         
         NSLayoutConstraint.activate([
             giftImageView.centerXAnchor.constraint(equalTo: view.centerXAnchor),
-            giftImageView.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor, constant: 10),
+            giftImageView.centerYAnchor.constraint(equalTo: view.centerYAnchor),
             giftImageView.widthAnchor.constraint(equalTo: view.widthAnchor, multiplier: 0.8),
         ])
         
