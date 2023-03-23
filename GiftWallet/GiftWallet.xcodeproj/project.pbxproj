@@ -15,8 +15,6 @@
 		17D5963929B02CBD00AFE039 /* SearchGiftCustomCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 17D5963829B02CBD00AFE039 /* SearchGiftCustomCell.swift */; };
 		17D5963B29B0835800AFE039 /* Extension+Date.swift in Sources */ = {isa = PBXBuildFile; fileRef = 17D5963A29B0835800AFE039 /* Extension+Date.swift */; };
 		D218232C29C9855500855D15 /* AudioToolbox.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D218232B29C9855400855D15 /* AudioToolbox.framework */; };
-		D218233029C9876000855D15 /* DeleteSheetViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D218232F29C9876000855D15 /* DeleteSheetViewController.swift */; };
-		D218233229C98DDC00855D15 /* DeleteSheetViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = D218233129C98DDC00855D15 /* DeleteSheetViewModel.swift */; };
 		D24002D129B752DB00635FFC /* NotoSansKR-Regular.otf in Resources */ = {isa = PBXBuildFile; fileRef = D24002CB29B752DA00635FFC /* NotoSansKR-Regular.otf */; };
 		D24002D229B752DB00635FFC /* NotoSansKR-Thin.otf in Resources */ = {isa = PBXBuildFile; fileRef = D24002CC29B752DB00635FFC /* NotoSansKR-Thin.otf */; };
 		D24002D329B752DB00635FFC /* NotoSansKR-Black.otf in Resources */ = {isa = PBXBuildFile; fileRef = D24002CD29B752DB00635FFC /* NotoSansKR-Black.otf */; };
@@ -100,8 +98,6 @@
 		17D5963829B02CBD00AFE039 /* SearchGiftCustomCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchGiftCustomCell.swift; sourceTree = "<group>"; };
 		17D5963A29B0835800AFE039 /* Extension+Date.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Extension+Date.swift"; sourceTree = "<group>"; };
 		D218232B29C9855400855D15 /* AudioToolbox.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AudioToolbox.framework; path = System/Library/Frameworks/AudioToolbox.framework; sourceTree = SDKROOT; };
-		D218232F29C9876000855D15 /* DeleteSheetViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DeleteSheetViewController.swift; sourceTree = "<group>"; };
-		D218233129C98DDC00855D15 /* DeleteSheetViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DeleteSheetViewModel.swift; sourceTree = "<group>"; };
 		D24002CB29B752DA00635FFC /* NotoSansKR-Regular.otf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "NotoSansKR-Regular.otf"; sourceTree = "<group>"; };
 		D24002CC29B752DB00635FFC /* NotoSansKR-Thin.otf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "NotoSansKR-Thin.otf"; sourceTree = "<group>"; };
 		D24002CD29B752DB00635FFC /* NotoSansKR-Black.otf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "NotoSansKR-Black.otf"; sourceTree = "<group>"; };
@@ -300,7 +296,6 @@
 		D2CDDBF229B0713A00E000E3 /* CustomUI */ = {
 			isa = PBXGroup;
 			children = (
-				D2DAAA2429A47CD500D70E8C /* CustomCollectionView.swift */,
 				D2CDDBF329B0716000E000E3 /* CustomTextField.swift */,
 				D2B7AE6029B7301A000AC592 /* CustomGiftTagUIView.swift */,
 				D27CA42C29B89F1900EC5FC7 /* CustomButton.swift */,
@@ -314,8 +309,7 @@
 				D2D6B74E29A3DEC900E6188C /* MainViewController.swift */,
 				D2D6B75029A3DEE900E6188C /* MainViewModel.swift */,
 				D2DAAA1B29A44B1600D70E8C /* MainCollectionViewCell.swift */,
-				D218232F29C9876000855D15 /* DeleteSheetViewController.swift */,
-				D218233129C98DDC00855D15 /* DeleteSheetViewModel.swift */,
+				D2DAAA2429A47CD500D70E8C /* CustomCollectionView.swift */,
 			);
 			path = MainView;
 			sourceTree = "<group>";
@@ -594,7 +588,6 @@
 				D2CDDBCD29ADFACB00E000E3 /* DateCalCulateUseCase.swift in Sources */,
 				D2DAAA2329A4720300D70E8C /* Ext+DateFormatter.swift in Sources */,
 				D2C90B5829BF4DC1003C3611 /* ZoomImageViewController.swift in Sources */,
-				D218233029C9876000855D15 /* DeleteSheetViewController.swift in Sources */,
 				FC62FF1029A77B5A003E63B0 /* MainTabBarController.swift in Sources */,
 				D2CDDBE229AF3D2B00E000E3 /* AutoInputUseCase.swift in Sources */,
 				D2BB131529C0507300A2440B /* BarcodeViewController.swift in Sources */,
@@ -625,7 +618,6 @@
 				D2C7A45B29A9DAB500EB6D56 /* EtcSttingViewModel.swift in Sources */,
 				D2D6B74F29A3DEC900E6188C /* MainViewController.swift in Sources */,
 				D2D6B75129A3DEE900E6188C /* MainViewModel.swift in Sources */,
-				D218233229C98DDC00855D15 /* DeleteSheetViewModel.swift in Sources */,
 				D2BB131929C2082300A2440B /* UpdateViewModel.swift in Sources */,
 				D2B951B529B63545002E7C08 /* Extension+UIFont.swift in Sources */,
 				D27CA42B29B86ABF00EC5FC7 /* PagingCollectionViewCell.swift in Sources */,
