@@ -35,7 +35,21 @@ class PhotoPreviewViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         view.addSubview(imageView)
-        
+        setupImageSize()
     }
     
+    private func setupImageSize() {
+        let width: CGFloat
+        let height: CGFloat
+        
+        if image.size.width > image.size.height {
+            width = view.frame.width
+            height = image.size.height * (width / image.size.width)
+        } else {
+            height = view.frame.height
+            width = image.size.width * (height / image.size.height)
+        }
+        
+        preferredContentSize = CGSize(width: width, height: height)
+    }
 }
