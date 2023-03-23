@@ -16,23 +16,10 @@ class DeleteSheetViewController: UIViewController {
         let imageView = UIImageView()
         
         imageView.image = UIImage(named: "testImageSTARBUCKSSMALL")
-        imageView.contentMode = .scaleAspectFit
         imageView.translatesAutoresizingMaskIntoConstraints = false
+        imageView.contentMode = .scaleAspectFit
         
         return imageView
-    }()
-    
-    private let deleteButton = {
-       let button = UIButton()
-        
-        button.setTitle("삭제하기", for: .normal)
-        button.backgroundColor = .white
-        button.setTitleColor(.black, for: .normal)
-        button.titleLabel?.font = UIFont(style: .regular, size: 18)
-        button.addTarget(nil, action: #selector(tapDeleteButton), for: .touchUpInside)
-        button.translatesAutoresizingMaskIntoConstraints = false
-        
-        return button
     }()
     
     init(viewModel: DeleteSheetViewModel) {
@@ -51,16 +38,6 @@ class DeleteSheetViewController: UIViewController {
         configureGiftImageViewHeightConstraint(size: viewModel.giftImageSize)
     }
     
-    override func viewWillLayoutSubviews() {
-        super.viewWillLayoutSubviews()
-        deleteButton.layer.cornerRadius = 10
-    }
-    
-    @objc
-    private func tapDeleteButton() {
-        self.dismiss(animated: true)
-    }
-    
     private func configureImageView() {
         giftImageView.image = viewModel.gift.image
     }
@@ -74,24 +51,19 @@ class DeleteSheetViewController: UIViewController {
     
     private func setupViews() {
         view.backgroundColor = UIColor.init(red: 0, green: 0, blue: 0, alpha: 0.9)
-                
-        [giftImageView, deleteButton].forEach(view.addSubview(_:))
+        
+        view.addSubview(giftImageView)
         
         NSLayoutConstraint.activate([
             giftImageView.centerXAnchor.constraint(equalTo: view.centerXAnchor),
             giftImageView.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor, constant: 10),
             giftImageView.widthAnchor.constraint(equalTo: view.widthAnchor, multiplier: 0.8),
-            
-            deleteButton.topAnchor.constraint(equalTo: giftImageView.bottomAnchor, constant: 20),
-            deleteButton.leadingAnchor.constraint(equalTo: giftImageView.leadingAnchor),
-            deleteButton.widthAnchor.constraint(equalTo: giftImageView.widthAnchor, multiplier: 0.7),
-            deleteButton.heightAnchor.constraint(equalTo: deleteButton.widthAnchor, multiplier: 0.2)
         ])
         
         giftImageViewHeightConstraint = giftImageView.heightAnchor.constraint(equalToConstant: .zero)
         
         NSLayoutConstraint.activate([
             giftImageViewHeightConstraint
-        ].compactMap{ $0 })
-    }
+        ].compactMap({ $0 })
+        )}
 }
