@@ -352,17 +352,40 @@ extension MainViewController: UICollectionViewDataSource {
     }
 }
 
-// MARK: UICollectionViewDelegate 관련
+// MARK: UICollectionViewDelegate 관련 ( ContextMenu )
 extension MainViewController: UICollectionViewDelegate {
     func collectionView(_ collectionView: UICollectionView, contextMenuConfigurationForItemAt indexPath: IndexPath, point: CGPoint) -> UIContextMenuConfiguration? {
         guard let gift = getGift(for: collectionView, indexPath: indexPath) else { return nil }
+        let identifier = indexPath.row as NSNumber
         
-        return UIContextMenuConfiguration(identifier: nil, previewProvider: {
+        return UIContextMenuConfiguration(identifier: identifier, previewProvider: {
             return PhotoPreviewViewController(image: gift.image)
         }, actionProvider: { _ in
             return self.makeMenu()
         })
         
+    }
+    
+    func collectionView(_ collectionView: UICollectionView, previewForHighlightingContextMenuWithConfiguration configuration: UIContextMenuConfiguration) -> UITargetedPreview? {
+        guard let index = configuration.identifier as? Int else { return nil }
+        let indexPath = IndexPath(item: index, section: 0)
+        guard let cell = collectionView.cellForItem(at: indexPath) as? MainCollectionViewCell else { return nil }
+
+        return UITargetedPreview(view: cell.giftImageView)
+    }
+        
+    func collectionView(_ collectionView: UICollectionView, willPerformPreviewActionForMenuWith configuration: UIContextMenuConfiguration, animator: UIContextMenuInteractionCommitAnimating) {
+        animator.addCompletion {
+            guard let index = configuration.identifier as? Int else { return }
+            let indexPath = IndexPath(row: index, section: 0)
+            guard let gift = self.getGift(for: collectionView, indexPath: indexPath) else { return }
+            
+            let viewModel = DetailViewModel(gifts: [gift])
+            let detailViewController = DetailViewController(viewModel: viewModel)
+            detailViewController.modalTransitionStyle = .crossDissolve
+            detailViewController.modalPresentationStyle = .overFullScreen
+            self.present(detailViewController, animated: true)
+        }
     }
     
     private func getGift(for collectionView: UICollectionView, indexPath: IndexPath) -> Gift? {
