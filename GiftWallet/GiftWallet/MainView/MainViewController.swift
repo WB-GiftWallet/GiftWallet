@@ -361,7 +361,7 @@ extension MainViewController: UICollectionViewDelegate {
         return UIContextMenuConfiguration(identifier: identifier, previewProvider: {
             return PhotoPreviewViewController(image: gift.image)
         }, actionProvider: { _ in
-            return self.makeMenu(gift: gift)
+            return self.makeMenu(gift: gift, collectionView: collectionView)
         })
         
     }
@@ -398,7 +398,7 @@ extension MainViewController: UICollectionViewDelegate {
         return gift
     }
     
-    private func makeMenu(gift: Gift) -> UIMenu {
+    private func makeMenu(gift: Gift, collectionView: UICollectionView) -> UIMenu {
         let see = UIAction(title: "보기", image: UIImage(systemName: "magnifyingglass")) { action in
             self.seeAction(gift: gift)
         }
@@ -409,7 +409,7 @@ extension MainViewController: UICollectionViewDelegate {
         }
         
         let completeUse = UIAction(title: "사용완료", image: UIImage(systemName: "checkmark.circle")) { action in
-            
+            self.completeUseAction(gift: gift)
         }
         
         let delete = UIAction(title: "삭제하기", image: UIImage(systemName: "trash"), attributes: .destructive) { action in
@@ -434,6 +434,15 @@ extension MainViewController: UICollectionViewDelegate {
         let navigationUpdateGiftInfoViewController = UINavigationController(rootViewController: updateGiftInfoViewController)
         navigationUpdateGiftInfoViewController.modalPresentationStyle = .fullScreen
         self.present(navigationUpdateGiftInfoViewController, animated: true)
+    }
+    
+    private func completeUseAction(gift: Gift) {
+        let alertController = UIAlertController(title: nil, message: "사용완료 처리하시겠습니까?", preferredStyle: .alert)
+        let okAction = UIAlertAction(title: "예", style: .destructive) { _ in
+            self.viewModel.updateUseable(updateGiftNumber: gift.number)
+        }
+        alertController.addAction(okAction)
+        present(alertController, animated: true)
     }
 }
 

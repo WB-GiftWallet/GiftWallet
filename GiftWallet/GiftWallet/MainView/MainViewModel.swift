@@ -10,6 +10,7 @@ import UIKit
 
 class MainViewModel {
     private let useCase = DateCalculateUseCase()
+    private let coreDataManager = CoreDataManager.shared
     
     var allGifts: [Gift] = []
     var expireGifts: Observable<[Gift]> = .init([])
@@ -45,9 +46,29 @@ class MainViewModel {
     }
 }
 
-/* unavailable Logic (수정필요)
- //        unavailableGifts = allGifts.filter({ gift in
- //            guard let giftExpireDateNotNil = gift.expireDate else { return false }
- //            return gift.useableState == false || calendar.checkIsExpired(expireDate: giftExpireDateNotNil)
- //        })
- */
+// MARK: Update Gift 관련
+extension MainViewModel {
+    func updateUseable(updateGiftNumber: Int) {
+        guard var gift = findIndexForGiftWithNumber(updategiftNumber: updateGiftNumber) else { return }
+        gift.useableState = false
+        
+        updateCoreData(gift: gift)
+    }
+    
+    private func findIndexForGiftWithNumber(updategiftNumber: Int) -> Int? {
+        if let index = recentGifts.value.firstIndex(where: { $0.number == updategiftNumber }) {
+            return recentGifts.value[index]
+        } else if let index = expireGifts.value.firstIndex(where: { $0.number == updategiftNumber }) {
+            return expireGifts.value[index]
+        }
+        return nil
+    }
+    
+    private func updateCoreData(gift: Gift) {
+        do {
+            try coreDataManager.updateData(gift)
+        } catch {
+            print(error.localizedDescription)
+        }
+    }
+}
