@@ -288,7 +288,8 @@ class MainViewController: UIViewController, UISearchBarDelegate, UISearchControl
     }
 }
 
-extension MainViewController: UICollectionViewDataSource, UICollectionViewDelegate {
+// MARK: UIColellectionViewDataSource
+extension MainViewController: UICollectionViewDataSource {
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
         switch collectionView {
         case expireCollectionView:
@@ -351,6 +352,12 @@ extension MainViewController: UICollectionViewDataSource, UICollectionViewDelega
     }
 }
 
+// MARK: UICollectionViewDelegate 관련
+extension MainViewController: UICollectionViewDelegate {
+    
+}
+
+// MARK: UICollectionViewDelegateFlowLayout 관련
 extension MainViewController: UICollectionViewDelegateFlowLayout {
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
         return CGSize(width: collectionView.frame.width / 2.5, height: collectionView.frame.height)
@@ -361,6 +368,7 @@ extension MainViewController: UICollectionViewDelegateFlowLayout {
     }
 }
 
+// MARK: GiftDidDismissDelegate Protocol 관련
 extension MainViewController: GiftDidDismissDelegate {
     func didDismissDetailViewController() {
         updateCollectionViewData()
