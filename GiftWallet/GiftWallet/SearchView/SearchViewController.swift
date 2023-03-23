@@ -43,8 +43,7 @@ final class SearchViewController: UIViewController {
         let isSearchBarHasText = searchController?.searchBar.text?.isEmpty == false
         return isActive && isSearchBarHasText
     }
-    private lazy var activateConstraint = recommendScrollView.frameLayoutGuide.heightAnchor.constraint(equalToConstant: .zero)
-                
+    private var activateConstraint = NSLayoutConstraint()
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -70,6 +69,7 @@ final class SearchViewController: UIViewController {
         [searchTableView, recommendScrollView].forEach {
             $0.translatesAutoresizingMaskIntoConstraints = false
         }
+        activateConstraint = recommendScrollView.frameLayoutGuide.heightAnchor.constraint(equalToConstant: .zero)
         
         NSLayoutConstraint.activate([
             recommendScrollView.frameLayoutGuide.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor, constant: 4),
@@ -237,10 +237,16 @@ extension SearchViewController: UISearchResultsUpdating {
 
 extension SearchViewController: UISearchControllerDelegate {
     func willPresentSearchController(_ searchController: UISearchController) {
-        activateConstraint.isActive = true
+        UIView.animate(withDuration: 1) {
+            self.activateConstraint.isActive = true
+            self.view.layoutIfNeeded()
+        }
     }
     
     func willDismissSearchController(_ searchController: UISearchController) {
-        activateConstraint.isActive = false
+        UIView.animate(withDuration: 1) {
+            self.activateConstraint.isActive = false
+            self.view.layoutIfNeeded()
+        }
     }
 }
