@@ -39,7 +39,7 @@ class MainViewController: UIViewController, UISearchBarDelegate, UISearchControl
     }()
     
     private let emptyLabel = {
-       let label = UILabel()
+        let label = UILabel()
         
         label.text = "쿠폰을 등록해주세요!"
         label.numberOfLines = 0
@@ -50,7 +50,7 @@ class MainViewController: UIViewController, UISearchBarDelegate, UISearchControl
     }()
     
     private let emptyVerticalStackView = {
-       let stackView = UIStackView()
+        let stackView = UIStackView()
         
         stackView.axis = .vertical
         stackView.spacing = 20
@@ -309,7 +309,7 @@ extension MainViewController: UICollectionViewDataSource {
                                                                 for: indexPath) as? MainCollectionViewCell ?? MainCollectionViewCell()
             let expireGift = viewModel.expireGifts.value[indexPath.row]
             let subtractionResult = viewModel.subtractionOfDays(expireDate: expireGift.expireDate)
-
+            
             cell.configureCell(data: expireGift)
             cell.configureTagLabel(subtractionResult)
             return cell
@@ -332,12 +332,12 @@ extension MainViewController: UICollectionViewDataSource {
         var sendGifts: [Gift]?
         
         switch collectionView {
-            case expireCollectionView:
-                sendGifts = viewModel.expireGifts.value
-            case recentCollectionView:
-                sendGifts = viewModel.recentGifts.value
-            default:
-                break
+        case expireCollectionView:
+            sendGifts = viewModel.expireGifts.value
+        case recentCollectionView:
+            sendGifts = viewModel.recentGifts.value
+        default:
+            break
         }
         guard let sendGifts = sendGifts else { return }
         let detailViewModel = DetailViewModel(gifts: sendGifts,
@@ -347,7 +347,7 @@ extension MainViewController: UICollectionViewDataSource {
         let navigationDetailViewController = UINavigationController(rootViewController: detailViewController)
         navigationDetailViewController.modalTransitionStyle = .coverVertical
         navigationDetailViewController.modalPresentationStyle = .overFullScreen
-
+        
         present(navigationDetailViewController, animated: true)
     }
 }
@@ -355,8 +355,33 @@ extension MainViewController: UICollectionViewDataSource {
 // MARK: UICollectionViewDelegate 관련
 extension MainViewController: UICollectionViewDelegate {
     func collectionView(_ collectionView: UICollectionView, contextMenuConfigurationForItemAt indexPath: IndexPath, point: CGPoint) -> UIContextMenuConfiguration? {
-        <#code#>
+        guard let gift = getGift(for: collectionView, indexPath: indexPath) else { return nil }
+        
+        return UIContextMenuConfiguration(identifier: nil, previewProvider: {
+            return PhotoPreviewViewController(image: gift.image)
+        }) { _ in
+            let deleteAction = UIAction(title: "삭제하기", image: UIImage(systemName: "trash")) { _ in
+                
+            }
+            return UIMenu(title: "", children: [deleteAction])
+        }
+        
     }
+    
+    private func getGift(for collectionView: UICollectionView, indexPath: IndexPath) -> Gift? {
+        let gift: Gift?
+        
+        switch collectionView {
+        case expireCollectionView:
+            gift = viewModel.expireGifts.value[indexPath.row]
+        case recentCollectionView:
+            gift = viewModel.recentGifts.value[indexPath.row]
+        default:
+            gift = nil
+        }
+        return gift
+    }
+    
 }
 
 // MARK: UICollectionViewDelegateFlowLayout 관련
