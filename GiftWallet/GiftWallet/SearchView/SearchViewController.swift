@@ -56,12 +56,10 @@ final class SearchViewController: UIViewController {
         searchTableView.dataSource = self
         searchResultController.tableView.delegate = self
         searchResultController.tableView.dataSource = self
-        giftSearchController.searchBar.delegate = self
         giftSearchController.delegate = self
         
         setupRecommendData()
         setLayout()
-        
         bind()
     }
     
@@ -237,7 +235,7 @@ extension SearchViewController: UISearchResultsUpdating {
     }
 }
 
-extension SearchViewController: UISearchBarDelegate, UISearchControllerDelegate {
+extension SearchViewController: UISearchControllerDelegate {
     func willPresentSearchController(_ searchController: UISearchController) {
         activateConstraint.isActive = true
     }
