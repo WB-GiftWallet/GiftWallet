@@ -10,7 +10,7 @@
 		171695B129B1B8CA00CF3E41 /* SearchTableViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 171695B029B1B8CA00CF3E41 /* SearchTableViewModel.swift */; };
 		1723BE8529C3142600AE06F9 /* IQKeyboardManagerSwift in Frameworks */ = {isa = PBXBuildFile; productRef = 1723BE8429C3142600AE06F9 /* IQKeyboardManagerSwift */; };
 		17A950FF29B74DA2001E6D4F /* SearchViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 17A950FE29B74DA2001E6D4F /* SearchViewController.swift */; };
-		17A9510129B75101001E6D4F /* RecommendView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 17A9510029B75101001E6D4F /* RecommendView.swift */; };
+		17A9510129B75101001E6D4F /* RecommendScrollView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 17A9510029B75101001E6D4F /* RecommendScrollView.swift */; };
 		17D5963729AF6F9800AFE039 /* SearchTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 17D5963629AF6F9800AFE039 /* SearchTableViewController.swift */; };
 		17D5963929B02CBD00AFE039 /* SearchGiftCustomCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 17D5963829B02CBD00AFE039 /* SearchGiftCustomCell.swift */; };
 		17D5963B29B0835800AFE039 /* Extension+Date.swift in Sources */ = {isa = PBXBuildFile; fileRef = 17D5963A29B0835800AFE039 /* Extension+Date.swift */; };
@@ -91,7 +91,7 @@
 /* Begin PBXFileReference section */
 		171695B029B1B8CA00CF3E41 /* SearchTableViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchTableViewModel.swift; sourceTree = "<group>"; };
 		17A950FE29B74DA2001E6D4F /* SearchViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchViewController.swift; sourceTree = "<group>"; };
-		17A9510029B75101001E6D4F /* RecommendView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RecommendView.swift; sourceTree = "<group>"; };
+		17A9510029B75101001E6D4F /* RecommendScrollView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RecommendScrollView.swift; sourceTree = "<group>"; };
 		17BCD48129C30F8900F9FC9C /* Package */ = {isa = PBXFileReference; lastKnownFileType = wrapper; path = Package; sourceTree = "<group>"; };
 		17D5963629AF6F9800AFE039 /* SearchTableViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchTableViewController.swift; sourceTree = "<group>"; };
 		17D5963829B02CBD00AFE039 /* SearchGiftCustomCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchGiftCustomCell.swift; sourceTree = "<group>"; };
@@ -186,11 +186,11 @@
 		17D5963529AF6F7300AFE039 /* SearchView */ = {
 			isa = PBXGroup;
 			children = (
-				17D5963629AF6F9800AFE039 /* SearchTableViewController.swift */,
 				17A950FE29B74DA2001E6D4F /* SearchViewController.swift */,
-				17A9510029B75101001E6D4F /* RecommendView.swift */,
 				171695B029B1B8CA00CF3E41 /* SearchTableViewModel.swift */,
+				17D5963629AF6F9800AFE039 /* SearchTableViewController.swift */,
 				17D5963829B02CBD00AFE039 /* SearchGiftCustomCell.swift */,
+				17A9510029B75101001E6D4F /* RecommendScrollView.swift */,
 			);
 			path = SearchView;
 			sourceTree = "<group>";
@@ -585,7 +585,7 @@
 				17D5963729AF6F9800AFE039 /* SearchTableViewController.swift in Sources */,
 				D2DAAA1C29A44B1600D70E8C /* MainCollectionViewCell.swift in Sources */,
 				FC074C0629A90361006AD199 /* GiftData+CoreDataProperties.swift in Sources */,
-				17A9510129B75101001E6D4F /* RecommendView.swift in Sources */,
+				17A9510129B75101001E6D4F /* RecommendScrollView.swift in Sources */,
 				FC1E747229A207DA0010A4BA /* AppDelegate.swift in Sources */,
 				FC074C0129A8D5B5006AD199 /* CoreDataManager.swift in Sources */,
 				D2CDDBF429B0716000E000E3 /* CustomTextField.swift in Sources */,

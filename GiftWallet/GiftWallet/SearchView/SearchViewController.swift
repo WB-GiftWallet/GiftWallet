@@ -9,140 +9,149 @@ import UIKit
 
 final class SearchViewController: UIViewController {
     
+    let viewModel = SearchTableViewModel()
+    
     private let searchResultController = SearchTableViewController()
-    private lazy var giftSearchController = UISearchController(searchResultsController: searchResultController)
+    private lazy var giftSearchController: UISearchController = {
+        let searchController = UISearchController(searchResultsController: searchResultController)
+        
+        searchController.searchResultsUpdater = self
+        searchController.hidesBottomBarWhenPushed = true
+        
+        searchController.searchBar.placeholder = "브랜드 이름으로 검색하세요!"
+        searchController.searchBar.showsSearchResultsButton = false
+        searchController.searchBar.setValue("취소", forKey: "cancelButtonText")
+        searchController.searchBar.searchTextField.clearButtonMode = .always
+        searchController.searchBar.searchTextField.clearsOnBeginEditing = true
+        
+        return searchController
+    }()
     
-    private let searchTableView = UITableView()
-    private let scrollView = UIScrollView()
-    private let recommendView = RecommendView()
+    private let searchTableView: UITableView = {
+        let tableView = UITableView()
+        
+        tableView.register(CustomCell.self, forCellReuseIdentifier: "giftCustomCell")
+        
+        return tableView
+    }()
     
-    private var allGiftData = [Gift]()
-    private var filteringGifts = [Gift]()
+    private let recommendScrollView = RecommendScrollView()
+    
     private var isFiltering: Bool {
         let searchController = self.navigationItem.searchController
         let isActive = searchController?.isActive ?? false
         let isSearchBarHasText = searchController?.searchBar.text?.isEmpty == false
         return isActive && isSearchBarHasText
     }
+    private var activateConstraint = NSLayoutConstraint()
     
     override func viewDidLoad() {
         super.viewDidLoad()
         view.backgroundColor = .systemBackground
         
-        fetchGiftCoreData()
-        setSearchController()
+        setNavigation()
         
         searchTableView.delegate = self
         searchTableView.dataSource = self
         searchResultController.tableView.delegate = self
         searchResultController.tableView.dataSource = self
+        giftSearchController.delegate = self
         
-        setLayout()
         setupRecommendData()
+        setLayout()
+        bind()
     }
     
     private func setLayout() {
-        view.addSubview(scrollView)
         view.addSubview(searchTableView)
-        scrollView.addSubview(recommendView)
+        view.addSubview(recommendScrollView)
         
-        searchTableView.translatesAutoresizingMaskIntoConstraints = false
-        recommendView.translatesAutoresizingMaskIntoConstraints = false
-        scrollView.translatesAutoresizingMaskIntoConstraints = false
-        
-        scrollView.showsHorizontalScrollIndicator = false
+        [searchTableView, recommendScrollView].forEach {
+            $0.translatesAutoresizingMaskIntoConstraints = false
+        }
+        activateConstraint = recommendScrollView.frameLayoutGuide.heightAnchor.constraint(equalToConstant: .zero)
         
         NSLayoutConstraint.activate([
-            scrollView.frameLayoutGuide.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor, constant: 4),
-            scrollView.frameLayoutGuide.leadingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.leadingAnchor, constant: 10),
-            scrollView.frameLayoutGuide.trailingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.trailingAnchor, constant: -10),
-            scrollView.frameLayoutGuide.heightAnchor.constraint(equalTo: recommendView.heightAnchor),
-            
-            recommendView.topAnchor.constraint(equalTo: scrollView.contentLayoutGuide.topAnchor),
-            recommendView.leadingAnchor.constraint(equalTo: scrollView.contentLayoutGuide.leadingAnchor),
-            recommendView.trailingAnchor.constraint(equalTo: scrollView.contentLayoutGuide.trailingAnchor),
-            recommendView.bottomAnchor.constraint(equalTo: scrollView.contentLayoutGuide.bottomAnchor),
-            
-            searchTableView.topAnchor.constraint(equalTo: scrollView.contentLayoutGuide.bottomAnchor, constant: 4),
+            recommendScrollView.frameLayoutGuide.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor, constant: 4),
+            recommendScrollView.frameLayoutGuide.leadingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.leadingAnchor, constant: 10),
+            recommendScrollView.frameLayoutGuide.trailingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.trailingAnchor, constant: -10),
+
+            searchTableView.topAnchor.constraint(equalTo: recommendScrollView.contentLayoutGuide.bottomAnchor, constant: 4),
             searchTableView.leadingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.leadingAnchor),
             searchTableView.trailingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.trailingAnchor),
             searchTableView.bottomAnchor.constraint(equalTo: view.safeAreaLayoutGuide.bottomAnchor),
         ])
     }
     
-    private func fetchGiftCoreData() {
-        
-        switch CoreDataManager.shared.fetchData() {
-            case .success(let data):
-                data.forEach { giftData in
-                    allGiftData.append(giftData)
-                }
-            case .failure(let error):
-                print(error.localizedDescription)
-        }
-        
-        self.filteringGifts = self.allGiftData.sorted(by: {$0.number < $1.number})
-    }
-    
-    private func setSearchController() {
-        
-        giftSearchController.view.backgroundColor = .systemBackground
-        giftSearchController.searchResultsUpdater = self
-        giftSearchController.searchBar.placeholder = "브랜드 이름으로 검색하세요!"
-        giftSearchController.hidesBottomBarWhenPushed = true
-        giftSearchController.searchBar.showsSearchResultsButton = false
-        giftSearchController.searchBar.setValue("취소", forKey: "cancelButtonText")
-        giftSearchController.searchBar.searchTextField.clearButtonMode = .always
-        giftSearchController.searchBar.searchTextField.clearsOnBeginEditing = true
-        
+    private func setNavigation() {
         self.navigationItem.hidesSearchBarWhenScrolling = false
         self.navigationItem.searchController = giftSearchController
-        
-        searchTableView.register(CustomCell.self, forCellReuseIdentifier: "giftCustomCell")
     }
     
     private func setupRecommendData() {
-        var brandCounts = Dictionary<String, Int>()
         
-        allGiftData.forEach { data in
-            guard let brandName = data.brandName else { return }
-            
-            if brandCounts[brandName] == nil {
-                brandCounts.updateValue(1, forKey: brandName)
-            } else if brandCounts[brandName] != nil {
-                guard let value = brandCounts[brandName] else { return }
-                brandCounts.updateValue(value + 1, forKey: brandName)
+        let buttons = [
+            recommendScrollView.firstRecommendButton,
+            recommendScrollView.secondRecommendButton,
+            recommendScrollView.thirdRecommendButton,
+            recommendScrollView.fourthRecommendButton,
+            recommendScrollView.fifthRecommendButton
+        ]
+        
+        let viewModelData = viewModel.sortedRecommendData
+        
+        if viewModelData.count == 0 {
+            return
+        } else if viewModelData.count <= 5 {
+            for (index, value) in viewModelData.enumerated() {
+                buttons[index].setTitle(value, for: .normal)
+                recommendScrollView.recommendStackView.addArrangedSubview(buttons[index])
+            }
+        } else {
+            for index in 0...4 {
+                buttons[index].setTitle(viewModelData[index], for: .normal)
+                recommendScrollView.recommendStackView.addArrangedSubview(buttons[index])
             }
         }
-        
-        let sortedCounts = brandCounts.sorted { $0.1 > $1.1 }
-        
-        recommendView.firstRecommendButton.setTitle(sortedCounts[0].key, for: .normal)
-        recommendView.secondRecommendButton.setTitle(sortedCounts[1].key, for: .normal)
-        recommendView.thirdRecommendButton.setTitle(sortedCounts[2].key, for: .normal)
-        recommendView.fourthRecommendButton.setTitle(sortedCounts[3].key, for: .normal)
-        recommendView.fifthRecommendButton.setTitle(sortedCounts[4].key, for: .normal)
         
         addTargetButtons()
     }
     
     private func addTargetButtons() {
-        recommendView.firstRecommendButton.addTarget(nil, action: #selector(tapRecommendButton), for: .touchUpInside)
-        recommendView.secondRecommendButton.addTarget(nil, action: #selector(tapRecommendButton), for: .touchUpInside)
-        recommendView.thirdRecommendButton.addTarget(nil, action: #selector(tapRecommendButton), for: .touchUpInside)
-        recommendView.fourthRecommendButton.addTarget(nil, action: #selector(tapRecommendButton), for: .touchUpInside)
-        recommendView.fifthRecommendButton.addTarget(nil, action: #selector(tapRecommendButton), for: .touchUpInside)
+        [recommendScrollView.firstRecommendButton,
+        recommendScrollView.secondRecommendButton,
+        recommendScrollView.thirdRecommendButton,
+        recommendScrollView.fourthRecommendButton,
+         recommendScrollView.fifthRecommendButton].forEach {
+            $0.addTarget(nil, action: #selector(tapRecommendButton), for: .touchUpInside)
+        }
     }
     
     @objc private func tapRecommendButton(_ sender: UIButton) {
-        giftSearchController.searchBar.text = sender.titleLabel?.text
         giftSearchController.searchBar.becomeFirstResponder()
+        giftSearchController.searchBar.text = sender.titleLabel?.text
+    }
+    
+    private func bind() {
+        viewModel.allGiftData.bind { [weak self] _ in
+            DispatchQueue.main.async {
+                self?.searchTableView.reloadData()
+                self?.searchResultController.tableView.reloadData()
+            }
+        }
+        
+        viewModel.filteringGifts.bind { [weak self] _ in
+            DispatchQueue.main.async {
+                self?.searchTableView.reloadData()
+                self?.searchResultController.tableView.reloadData()
+            }
+        }
     }
 }
 
 extension SearchViewController: UITableViewDataSource, UITableViewDelegate {
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return self.isFiltering ? self.filteringGifts.count : self.allGiftData.count
+        return self.isFiltering ? self.viewModel.filteringGifts.value.count : self.viewModel.allGiftData.value.count
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
@@ -151,19 +160,10 @@ extension SearchViewController: UITableViewDataSource, UITableViewDelegate {
         }
         
         if self.isFiltering {
-            let indexGiftsData = filteringGifts[indexPath.row]
-            cell.giftImageView.image = indexGiftsData.image
-            cell.brandNameLabel.text = indexGiftsData.brandName
-            cell.productNameLabel.text = indexGiftsData.productName
-            cell.expireDateLabel.text = indexGiftsData.expireDate?.setupDateStyleForDisplay()
+            cell.changeCell(viewModel.filteringGifts.value[indexPath.row])
         } else {
-            let indexGiftsData = allGiftData[indexPath.row]
-            cell.giftImageView.image = indexGiftsData.image
-            cell.brandNameLabel.text = indexGiftsData.brandName
-            cell.productNameLabel.text = indexGiftsData.productName
-            cell.expireDateLabel.text = indexGiftsData.expireDate?.setupDateStyleForDisplay()
+            cell.changeCell(viewModel.allGiftData.value[indexPath.row])
         }
-        
         return cell
     }
     
@@ -172,23 +172,22 @@ extension SearchViewController: UITableViewDataSource, UITableViewDelegate {
         var indexGiftsData: Gift
         
         if self.isFiltering {
-            indexGiftsData = filteringGifts[indexPath.row]
+            indexGiftsData = viewModel.filteringGifts.value[indexPath.row]
         } else {
-            indexGiftsData = allGiftData[indexPath.row]
+            indexGiftsData = viewModel.allGiftData.value[indexPath.row]
         }
         
         let viewmodel = DetailViewModel(gifts: [indexGiftsData])
         let detailViewController = DetailViewController(viewModel: viewmodel)
         
-        let naviDV = UINavigationController(rootViewController: detailViewController)
-        naviDV.modalPresentationStyle = .overFullScreen
-        present(naviDV, animated: true)
+        let detailNavigationController = UINavigationController(rootViewController: detailViewController)
+        detailNavigationController.modalPresentationStyle = .overFullScreen
+        present(detailNavigationController, animated: true)
         
         tableView.deselectRow(at: indexPath, animated: true)
-        
-        return
     }
     
+    //TODO: Height조정 필요
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
         return self.view.frame.height / 7
     }
@@ -198,10 +197,10 @@ extension SearchViewController: UITableViewDataSource, UITableViewDelegate {
             let dataNumber: Int
             
             if self.isFiltering {
-                dataNumber = self.filteringGifts[indexPath.row].number
-                self.filteringGifts.remove(at: indexPath.row)
+                dataNumber = self.viewModel.filteringGifts.value[indexPath.row].number
+                self.viewModel.filteringGifts.value.remove(at: indexPath.row)
             } else {
-                dataNumber = self.allGiftData[indexPath.row].number
+                dataNumber = self.viewModel.allGiftData.value[indexPath.row].number
             }
             
             do {
@@ -210,9 +209,9 @@ extension SearchViewController: UITableViewDataSource, UITableViewDelegate {
                 print(error.localizedDescription)
             }
             
-            for (index, data) in self.allGiftData.enumerated() {
+            for (index, data) in self.viewModel.allGiftData.value.enumerated() {
                 if data.number == dataNumber {
-                    self.allGiftData.remove(at: index)
+                    self.viewModel.allGiftData.value.remove(at: index)
                     break
                 }
             }
@@ -230,8 +229,24 @@ extension SearchViewController: UISearchResultsUpdating {
     func updateSearchResults(for searchController: UISearchController) {
         
         guard let text = searchController.searchBar.text else { return }
-        self.filteringGifts = self.allGiftData.filter { $0.brandName!.contains(text) }
+        self.viewModel.filteringGifts.value = self.viewModel.allGiftData.value.filter { $0.brandName!.contains(text) }
         
         self.searchResultController.tableView.reloadData()
+    }
+}
+
+extension SearchViewController: UISearchControllerDelegate {
+    func willPresentSearchController(_ searchController: UISearchController) {
+        UIView.animate(withDuration: 1) {
+            self.activateConstraint.isActive = true
+            self.view.layoutIfNeeded()
+        }
+    }
+    
+    func willDismissSearchController(_ searchController: UISearchController) {
+        UIView.animate(withDuration: 1) {
+            self.activateConstraint.isActive = false
+            self.view.layoutIfNeeded()
+        }
     }
 }
