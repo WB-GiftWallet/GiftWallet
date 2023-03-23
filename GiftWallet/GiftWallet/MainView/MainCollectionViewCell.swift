@@ -9,8 +9,6 @@ import UIKit
 
 class MainCollectionViewCell: UICollectionViewCell, ReusableView {
     
-    var delegate: CollectionViewCellLongPressDelegate?
-    
     private let shadowView = {
         let view = UIView()
         view.backgroundColor = .white.withAlphaComponent(0.1)
@@ -103,7 +101,6 @@ class MainCollectionViewCell: UICollectionViewCell, ReusableView {
         super.init(frame: frame)
         setupShadow()
         setupViews()
-        setupLongGestureRecognizerOnCollection()
     }
     
     @available(*, unavailable)
@@ -171,24 +168,4 @@ class MainCollectionViewCell: UICollectionViewCell, ReusableView {
             allContentsVerticalStackView.bottomAnchor.constraint(equalTo: safeArea.bottomAnchor)
         ])
     }
-}
-
-// MARK: Delete On LongPress Gesture 관련
-extension MainCollectionViewCell {
-    private func setupLongGestureRecognizerOnCollection() {
-        let gesture = UILongPressGestureRecognizer(target: self, action: #selector(handleLongPress(gestureRecognizer:)))
-        addGestureRecognizer(gesture)
-    }
-    
-    @objc func handleLongPress(gestureRecognizer: UILongPressGestureRecognizer) {
-        if gestureRecognizer.state == .began {
-            print("진동")
-        } else if gestureRecognizer.state == .ended {
-            delegate?.longPressed(gestureRecognizer)
-        }
-    }
-}
-
-protocol CollectionViewCellLongPressDelegate {
-    func longPressed(_ sender: UILongPressGestureRecognizer)
 }

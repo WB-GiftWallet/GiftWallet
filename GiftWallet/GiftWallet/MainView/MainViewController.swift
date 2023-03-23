@@ -288,7 +288,6 @@ class MainViewController: UIViewController, UISearchBarDelegate, UISearchControl
     }
 }
 
-// MARK: CollectionView Datasource & Delegate 관련
 extension MainViewController: UICollectionViewDataSource, UICollectionViewDelegate {
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
         switch collectionView {
@@ -310,7 +309,6 @@ extension MainViewController: UICollectionViewDataSource, UICollectionViewDelega
             let expireGift = viewModel.expireGifts.value[indexPath.row]
             let subtractionResult = viewModel.subtractionOfDays(expireDate: expireGift.expireDate)
 
-            cell.delegate = self
             cell.configureCell(data: expireGift)
             cell.configureTagLabel(subtractionResult)
             return cell
@@ -320,7 +318,6 @@ extension MainViewController: UICollectionViewDataSource, UICollectionViewDelega
                                                                 for: indexPath) as? MainCollectionViewCell ?? MainCollectionViewCell()
             let recentGift = viewModel.recentGifts.value[indexPath.row]
             
-            cell.delegate = self
             cell.configureCell(data: recentGift)
             cell.setupTagViewIsHidden()
             return cell
@@ -354,7 +351,6 @@ extension MainViewController: UICollectionViewDataSource, UICollectionViewDelega
     }
 }
 
-// MARK: UICollectionViewDelegateFlowLayout 관련
 extension MainViewController: UICollectionViewDelegateFlowLayout {
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
         return CGSize(width: collectionView.frame.width / 2.5, height: collectionView.frame.height)
@@ -365,16 +361,8 @@ extension MainViewController: UICollectionViewDelegateFlowLayout {
     }
 }
 
-// MARK: DetailView Dismiss 이후, Update 처리에 대한 Delegate 관련
 extension MainViewController: GiftDidDismissDelegate {
     func didDismissDetailViewController() {
         updateCollectionViewData()
     }
-}
-
-extension MainViewController: CollectionViewCellLongPressDelegate {
-    func longPressed(_ sender: UILongPressGestureRecognizer) {
-        print("제스쳐완료")
-    }
-    
 }
