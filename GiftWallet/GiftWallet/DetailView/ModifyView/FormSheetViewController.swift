@@ -166,7 +166,12 @@ class FormSheetViewController: UIViewController {
             self.dismiss(animated: true) {
                 let updateGiftInfoViewModel = UpdateViewModel(gift: self.viewModel.gift)
                 let updateGiftInfoViewController = UpdateGiftInfoViewController(viewModel: updateGiftInfoViewModel)
-                presentViewController.present(updateGiftInfoViewController, animated: true)
+                let navigationupdateGiftInfoViewController = UINavigationController(rootViewController: updateGiftInfoViewController)
+                
+                navigationupdateGiftInfoViewController.modalTransitionStyle = .coverVertical
+                navigationupdateGiftInfoViewController.modalPresentationStyle = .fullScreen
+                
+                presentViewController.present(navigationupdateGiftInfoViewController, animated: true)
             }
         }
         pencilImageButton.addAction(pencilAction, for: .touchUpInside)
