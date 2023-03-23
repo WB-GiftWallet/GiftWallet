@@ -169,7 +169,7 @@ class FormSheetViewController: UIViewController {
                 let navigationupdateGiftInfoViewController = UINavigationController(rootViewController: updateGiftInfoViewController)
                 
                 navigationupdateGiftInfoViewController.modalTransitionStyle = .coverVertical
-                navigationupdateGiftInfoViewController.modalPresentationStyle = .fullScreen
+                navigationupdateGiftInfoViewController.modalPresentationStyle = .overFullScreen
                 
                 presentViewController.present(navigationupdateGiftInfoViewController, animated: true)
             }
@@ -314,6 +314,5 @@ extension FormSheetViewController {
 
 // MARK: Gift 정보 수정 시, 호출
 protocol GiftDidUpdateDelegate {
-//    func tapModifyInfo(gift: Gift)
     func didUpdateGift(updatedGift: Gift)
 }

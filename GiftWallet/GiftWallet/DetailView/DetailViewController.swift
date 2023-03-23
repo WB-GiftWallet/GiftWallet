@@ -42,11 +42,13 @@ final class DetailViewController: UIViewController {
         setupCollectionViewAttributes()
         setupNavigation()
         setupViews()
+        scrollBySelectedIndex()
+        addUpdateNotification()
     }
   
-    override func viewWillAppear(_ animated: Bool) {
-        super.viewWillAppear(animated)
-        scrollBySelectedIndex()
+    override func viewWillDisappear(_ animated: Bool) {
+        super.viewWillDisappear(animated)
+        removeUpdateNotification()
     }
     
     private func scrollBySelectedIndex() {
@@ -233,6 +235,21 @@ extension DetailViewController: CellElementTappedDelegate {
 // MARK: Update 후, 업데이트 관련
 extension DetailViewController: GiftDidUpdateDelegate {
     func didUpdateGift(updatedGift: Gift) {
+        viewModel.updateGifts(updatedGift)
+        pagingCollectionView.reloadData()
+    }
+    
+    private func addUpdateNotification() {
+        NotificationCenter.default.addObserver(self, selector: #selector(updateGift), name: Notification.Name("UpdateGiftInfoVC"), object: nil)
+    }
+    
+    private func removeUpdateNotification() {
+        NotificationCenter.default.removeObserver(self, name: Notification.Name("UpdateGiftInfoVC"), object: nil)
+    }
+    
+    @objc
+    private func updateGift(_ notification: Notification) {
+        guard let updatedGift = notification.object as? Gift else { return }
         viewModel.updateGifts(updatedGift)
         pagingCollectionView.reloadData()
     }
