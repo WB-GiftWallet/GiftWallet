@@ -430,10 +430,10 @@ extension MainViewController: UICollectionViewDelegate {
     
     private func modifyAction(gift: Gift) {
         let updateViewModel = UpdateViewModel(gift: gift)
-        let formSheetViewController = FormSheetViewController(viewModel: updateViewModel)
-        formSheetViewController.modalTransitionStyle = .crossDissolve
-        formSheetViewController.modalPresentationStyle = .overFullScreen
-        self.present(formSheetViewController, animated: true)
+        let updateGiftInfoViewController = UpdateGiftInfoViewController(viewModel: updateViewModel)
+        let navigationUpdateGiftInfoViewController = UINavigationController(rootViewController: updateGiftInfoViewController)
+        navigationUpdateGiftInfoViewController.modalPresentationStyle = .fullScreen
+        self.present(navigationUpdateGiftInfoViewController, animated: true)
     }
 }
 

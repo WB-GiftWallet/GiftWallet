@@ -156,9 +156,9 @@ class UpdateGiftInfoViewController: UIViewController {
     @objc
     private func tapCompleteButton() {
         inputtedTextsToGift()
+        viewModel.coreDataUpdate()
         
         dismiss(animated: true) { [self] in
-            viewModel.coreDataUpdate()
             NotificationCenter.default.post(name: NSNotification.Name("UpdateGiftInfoVC"), object: viewModel.gift)
         }
     }
