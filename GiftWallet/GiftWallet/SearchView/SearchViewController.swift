@@ -43,6 +43,8 @@ final class SearchViewController: UIViewController {
         let isSearchBarHasText = searchController?.searchBar.text?.isEmpty == false
         return isActive && isSearchBarHasText
     }
+    private lazy var activateConstraint = recommendScrollView.frameLayoutGuide.heightAnchor.constraint(equalToConstant: .zero)
+                
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -54,6 +56,8 @@ final class SearchViewController: UIViewController {
         searchTableView.dataSource = self
         searchResultController.tableView.delegate = self
         searchResultController.tableView.dataSource = self
+        giftSearchController.searchBar.delegate = self
+        giftSearchController.delegate = self
         
         setupRecommendData()
         setLayout()
@@ -230,5 +234,15 @@ extension SearchViewController: UISearchResultsUpdating {
         self.viewModel.filteringGifts.value = self.viewModel.allGiftData.value.filter { $0.brandName!.contains(text) }
         
         self.searchResultController.tableView.reloadData()
+    }
+}
+
+extension SearchViewController: UISearchBarDelegate, UISearchControllerDelegate {
+    func willPresentSearchController(_ searchController: UISearchController) {
+        activateConstraint.isActive = true
+    }
+    
+    func willDismissSearchController(_ searchController: UISearchController) {
+        activateConstraint.isActive = false
     }
 }
