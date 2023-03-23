@@ -359,12 +359,9 @@ extension MainViewController: UICollectionViewDelegate {
         
         return UIContextMenuConfiguration(identifier: nil, previewProvider: {
             return PhotoPreviewViewController(image: gift.image)
-        }) { _ in
-            let deleteAction = UIAction(title: "삭제하기", image: UIImage(systemName: "trash")) { _ in
-                
-            }
-            return UIMenu(title: "", children: [deleteAction])
-        }
+        }, actionProvider: { _ in
+            return self.makeMenu()
+        })
         
     }
     
@@ -382,6 +379,26 @@ extension MainViewController: UICollectionViewDelegate {
         return gift
     }
     
+    private func makeMenu() -> UIMenu {
+        let see = UIAction(title: "보기", image: UIImage(systemName: "magnifyingglass")) { action in
+            
+        }
+
+        
+        let modify = UIAction(title: "수정하기", image: UIImage(systemName: "square.and.pencil")) { action in
+            
+        }
+
+        let completeUse = UIAction(title: "사용완료", image: UIImage(systemName: "checkmark.circle")) { action in
+            
+        }
+
+        let delete = UIAction(title: "삭제하기", image: UIImage(systemName: "trash"), attributes: .destructive) { action in
+            
+        }
+
+        return UIMenu(title: "", children: [see, modify, completeUse, delete])
+    }
 }
 
 // MARK: UICollectionViewDelegateFlowLayout 관련
