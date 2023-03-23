@@ -354,7 +354,9 @@ extension MainViewController: UICollectionViewDataSource {
 
 // MARK: UICollectionViewDelegate 관련
 extension MainViewController: UICollectionViewDelegate {
-    
+    func collectionView(_ collectionView: UICollectionView, contextMenuConfigurationForItemAt indexPath: IndexPath, point: CGPoint) -> UIContextMenuConfiguration? {
+        <#code#>
+    }
 }
 
 // MARK: UICollectionViewDelegateFlowLayout 관련

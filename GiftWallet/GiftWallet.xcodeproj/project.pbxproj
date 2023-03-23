@@ -14,6 +14,7 @@
 		17D5963729AF6F9800AFE039 /* SearchTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 17D5963629AF6F9800AFE039 /* SearchTableViewController.swift */; };
 		17D5963929B02CBD00AFE039 /* SearchGiftCustomCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 17D5963829B02CBD00AFE039 /* SearchGiftCustomCell.swift */; };
 		17D5963B29B0835800AFE039 /* Extension+Date.swift in Sources */ = {isa = PBXBuildFile; fileRef = 17D5963A29B0835800AFE039 /* Extension+Date.swift */; };
+		D218233629CBEF7B00855D15 /* PhotoPreviewViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D218233529CBEF7B00855D15 /* PhotoPreviewViewController.swift */; };
 		D24002D129B752DB00635FFC /* NotoSansKR-Regular.otf in Resources */ = {isa = PBXBuildFile; fileRef = D24002CB29B752DA00635FFC /* NotoSansKR-Regular.otf */; };
 		D24002D229B752DB00635FFC /* NotoSansKR-Thin.otf in Resources */ = {isa = PBXBuildFile; fileRef = D24002CC29B752DB00635FFC /* NotoSansKR-Thin.otf */; };
 		D24002D329B752DB00635FFC /* NotoSansKR-Black.otf in Resources */ = {isa = PBXBuildFile; fileRef = D24002CD29B752DB00635FFC /* NotoSansKR-Black.otf */; };
@@ -96,6 +97,7 @@
 		17D5963629AF6F9800AFE039 /* SearchTableViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchTableViewController.swift; sourceTree = "<group>"; };
 		17D5963829B02CBD00AFE039 /* SearchGiftCustomCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchGiftCustomCell.swift; sourceTree = "<group>"; };
 		17D5963A29B0835800AFE039 /* Extension+Date.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Extension+Date.swift"; sourceTree = "<group>"; };
+		D218233529CBEF7B00855D15 /* PhotoPreviewViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PhotoPreviewViewController.swift; sourceTree = "<group>"; };
 		D24002CB29B752DA00635FFC /* NotoSansKR-Regular.otf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "NotoSansKR-Regular.otf"; sourceTree = "<group>"; };
 		D24002CC29B752DB00635FFC /* NotoSansKR-Thin.otf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "NotoSansKR-Thin.otf"; sourceTree = "<group>"; };
 		D24002CD29B752DB00635FFC /* NotoSansKR-Black.otf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "NotoSansKR-Black.otf"; sourceTree = "<group>"; };
@@ -299,6 +301,7 @@
 				D2D6B75029A3DEE900E6188C /* MainViewModel.swift */,
 				D2DAAA1B29A44B1600D70E8C /* MainCollectionViewCell.swift */,
 				D2DAAA2429A47CD500D70E8C /* CustomCollectionView.swift */,
+				D218233529CBEF7B00855D15 /* PhotoPreviewViewController.swift */,
 			);
 			path = MainView;
 			sourceTree = "<group>";
@@ -608,6 +611,7 @@
 				D2D6B75129A3DEE900E6188C /* MainViewModel.swift in Sources */,
 				D2BB131929C2082300A2440B /* UpdateViewModel.swift in Sources */,
 				D2B951B529B63545002E7C08 /* Extension+UIFont.swift in Sources */,
+				D218233629CBEF7B00855D15 /* PhotoPreviewViewController.swift in Sources */,
 				D27CA42B29B86ABF00EC5FC7 /* PagingCollectionViewCell.swift in Sources */,
 				F6A4AB4B29A5DA1C009AEB78 /* DetailViewController.swift in Sources */,
 				D27CA42D29B89F1900EC5FC7 /* CustomButton.swift in Sources */,
