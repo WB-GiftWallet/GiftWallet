@@ -361,7 +361,7 @@ extension MainViewController: UICollectionViewDelegate {
         return UIContextMenuConfiguration(identifier: identifier, previewProvider: {
             return PhotoPreviewViewController(image: gift.image)
         }, actionProvider: { _ in
-            return self.makeMenu()
+            return self.makeMenu(gift: gift)
         })
         
     }
@@ -370,21 +370,17 @@ extension MainViewController: UICollectionViewDelegate {
         guard let index = configuration.identifier as? Int else { return nil }
         let indexPath = IndexPath(item: index, section: 0)
         guard let cell = collectionView.cellForItem(at: indexPath) as? MainCollectionViewCell else { return nil }
-
+        
         return UITargetedPreview(view: cell.giftImageView)
     }
-        
+    
     func collectionView(_ collectionView: UICollectionView, willPerformPreviewActionForMenuWith configuration: UIContextMenuConfiguration, animator: UIContextMenuInteractionCommitAnimating) {
         animator.addCompletion {
             guard let index = configuration.identifier as? Int else { return }
             let indexPath = IndexPath(row: index, section: 0)
             guard let gift = self.getGift(for: collectionView, indexPath: indexPath) else { return }
             
-            let viewModel = DetailViewModel(gifts: [gift])
-            let detailViewController = DetailViewController(viewModel: viewModel)
-            detailViewController.modalTransitionStyle = .crossDissolve
-            detailViewController.modalPresentationStyle = .overFullScreen
-            self.present(detailViewController, animated: true)
+            self.seeAction(gift: gift)
         }
     }
     
@@ -402,25 +398,42 @@ extension MainViewController: UICollectionViewDelegate {
         return gift
     }
     
-    private func makeMenu() -> UIMenu {
+    private func makeMenu(gift: Gift) -> UIMenu {
         let see = UIAction(title: "보기", image: UIImage(systemName: "magnifyingglass")) { action in
-            
+            self.seeAction(gift: gift)
         }
-
+        
         
         let modify = UIAction(title: "수정하기", image: UIImage(systemName: "square.and.pencil")) { action in
-            
+            self.modifyAction(gift: gift)
         }
-
+        
         let completeUse = UIAction(title: "사용완료", image: UIImage(systemName: "checkmark.circle")) { action in
             
         }
-
+        
         let delete = UIAction(title: "삭제하기", image: UIImage(systemName: "trash"), attributes: .destructive) { action in
             
         }
-
+        
         return UIMenu(title: "", children: [see, modify, completeUse, delete])
+    }
+    
+    private func seeAction(gift: Gift) {
+        let gifts = [gift]
+        let viewModel = DetailViewModel(gifts: gifts)
+        let detailViewController = DetailViewController(viewModel: viewModel)
+        detailViewController.modalTransitionStyle = .coverVertical
+        detailViewController.modalPresentationStyle = .overFullScreen
+        self.present(detailViewController, animated: true)
+    }
+    
+    private func modifyAction(gift: Gift) {
+        let updateViewModel = UpdateViewModel(gift: gift)
+        let formSheetViewController = FormSheetViewController(viewModel: updateViewModel)
+        formSheetViewController.modalTransitionStyle = .crossDissolve
+        formSheetViewController.modalPresentationStyle = .overFullScreen
+        self.present(formSheetViewController, animated: true)
     }
 }
 
