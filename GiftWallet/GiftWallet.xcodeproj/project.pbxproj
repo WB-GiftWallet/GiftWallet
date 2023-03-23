@@ -8,6 +8,8 @@
 
 /* Begin PBXBuildFile section */
 		171695B129B1B8CA00CF3E41 /* SearchTableViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 171695B029B1B8CA00CF3E41 /* SearchTableViewModel.swift */; };
+		17211CB629CC9F200049940F /* DetailViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = D24002DA29B75B5200635FFC /* DetailViewModel.swift */; };
+		17211CB829CC9F820049940F /* TemporaryLoginView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 17211CB729CC9F7D0049940F /* TemporaryLoginView.swift */; };
 		1723BE8529C3142600AE06F9 /* IQKeyboardManagerSwift in Frameworks */ = {isa = PBXBuildFile; productRef = 1723BE8429C3142600AE06F9 /* IQKeyboardManagerSwift */; };
 		17A950FF29B74DA2001E6D4F /* SearchViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 17A950FE29B74DA2001E6D4F /* SearchViewController.swift */; };
 		17A9510129B75101001E6D4F /* RecommendScrollView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 17A9510029B75101001E6D4F /* RecommendScrollView.swift */; };
@@ -21,7 +23,6 @@
 		D24002D529B752DB00635FFC /* NotoSansKR-Light.otf in Resources */ = {isa = PBXBuildFile; fileRef = D24002CF29B752DB00635FFC /* NotoSansKR-Light.otf */; };
 		D24002D629B752DB00635FFC /* NotoSansKR-Medium.otf in Resources */ = {isa = PBXBuildFile; fileRef = D24002D029B752DB00635FFC /* NotoSansKR-Medium.otf */; };
 		D24002D829B7536B00635FFC /* BMJUA_otf.otf in Resources */ = {isa = PBXBuildFile; fileRef = D24002D729B7536B00635FFC /* BMJUA_otf.otf */; };
-		D24002DB29B75B5200635FFC /* DetailViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = D24002DA29B75B5200635FFC /* DetailViewModel.swift */; };
 		D27CA42929B84F6F00EC5FC7 /* ZoomImageViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = D27CA42829B84F6F00EC5FC7 /* ZoomImageViewModel.swift */; };
 		D27CA42B29B86ABF00EC5FC7 /* PagingCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = D27CA42A29B86ABF00EC5FC7 /* PagingCollectionViewCell.swift */; };
 		D27CA42D29B89F1900EC5FC7 /* CustomButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = D27CA42C29B89F1900EC5FC7 /* CustomButton.swift */; };
@@ -90,6 +91,7 @@
 
 /* Begin PBXFileReference section */
 		171695B029B1B8CA00CF3E41 /* SearchTableViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchTableViewModel.swift; sourceTree = "<group>"; };
+		17211CB729CC9F7D0049940F /* TemporaryLoginView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TemporaryLoginView.swift; sourceTree = "<group>"; };
 		17A950FE29B74DA2001E6D4F /* SearchViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchViewController.swift; sourceTree = "<group>"; };
 		17A9510029B75101001E6D4F /* RecommendScrollView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RecommendScrollView.swift; sourceTree = "<group>"; };
 		17BCD48129C30F8900F9FC9C /* Package */ = {isa = PBXFileReference; lastKnownFileType = wrapper; path = Package; sourceTree = "<group>"; };
@@ -376,6 +378,7 @@
 		FC1E747029A207DA0010A4BA /* GiftWallet */ = {
 			isa = PBXGroup;
 			children = (
+				17211CB729CC9F7D0049940F /* TemporaryLoginView.swift */,
 				D2B951A729B63499002E7C08 /* Fonts */,
 				D2CDDBF229B0713A00E000E3 /* CustomUI */,
 				17D5963529AF6F7300AFE039 /* SearchView */,
@@ -569,17 +572,18 @@
 				D27CA42929B84F6F00EC5FC7 /* ZoomImageViewModel.swift in Sources */,
 				D2CDDBE729AF487600E000E3 /* BrandList.swift in Sources */,
 				D2C7A45929A9DA6C00EB6D56 /* EtcSettingViewController.swift in Sources */,
-				D24002DB29B75B5200635FFC /* DetailViewModel.swift in Sources */,
 				D2A282B829A85EF2002CCF5A /* Observable.swift in Sources */,
 				D295E4B929A5F64200E12CAF /* FormSheetViewController.swift in Sources */,
 				D2CDDBE029AF3CD300E000E3 /* VisionManager.swift in Sources */,
 				D2CDDBCD29ADFACB00E000E3 /* DateCalCulateUseCase.swift in Sources */,
 				D2DAAA2329A4720300D70E8C /* Ext+DateFormatter.swift in Sources */,
 				D2C90B5829BF4DC1003C3611 /* ZoomImageViewController.swift in Sources */,
+				17211CB829CC9F820049940F /* TemporaryLoginView.swift in Sources */,
 				FC62FF1029A77B5A003E63B0 /* MainTabBarController.swift in Sources */,
 				D2CDDBE229AF3D2B00E000E3 /* AutoInputUseCase.swift in Sources */,
 				D2BB131529C0507300A2440B /* BarcodeViewController.swift in Sources */,
 				D2BB131729C0507D00A2440B /* BarcodeViewModel.swift in Sources */,
+				17211CB629CC9F200049940F /* DetailViewModel.swift in Sources */,
 				D2C7A45D29A9E77100EB6D56 /* EtcSettingTableViewCell.swift in Sources */,
 				17A950FF29B74DA2001E6D4F /* SearchViewController.swift in Sources */,
 				17D5963729AF6F9800AFE039 /* SearchTableViewController.swift in Sources */,
