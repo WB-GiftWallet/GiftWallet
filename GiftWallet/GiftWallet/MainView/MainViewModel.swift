@@ -48,20 +48,26 @@ class MainViewModel {
 
 // MARK: Update Gift 관련
 extension MainViewModel {
-    func updateUseable(updateGiftNumber: Int) {
-        guard var gift = findIndexForGiftWithNumber(updategiftNumber: updateGiftNumber) else { return }
-        gift.useableState = false
+    func updateGiftUseable(updategiftNumber: Int) {
+        if let index = recentGifts.value.firstIndex(where: { $0.number == updategiftNumber }) {
+            recentGifts.value[index].useableState = false
+            updateCoreData(gift: recentGifts.value[index])
+        } else if let index = expireGifts.value.firstIndex(where: { $0.number == updategiftNumber }) {
+            expireGifts.value[index].useableState = false
+            updateCoreData(gift: expireGifts.value[index])
+        }
         
-        updateCoreData(gift: gift)
     }
     
-    private func findIndexForGiftWithNumber(updategiftNumber: Int) -> Int? {
-        if let index = recentGifts.value.firstIndex(where: { $0.number == updategiftNumber }) {
-            return recentGifts.value[index]
-        } else if let index = expireGifts.value.firstIndex(where: { $0.number == updategiftNumber }) {
-            return expireGifts.value[index]
+    func deleteCoreData(targetGiftNumber: Int) {
+        let int16TargetGiftNumber = Int16(targetGiftNumber)
+        
+        do {
+            try coreDataManager.deleteDate(id: int16TargetGiftNumber)
+        } catch {
+            print(error.localizedDescription)
         }
-        return nil
+        
     }
     
     private func updateCoreData(gift: Gift) {

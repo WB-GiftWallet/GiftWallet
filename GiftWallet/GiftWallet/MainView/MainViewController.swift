@@ -413,7 +413,7 @@ extension MainViewController: UICollectionViewDelegate {
         }
         
         let delete = UIAction(title: "삭제하기", image: UIImage(systemName: "trash"), attributes: .destructive) { action in
-            
+            self.deleteAction(gift: gift)
         }
         
         return UIMenu(title: "", children: [see, modify, completeUse, delete])
@@ -439,12 +439,29 @@ extension MainViewController: UICollectionViewDelegate {
     private func completeUseAction(gift: Gift) {
         let alertController = UIAlertController(title: nil, message: "사용완료 처리하시겠습니까?", preferredStyle: .alert)
         let okAction = UIAlertAction(title: "예", style: .destructive) { _ in
-            self.viewModel.updateUseable(updateGiftNumber: gift.number)
+            self.viewModel.updateGiftUseable(updategiftNumber: gift.number)
         }
-        alertController.addAction(okAction)
+        
+        let noAction = UIAlertAction(title: "아니오", style: .cancel)
+
+        [okAction, noAction].forEach(alertController.addAction(_:))
+        present(alertController, animated: true)
+    }
+    
+    private func deleteAction(gift: Gift) {
+        let alertController = UIAlertController(title: nil, message: "삭제 하시겠습니까?", preferredStyle: .alert)
+        let okAction = UIAlertAction(title: "예", style: .destructive) { _ in
+            self.viewModel.deleteCoreData(targetGiftNumber: gift.number)
+            self.updateCollectionViewData()
+        }
+        
+        let noAction = UIAlertAction(title: "아니오", style: .cancel)
+
+        [okAction, noAction].forEach(alertController.addAction(_:))
         present(alertController, animated: true)
     }
 }
+
 
 // MARK: UICollectionViewDelegateFlowLayout 관련
 extension MainViewController: UICollectionViewDelegateFlowLayout {
