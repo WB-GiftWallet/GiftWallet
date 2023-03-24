@@ -15,7 +15,6 @@ class MainViewModel {
     var allGifts: [Gift] = []
     var expireGifts: Observable<[Gift]> = .init([])
     var recentGifts: Observable<[Gift]> = .init([])
-    var unavailableGifts: [Gift] = []
     
     func fetchCoreData() {
         switch CoreDataManager.shared.fetchData() {
