@@ -10,6 +10,8 @@ import UIKit
 class MainViewController: UIViewController, UISearchBarDelegate, UISearchControllerDelegate {
     
     private let viewModel: MainViewModel
+    private var oneCollectionHeight: NSLayoutConstraint?
+    private var twoCollectionHeight: NSLayoutConstraint?
     
     private lazy var contentScrollView: UIScrollView = {
         
@@ -252,6 +254,16 @@ class MainViewController: UIViewController, UISearchBarDelegate, UISearchControl
             recentCollectionView.trailingAnchor.constraint(equalTo: recentCollectionViewHeaderLabel.trailingAnchor),
             recentCollectionView.widthAnchor.constraint(equalTo: contentView.widthAnchor)
         ])
+        
+        oneCollectionHeight = expireCollectionView.heightAnchor.constraint(equalToConstant: .zero)
+        twoCollectionHeight = recentCollectionView.heightAnchor.constraint(equalToConstant: .zero)
+        
+        NSLayoutConstraint.activate([
+            oneCollectionHeight,
+            twoCollectionHeight
+        ].compactMap { $0 })
+        
+        
     }
     
     private func setupCollectionViewIsHiddenAndHeightConstraint() {
@@ -259,8 +271,11 @@ class MainViewController: UIViewController, UISearchBarDelegate, UISearchControl
             emptyVerticalStackView.isHidden = false
             expireCollectionViewHeaderLabel.isHidden = true
             recentCollectionViewHeaderLabel.isHidden = true
-            recentCollectionView.heightAnchor.constraint(equalToConstant: .zero).isActive = true
-            expireCollectionView.heightAnchor.constraint(equalToConstant: .zero).isActive = true
+            
+            oneCollectionHeight?.constant = 0
+            twoCollectionHeight?.constant = 0
+            recentCollectionView.layoutIfNeeded()
+            expireCollectionView.layoutIfNeeded()
         }
         
         let expireGifts = viewModel.expireGifts.value
@@ -269,21 +284,28 @@ class MainViewController: UIViewController, UISearchBarDelegate, UISearchControl
         if expireGifts.isEmpty && !recentGifts.isEmpty {
             emptyVerticalStackView.isHidden = true
             expireCollectionViewHeaderLabel.isHidden = true
-            expireCollectionView.heightAnchor.constraint(equalToConstant: .zero).isActive = true
+    
+            oneCollectionHeight?.constant = 0
             recentCollectionViewHeaderLabel.isHidden = false
-            recentCollectionView.heightAnchor.constraint(equalTo: recentCollectionView.widthAnchor, multiplier: 0.85).isActive = true
+            twoCollectionHeight?.constant = view.frame.width * 0.85
+            recentCollectionView.layoutIfNeeded()
+            expireCollectionView.layoutIfNeeded()
         } else if !expireGifts.isEmpty && recentGifts.isEmpty {
             emptyVerticalStackView.isHidden = true
             recentCollectionViewHeaderLabel.isHidden = true
-            recentCollectionView.heightAnchor.constraint(equalToConstant: .zero).isActive = true
+            twoCollectionHeight?.constant = 0
             expireCollectionViewHeaderLabel.isHidden = false
-            expireCollectionView.heightAnchor.constraint(equalTo: expireCollectionView.widthAnchor, multiplier: 0.85).isActive = true
+            oneCollectionHeight?.constant = view.frame.width * 0.85
+            recentCollectionView.layoutIfNeeded()
+            expireCollectionView.layoutIfNeeded()
         } else if !expireGifts.isEmpty && !recentGifts.isEmpty {
             emptyVerticalStackView.isHidden = true
             expireCollectionViewHeaderLabel.isHidden = false
-            expireCollectionView.heightAnchor.constraint(equalTo: expireCollectionView.widthAnchor, multiplier: 0.85).isActive = true
+            oneCollectionHeight?.constant = view.frame.width * 0.85
             recentCollectionViewHeaderLabel.isHidden = false
-            recentCollectionView.heightAnchor.constraint(equalTo: expireCollectionView.widthAnchor, multiplier: 0.85).isActive = true
+            twoCollectionHeight?.constant = view.frame.width * 0.85
+            recentCollectionView.layoutIfNeeded()
+            expireCollectionView.layoutIfNeeded()
         }
     }
 }
