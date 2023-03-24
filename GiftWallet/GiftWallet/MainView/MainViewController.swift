@@ -423,6 +423,7 @@ extension MainViewController: UICollectionViewDelegate {
         let gifts = [gift]
         let viewModel = DetailViewModel(gifts: gifts)
         let detailViewController = DetailViewController(viewModel: viewModel)
+        detailViewController.delegate = self
         detailViewController.modalTransitionStyle = .coverVertical
         detailViewController.modalPresentationStyle = .overFullScreen
         self.present(detailViewController, animated: true)
