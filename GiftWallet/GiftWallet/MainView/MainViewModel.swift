@@ -47,15 +47,16 @@ class MainViewModel {
 
 // MARK: Update Gift 관련
 extension MainViewModel {
-    func updateGiftUseable(updategiftNumber: Int) {
+    func updateGiftUsableState(updategiftNumber: Int) {
         if let index = recentGifts.value.firstIndex(where: { $0.number == updategiftNumber }) {
-            recentGifts.value[index].useableState = false
-            updateCoreData(gift: recentGifts.value[index])
+            var gift = recentGifts.value[index]
+            gift.useableState = false
+            updateCoreData(gift: gift)
         } else if let index = expireGifts.value.firstIndex(where: { $0.number == updategiftNumber }) {
-            expireGifts.value[index].useableState = false
-            updateCoreData(gift: expireGifts.value[index])
+            var gift = expireGifts.value[index]
+            gift.useableState = false
+            updateCoreData(gift: gift)
         }
-        
     }
     
     func deleteCoreData(targetGiftNumber: Int) {

@@ -438,9 +438,10 @@ extension MainViewController: UICollectionViewDelegate {
     }
     
     private func completeUseAction(gift: Gift) {
-        let alertController = UIAlertController(title: nil, message: "사용완료 처리하시겠습니까?", preferredStyle: .alert)
+        let alertController = UIAlertController(title: "선택한 쿠폰을 사용완료처리합니다.", message: "사용완료 처리하시겠습니까?", preferredStyle: .actionSheet)
         let okAction = UIAlertAction(title: "예", style: .destructive) { _ in
-            self.viewModel.updateGiftUseable(updategiftNumber: gift.number)
+            self.viewModel.updateGiftUsableState(updategiftNumber: gift.number)
+            self.updateCollectionViewData()
         }
         
         let noAction = UIAlertAction(title: "아니오", style: .cancel)
@@ -450,7 +451,7 @@ extension MainViewController: UICollectionViewDelegate {
     }
     
     private func deleteAction(gift: Gift) {
-        let alertController = UIAlertController(title: nil, message: "삭제 하시겠습니까?", preferredStyle: .alert)
+        let alertController = UIAlertController(title: "선택한 쿠폰을 완전히 제거합니다.", message: "삭제 하시겠습니까?", preferredStyle: .actionSheet)
         let okAction = UIAlertAction(title: "예", style: .destructive) { _ in
             self.viewModel.deleteCoreData(targetGiftNumber: gift.number)
             self.updateCollectionViewData()
