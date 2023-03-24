@@ -42,11 +42,13 @@ final class DetailViewController: UIViewController {
         setupCollectionViewAttributes()
         setupNavigation()
         setupViews()
+        scrollBySelectedIndex()
+        addUpdateNotification()
     }
   
-    override func viewWillAppear(_ animated: Bool) {
-        super.viewWillAppear(animated)
-        scrollBySelectedIndex()
+    override func viewWillDisappear(_ animated: Bool) {
+        super.viewWillDisappear(animated)
+        removeUpdateNotification()
     }
     
     private func scrollBySelectedIndex() {
@@ -232,16 +234,22 @@ extension DetailViewController: CellElementTappedDelegate {
 
 // MARK: Update 후, 업데이트 관련
 extension DetailViewController: GiftDidUpdateDelegate {
-    func tapModifyInfo(gift: Gift) {
-        guard let index = self.viewModel.findIndexForGiftWithNumber(gift.number) else { return }
-        let updateViewModel = UpdateViewModel(gift: viewModel.gifts[index])
-        let updateGiftInfoViewController = UpdateGiftInfoViewController(viewModel: updateViewModel)
-        updateGiftInfoViewController.delegate = self
-        let navigationUpdateGiftInfoViewController = UINavigationController(rootViewController: updateGiftInfoViewController)
-        sceneConversion(viewController: navigationUpdateGiftInfoViewController)
+    func didUpdateGift(updatedGift: Gift) {
+        viewModel.updateGifts(updatedGift)
+        pagingCollectionView.reloadData()
     }
     
-    func didUpdateGift(updatedGift: Gift) {
+    private func addUpdateNotification() {
+        NotificationCenter.default.addObserver(self, selector: #selector(updateGift), name: Notification.Name("UpdateGiftInfoVC"), object: nil)
+    }
+    
+    private func removeUpdateNotification() {
+        NotificationCenter.default.removeObserver(self, name: Notification.Name("UpdateGiftInfoVC"), object: nil)
+    }
+    
+    @objc
+    private func updateGift(_ notification: Notification) {
+        guard let updatedGift = notification.object as? Gift else { return }
         viewModel.updateGifts(updatedGift)
         pagingCollectionView.reloadData()
     }

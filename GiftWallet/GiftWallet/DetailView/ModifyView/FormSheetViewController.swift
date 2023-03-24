@@ -161,8 +161,17 @@ class FormSheetViewController: UIViewController {
     private func setupButton() {
         let pencilAction = UIAction { [weak self] _ in
             guard let self = self else { return }
+            guard let presentViewController = self.presentingViewController else { return }
+            
             self.dismiss(animated: true) {
-                self.delegate?.tapModifyInfo(gift: self.viewModel.gift)
+                let updateGiftInfoViewModel = UpdateViewModel(gift: self.viewModel.gift)
+                let updateGiftInfoViewController = UpdateGiftInfoViewController(viewModel: updateGiftInfoViewModel)
+                let navigationupdateGiftInfoViewController = UINavigationController(rootViewController: updateGiftInfoViewController)
+                
+                navigationupdateGiftInfoViewController.modalTransitionStyle = .coverVertical
+                navigationupdateGiftInfoViewController.modalPresentationStyle = .overFullScreen
+                
+                presentViewController.present(navigationupdateGiftInfoViewController, animated: true)
             }
         }
         pencilImageButton.addAction(pencilAction, for: .touchUpInside)
@@ -305,6 +314,5 @@ extension FormSheetViewController {
 
 // MARK: Gift 정보 수정 시, 호출
 protocol GiftDidUpdateDelegate {
-    func tapModifyInfo(gift: Gift)
     func didUpdateGift(updatedGift: Gift)
 }

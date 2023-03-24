@@ -10,6 +10,7 @@ import UIKit
 
 class MainViewModel {
     private let useCase = DateCalculateUseCase()
+    private let coreDataManager = CoreDataManager.shared
     
     var allGifts: [Gift] = []
     var expireGifts: Observable<[Gift]> = .init([])
@@ -45,9 +46,35 @@ class MainViewModel {
     }
 }
 
-/* unavailable Logic (수정필요)
- //        unavailableGifts = allGifts.filter({ gift in
- //            guard let giftExpireDateNotNil = gift.expireDate else { return false }
- //            return gift.useableState == false || calendar.checkIsExpired(expireDate: giftExpireDateNotNil)
- //        })
- */
+// MARK: Update Gift 관련
+extension MainViewModel {
+    func updateGiftUseable(updategiftNumber: Int) {
+        if let index = recentGifts.value.firstIndex(where: { $0.number == updategiftNumber }) {
+            recentGifts.value[index].useableState = false
+            updateCoreData(gift: recentGifts.value[index])
+        } else if let index = expireGifts.value.firstIndex(where: { $0.number == updategiftNumber }) {
+            expireGifts.value[index].useableState = false
+            updateCoreData(gift: expireGifts.value[index])
+        }
+        
+    }
+    
+    func deleteCoreData(targetGiftNumber: Int) {
+        let int16TargetGiftNumber = Int16(targetGiftNumber)
+        
+        do {
+            try coreDataManager.deleteDate(id: int16TargetGiftNumber)
+        } catch {
+            print(error.localizedDescription)
+        }
+        
+    }
+    
+    private func updateCoreData(gift: Gift) {
+        do {
+            try coreDataManager.updateData(gift)
+        } catch {
+            print(error.localizedDescription)
+        }
+    }
+}

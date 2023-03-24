@@ -39,7 +39,7 @@ class MainViewController: UIViewController, UISearchBarDelegate, UISearchControl
     }()
     
     private let emptyLabel = {
-       let label = UILabel()
+        let label = UILabel()
         
         label.text = "쿠폰을 등록해주세요!"
         label.numberOfLines = 0
@@ -50,7 +50,7 @@ class MainViewController: UIViewController, UISearchBarDelegate, UISearchControl
     }()
     
     private let emptyVerticalStackView = {
-       let stackView = UIStackView()
+        let stackView = UIStackView()
         
         stackView.axis = .vertical
         stackView.spacing = 20
@@ -288,7 +288,8 @@ class MainViewController: UIViewController, UISearchBarDelegate, UISearchControl
     }
 }
 
-extension MainViewController: UICollectionViewDataSource, UICollectionViewDelegate {
+// MARK: UIColellectionViewDataSource
+extension MainViewController: UICollectionViewDataSource {
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
         switch collectionView {
         case expireCollectionView:
@@ -308,7 +309,7 @@ extension MainViewController: UICollectionViewDataSource, UICollectionViewDelega
                                                                 for: indexPath) as? MainCollectionViewCell ?? MainCollectionViewCell()
             let expireGift = viewModel.expireGifts.value[indexPath.row]
             let subtractionResult = viewModel.subtractionOfDays(expireDate: expireGift.expireDate)
-
+            
             cell.configureCell(data: expireGift)
             cell.configureTagLabel(subtractionResult)
             return cell
@@ -331,12 +332,12 @@ extension MainViewController: UICollectionViewDataSource, UICollectionViewDelega
         var sendGifts: [Gift]?
         
         switch collectionView {
-            case expireCollectionView:
-                sendGifts = viewModel.expireGifts.value
-            case recentCollectionView:
-                sendGifts = viewModel.recentGifts.value
-            default:
-                break
+        case expireCollectionView:
+            sendGifts = viewModel.expireGifts.value
+        case recentCollectionView:
+            sendGifts = viewModel.recentGifts.value
+        default:
+            break
         }
         guard let sendGifts = sendGifts else { return }
         let detailViewModel = DetailViewModel(gifts: sendGifts,
@@ -346,11 +347,124 @@ extension MainViewController: UICollectionViewDataSource, UICollectionViewDelega
         let navigationDetailViewController = UINavigationController(rootViewController: detailViewController)
         navigationDetailViewController.modalTransitionStyle = .coverVertical
         navigationDetailViewController.modalPresentationStyle = .overFullScreen
-
+        
         present(navigationDetailViewController, animated: true)
     }
 }
 
+// MARK: UICollectionViewDelegate 관련 ( ContextMenu )
+extension MainViewController: UICollectionViewDelegate {
+    func collectionView(_ collectionView: UICollectionView, contextMenuConfigurationForItemAt indexPath: IndexPath, point: CGPoint) -> UIContextMenuConfiguration? {
+        guard let gift = getGift(for: collectionView, indexPath: indexPath) else { return nil }
+        let identifier = indexPath.row as NSNumber
+        
+        return UIContextMenuConfiguration(identifier: identifier, previewProvider: {
+            return PhotoPreviewViewController(image: gift.image)
+        }, actionProvider: { _ in
+            return self.makeMenu(gift: gift, collectionView: collectionView)
+        })
+        
+    }
+    
+    func collectionView(_ collectionView: UICollectionView, previewForHighlightingContextMenuWithConfiguration configuration: UIContextMenuConfiguration) -> UITargetedPreview? {
+        guard let index = configuration.identifier as? Int else { return nil }
+        let indexPath = IndexPath(item: index, section: 0)
+        guard let cell = collectionView.cellForItem(at: indexPath) as? MainCollectionViewCell else { return nil }
+        
+        return UITargetedPreview(view: cell.giftImageView)
+    }
+    
+    func collectionView(_ collectionView: UICollectionView, willPerformPreviewActionForMenuWith configuration: UIContextMenuConfiguration, animator: UIContextMenuInteractionCommitAnimating) {
+        animator.addCompletion {
+            guard let index = configuration.identifier as? Int else { return }
+            let indexPath = IndexPath(row: index, section: 0)
+            guard let gift = self.getGift(for: collectionView, indexPath: indexPath) else { return }
+            
+            self.seeAction(gift: gift)
+        }
+    }
+    
+    private func getGift(for collectionView: UICollectionView, indexPath: IndexPath) -> Gift? {
+        let gift: Gift?
+        
+        switch collectionView {
+        case expireCollectionView:
+            gift = viewModel.expireGifts.value[indexPath.row]
+        case recentCollectionView:
+            gift = viewModel.recentGifts.value[indexPath.row]
+        default:
+            gift = nil
+        }
+        return gift
+    }
+    
+    private func makeMenu(gift: Gift, collectionView: UICollectionView) -> UIMenu {
+        let see = UIAction(title: "보기", image: UIImage(systemName: "magnifyingglass")) { action in
+            self.seeAction(gift: gift)
+        }
+        
+        
+        let modify = UIAction(title: "수정하기", image: UIImage(systemName: "square.and.pencil")) { action in
+            self.modifyAction(gift: gift)
+        }
+        
+        let completeUse = UIAction(title: "사용완료", image: UIImage(systemName: "checkmark.circle")) { action in
+            self.completeUseAction(gift: gift)
+        }
+        
+        let delete = UIAction(title: "삭제하기", image: UIImage(systemName: "trash"), attributes: .destructive) { action in
+            self.deleteAction(gift: gift)
+        }
+        
+        return UIMenu(title: "", children: [see, modify, completeUse, delete])
+    }
+    
+    private func seeAction(gift: Gift) {
+        let gifts = [gift]
+        let viewModel = DetailViewModel(gifts: gifts)
+        let detailViewController = DetailViewController(viewModel: viewModel)
+        detailViewController.delegate = self
+        detailViewController.modalTransitionStyle = .coverVertical
+        detailViewController.modalPresentationStyle = .overFullScreen
+        self.present(detailViewController, animated: true)
+    }
+    
+    private func modifyAction(gift: Gift) {
+        let updateViewModel = UpdateViewModel(gift: gift)
+        let updateGiftInfoViewController = UpdateGiftInfoViewController(viewModel: updateViewModel)
+        let navigationUpdateGiftInfoViewController = UINavigationController(rootViewController: updateGiftInfoViewController)
+        navigationUpdateGiftInfoViewController.modalPresentationStyle = .fullScreen
+        self.present(navigationUpdateGiftInfoViewController, animated: true)
+    }
+    
+    private func completeUseAction(gift: Gift) {
+        let alertController = UIAlertController(title: nil, message: "사용완료 처리하시겠습니까?", preferredStyle: .alert)
+        let okAction = UIAlertAction(title: "예", style: .destructive) { _ in
+            self.viewModel.updateGiftUseable(updategiftNumber: gift.number)
+        }
+        
+        let noAction = UIAlertAction(title: "아니오", style: .cancel)
+
+        [okAction, noAction].forEach(alertController.addAction(_:))
+        present(alertController, animated: true)
+    }
+    
+    private func deleteAction(gift: Gift) {
+        let alertController = UIAlertController(title: nil, message: "삭제 하시겠습니까?", preferredStyle: .alert)
+        let okAction = UIAlertAction(title: "예", style: .destructive) { _ in
+            self.viewModel.deleteCoreData(targetGiftNumber: gift.number)
+            self.updateCollectionViewData()
+        }
+        
+        let noAction = UIAlertAction(title: "아니오", style: .cancel)
+
+        [okAction, noAction].forEach(alertController.addAction(_:))
+        present(alertController, animated: true)
+    }
+}
+
+
+// MARK: UICollectionViewDelegateFlowLayout 관련
 extension MainViewController: UICollectionViewDelegateFlowLayout {
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
         return CGSize(width: collectionView.frame.width / 2.5, height: collectionView.frame.height)
@@ -361,6 +475,7 @@ extension MainViewController: UICollectionViewDelegateFlowLayout {
     }
 }
 
+// MARK: GiftDidDismissDelegate Protocol 관련
 extension MainViewController: GiftDidDismissDelegate {
     func didDismissDetailViewController() {
         updateCollectionViewData()

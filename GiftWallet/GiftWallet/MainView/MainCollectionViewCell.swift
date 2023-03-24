@@ -17,7 +17,7 @@ class MainCollectionViewCell: UICollectionViewCell, ReusableView {
         return view
     }()
     
-    private let giftImageView = {
+    let giftImageView = {
        let imageView = UIImageView()
         imageView.layer.cornerRadius = 10.0
         imageView.clipsToBounds = true
