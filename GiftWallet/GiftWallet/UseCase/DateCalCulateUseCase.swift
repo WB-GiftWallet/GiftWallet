@@ -16,6 +16,7 @@ struct DateCalculateUseCase {
             guard let expireDate = gift.expireDate else { return false }
             return checkExpireDateIsSmallerThanSevenDays(expireDate: expireDate)
         })
+        sortGiftsByDateAscending(observableGifts)
     }
     
     func sortOutRecentDate(_ observableGifts: Observable<[Gift]>,
@@ -25,6 +26,7 @@ struct DateCalculateUseCase {
             guard let expireDate = gift.expireDate else { return true }
             return checkExpireDateIsBiggerThanSevenDays(expireDate: expireDate)
         })
+        sortGiftsByDateAscending(observableGifts)
     }
 }
 
@@ -66,4 +68,13 @@ extension DateCalculateUseCase {
         
         return (expireDate: expireDate, today: today)
     }
+    
+    private func sortGiftsByDateAscending(_ observableGifts: Observable<[Gift]>) {
+        observableGifts.value.sort { gift, compareGift in
+            guard let expireDate = gift.expireDate,
+                  let compareDate = compareGift.expireDate else { return false }
+            return expireDate.compare(compareDate) == .orderedAscending
+        }
+    }
+    
 }
