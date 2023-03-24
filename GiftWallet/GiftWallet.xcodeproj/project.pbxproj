@@ -9,7 +9,8 @@
 /* Begin PBXBuildFile section */
 		171695B129B1B8CA00CF3E41 /* SearchTableViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 171695B029B1B8CA00CF3E41 /* SearchTableViewModel.swift */; };
 		17211CB629CC9F200049940F /* DetailViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = D24002DA29B75B5200635FFC /* DetailViewModel.swift */; };
-		17211CB829CC9F820049940F /* TemporaryLoginView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 17211CB729CC9F7D0049940F /* TemporaryLoginView.swift */; };
+		17211CB829CC9F820049940F /* TemporaryLoginViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 17211CB729CC9F7D0049940F /* TemporaryLoginViewController.swift */; };
+		17211CBB29CCA10A0049940F /* TemporaryLoginViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 17211CBA29CCA10A0049940F /* TemporaryLoginViewModel.swift */; };
 		1723BE8529C3142600AE06F9 /* IQKeyboardManagerSwift in Frameworks */ = {isa = PBXBuildFile; productRef = 1723BE8429C3142600AE06F9 /* IQKeyboardManagerSwift */; };
 		17A950FF29B74DA2001E6D4F /* SearchViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 17A950FE29B74DA2001E6D4F /* SearchViewController.swift */; };
 		17A9510129B75101001E6D4F /* RecommendScrollView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 17A9510029B75101001E6D4F /* RecommendScrollView.swift */; };
@@ -91,7 +92,8 @@
 
 /* Begin PBXFileReference section */
 		171695B029B1B8CA00CF3E41 /* SearchTableViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchTableViewModel.swift; sourceTree = "<group>"; };
-		17211CB729CC9F7D0049940F /* TemporaryLoginView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TemporaryLoginView.swift; sourceTree = "<group>"; };
+		17211CB729CC9F7D0049940F /* TemporaryLoginViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TemporaryLoginViewController.swift; sourceTree = "<group>"; };
+		17211CBA29CCA10A0049940F /* TemporaryLoginViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TemporaryLoginViewModel.swift; sourceTree = "<group>"; };
 		17A950FE29B74DA2001E6D4F /* SearchViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchViewController.swift; sourceTree = "<group>"; };
 		17A9510029B75101001E6D4F /* RecommendScrollView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RecommendScrollView.swift; sourceTree = "<group>"; };
 		17BCD48129C30F8900F9FC9C /* Package */ = {isa = PBXFileReference; lastKnownFileType = wrapper; path = Package; sourceTree = "<group>"; };
@@ -185,6 +187,15 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		17211CB929CCA0820049940F /* LoginWithFireBase */ = {
+			isa = PBXGroup;
+			children = (
+				17211CB729CC9F7D0049940F /* TemporaryLoginViewController.swift */,
+				17211CBA29CCA10A0049940F /* TemporaryLoginViewModel.swift */,
+			);
+			path = LoginWithFireBase;
+			sourceTree = "<group>";
+		};
 		17D5963529AF6F7300AFE039 /* SearchView */ = {
 			isa = PBXGroup;
 			children = (
@@ -378,7 +389,7 @@
 		FC1E747029A207DA0010A4BA /* GiftWallet */ = {
 			isa = PBXGroup;
 			children = (
-				17211CB729CC9F7D0049940F /* TemporaryLoginView.swift */,
+				17211CB929CCA0820049940F /* LoginWithFireBase */,
 				D2B951A729B63499002E7C08 /* Fonts */,
 				D2CDDBF229B0713A00E000E3 /* CustomUI */,
 				17D5963529AF6F7300AFE039 /* SearchView */,
@@ -578,13 +589,14 @@
 				D2CDDBCD29ADFACB00E000E3 /* DateCalCulateUseCase.swift in Sources */,
 				D2DAAA2329A4720300D70E8C /* Ext+DateFormatter.swift in Sources */,
 				D2C90B5829BF4DC1003C3611 /* ZoomImageViewController.swift in Sources */,
-				17211CB829CC9F820049940F /* TemporaryLoginView.swift in Sources */,
+				17211CB829CC9F820049940F /* TemporaryLoginViewController.swift in Sources */,
 				FC62FF1029A77B5A003E63B0 /* MainTabBarController.swift in Sources */,
 				D2CDDBE229AF3D2B00E000E3 /* AutoInputUseCase.swift in Sources */,
 				D2BB131529C0507300A2440B /* BarcodeViewController.swift in Sources */,
 				D2BB131729C0507D00A2440B /* BarcodeViewModel.swift in Sources */,
 				17211CB629CC9F200049940F /* DetailViewModel.swift in Sources */,
 				D2C7A45D29A9E77100EB6D56 /* EtcSettingTableViewCell.swift in Sources */,
+				17211CBB29CCA10A0049940F /* TemporaryLoginViewModel.swift in Sources */,
 				17A950FF29B74DA2001E6D4F /* SearchViewController.swift in Sources */,
 				17D5963729AF6F9800AFE039 /* SearchTableViewController.swift in Sources */,
 				D2DAAA1C29A44B1600D70E8C /* MainCollectionViewCell.swift in Sources */,
