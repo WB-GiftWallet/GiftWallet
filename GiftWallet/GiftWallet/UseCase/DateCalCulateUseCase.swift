@@ -9,12 +9,14 @@ import Foundation
 
 // MARK: 외부함수
 struct DateCalculateUseCase {
+    private var expireThresholdDate = 30
+    
     func sortOutExpireDate(_ observableGifts: Observable<[Gift]>,
                            _ gifts: [Gift]) {
         observableGifts.value = gifts.filter({ gift in
             guard gift.useableState == true else { return false }
             guard let expireDate = gift.expireDate else { return false }
-            return checkExpireDateIsSmallerThanSevenDays(expireDate: expireDate)
+            return checkExpireDateIsSmallerThanExpireThresholdDate(expireDate: expireDate)
         })
         sortGiftsByDateAscending(observableGifts)
     }
@@ -24,7 +26,7 @@ struct DateCalculateUseCase {
         observableGifts.value = gifts.filter({ gift in
             guard gift.useableState == true else { return false }
             guard let expireDate = gift.expireDate else { return true }
-            return checkExpireDateIsBiggerThanSevenDays(expireDate: expireDate)
+            return checkExpireDateIsBiggerThanExpireThresholdDate(expireDate: expireDate)
         })
         sortGiftsByDateAscending(observableGifts)
     }
@@ -32,16 +34,16 @@ struct DateCalculateUseCase {
 
 // MARK: 내부함수
 extension DateCalculateUseCase {
-    func checkExpireDateIsSmallerThanSevenDays(expireDate: Date) -> Bool {
+    func checkExpireDateIsSmallerThanExpireThresholdDate(expireDate: Date) -> Bool {
         let subtractionResult = subtractionOftheDays(expireDate: expireDate, today: Date())
         
-        return subtractionResult >= 0 && subtractionResult <= 7 ? true : false
+        return subtractionResult >= 0 && subtractionResult <= expireThresholdDate ? true : false
     }
     
-    func checkExpireDateIsBiggerThanSevenDays(expireDate: Date) -> Bool {
+    func checkExpireDateIsBiggerThanExpireThresholdDate(expireDate: Date) -> Bool {
         let subtractionResult = subtractionOftheDays(expireDate: expireDate, today: Date())
         
-        return subtractionResult > 7 ? true : false
+        return subtractionResult > expireThresholdDate ? true : false
     }
     
     func subtractionOftheDays(expireDate: Date, today: Date) -> Int {
