@@ -11,8 +11,8 @@ class MainViewController: UIViewController, UISearchBarDelegate, UISearchControl
     
     private let viewModel: MainViewModel
     
-    private var oneCollectionHeight: NSLayoutConstraint?
-    private var twoCollectionHeight: NSLayoutConstraint?
+    private var expireCollectionViewHeightAnchor: NSLayoutConstraint?
+    private var recentCollectionViewHeightAnchor: NSLayoutConstraint?
     private var recentCollectionHeaderLabelTopAnchor: NSLayoutConstraint?
     
     private lazy var contentScrollView: UIScrollView = {
@@ -274,13 +274,13 @@ class MainViewController: UIViewController, UISearchBarDelegate, UISearchControl
     }
     
     private func setupResponsiveConstraintViews() {
-        oneCollectionHeight = expireCollectionView.heightAnchor.constraint(equalToConstant: .zero)
-        twoCollectionHeight = recentCollectionView.heightAnchor.constraint(equalToConstant: .zero)
+        expireCollectionViewHeightAnchor = expireCollectionView.heightAnchor.constraint(equalToConstant: .zero)
+        recentCollectionViewHeightAnchor = recentCollectionView.heightAnchor.constraint(equalToConstant: .zero)
         recentCollectionHeaderLabelTopAnchor = recentCollectionViewHeaderLabel.topAnchor.constraint(equalTo: searchButton.bottomAnchor, constant: .zero)
         
         NSLayoutConstraint.activate([
-            oneCollectionHeight,
-            twoCollectionHeight,
+            expireCollectionViewHeightAnchor,
+            recentCollectionViewHeightAnchor,
             recentCollectionHeaderLabelTopAnchor
         ].compactMap { $0 })
     }
@@ -312,8 +312,8 @@ class MainViewController: UIViewController, UISearchBarDelegate, UISearchControl
         expireCollectionViewHeaderLabel.isHidden = expireCollectionViewActivate ? false : true
         recentCollectionViewHeaderLabel.isHidden = recentCollectionViewActivate ? false : true
         
-        oneCollectionHeight?.constant = expireCollectionViewActivate ? view.frame.width * 0.85 : 0
-        twoCollectionHeight?.constant = recentCollectionViewActivate ? view.frame.width * 0.85 : 0
+        expireCollectionViewHeightAnchor?.constant = expireCollectionViewActivate ? view.frame.width * 0.85 : 0
+        recentCollectionViewHeightAnchor?.constant = recentCollectionViewActivate ? view.frame.width * 0.85 : 0
         recentCollectionHeaderLabelTopAnchor?.constant = recentHeaderLabelActivate ? view.frame.height * 0.55 : 25
         
         expireCollectionView.layoutIfNeeded()
