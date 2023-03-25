@@ -9,35 +9,49 @@ import Foundation
 
 // MARK: 외부함수
 struct DateCalculateUseCase {
+    private var expireThresholdDate = 30
+    
     func sortOutExpireDate(_ observableGifts: Observable<[Gift]>,
                            _ gifts: [Gift]) {
         observableGifts.value = gifts.filter({ gift in
+            guard gift.useableState == true else { return false }
             guard let expireDate = gift.expireDate else { return false }
-            return checkExpireDateIsSmallerThanSevenDays(expireDate: expireDate)
+            return checkExpireDateIsSmallerThanExpireThresholdDate(expireDate: expireDate)
         })
+        sortGiftsByDateAscending(observableGifts)
     }
     
     func sortOutRecentDate(_ observableGifts: Observable<[Gift]>,
                            _ gifts: [Gift]) {
         observableGifts.value = gifts.filter({ gift in
+            guard gift.useableState == true else { return false }
             guard let expireDate = gift.expireDate else { return true }
-            return checkExpireDateIsBiggerThanSevenDays(expireDate: expireDate)
+            return checkExpireDateIsBiggerThanExpireThresholdDate(expireDate: expireDate)
         })
+        sortGiftsByDateAscending(observableGifts)
     }
+    
+    func checkValidDate(expireDate: Date) -> Date? {
+        if expireDate < Date() {
+            return nil
+        }
+        return expireDate
+    }
+    
 }
 
 // MARK: 내부함수
 extension DateCalculateUseCase {
-    func checkExpireDateIsSmallerThanSevenDays(expireDate: Date) -> Bool {
+    func checkExpireDateIsSmallerThanExpireThresholdDate(expireDate: Date) -> Bool {
         let subtractionResult = subtractionOftheDays(expireDate: expireDate, today: Date())
         
-        return subtractionResult >= 0 && subtractionResult <= 7 ? true : false
+        return subtractionResult >= 0 && subtractionResult <= expireThresholdDate ? true : false
     }
     
-    func checkExpireDateIsBiggerThanSevenDays(expireDate: Date) -> Bool {
+    func checkExpireDateIsBiggerThanExpireThresholdDate(expireDate: Date) -> Bool {
         let subtractionResult = subtractionOftheDays(expireDate: expireDate, today: Date())
         
-        return subtractionResult > 7 ? true : false
+        return subtractionResult > expireThresholdDate ? true : false
     }
     
     func subtractionOftheDays(expireDate: Date, today: Date) -> Int {
@@ -64,15 +78,13 @@ extension DateCalculateUseCase {
         
         return (expireDate: expireDate, today: today)
     }
+    
+    private func sortGiftsByDateAscending(_ observableGifts: Observable<[Gift]>) {
+        observableGifts.value.sort { gift, compareGift in
+            guard let expireDate = gift.expireDate,
+                  let compareDate = compareGift.expireDate else { return false }
+            return expireDate.compare(compareDate) == .orderedAscending
+        }
+    }
+    
 }
-
-/*
- 
- 1. usableState가 false면 historyViewModel에 담는다.
- 2. expireDate가 - 이면 historyViewModel에 담는다.
-
- 1이 우선조건임.
- 1이 사용만료가 되면 일단 historyViewModel에 담고 enum으로 사용완료로 나오게함
- 2이 만료되면 historyViewModel에 담고 enum으로 이용기간만료로 나오게함
- 
- */

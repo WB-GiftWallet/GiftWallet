@@ -31,4 +31,6 @@ extension UIColor {
     static let imageViewbackground = UIColor(r: 244, g: 244, b: 244)
     
     static let unenableButton = UIColor(r: 245, g: 245, b: 245)
+    
+    static let emptyImage = UIColor(r: 235, g: 235, b: 235)
 }

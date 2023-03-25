@@ -61,7 +61,7 @@ final class DateCalculateUseCaseTest: XCTestCase {
         let expireDate = Date().addFromTodayDate(7)
         
         // when
-        let result = sut.checkExpireDateIsSmallerThanSevenDays(expireDate: expireDate)
+        let result = sut.checkExpireDateIsSmallerThanExpireThresholdDate(expireDate: expireDate)
         
         // then
         XCTAssertTrue(result)
@@ -72,7 +72,7 @@ final class DateCalculateUseCaseTest: XCTestCase {
         let expireDate = Date().addFromTodayDate(8)
         
         // when
-        let result = sut.checkExpireDateIsSmallerThanSevenDays(expireDate: expireDate)
+        let result = sut.checkExpireDateIsSmallerThanExpireThresholdDate(expireDate: expireDate)
         
         // then
         XCTAssertFalse(result)
@@ -83,7 +83,7 @@ final class DateCalculateUseCaseTest: XCTestCase {
         let expireDate = Date()
         
         // when
-        let result = sut.checkExpireDateIsSmallerThanSevenDays(expireDate: expireDate)
+        let result = sut.checkExpireDateIsSmallerThanExpireThresholdDate(expireDate: expireDate)
         
         // then
         XCTAssertTrue(result)

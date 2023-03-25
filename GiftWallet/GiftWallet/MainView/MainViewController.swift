@@ -11,6 +11,10 @@ class MainViewController: UIViewController, UISearchBarDelegate, UISearchControl
     
     private let viewModel: MainViewModel
     
+    private var expireCollectionViewHeightAnchor: NSLayoutConstraint?
+    private var recentCollectionViewHeightAnchor: NSLayoutConstraint?
+    private var recentCollectionHeaderLabelTopAnchor: NSLayoutConstraint?
+    
     private lazy var contentScrollView: UIScrollView = {
         
         let scrollView = UIScrollView()
@@ -32,8 +36,9 @@ class MainViewController: UIViewController, UISearchBarDelegate, UISearchControl
     private let emptyImageView = {
         let imageView = UIImageView()
         
-        imageView.image = UIImage(named: "emptyBoxResize")
-        imageView.contentMode = .center
+        imageView.image = UIImage(systemName: "camera")
+        imageView.contentMode = .scaleAspectFill
+        imageView.tintColor = .modifyButtonBorder
         
         return imageView
     }()
@@ -41,10 +46,23 @@ class MainViewController: UIViewController, UISearchBarDelegate, UISearchControl
     private let emptyLabel = {
         let label = UILabel()
         
-        label.text = "쿠폰을 등록해주세요!"
+        label.text = "내 쿠폰함"
         label.numberOfLines = 0
         label.textAlignment = .center
-        label.font = UIFont(style: .bmJua, size: 30)
+        label.font = UIFont(style: .bold, size: 20)
+        
+        return label
+    }()
+    
+    private let emptyDescriptionLabel = {
+        let label = UILabel()
+        
+        label.text = "쿠폰을 등록하면 쿠폰함에 표시됩니다."
+        label.numberOfLines = 0
+        label.textAlignment = .center
+        label.textColor = .
+        modifyButtonTitle
+        label.font = UIFont(style: .regular, size: 18)
         
         return label
     }()
@@ -53,7 +71,7 @@ class MainViewController: UIViewController, UISearchBarDelegate, UISearchControl
         let stackView = UIStackView()
         
         stackView.axis = .vertical
-        stackView.spacing = 20
+        stackView.spacing = 10
         stackView.isHidden = true
         stackView.alignment = .center
         stackView.distribution = .fillEqually
@@ -184,14 +202,17 @@ class MainViewController: UIViewController, UISearchBarDelegate, UISearchControl
     private func updateCollectionViewData() {
         viewModel.fetchCoreData()
         viewModel.sortOutInGlobalThread {
-            self.setupCollectionViewIsHiddenAndHeightConstraint()
+            self.resizeViewsAutoLayoutBasedOnGiftsData()
         }
     }
     
     
     private func setupButton() {
         let searchButtonAction = UIAction { _ in
-            let searchViewController = SearchViewController()
+            let gifts = self.viewModel.recentGifts.value + self.viewModel.expireGifts.value
+            let observableGifts: Observable<[Gift]> = .init(gifts)
+            let searchTableViewModel = SearchTableViewModel(allGiftData: observableGifts)
+            let searchViewController = SearchViewController(viewModel: searchTableViewModel)
             self.navigationController?.pushViewController(searchViewController, animated: true)
         }
         searchButton.addAction(searchButtonAction, for: .touchUpInside)
@@ -199,7 +220,7 @@ class MainViewController: UIViewController, UISearchBarDelegate, UISearchControl
     
     private func setupViews() {
         
-        [emptyImageView, emptyLabel].forEach(emptyVerticalStackView.addArrangedSubview(_:))
+        [emptyImageView, emptyLabel, emptyDescriptionLabel].forEach(emptyVerticalStackView.addArrangedSubview(_:))
         contentView.addSubview(emptyVerticalStackView)
         
         contentView.addSubview(searchButton)
@@ -244,7 +265,6 @@ class MainViewController: UIViewController, UISearchBarDelegate, UISearchControl
             expireCollectionView.trailingAnchor.constraint(equalTo: expireCollectionViewHeaderLabel.trailingAnchor),
             expireCollectionView.widthAnchor.constraint(equalTo: contentView.widthAnchor),
             
-            recentCollectionViewHeaderLabel.topAnchor.constraint(equalTo: expireCollectionView.bottomAnchor, constant: 25),
             recentCollectionViewHeaderLabel.leadingAnchor.constraint(equalTo: expireCollectionViewHeaderLabel.leadingAnchor),
             
             recentCollectionView.topAnchor.constraint(equalTo: recentCollectionViewHeaderLabel.bottomAnchor, constant: 15),
@@ -252,39 +272,56 @@ class MainViewController: UIViewController, UISearchBarDelegate, UISearchControl
             recentCollectionView.trailingAnchor.constraint(equalTo: recentCollectionViewHeaderLabel.trailingAnchor),
             recentCollectionView.widthAnchor.constraint(equalTo: contentView.widthAnchor)
         ])
+        
+        setupResponsiveConstraintViews()
     }
     
-    private func setupCollectionViewIsHiddenAndHeightConstraint() {
-        if viewModel.allGifts.isEmpty {
-            emptyVerticalStackView.isHidden = false
-            expireCollectionViewHeaderLabel.isHidden = true
-            recentCollectionViewHeaderLabel.isHidden = true
-            recentCollectionView.heightAnchor.constraint(equalToConstant: .zero).isActive = true
-            expireCollectionView.heightAnchor.constraint(equalToConstant: .zero).isActive = true
-        }
+    private func setupResponsiveConstraintViews() {
+        expireCollectionViewHeightAnchor = expireCollectionView.heightAnchor.constraint(equalToConstant: .zero)
+        recentCollectionViewHeightAnchor = recentCollectionView.heightAnchor.constraint(equalToConstant: .zero)
+        recentCollectionHeaderLabelTopAnchor = recentCollectionViewHeaderLabel.topAnchor.constraint(equalTo: searchButton.bottomAnchor, constant: .zero)
         
+        NSLayoutConstraint.activate([
+            expireCollectionViewHeightAnchor,
+            recentCollectionViewHeightAnchor,
+            recentCollectionHeaderLabelTopAnchor
+        ].compactMap { $0 })
+    }
+    
+    private func resizeViewsAutoLayoutBasedOnGiftsData() {
         let expireGifts = viewModel.expireGifts.value
         let recentGifts = viewModel.recentGifts.value
         
-        if expireGifts.isEmpty && !recentGifts.isEmpty {
-            emptyVerticalStackView.isHidden = true
-            expireCollectionViewHeaderLabel.isHidden = true
-            expireCollectionView.heightAnchor.constraint(equalToConstant: .zero).isActive = true
-            recentCollectionViewHeaderLabel.isHidden = false
-            recentCollectionView.heightAnchor.constraint(equalTo: recentCollectionView.widthAnchor, multiplier: 0.85).isActive = true
-        } else if !expireGifts.isEmpty && recentGifts.isEmpty {
-            emptyVerticalStackView.isHidden = true
-            recentCollectionViewHeaderLabel.isHidden = true
-            recentCollectionView.heightAnchor.constraint(equalToConstant: .zero).isActive = true
-            expireCollectionViewHeaderLabel.isHidden = false
-            expireCollectionView.heightAnchor.constraint(equalTo: expireCollectionView.widthAnchor, multiplier: 0.85).isActive = true
-        } else if !expireGifts.isEmpty && !recentGifts.isEmpty {
-            emptyVerticalStackView.isHidden = true
-            expireCollectionViewHeaderLabel.isHidden = false
-            expireCollectionView.heightAnchor.constraint(equalTo: expireCollectionView.widthAnchor, multiplier: 0.85).isActive = true
-            recentCollectionViewHeaderLabel.isHidden = false
-            recentCollectionView.heightAnchor.constraint(equalTo: expireCollectionView.widthAnchor, multiplier: 0.85).isActive = true
+        switch (expireGifts.isEmpty, recentGifts.isEmpty) {
+        case (true, true):
+            updateConstantBasedOnViewActivation(emptyViewActivate: true, expireCollectionViewActivate: false,
+                                                recentCollectionViewActivate: false, recentHeaderLabelActivate: false)
+        case (true, false):
+            updateConstantBasedOnViewActivation(emptyViewActivate: false, expireCollectionViewActivate: false,
+                                                recentCollectionViewActivate: true, recentHeaderLabelActivate: false)
+        case (false, true):
+            updateConstantBasedOnViewActivation(emptyViewActivate: false, expireCollectionViewActivate: true,
+                                                recentCollectionViewActivate: false, recentHeaderLabelActivate: false)
+        case (false, false):
+            updateConstantBasedOnViewActivation(emptyViewActivate: false, expireCollectionViewActivate: true,
+                                                recentCollectionViewActivate: true, recentHeaderLabelActivate: true)
         }
+    }
+    
+    private func updateConstantBasedOnViewActivation(emptyViewActivate: Bool, expireCollectionViewActivate: Bool,
+                                                     recentCollectionViewActivate: Bool, recentHeaderLabelActivate: Bool) {
+        emptyVerticalStackView.isHidden = emptyViewActivate ? false : true
+        
+        expireCollectionViewHeaderLabel.isHidden = expireCollectionViewActivate ? false : true
+        recentCollectionViewHeaderLabel.isHidden = recentCollectionViewActivate ? false : true
+        
+        expireCollectionViewHeightAnchor?.constant = expireCollectionViewActivate ? view.frame.width * 0.85 : 0
+        recentCollectionViewHeightAnchor?.constant = recentCollectionViewActivate ? view.frame.width * 0.85 : 0
+        recentCollectionHeaderLabelTopAnchor?.constant = recentHeaderLabelActivate ? view.frame.height * 0.55 : 25
+        
+        expireCollectionView.layoutIfNeeded()
+        recentCollectionView.layoutIfNeeded()
+        recentCollectionViewHeaderLabel.layoutIfNeeded()
     }
 }
 
@@ -438,26 +475,28 @@ extension MainViewController: UICollectionViewDelegate {
     }
     
     private func completeUseAction(gift: Gift) {
-        let alertController = UIAlertController(title: nil, message: "사용완료 처리하시겠습니까?", preferredStyle: .alert)
-        let okAction = UIAlertAction(title: "예", style: .destructive) { _ in
-            self.viewModel.updateGiftUseable(updategiftNumber: gift.number)
+        let alertController = UIAlertController(title: nil, message: "선택한 쿠폰을 사용완료로 처리합니다.",
+                                                preferredStyle: .actionSheet)
+        let okAction = UIAlertAction(title: "네", style: .destructive) { _ in
+            self.viewModel.updateGiftUsableState(updategiftNumber: gift.number)
+            self.updateCollectionViewData()
         }
         
         let noAction = UIAlertAction(title: "아니오", style: .cancel)
-
+        
         [okAction, noAction].forEach(alertController.addAction(_:))
         present(alertController, animated: true)
     }
     
     private func deleteAction(gift: Gift) {
-        let alertController = UIAlertController(title: nil, message: "삭제 하시겠습니까?", preferredStyle: .alert)
-        let okAction = UIAlertAction(title: "예", style: .destructive) { _ in
+        let alertController = UIAlertController(title: nil, message: "선택한 쿠폰을 완전히 제거합니다.", preferredStyle: .actionSheet)
+        let okAction = UIAlertAction(title: "네", style: .destructive) { _ in
             self.viewModel.deleteCoreData(targetGiftNumber: gift.number)
             self.updateCollectionViewData()
         }
         
         let noAction = UIAlertAction(title: "아니오", style: .cancel)
-
+        
         [okAction, noAction].forEach(alertController.addAction(_:))
         present(alertController, animated: true)
     }
