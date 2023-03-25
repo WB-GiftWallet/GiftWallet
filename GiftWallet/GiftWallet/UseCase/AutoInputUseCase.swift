@@ -12,16 +12,14 @@ struct AutoInputUseCase {
     //MARK: Texts To Brand
     func processImageTextsToBrandNameText(imageTexts: [String]?) -> String? {
         var brandName: String?
-        let brandList = BrandList()
+        let brandList = BrandList().lists
         
         guard let imageTexts = imageTexts else { return nil }
-        let trimmingImageTexts = imageTexts.map( { $0.replacingOccurrences(of: " ", with: "") })
-        print(trimmingImageTexts)
-        
-        for list in brandList.lists {
-            if trimmingImageTexts.contains(list) {
-                brandName = list
-            }
+        let separatedTexts = imageTexts.flatMap { $0.components(separatedBy: " ") }
+        let removedPunctuationTexts = separatedTexts.map { $0.components(separatedBy: CharacterSet.alphanumerics.inverted).joined() }
+                
+        if let brand = removedPunctuationTexts.first(where: { brandList.contains($0.lowercased()) }) {
+            brandName = brand
         }
         return brandName
     }
