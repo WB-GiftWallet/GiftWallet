@@ -209,7 +209,10 @@ class MainViewController: UIViewController, UISearchBarDelegate, UISearchControl
     
     private func setupButton() {
         let searchButtonAction = UIAction { _ in
-            let searchViewController = SearchViewController()
+            let gifts = self.viewModel.recentGifts.value + self.viewModel.expireGifts.value
+            let observableGifts: Observable<[Gift]> = .init(gifts)
+            let searchTableViewModel = SearchTableViewModel(allGiftData: observableGifts)
+            let searchViewController = SearchViewController(viewModel: searchTableViewModel)
             self.navigationController?.pushViewController(searchViewController, animated: true)
         }
         searchButton.addAction(searchButtonAction, for: .touchUpInside)

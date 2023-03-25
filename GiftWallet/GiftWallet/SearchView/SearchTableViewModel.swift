@@ -9,25 +9,27 @@ import Foundation
 
 class SearchTableViewModel {
     
-    var allGiftData: Observable<[Gift]> = .init([])
+    var allGiftData: Observable<[Gift]>
     var filteringGifts: Observable<[Gift]> = .init([])
     
     var sortedRecommendData = [String]()
     
-    init() {
+    init(allGiftData: Observable<[Gift]>) {
+        self.allGiftData = allGiftData
         fetchGiftCoreData()
         setupRecommendData()
     }
     
     //MARK: init Method
     private func fetchGiftCoreData() {
-        
-        switch CoreDataManager.shared.fetchData() {
-            case .success(let data):
-                allGiftData.value = data
-            case .failure(let error):
-                print(error.localizedDescription)
-        }
+
+        // MARK: 수정
+//        switch CoreDataManager.shared.fetchData() {
+//            case .success(let data):
+//                allGiftData.value = data
+//            case .failure(let error):
+//                print(error.localizedDescription)
+//        }
         
         sortFilteringGifts()
     }
