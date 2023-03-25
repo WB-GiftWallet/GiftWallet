@@ -9,7 +9,7 @@ import UIKit
 
 final class SearchViewController: UIViewController {
     
-    let viewModel = SearchTableViewModel()
+    let viewModel: SearchTableViewModel
     
     private let searchResultController = SearchTableViewController()
     private lazy var giftSearchController: UISearchController = {
@@ -44,6 +44,15 @@ final class SearchViewController: UIViewController {
         return isActive && isSearchBarHasText
     }
     private var activateConstraint = NSLayoutConstraint()
+    
+    init(viewModel: SearchTableViewModel) {
+        self.viewModel = viewModel
+        super.init(nibName: nil, bundle: nil)
+    }
+    
+    required init?(coder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
+    }
     
     override func viewDidLoad() {
         super.viewDidLoad()
