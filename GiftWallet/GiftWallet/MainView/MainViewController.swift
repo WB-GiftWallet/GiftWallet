@@ -34,8 +34,9 @@ class MainViewController: UIViewController, UISearchBarDelegate, UISearchControl
     private let emptyImageView = {
         let imageView = UIImageView()
         
-        imageView.image = UIImage(named: "emptyBoxResize")
-        imageView.contentMode = .center
+        imageView.image = UIImage(systemName: "camera")
+        imageView.contentMode = .scaleAspectFill
+        imageView.tintColor = .modifyButtonBorder
         
         return imageView
     }()
@@ -43,19 +44,32 @@ class MainViewController: UIViewController, UISearchBarDelegate, UISearchControl
     private let emptyLabel = {
         let label = UILabel()
         
-        label.text = "쿠폰을 등록해주세요!"
+        label.text = "내 쿠폰함"
         label.numberOfLines = 0
         label.textAlignment = .center
-        label.font = UIFont(style: .bmJua, size: 30)
+        label.font = UIFont(style: .bold, size: 20)
         
         return label
+    }()
+    
+    private let emptyDescriptionLabel = {
+        let label = UILabel()
+        
+        label.text = "쿠폰을 등록하면 쿠폰함에 표시됩니다."
+        label.numberOfLines = 0
+        label.textAlignment = .center
+        label.textColor = .
+        modifyButtonTitle
+        label.font = UIFont(style: .regular, size: 18)
+        
+       return label
     }()
     
     private let emptyVerticalStackView = {
         let stackView = UIStackView()
         
         stackView.axis = .vertical
-        stackView.spacing = 20
+        stackView.spacing = 10
         stackView.isHidden = true
         stackView.alignment = .center
         stackView.distribution = .fillEqually
@@ -201,7 +215,7 @@ class MainViewController: UIViewController, UISearchBarDelegate, UISearchControl
     
     private func setupViews() {
         
-        [emptyImageView, emptyLabel].forEach(emptyVerticalStackView.addArrangedSubview(_:))
+        [emptyImageView, emptyLabel, emptyDescriptionLabel].forEach(emptyVerticalStackView.addArrangedSubview(_:))
         contentView.addSubview(emptyVerticalStackView)
         
         contentView.addSubview(searchButton)
@@ -274,8 +288,8 @@ class MainViewController: UIViewController, UISearchBarDelegate, UISearchControl
             
             oneCollectionHeight?.constant = 0
             twoCollectionHeight?.constant = 0
-            recentCollectionView.layoutIfNeeded()
-            expireCollectionView.layoutIfNeeded()
+            recentCollectionView.setNeedsLayout()
+            expireCollectionView.setNeedsLayout()
         }
         
         let expireGifts = viewModel.expireGifts.value
@@ -288,24 +302,24 @@ class MainViewController: UIViewController, UISearchBarDelegate, UISearchControl
             oneCollectionHeight?.constant = 0
             recentCollectionViewHeaderLabel.isHidden = false
             twoCollectionHeight?.constant = view.frame.width * 0.85
-            recentCollectionView.layoutIfNeeded()
-            expireCollectionView.layoutIfNeeded()
+            recentCollectionView.setNeedsLayout()
+            expireCollectionView.setNeedsLayout()
         } else if !expireGifts.isEmpty && recentGifts.isEmpty {
             emptyVerticalStackView.isHidden = true
             recentCollectionViewHeaderLabel.isHidden = true
             twoCollectionHeight?.constant = 0
             expireCollectionViewHeaderLabel.isHidden = false
             oneCollectionHeight?.constant = view.frame.width * 0.85
-            recentCollectionView.layoutIfNeeded()
-            expireCollectionView.layoutIfNeeded()
+            recentCollectionView.setNeedsLayout()
+            expireCollectionView.setNeedsLayout()
         } else if !expireGifts.isEmpty && !recentGifts.isEmpty {
             emptyVerticalStackView.isHidden = true
             expireCollectionViewHeaderLabel.isHidden = false
             oneCollectionHeight?.constant = view.frame.width * 0.85
             recentCollectionViewHeaderLabel.isHidden = false
             twoCollectionHeight?.constant = view.frame.width * 0.85
-            recentCollectionView.layoutIfNeeded()
-            expireCollectionView.layoutIfNeeded()
+            recentCollectionView.setNeedsLayout()
+            expireCollectionView.setNeedsLayout()
         }
     }
 }
