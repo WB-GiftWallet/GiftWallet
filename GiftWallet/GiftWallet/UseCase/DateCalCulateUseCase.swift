@@ -30,6 +30,14 @@ struct DateCalculateUseCase {
         })
         sortGiftsByDateAscending(observableGifts)
     }
+    
+    func checkValidDate(expireDate: Date) -> Date? {
+        if expireDate < Date() {
+            return nil
+        }
+        return expireDate
+    }
+    
 }
 
 // MARK: 내부함수

@@ -20,4 +20,11 @@ extension DateFormatter {
         dateFormatter.dateFormat = "yyyy. MM. dd"
         return dateFormatter.date(from: dateText)
     }
+    
+    
+    static func convertToDisplayStringInputStyle(date: Date) -> String {
+        let dateFormatter = DateFormatter()
+        dateFormatter.dateFormat = "yyyy. MM. dd"
+        return dateFormatter.string(from: date)
+    }
 }

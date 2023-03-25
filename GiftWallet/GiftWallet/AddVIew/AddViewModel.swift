@@ -11,7 +11,8 @@ class AddViewModel {
     
     private let coreDataManager = CoreDataManager.shared
     private let visionManager = VisionManager()
-    private let useCase = AutoInputUseCase()
+    private let autoInputUseCase = AutoInputUseCase()
+    private let dateCalculateUseCase = DateCalculateUseCase()
     
     let selectedImage: UIImage
     var gift: Gift?
@@ -28,11 +29,15 @@ class AddViewModel {
         
         switch page {
         case .brand:
-            return useCase.processImageTextsToBrandNameText(imageTexts: texts)
+            return autoInputUseCase.processImageTextsToBrandNameText(imageTexts: texts)
         case .productName:
             return nil
         case .expireDate:
-            return useCase.processImageTextsToExpireDate(imageTexts: texts)
+            guard let texts = texts,
+                  let processedTexts = autoInputUseCase.processImageTextsToBrandNameText(imageTexts: texts),
+                  let convertToDate = DateFormatter.convertToDisplyStringToExpireDate(dateText: processedTexts),
+                  let checkValidDate = dateCalculateUseCase.checkValidDate(expireDate: convertToDate) else { return nil }
+            return DateFormatter.convertToDisplayStringInputStyle(date: checkValidDate)
         }
     }
     
