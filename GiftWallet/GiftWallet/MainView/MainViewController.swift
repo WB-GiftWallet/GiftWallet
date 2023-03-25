@@ -12,6 +12,7 @@ class MainViewController: UIViewController, UISearchBarDelegate, UISearchControl
     private let viewModel: MainViewModel
     private var oneCollectionHeight: NSLayoutConstraint?
     private var twoCollectionHeight: NSLayoutConstraint?
+    private var recentCollectionHeaderLabelTopAnchor: NSLayoutConstraint?
     
     private lazy var contentScrollView: UIScrollView = {
         
@@ -62,7 +63,7 @@ class MainViewController: UIViewController, UISearchBarDelegate, UISearchControl
         modifyButtonTitle
         label.font = UIFont(style: .regular, size: 18)
         
-       return label
+        return label
     }()
     
     private let emptyVerticalStackView = {
@@ -260,7 +261,6 @@ class MainViewController: UIViewController, UISearchBarDelegate, UISearchControl
             expireCollectionView.trailingAnchor.constraint(equalTo: expireCollectionViewHeaderLabel.trailingAnchor),
             expireCollectionView.widthAnchor.constraint(equalTo: contentView.widthAnchor),
             
-            recentCollectionViewHeaderLabel.topAnchor.constraint(equalTo: expireCollectionView.bottomAnchor, constant: 25),
             recentCollectionViewHeaderLabel.leadingAnchor.constraint(equalTo: expireCollectionViewHeaderLabel.leadingAnchor),
             
             recentCollectionView.topAnchor.constraint(equalTo: recentCollectionViewHeaderLabel.bottomAnchor, constant: 15),
@@ -269,57 +269,78 @@ class MainViewController: UIViewController, UISearchBarDelegate, UISearchControl
             recentCollectionView.widthAnchor.constraint(equalTo: contentView.widthAnchor)
         ])
         
-        oneCollectionHeight = expireCollectionView.heightAnchor.constraint(equalToConstant: .zero)
-        twoCollectionHeight = recentCollectionView.heightAnchor.constraint(equalToConstant: .zero)
-        
-        NSLayoutConstraint.activate([
-            oneCollectionHeight,
-            twoCollectionHeight
-        ].compactMap { $0 })
-        
-        
+        setupResponsiveConstraintViews()
     }
     
+    private func setupResponsiveConstraintViews() {
+        oneCollectionHeight = expireCollectionView.heightAnchor.constraint(equalToConstant: .zero)
+        twoCollectionHeight = recentCollectionView.heightAnchor.constraint(equalToConstant: .zero)
+        recentCollectionHeaderLabelTopAnchor = recentCollectionViewHeaderLabel.topAnchor.constraint(equalTo: searchButton.bottomAnchor, constant: .zero)
+        NSLayoutConstraint.activate([
+            oneCollectionHeight,
+            twoCollectionHeight,
+            recentCollectionHeaderLabelTopAnchor
+        ].compactMap { $0 })
+    }
+    
+    
     private func setupCollectionViewIsHiddenAndHeightConstraint() {
-        if viewModel.allGifts.isEmpty {
+        let expireGifts = viewModel.expireGifts.value
+        let recentGifts = viewModel.recentGifts.value
+        
+        if expireGifts.isEmpty && recentGifts.isEmpty {
             emptyVerticalStackView.isHidden = false
             expireCollectionViewHeaderLabel.isHidden = true
             recentCollectionViewHeaderLabel.isHidden = true
             
             oneCollectionHeight?.constant = 0
             twoCollectionHeight?.constant = 0
-            recentCollectionView.setNeedsLayout()
-            expireCollectionView.setNeedsLayout()
+            
+            recentCollectionViewHeaderLabel.layoutIfNeeded()
+            recentCollectionView.layoutIfNeeded()
+            expireCollectionView.layoutIfNeeded()
         }
         
-        let expireGifts = viewModel.expireGifts.value
-        let recentGifts = viewModel.recentGifts.value
         
         if expireGifts.isEmpty && !recentGifts.isEmpty {
             emptyVerticalStackView.isHidden = true
             expireCollectionViewHeaderLabel.isHidden = true
-    
+            
             oneCollectionHeight?.constant = 0
             recentCollectionViewHeaderLabel.isHidden = false
             twoCollectionHeight?.constant = view.frame.width * 0.85
-            recentCollectionView.setNeedsLayout()
-            expireCollectionView.setNeedsLayout()
+            
+            recentCollectionHeaderLabelTopAnchor?.constant = 25
+            
+            recentCollectionViewHeaderLabel.layoutIfNeeded()
+            recentCollectionView.layoutIfNeeded()
+            expireCollectionView.layoutIfNeeded()
         } else if !expireGifts.isEmpty && recentGifts.isEmpty {
             emptyVerticalStackView.isHidden = true
             recentCollectionViewHeaderLabel.isHidden = true
             twoCollectionHeight?.constant = 0
             expireCollectionViewHeaderLabel.isHidden = false
             oneCollectionHeight?.constant = view.frame.width * 0.85
-            recentCollectionView.setNeedsLayout()
-            expireCollectionView.setNeedsLayout()
+            recentCollectionHeaderLabelTopAnchor?.constant = view.frame.height * 0.55
+            
+            recentCollectionViewHeaderLabel.layoutIfNeeded()
+            recentCollectionView.layoutIfNeeded()
+            expireCollectionView.layoutIfNeeded()
         } else if !expireGifts.isEmpty && !recentGifts.isEmpty {
             emptyVerticalStackView.isHidden = true
+            
             expireCollectionViewHeaderLabel.isHidden = false
             oneCollectionHeight?.constant = view.frame.width * 0.85
             recentCollectionViewHeaderLabel.isHidden = false
+            
+            recentCollectionHeaderLabelTopAnchor?.constant = view.frame.height * 0.55
+            
             twoCollectionHeight?.constant = view.frame.width * 0.85
-            recentCollectionView.setNeedsLayout()
-            expireCollectionView.setNeedsLayout()
+            
+            expireCollectionViewHeaderLabel.layoutIfNeeded()
+            recentCollectionViewHeaderLabel.layoutIfNeeded()
+            recentCollectionView.layoutIfNeeded()
+            expireCollectionView.layoutIfNeeded()
         }
     }
 }
@@ -482,7 +503,7 @@ extension MainViewController: UICollectionViewDelegate {
         }
         
         let noAction = UIAlertAction(title: "아니오", style: .cancel)
-
+        
         [okAction, noAction].forEach(alertController.addAction(_:))
         present(alertController, animated: true)
     }
@@ -495,7 +516,7 @@ extension MainViewController: UICollectionViewDelegate {
         }
         
         let noAction = UIAlertAction(title: "아니오", style: .cancel)
-
+        
         [okAction, noAction].forEach(alertController.addAction(_:))
         present(alertController, animated: true)
     }
