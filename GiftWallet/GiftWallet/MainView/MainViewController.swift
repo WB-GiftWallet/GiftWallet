@@ -10,6 +10,7 @@ import UIKit
 class MainViewController: UIViewController, UISearchBarDelegate, UISearchControllerDelegate {
     
     private let viewModel: MainViewModel
+    
     private var oneCollectionHeight: NSLayoutConstraint?
     private var twoCollectionHeight: NSLayoutConstraint?
     private var recentCollectionHeaderLabelTopAnchor: NSLayoutConstraint?
@@ -201,7 +202,7 @@ class MainViewController: UIViewController, UISearchBarDelegate, UISearchControl
     private func updateCollectionViewData() {
         viewModel.fetchCoreData()
         viewModel.sortOutInGlobalThread {
-            self.setupCollectionViewIsHiddenAndHeightConstraint()
+            self.resizeViewsAutoLayoutBasedOnGiftsData()
         }
     }
     
@@ -276,6 +277,7 @@ class MainViewController: UIViewController, UISearchBarDelegate, UISearchControl
         oneCollectionHeight = expireCollectionView.heightAnchor.constraint(equalToConstant: .zero)
         twoCollectionHeight = recentCollectionView.heightAnchor.constraint(equalToConstant: .zero)
         recentCollectionHeaderLabelTopAnchor = recentCollectionViewHeaderLabel.topAnchor.constraint(equalTo: searchButton.bottomAnchor, constant: .zero)
+        
         NSLayoutConstraint.activate([
             oneCollectionHeight,
             twoCollectionHeight,
@@ -283,65 +285,40 @@ class MainViewController: UIViewController, UISearchBarDelegate, UISearchControl
         ].compactMap { $0 })
     }
     
-    
-    private func setupCollectionViewIsHiddenAndHeightConstraint() {
+    private func resizeViewsAutoLayoutBasedOnGiftsData() {
         let expireGifts = viewModel.expireGifts.value
         let recentGifts = viewModel.recentGifts.value
         
-        if expireGifts.isEmpty && recentGifts.isEmpty {
-            emptyVerticalStackView.isHidden = false
-            expireCollectionViewHeaderLabel.isHidden = true
-            recentCollectionViewHeaderLabel.isHidden = true
-            
-            oneCollectionHeight?.constant = 0
-            twoCollectionHeight?.constant = 0
-            
-            recentCollectionViewHeaderLabel.layoutIfNeeded()
-            recentCollectionView.layoutIfNeeded()
-            expireCollectionView.layoutIfNeeded()
+        switch (expireGifts.isEmpty, recentGifts.isEmpty) {
+        case (true, true):
+            updateConstantBasedOnViewActivation(emptyViewActivate: true, expireCollectionViewActivate: false,
+                                                recentCollectionViewActivate: false, recentHeaderLabelActivate: false)
+        case (true, false):
+            updateConstantBasedOnViewActivation(emptyViewActivate: false, expireCollectionViewActivate: false,
+                                                recentCollectionViewActivate: true, recentHeaderLabelActivate: false)
+        case (false, true):
+            updateConstantBasedOnViewActivation(emptyViewActivate: false, expireCollectionViewActivate: true,
+                                                recentCollectionViewActivate: false, recentHeaderLabelActivate: false)
+        case (false, false):
+            updateConstantBasedOnViewActivation(emptyViewActivate: false, expireCollectionViewActivate: true,
+                                                recentCollectionViewActivate: true, recentHeaderLabelActivate: true)
         }
+    }
+    
+    private func updateConstantBasedOnViewActivation(emptyViewActivate: Bool, expireCollectionViewActivate: Bool,
+                                                     recentCollectionViewActivate: Bool, recentHeaderLabelActivate: Bool) {
+        emptyVerticalStackView.isHidden = emptyViewActivate ? false : true
         
+        expireCollectionViewHeaderLabel.isHidden = expireCollectionViewActivate ? false : true
+        recentCollectionViewHeaderLabel.isHidden = recentCollectionViewActivate ? false : true
         
-        if expireGifts.isEmpty && !recentGifts.isEmpty {
-            emptyVerticalStackView.isHidden = true
-            expireCollectionViewHeaderLabel.isHidden = true
-            
-            oneCollectionHeight?.constant = 0
-            recentCollectionViewHeaderLabel.isHidden = false
-            twoCollectionHeight?.constant = view.frame.width * 0.85
-            
-            recentCollectionHeaderLabelTopAnchor?.constant = 25
-            
-            recentCollectionViewHeaderLabel.layoutIfNeeded()
-            recentCollectionView.layoutIfNeeded()
-            expireCollectionView.layoutIfNeeded()
-        } else if !expireGifts.isEmpty && recentGifts.isEmpty {
-            emptyVerticalStackView.isHidden = true
-            recentCollectionViewHeaderLabel.isHidden = true
-            twoCollectionHeight?.constant = 0
-            expireCollectionViewHeaderLabel.isHidden = false
-            oneCollectionHeight?.constant = view.frame.width * 0.85
-            recentCollectionHeaderLabelTopAnchor?.constant = view.frame.height * 0.55
-            
-            recentCollectionViewHeaderLabel.layoutIfNeeded()
-            recentCollectionView.layoutIfNeeded()
-            expireCollectionView.layoutIfNeeded()
-        } else if !expireGifts.isEmpty && !recentGifts.isEmpty {
-            emptyVerticalStackView.isHidden = true
-            
-            expireCollectionViewHeaderLabel.isHidden = false
-            oneCollectionHeight?.constant = view.frame.width * 0.85
-            recentCollectionViewHeaderLabel.isHidden = false
-            
-            recentCollectionHeaderLabelTopAnchor?.constant = view.frame.height * 0.55
-            
-            twoCollectionHeight?.constant = view.frame.width * 0.85
-            
-            expireCollectionViewHeaderLabel.layoutIfNeeded()
-            recentCollectionViewHeaderLabel.layoutIfNeeded()
-            recentCollectionView.layoutIfNeeded()
-            expireCollectionView.layoutIfNeeded()
-        }
+        oneCollectionHeight?.constant = expireCollectionViewActivate ? view.frame.width * 0.85 : 0
+        twoCollectionHeight?.constant = recentCollectionViewActivate ? view.frame.width * 0.85 : 0
+        recentCollectionHeaderLabelTopAnchor?.constant = recentHeaderLabelActivate ? view.frame.height * 0.55 : 25
+        
+        expireCollectionView.layoutIfNeeded()
+        recentCollectionView.layoutIfNeeded()
+        recentCollectionViewHeaderLabel.layoutIfNeeded()
     }
 }
 
