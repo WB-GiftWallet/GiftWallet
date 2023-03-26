@@ -24,7 +24,7 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
 //        window.backgroundColor = .white
 //        window.rootViewController = navigationMainController
         
-        window.rootViewController = TemporaryLoginViewController()
+        window.rootViewController = UINavigationController(rootViewController: TemporaryLoginViewController())
         window.makeKeyAndVisible()
         self.window = window
     }
