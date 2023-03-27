@@ -16,24 +16,12 @@ class SearchTableViewModel {
     
     init(allGiftData: Observable<[Gift]>) {
         self.allGiftData = allGiftData
-        fetchGiftCoreData()
+        
+        sortFilteringGifts()
         setupRecommendData()
     }
     
-    //MARK: init Method
-    private func fetchGiftCoreData() {
-
-        // MARK: 수정
-//        switch CoreDataManager.shared.fetchData() {
-//            case .success(let data):
-//                allGiftData.value = data
-//            case .failure(let error):
-//                print(error.localizedDescription)
-//        }
-        
-        sortFilteringGifts()
-    }
-    
+    //MARK: Initail Function
     private func sortFilteringGifts() {
         filteringGifts.value = allGiftData.value.sorted(by: {$0.number < $1.number})
     }
@@ -54,5 +42,11 @@ class SearchTableViewModel {
         
         let sortedBrandsNameForDescending = brandCounts.sorted { $0.1 > $1.1 }
         sortedRecommendData = sortedBrandsNameForDescending.map { $0.key }
+    }
+    
+    
+    
+    func filterGiftDataWhenUpdate(_ text: String) {
+        filteringGifts.value = allGiftData.value.filter { $0.brandName!.contains(text) }
     }
 }

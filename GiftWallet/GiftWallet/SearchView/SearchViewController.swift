@@ -238,7 +238,7 @@ extension SearchViewController: UISearchResultsUpdating {
     func updateSearchResults(for searchController: UISearchController) {
         
         guard let text = searchController.searchBar.text else { return }
-        self.viewModel.filteringGifts.value = self.viewModel.allGiftData.value.filter { $0.brandName!.contains(text) }
+        viewModel.filterGiftDataWhenUpdate(text)
         
         self.searchResultController.tableView.reloadData()
     }
