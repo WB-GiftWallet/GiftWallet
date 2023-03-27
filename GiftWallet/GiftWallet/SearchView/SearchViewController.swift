@@ -207,20 +207,16 @@ extension SearchViewController: UITableViewDataSource, UITableViewDelegate {
             
             if self.isFiltering {
                 dataNumber = self.viewModel.filteringGifts.value[indexPath.row].number
-                self.viewModel.filteringGifts.value.remove(at: indexPath.row)
+                self.viewModel.removeFilteingGiftData(indexPath.row)
             } else {
                 dataNumber = self.viewModel.allGiftData.value[indexPath.row].number
             }
             
-            do {
-                try CoreDataManager.shared.deleteDate(id: Int16(dataNumber))
-            } catch {
-                print(error.localizedDescription)
-            }
+            self.viewModel.deleteCoreData(dataNumber)
             
             for (index, data) in self.viewModel.allGiftData.value.enumerated() {
                 if data.number == dataNumber {
-                    self.viewModel.allGiftData.value.remove(at: index)
+                    self.viewModel.removeAllGiftData(index)
                     break
                 }
             }

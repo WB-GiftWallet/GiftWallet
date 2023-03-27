@@ -21,7 +21,7 @@ class SearchTableViewModel {
         setupRecommendData()
     }
     
-    //MARK: Initail Function
+    //MARK: Initail Method
     private func sortFilteringGifts() {
         filteringGifts.value = allGiftData.value.sorted(by: {$0.number < $1.number})
     }
@@ -44,9 +44,25 @@ class SearchTableViewModel {
         sortedRecommendData = sortedBrandsNameForDescending.map { $0.key }
     }
     
-    
-    
+    //MARK: Controller Method
     func filterGiftDataWhenUpdate(_ text: String) {
         filteringGifts.value = allGiftData.value.filter { $0.brandName!.contains(text) }
     }
+    
+    func removeFilteingGiftData(_ index: Int) {
+        filteringGifts.value.remove(at: index)
+    }
+    
+    func removeAllGiftData(_ index: Int) {
+        allGiftData.value.remove(at: index)
+    }
+    
+    func deleteCoreData(_ index: Int) {
+        do {
+            try CoreDataManager.shared.deleteDate(id: Int16(index))
+        } catch {
+            print(error.localizedDescription)
+        }
+    }
 }
+
