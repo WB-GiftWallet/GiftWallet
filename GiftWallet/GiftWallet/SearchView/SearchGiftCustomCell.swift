@@ -11,7 +11,7 @@ class CustomCell: UITableViewCell {
     var giftImageView: UIImageView = {
         let view = UIImageView()
         
-        view.image = UIImage(named: "testImageSTARBUCKSSMALL")
+        view.image = UIImage(systemName: "questionmark.app")
         view.contentMode = .scaleAspectFit
         view.translatesAutoresizingMaskIntoConstraints = false
         
@@ -21,7 +21,6 @@ class CustomCell: UITableViewCell {
     var brandNameLabel: UILabel = {
         let label = UILabel()
         
-        label.text = "임시 텍스트 입니다"
         label.font = .preferredFont(forTextStyle: .title3)
         
         return label
@@ -30,7 +29,6 @@ class CustomCell: UITableViewCell {
     var productNameLabel: UILabel = {
         let label = UILabel()
         
-        label.text = "임시 텍스트 입니다"
         label.font = .preferredFont(forTextStyle: .body)
         
         return label
@@ -39,7 +37,6 @@ class CustomCell: UITableViewCell {
     var expireDateLabel: UILabel = {
         let label = UILabel()
         
-        label.text = "임시 텍스트 입니다"
         label.font = .preferredFont(forTextStyle: .caption1)
         
         return label
@@ -90,23 +87,11 @@ class CustomCell: UITableViewCell {
             labelStackView.centerYAnchor.constraint(equalTo: giftImageView.centerYAnchor)
         ])
     }
+    
     func changeCell(_ giftData: Gift) {
         giftImageView.image = giftData.image
         brandNameLabel.text = giftData.brandName
         productNameLabel.text = giftData.productName
         expireDateLabel.text = giftData.expireDate?.setupDateStyleForDisplay()
-    }
-    
-    func changeGiftImageView(_ image: UIImage) {
-        giftImageView.image = image
-    }
-    func changeBrandNameLabel(_ brandName: String) {
-        brandNameLabel.text = brandName
-    }
-    func changeProductNameLabel(_ productName: String) {
-        productNameLabel.text = productName
-    }
-    func changeExpireDateLabel(_ expireDate: Date) {
-        expireDateLabel.text = expireDate.setupDateStyleForDisplay()
     }
 }
