@@ -22,6 +22,9 @@
 		D230BD1729D311A600B8E74E /* LoginViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D230BD1629D311A600B8E74E /* LoginViewController.swift */; };
 		D230BD1929D311B300B8E74E /* LoginViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = D230BD1829D311B300B8E74E /* LoginViewModel.swift */; };
 		D230BD1B29D311E700B8E74E /* SocialLoginManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = D230BD1A29D311E700B8E74E /* SocialLoginManager.swift */; };
+		D230BD1E29D31C3200B8E74E /* KakaoSDKAuth in Frameworks */ = {isa = PBXBuildFile; productRef = D230BD1D29D31C3200B8E74E /* KakaoSDKAuth */; };
+		D230BD2029D31C3200B8E74E /* KakaoSDKCommon in Frameworks */ = {isa = PBXBuildFile; productRef = D230BD1F29D31C3200B8E74E /* KakaoSDKCommon */; };
+		D230BD2229D31C3200B8E74E /* KakaoSDKUser in Frameworks */ = {isa = PBXBuildFile; productRef = D230BD2129D31C3200B8E74E /* KakaoSDKUser */; };
 		D24002D129B752DB00635FFC /* NotoSansKR-Regular.otf in Resources */ = {isa = PBXBuildFile; fileRef = D24002CB29B752DA00635FFC /* NotoSansKR-Regular.otf */; };
 		D24002D229B752DB00635FFC /* NotoSansKR-Thin.otf in Resources */ = {isa = PBXBuildFile; fileRef = D24002CC29B752DB00635FFC /* NotoSansKR-Thin.otf */; };
 		D24002D329B752DB00635FFC /* NotoSansKR-Black.otf in Resources */ = {isa = PBXBuildFile; fileRef = D24002CD29B752DB00635FFC /* NotoSansKR-Black.otf */; };
@@ -192,7 +195,10 @@
 				1723BE8529C3142600AE06F9 /* IQKeyboardManagerSwift in Frameworks */,
 				1713140A29D2E5C0007A3AF9 /* FirebaseAuth in Frameworks */,
 				1713140C29D2E5C0007A3AF9 /* FirebaseFirestore in Frameworks */,
+				D230BD2229D31C3200B8E74E /* KakaoSDKUser in Frameworks */,
 				1713140E29D2E5C0007A3AF9 /* FirebaseFirestoreSwift in Frameworks */,
+				D230BD2029D31C3200B8E74E /* KakaoSDKCommon in Frameworks */,
+				D230BD1E29D31C3200B8E74E /* KakaoSDKAuth in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -493,6 +499,9 @@
 				1713140929D2E5C0007A3AF9 /* FirebaseAuth */,
 				1713140B29D2E5C0007A3AF9 /* FirebaseFirestore */,
 				1713140D29D2E5C0007A3AF9 /* FirebaseFirestoreSwift */,
+				D230BD1D29D31C3200B8E74E /* KakaoSDKAuth */,
+				D230BD1F29D31C3200B8E74E /* KakaoSDKCommon */,
+				D230BD2129D31C3200B8E74E /* KakaoSDKUser */,
 			);
 			productName = GiftWallet;
 			productReference = FC1E746E29A207DA0010A4BA /* GiftWallet.app */;
@@ -533,6 +542,7 @@
 			packageReferences = (
 				1723BE8329C3142600AE06F9 /* XCRemoteSwiftPackageReference "IQKeyboardManager" */,
 				1713140829D2E5C0007A3AF9 /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */,
+				D230BD1C29D31C3200B8E74E /* XCRemoteSwiftPackageReference "kakao-ios-sdk" */,
 			);
 			productRefGroup = FC1E746F29A207DA0010A4BA /* Products */;
 			projectDirPath = "";
@@ -995,6 +1005,14 @@
 				minimumVersion = 6.0.0;
 			};
 		};
+		D230BD1C29D31C3200B8E74E /* XCRemoteSwiftPackageReference "kakao-ios-sdk" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/kakao/kakao-ios-sdk";
+			requirement = {
+				branch = master;
+				kind = branch;
+			};
+		};
 /* End XCRemoteSwiftPackageReference section */
 
 /* Begin XCSwiftPackageProductDependency section */
@@ -1017,6 +1035,21 @@
 			isa = XCSwiftPackageProductDependency;
 			package = 1723BE8329C3142600AE06F9 /* XCRemoteSwiftPackageReference "IQKeyboardManager" */;
 			productName = IQKeyboardManagerSwift;
+		};
+		D230BD1D29D31C3200B8E74E /* KakaoSDKAuth */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = D230BD1C29D31C3200B8E74E /* XCRemoteSwiftPackageReference "kakao-ios-sdk" */;
+			productName = KakaoSDKAuth;
+		};
+		D230BD1F29D31C3200B8E74E /* KakaoSDKCommon */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = D230BD1C29D31C3200B8E74E /* XCRemoteSwiftPackageReference "kakao-ios-sdk" */;
+			productName = KakaoSDKCommon;
+		};
+		D230BD2129D31C3200B8E74E /* KakaoSDKUser */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = D230BD1C29D31C3200B8E74E /* XCRemoteSwiftPackageReference "kakao-ios-sdk" */;
+			productName = KakaoSDKUser;
 		};
 /* End XCSwiftPackageProductDependency section */
 
