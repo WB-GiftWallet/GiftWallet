@@ -7,6 +7,10 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		1713140A29D2E5C0007A3AF9 /* FirebaseAuth in Frameworks */ = {isa = PBXBuildFile; productRef = 1713140929D2E5C0007A3AF9 /* FirebaseAuth */; };
+		1713140C29D2E5C0007A3AF9 /* FirebaseFirestore in Frameworks */ = {isa = PBXBuildFile; productRef = 1713140B29D2E5C0007A3AF9 /* FirebaseFirestore */; };
+		1713140E29D2E5C0007A3AF9 /* FirebaseFirestoreSwift in Frameworks */ = {isa = PBXBuildFile; productRef = 1713140D29D2E5C0007A3AF9 /* FirebaseFirestoreSwift */; };
+		1713141029D2E5E9007A3AF9 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 1713140F29D2E5E9007A3AF9 /* GoogleService-Info.plist */; };
 		171695B129B1B8CA00CF3E41 /* SearchTableViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 171695B029B1B8CA00CF3E41 /* SearchTableViewModel.swift */; };
 		1723BE8529C3142600AE06F9 /* IQKeyboardManagerSwift in Frameworks */ = {isa = PBXBuildFile; productRef = 1723BE8429C3142600AE06F9 /* IQKeyboardManagerSwift */; };
 		17A950FF29B74DA2001E6D4F /* SearchViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 17A950FE29B74DA2001E6D4F /* SearchViewController.swift */; };
@@ -90,6 +94,7 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		1713140F29D2E5E9007A3AF9 /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
 		171695B029B1B8CA00CF3E41 /* SearchTableViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchTableViewModel.swift; sourceTree = "<group>"; };
 		17A950FE29B74DA2001E6D4F /* SearchViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchViewController.swift; sourceTree = "<group>"; };
 		17A9510029B75101001E6D4F /* RecommendScrollView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RecommendScrollView.swift; sourceTree = "<group>"; };
@@ -179,6 +184,9 @@
 			buildActionMask = 2147483647;
 			files = (
 				1723BE8529C3142600AE06F9 /* IQKeyboardManagerSwift in Frameworks */,
+				1713140A29D2E5C0007A3AF9 /* FirebaseAuth in Frameworks */,
+				1713140C29D2E5C0007A3AF9 /* FirebaseFirestore in Frameworks */,
+				1713140E29D2E5C0007A3AF9 /* FirebaseFirestoreSwift in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -396,6 +404,7 @@
 				FC1E747F29A207DC0010A4BA /* LaunchScreen.storyboard */,
 				FC1E747129A207DA0010A4BA /* AppDelegate.swift */,
 				FC1E747329A207DA0010A4BA /* SceneDelegate.swift */,
+				1713140F29D2E5E9007A3AF9 /* GoogleService-Info.plist */,
 				FC1E748229A207DC0010A4BA /* Info.plist */,
 				FC1E747A29A207DA0010A4BA /* GiftWallet.xcdatamodeld */,
 			);
@@ -464,6 +473,9 @@
 			name = GiftWallet;
 			packageProductDependencies = (
 				1723BE8429C3142600AE06F9 /* IQKeyboardManagerSwift */,
+				1713140929D2E5C0007A3AF9 /* FirebaseAuth */,
+				1713140B29D2E5C0007A3AF9 /* FirebaseFirestore */,
+				1713140D29D2E5C0007A3AF9 /* FirebaseFirestoreSwift */,
 			);
 			productName = GiftWallet;
 			productReference = FC1E746E29A207DA0010A4BA /* GiftWallet.app */;
@@ -503,6 +515,7 @@
 			mainGroup = FC1E746529A207DA0010A4BA;
 			packageReferences = (
 				1723BE8329C3142600AE06F9 /* XCRemoteSwiftPackageReference "IQKeyboardManager" */,
+				1713140829D2E5C0007A3AF9 /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */,
 			);
 			productRefGroup = FC1E746F29A207DA0010A4BA /* Products */;
 			projectDirPath = "";
@@ -541,6 +554,7 @@
 				D24002D629B752DB00635FFC /* NotoSansKR-Medium.otf in Resources */,
 				D24002D329B752DB00635FFC /* NotoSansKR-Black.otf in Resources */,
 				D24002D429B752DB00635FFC /* NotoSansKR-Bold.otf in Resources */,
+				1713141029D2E5E9007A3AF9 /* GoogleService-Info.plist in Resources */,
 				D24002D829B7536B00635FFC /* BMJUA_otf.otf in Resources */,
 				FC1E747E29A207DC0010A4BA /* Assets.xcassets in Resources */,
 			);
@@ -855,7 +869,7 @@
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
-				DEVELOPMENT_TEAM = N2WW86KJNF;
+				DEVELOPMENT_TEAM = "";
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = GiftWallet/Info.plist;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
@@ -867,7 +881,7 @@
 					"@executable_path/Frameworks",
 				);
 				MARKETING_VERSION = 1.0;
-				PRODUCT_BUNDLE_IDENTIFIER = wb.GiftWalletl233;
+				PRODUCT_BUNDLE_IDENTIFIER = wb.GiftWallet;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_EMIT_LOC_STRINGS = YES;
 				SWIFT_VERSION = 5.0;
@@ -882,7 +896,7 @@
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
-				DEVELOPMENT_TEAM = N2WW86KJNF;
+				DEVELOPMENT_TEAM = "";
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = GiftWallet/Info.plist;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
@@ -894,7 +908,7 @@
 					"@executable_path/Frameworks",
 				);
 				MARKETING_VERSION = 1.0;
-				PRODUCT_BUNDLE_IDENTIFIER = wb.GiftWalletl233;
+				PRODUCT_BUNDLE_IDENTIFIER = wb.GiftWallet;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_EMIT_LOC_STRINGS = YES;
 				SWIFT_VERSION = 5.0;
@@ -944,6 +958,14 @@
 /* End XCConfigurationList section */
 
 /* Begin XCRemoteSwiftPackageReference section */
+		1713140829D2E5C0007A3AF9 /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/firebase/firebase-ios-sdk";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 9.0.0;
+			};
+		};
 		1723BE8329C3142600AE06F9 /* XCRemoteSwiftPackageReference "IQKeyboardManager" */ = {
 			isa = XCRemoteSwiftPackageReference;
 			repositoryURL = "https://github.com/hackiftekhar/IQKeyboardManager.git";
@@ -956,6 +978,21 @@
 /* End XCRemoteSwiftPackageReference section */
 
 /* Begin XCSwiftPackageProductDependency section */
+		1713140929D2E5C0007A3AF9 /* FirebaseAuth */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 1713140829D2E5C0007A3AF9 /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */;
+			productName = FirebaseAuth;
+		};
+		1713140B29D2E5C0007A3AF9 /* FirebaseFirestore */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 1713140829D2E5C0007A3AF9 /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */;
+			productName = FirebaseFirestore;
+		};
+		1713140D29D2E5C0007A3AF9 /* FirebaseFirestoreSwift */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 1713140829D2E5C0007A3AF9 /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */;
+			productName = FirebaseFirestoreSwift;
+		};
 		1723BE8429C3142600AE06F9 /* IQKeyboardManagerSwift */ = {
 			isa = XCSwiftPackageProductDependency;
 			package = 1723BE8329C3142600AE06F9 /* XCRemoteSwiftPackageReference "IQKeyboardManager" */;
