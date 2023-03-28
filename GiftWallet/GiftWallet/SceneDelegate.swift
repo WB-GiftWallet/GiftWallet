@@ -14,7 +14,14 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
     func scene(_ scene: UIScene, willConnectTo session: UISceneSession, options connectionOptions: UIScene.ConnectionOptions) {
         guard let windowScene = (scene as? UIWindowScene) else { return }
         let window = UIWindow(windowScene: windowScene)
-        window.rootViewController = ViewController()
+        
+        let mainViewModel = MainViewModel()
+        let etcSettingViewModel = EtcSettingViewModel()
+        let mainTabBarController = MainTabBarController(mainViewModel: mainViewModel,
+                                                        etcSettingViewModel: etcSettingViewModel)
+        let navigationMainController = UINavigationController(rootViewController: mainTabBarController)
+        window.backgroundColor = .white
+        window.rootViewController = navigationMainController
         window.makeKeyAndVisible()
         self.window = window
     }

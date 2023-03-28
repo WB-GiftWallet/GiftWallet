@@ -1,4 +1,14 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
-<model type="com.apple.IDECoreDataModeler.DataModel" documentVersion="1.0" lastSavedToolsVersion="1" systemVersion="11A491" minimumToolsVersion="Automatic" sourceLanguage="Swift" usedWithCloudKit="false" userDefinedModelVersionIdentifier="">
-    <elements/>
+<model type="com.apple.IDECoreDataModeler.DataModel" documentVersion="1.0" lastSavedToolsVersion="21513" systemVersion="21G217" minimumToolsVersion="Automatic" sourceLanguage="Swift" userDefinedModelVersionIdentifier="">
+    <entity name="GiftData" representedClassName="GiftData" syncable="YES">
+        <attribute name="brandName" optional="YES" attributeType="String"/>
+        <attribute name="category" optional="YES" attributeType="String" customClassName="[String]"/>
+        <attribute name="expireDate" optional="YES" attributeType="Date" usesScalarValueType="NO"/>
+        <attribute name="image" optional="YES" attributeType="Binary"/>
+        <attribute name="memo" optional="YES" attributeType="String"/>
+        <attribute name="number" optional="YES" attributeType="Integer 16" defaultValueString="0" usesScalarValueType="YES"/>
+        <attribute name="productName" optional="YES" attributeType="String"/>
+        <attribute name="useableState" optional="YES" attributeType="Boolean" usesScalarValueType="YES"/>
+        <attribute name="useDate" optional="YES" attributeType="Date" usesScalarValueType="NO"/>
+    </entity>
 </model>
