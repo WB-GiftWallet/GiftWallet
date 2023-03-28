@@ -9,6 +9,8 @@ import UIKit
 
 class LoginViewController: UIViewController {
 
+    private let viewModel = LoginViewModel()
+    
     private let kakaoLoginButton = {
        let button = UIButton()
         
@@ -21,7 +23,16 @@ class LoginViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         setupViews()
+        setupButton()
     }
+    
+    private func setupButton() {
+        let kakaoLoginAction = UIAction { _ in
+            self.viewModel.kakaoLogin()
+        }
+        kakaoLoginButton.addAction(kakaoLoginAction, for: .touchUpInside)
+    }
+    
     
     private func setupViews() {
         view.addSubview(kakaoLoginButton)
