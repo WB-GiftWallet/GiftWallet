@@ -7,11 +7,13 @@
 
 import UIKit
 import FirebaseAuth
+import FirebaseFirestore
 
 class TemporaryLoginViewController: UIViewController {
     
     let viewModel = TemporaryLoginViewModel()
     var handle: AuthStateDidChangeListenerHandle?
+    var db = Firestore.firestore()
     
     let loginButton: UIButton = {
         let button = UIButton()
@@ -77,6 +79,15 @@ class TemporaryLoginViewController: UIViewController {
         return button
     }()
     
+    let addFireStoreButton: UIButton = {
+        let button = UIButton()
+        
+        button.setTitle(" Add FireStore ", for: .normal)
+        button.backgroundColor = .systemBrown
+        
+        return button
+    }()
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         view.backgroundColor = .systemOrange
@@ -84,12 +95,8 @@ class TemporaryLoginViewController: UIViewController {
         //MARK: 로그아웃
         if let user = Auth.auth().currentUser {
             print(user)
-            DispatchQueue.main.async {
-                self.idTextField.placeholder = "이미 로그인 된 상태입니다."
-                self.passWordTextField.placeholder = "이미 로그인 된 상태입니다."
-                self.loginButton.setTitle("이미 로그인 된 상태입니다.", for: .normal)
-            }
             
+            loginSuccess()
         }
         
         setupLayout()
@@ -112,7 +119,7 @@ class TemporaryLoginViewController: UIViewController {
         
         view.addSubview(stackView)
         
-        [idTextField, passWordTextField, loginButton, logOutButton, addGiftButton, printButton].forEach(stackView.addArrangedSubview(_:))
+        [idTextField, passWordTextField, loginButton, logOutButton, addGiftButton, printButton, addFireStoreButton].forEach(stackView.addArrangedSubview(_:))
         
         NSLayoutConstraint.activate([
             stackView.centerXAnchor.constraint(equalTo: view.safeAreaLayoutGuide.centerXAnchor),
@@ -125,6 +132,7 @@ class TemporaryLoginViewController: UIViewController {
         logOutButton.addTarget(nil, action: #selector(tapLogoutButton), for: .touchUpInside)
         addGiftButton.addTarget(nil, action: #selector(tapMakeGiftButton), for: .touchUpInside)
         printButton.addTarget(nil, action: #selector(tapPrintButton), for: .touchUpInside)
+        addFireStoreButton.addTarget(nil, action: #selector(tapAddFirebaseButton), for: .touchUpInside)
     }
     
     @objc func tapLoginButton() {
@@ -144,6 +152,10 @@ class TemporaryLoginViewController: UIViewController {
     func loginSuccess() {
         print("login success")
         print(Auth.auth().currentUser?.email ?? "Not Login User")
+        
+        self.idTextField.placeholder = "이미 로그인 된 상태입니다."
+        self.passWordTextField.placeholder = "이미 로그인 된 상태입니다."
+        self.loginButton.setTitle("이미 로그인 된 상태입니다.", for: .normal)
         //                let tabbar = MainTabBarController(mainViewModel: MainViewModel(), etcSettingViewModel: EtcSettingViewModel())
         //                self?.navigationController?.pushViewController(tabbar, animated: true)
     }
@@ -168,7 +180,35 @@ class TemporaryLoginViewController: UIViewController {
     @objc func tapMakeGiftButton() {
         print("tapMakeGiftButton")
     }
+    
     @objc func tapPrintButton() {
         print("tabPrintButton")
     }
+    
+    @objc func tapAddFirebaseButton() {
+        print("tapAddFirebaseButton")
+        
+        db.collection("GiftData").document("1").setData(["brandName":"엔제리너스", "productName":"따뜨탄커피"])
+        
+//        var ref: DocumentReference? = nil
+//        ref = db.collection("GiftData").document("1").setdatafrom
+        
+        
+//        ref = db.collection("GiftData").addDocument(data: [
+//            "brandName": "Ada",
+//            "productName": "Lovelace",
+////            "born": 1815
+//        ]) { err in
+//            if let err = err {
+//                print("Error adding document: \(err)")
+//            } else {
+//                print("Document added with ID: \(ref!.documentID)")
+//            }
+//        }
+    }
+    
+//    private func loginSuccess() {
+//
+//    }
 }
+
