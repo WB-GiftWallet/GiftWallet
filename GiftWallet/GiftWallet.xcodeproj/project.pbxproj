@@ -19,6 +19,9 @@
 		17D5963929B02CBD00AFE039 /* SearchGiftCustomCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 17D5963829B02CBD00AFE039 /* SearchGiftCustomCell.swift */; };
 		17D5963B29B0835800AFE039 /* Extension+Date.swift in Sources */ = {isa = PBXBuildFile; fileRef = 17D5963A29B0835800AFE039 /* Extension+Date.swift */; };
 		D218233629CBEF7B00855D15 /* PhotoPreviewViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D218233529CBEF7B00855D15 /* PhotoPreviewViewController.swift */; };
+		D230BD1729D311A600B8E74E /* LoginViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D230BD1629D311A600B8E74E /* LoginViewController.swift */; };
+		D230BD1929D311B300B8E74E /* LoginViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = D230BD1829D311B300B8E74E /* LoginViewModel.swift */; };
+		D230BD1B29D311E700B8E74E /* SocialLoginManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = D230BD1A29D311E700B8E74E /* SocialLoginManager.swift */; };
 		D24002D129B752DB00635FFC /* NotoSansKR-Regular.otf in Resources */ = {isa = PBXBuildFile; fileRef = D24002CB29B752DA00635FFC /* NotoSansKR-Regular.otf */; };
 		D24002D229B752DB00635FFC /* NotoSansKR-Thin.otf in Resources */ = {isa = PBXBuildFile; fileRef = D24002CC29B752DB00635FFC /* NotoSansKR-Thin.otf */; };
 		D24002D329B752DB00635FFC /* NotoSansKR-Black.otf in Resources */ = {isa = PBXBuildFile; fileRef = D24002CD29B752DB00635FFC /* NotoSansKR-Black.otf */; };
@@ -103,6 +106,9 @@
 		17D5963829B02CBD00AFE039 /* SearchGiftCustomCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchGiftCustomCell.swift; sourceTree = "<group>"; };
 		17D5963A29B0835800AFE039 /* Extension+Date.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Extension+Date.swift"; sourceTree = "<group>"; };
 		D218233529CBEF7B00855D15 /* PhotoPreviewViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PhotoPreviewViewController.swift; sourceTree = "<group>"; };
+		D230BD1629D311A600B8E74E /* LoginViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginViewController.swift; sourceTree = "<group>"; };
+		D230BD1829D311B300B8E74E /* LoginViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginViewModel.swift; sourceTree = "<group>"; };
+		D230BD1A29D311E700B8E74E /* SocialLoginManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SocialLoginManager.swift; sourceTree = "<group>"; };
 		D24002CB29B752DA00635FFC /* NotoSansKR-Regular.otf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "NotoSansKR-Regular.otf"; sourceTree = "<group>"; };
 		D24002CC29B752DB00635FFC /* NotoSansKR-Thin.otf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "NotoSansKR-Thin.otf"; sourceTree = "<group>"; };
 		D24002CD29B752DB00635FFC /* NotoSansKR-Black.otf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "NotoSansKR-Black.otf"; sourceTree = "<group>"; };
@@ -205,6 +211,15 @@
 			path = SearchView;
 			sourceTree = "<group>";
 		};
+		D230BD1529D3118A00B8E74E /* LoginView */ = {
+			isa = PBXGroup;
+			children = (
+				D230BD1629D311A600B8E74E /* LoginViewController.swift */,
+				D230BD1829D311B300B8E74E /* LoginViewModel.swift */,
+			);
+			path = LoginView;
+			sourceTree = "<group>";
+		};
 		D295E4B329A5E2D700E12CAF /* ModifyView */ = {
 			isa = PBXGroup;
 			children = (
@@ -279,6 +294,7 @@
 			isa = PBXGroup;
 			children = (
 				D2CDDBDF29AF3CD300E000E3 /* VisionManager.swift */,
+				D230BD1A29D311E700B8E74E /* SocialLoginManager.swift */,
 			);
 			path = Manager;
 			sourceTree = "<group>";
@@ -392,6 +408,7 @@
 				17D5963529AF6F7300AFE039 /* SearchView */,
 				D2CDDBCB29ADFA8F00E000E3 /* UseCase */,
 				D2CDDBDE29AF3CC600E000E3 /* Manager */,
+				D230BD1529D3118A00B8E74E /* LoginView */,
 				D2CDDBE829AF4BE000E000E3 /* AddVIew */,
 				D2B6333E29ACD17500EE9ACE /* EtcUsageHistoryView */,
 				D2C7A45729A9DA3300EB6D56 /* EtcSettingView */,
@@ -590,6 +607,7 @@
 				D2A282B829A85EF2002CCF5A /* Observable.swift in Sources */,
 				D295E4B929A5F64200E12CAF /* FormSheetViewController.swift in Sources */,
 				D2CDDBE029AF3CD300E000E3 /* VisionManager.swift in Sources */,
+				D230BD1929D311B300B8E74E /* LoginViewModel.swift in Sources */,
 				D2CDDBCD29ADFACB00E000E3 /* DateCalCulateUseCase.swift in Sources */,
 				D2DAAA2329A4720300D70E8C /* Ext+DateFormatter.swift in Sources */,
 				D2C90B5829BF4DC1003C3611 /* ZoomImageViewController.swift in Sources */,
@@ -600,6 +618,7 @@
 				D2C7A45D29A9E77100EB6D56 /* EtcSettingTableViewCell.swift in Sources */,
 				17A950FF29B74DA2001E6D4F /* SearchViewController.swift in Sources */,
 				17D5963729AF6F9800AFE039 /* SearchTableViewController.swift in Sources */,
+				D230BD1B29D311E700B8E74E /* SocialLoginManager.swift in Sources */,
 				D2DAAA1C29A44B1600D70E8C /* MainCollectionViewCell.swift in Sources */,
 				FC074C0629A90361006AD199 /* GiftData+CoreDataProperties.swift in Sources */,
 				17A9510129B75101001E6D4F /* RecommendScrollView.swift in Sources */,
@@ -607,6 +626,7 @@
 				FC074C0129A8D5B5006AD199 /* CoreDataManager.swift in Sources */,
 				D2CDDBF429B0716000E000E3 /* CustomTextField.swift in Sources */,
 				D2CDDBEA29AF4BF500E000E3 /* AddViewController.swift in Sources */,
+				D230BD1729D311A600B8E74E /* LoginViewController.swift in Sources */,
 				FC074C0529A90361006AD199 /* GiftData+CoreDataClass.swift in Sources */,
 				D2DAAA2029A44B9200D70E8C /* ReusableView.swift in Sources */,
 				D2A282B629A85EBC002CCF5A /* Gift.swift in Sources */,
@@ -896,7 +916,7 @@
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
-				DEVELOPMENT_TEAM = "";
+				DEVELOPMENT_TEAM = N2WW86KJNF;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = GiftWallet/Info.plist;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
