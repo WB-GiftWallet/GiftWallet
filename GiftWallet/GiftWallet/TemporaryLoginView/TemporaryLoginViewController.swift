@@ -92,9 +92,29 @@ class TemporaryLoginViewController: UIViewController {
         super.viewDidLoad()
         view.backgroundColor = .systemOrange
         
+        //MARK: 로그아웃
+        if let user = Auth.auth().currentUser {
+            print(user)
+            
+            loginSuccess()
+        }
+        
         setupLayout()
+        buttonAddTarget()
     }
-  
+    
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(true)
+        handle = Auth.auth().addStateDidChangeListener { auth, user in
+            print("handler Start")
+        }
+    }
+    
+    override func viewWillDisappear(_ animated: Bool) {
+        super.viewWillDisappear(true)
+        Auth.auth().removeStateDidChangeListener(handle!)
+    }
+    
     func setupLayout() {
         
         view.addSubview(stackView)
@@ -106,4 +126,88 @@ class TemporaryLoginViewController: UIViewController {
             stackView.centerYAnchor.constraint(equalTo: view.safeAreaLayoutGuide.centerYAnchor)
         ])
     }
+    
+    func buttonAddTarget() {
+        loginButton.addTarget(nil, action: #selector(tapLoginButton), for: .touchUpInside)
+        logOutButton.addTarget(nil, action: #selector(tapLogoutButton), for: .touchUpInside)
+        addGiftButton.addTarget(nil, action: #selector(tapMakeGiftButton), for: .touchUpInside)
+        printButton.addTarget(nil, action: #selector(tapPrintButton), for: .touchUpInside)
+        addFireStoreButton.addTarget(nil, action: #selector(tapAddFirebaseButton), for: .touchUpInside)
+    }
+    
+    @objc func tapLoginButton() {
+        print("Tapped Login Button")
+        Auth.auth().signIn(withEmail: idTextField.text!, password: passWordTextField.text!) { [weak self] authResult, error in
+            
+            if authResult != nil{
+                //TODO: 로그인 성공 시 Tabbar Push Logic
+                self?.loginSuccess()
+            }
+            else{
+                print("login fail")
+            }
+        }
+    }
+    
+    func loginSuccess() {
+        print("login success")
+        print(Auth.auth().currentUser?.email ?? "Not Login User")
+        
+        self.idTextField.placeholder = "이미 로그인 된 상태입니다."
+        self.passWordTextField.placeholder = "이미 로그인 된 상태입니다."
+        self.loginButton.setTitle("이미 로그인 된 상태입니다.", for: .normal)
+        //                let tabbar = MainTabBarController(mainViewModel: MainViewModel(), etcSettingViewModel: EtcSettingViewModel())
+        //                self?.navigationController?.pushViewController(tabbar, animated: true)
+    }
+    
+    
+    @objc func tapLogoutButton() {
+        print("tapLogOutButton")
+        do {
+            
+            print("------로그아웃Start :", Auth.auth().currentUser?.email ?? "Not Login User")
+            try Auth.auth().signOut()
+            print("------로그아웃End :", Auth.auth().currentUser?.email ?? "Not Login User")
+            DispatchQueue.main.async {
+                self.idTextField.placeholder = "ID 입력"
+                self.passWordTextField.placeholder = "Password 입력."
+                self.loginButton.setTitle(" 로   그   인  ", for: .normal)
+            }
+        } catch let signOutError as NSError {
+            print ("Error signing out: %@", signOutError)
+        }
+    }
+    @objc func tapMakeGiftButton() {
+        print("tapMakeGiftButton")
+    }
+    
+    @objc func tapPrintButton() {
+        print("tabPrintButton")
+    }
+    
+    @objc func tapAddFirebaseButton() {
+        print("tapAddFirebaseButton")
+        
+        db.collection("GiftData").document("1").setData(["brandName":"엔제리너스", "productName":"따뜨탄커피"])
+        
+//        var ref: DocumentReference? = nil
+//        ref = db.collection("GiftData").document("1").setdatafrom
+        
+        
+//        ref = db.collection("GiftData").addDocument(data: [
+//            "brandName": "Ada",
+//            "productName": "Lovelace",
+////            "born": 1815
+//        ]) { err in
+//            if let err = err {
+//                print("Error adding document: \(err)")
+//            } else {
+//                print("Document added with ID: \(ref!.documentID)")
+//            }
+//        }
+    }
+    
+//    private func loginSuccess() {
+//
+//    }
 }
