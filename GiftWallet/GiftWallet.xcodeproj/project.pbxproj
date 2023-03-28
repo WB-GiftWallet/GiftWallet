@@ -15,6 +15,8 @@
 		1723BE8529C3142600AE06F9 /* IQKeyboardManagerSwift in Frameworks */ = {isa = PBXBuildFile; productRef = 1723BE8429C3142600AE06F9 /* IQKeyboardManagerSwift */; };
 		17A950FF29B74DA2001E6D4F /* SearchViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 17A950FE29B74DA2001E6D4F /* SearchViewController.swift */; };
 		17A9510129B75101001E6D4F /* RecommendScrollView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 17A9510029B75101001E6D4F /* RecommendScrollView.swift */; };
+		17B579EA29D3300D00042D80 /* TemporaryLoginViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 17B579E929D3300300042D80 /* TemporaryLoginViewController.swift */; };
+		17B579EC29D3301D00042D80 /* TemporaryLoginViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 17B579EB29D3301900042D80 /* TemporaryLoginViewModel.swift */; };
 		17D5963729AF6F9800AFE039 /* SearchTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 17D5963629AF6F9800AFE039 /* SearchTableViewController.swift */; };
 		17D5963929B02CBD00AFE039 /* SearchGiftCustomCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 17D5963829B02CBD00AFE039 /* SearchGiftCustomCell.swift */; };
 		17D5963B29B0835800AFE039 /* Extension+Date.swift in Sources */ = {isa = PBXBuildFile; fileRef = 17D5963A29B0835800AFE039 /* Extension+Date.swift */; };
@@ -98,6 +100,8 @@
 		171695B029B1B8CA00CF3E41 /* SearchTableViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchTableViewModel.swift; sourceTree = "<group>"; };
 		17A950FE29B74DA2001E6D4F /* SearchViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchViewController.swift; sourceTree = "<group>"; };
 		17A9510029B75101001E6D4F /* RecommendScrollView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RecommendScrollView.swift; sourceTree = "<group>"; };
+		17B579E929D3300300042D80 /* TemporaryLoginViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TemporaryLoginViewController.swift; sourceTree = "<group>"; };
+		17B579EB29D3301900042D80 /* TemporaryLoginViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TemporaryLoginViewModel.swift; sourceTree = "<group>"; };
 		17BCD48129C30F8900F9FC9C /* Package */ = {isa = PBXFileReference; lastKnownFileType = wrapper; path = Package; sourceTree = "<group>"; };
 		17D5963629AF6F9800AFE039 /* SearchTableViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchTableViewController.swift; sourceTree = "<group>"; };
 		17D5963829B02CBD00AFE039 /* SearchGiftCustomCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchGiftCustomCell.swift; sourceTree = "<group>"; };
@@ -193,6 +197,15 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		17B579ED29D3302D00042D80 /* TemporaryLoginView */ = {
+			isa = PBXGroup;
+			children = (
+				17B579E929D3300300042D80 /* TemporaryLoginViewController.swift */,
+				17B579EB29D3301900042D80 /* TemporaryLoginViewModel.swift */,
+			);
+			path = TemporaryLoginView;
+			sourceTree = "<group>";
+		};
 		17D5963529AF6F7300AFE039 /* SearchView */ = {
 			isa = PBXGroup;
 			children = (
@@ -388,6 +401,7 @@
 			isa = PBXGroup;
 			children = (
 				D2B951A729B63499002E7C08 /* Fonts */,
+				17B579ED29D3302D00042D80 /* TemporaryLoginView */,
 				D2CDDBF229B0713A00E000E3 /* CustomUI */,
 				17D5963529AF6F7300AFE039 /* SearchView */,
 				D2CDDBCB29ADFA8F00E000E3 /* UseCase */,
@@ -607,6 +621,7 @@
 				FC074C0129A8D5B5006AD199 /* CoreDataManager.swift in Sources */,
 				D2CDDBF429B0716000E000E3 /* CustomTextField.swift in Sources */,
 				D2CDDBEA29AF4BF500E000E3 /* AddViewController.swift in Sources */,
+				17B579EA29D3300D00042D80 /* TemporaryLoginViewController.swift in Sources */,
 				FC074C0529A90361006AD199 /* GiftData+CoreDataClass.swift in Sources */,
 				D2DAAA2029A44B9200D70E8C /* ReusableView.swift in Sources */,
 				D2A282B629A85EBC002CCF5A /* Gift.swift in Sources */,
@@ -619,6 +634,7 @@
 				D2B7AE6129B7301A000AC592 /* CustomGiftTagUIView.swift in Sources */,
 				D295E4B529A5E2F400E12CAF /* UpdateGiftInfoViewController.swift in Sources */,
 				D2B6334429ACEAB700EE9ACE /* HistoryTableViewCell.swift in Sources */,
+				17B579EC29D3301D00042D80 /* TemporaryLoginViewModel.swift in Sources */,
 				FC1E747429A207DA0010A4BA /* SceneDelegate.swift in Sources */,
 				D2C7A45B29A9DAB500EB6D56 /* EtcSttingViewModel.swift in Sources */,
 				D2D6B74F29A3DEC900E6188C /* MainViewController.swift in Sources */,
