@@ -207,20 +207,16 @@ extension SearchViewController: UITableViewDataSource, UITableViewDelegate {
             
             if self.isFiltering {
                 dataNumber = self.viewModel.filteringGifts.value[indexPath.row].number
-                self.viewModel.filteringGifts.value.remove(at: indexPath.row)
+                self.viewModel.removeFilteingGiftData(indexPath.row)
             } else {
                 dataNumber = self.viewModel.allGiftData.value[indexPath.row].number
             }
             
-            do {
-                try CoreDataManager.shared.deleteDate(id: Int16(dataNumber))
-            } catch {
-                print(error.localizedDescription)
-            }
+            self.viewModel.deleteCoreData(dataNumber)
             
             for (index, data) in self.viewModel.allGiftData.value.enumerated() {
                 if data.number == dataNumber {
-                    self.viewModel.allGiftData.value.remove(at: index)
+                    self.viewModel.removeAllGiftData(index)
                     break
                 }
             }
@@ -238,7 +234,7 @@ extension SearchViewController: UISearchResultsUpdating {
     func updateSearchResults(for searchController: UISearchController) {
         
         guard let text = searchController.searchBar.text else { return }
-        self.viewModel.filteringGifts.value = self.viewModel.allGiftData.value.filter { $0.brandName!.contains(text) }
+        viewModel.filterGiftDataWhenUpdate(text)
         
         self.searchResultController.tableView.reloadData()
     }

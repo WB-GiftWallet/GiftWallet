@@ -61,7 +61,6 @@ class RecommendScrollView: UIScrollView {
         self.addSubview(contentsView)
         contentsView.translatesAutoresizingMaskIntoConstraints = false
         contentsView.addSubview(recommendStackView)
-
         
         NSLayoutConstraint.activate([
             recommendStackView.topAnchor.constraint(equalTo: contentsView.topAnchor),
