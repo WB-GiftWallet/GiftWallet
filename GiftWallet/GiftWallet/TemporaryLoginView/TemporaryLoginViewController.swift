@@ -137,6 +137,7 @@ class TemporaryLoginViewController: UIViewController {
     
     @objc func tapLoginButton() {
         print("Tapped Login Button")
+//        Auth.auth().createUser(withEmail: <#T##String#>, password: <#T##String#>)
         Auth.auth().signIn(withEmail: idTextField.text!, password: passWordTextField.text!) { [weak self] authResult, error in
             
             if authResult != nil{
@@ -183,19 +184,23 @@ class TemporaryLoginViewController: UIViewController {
     
     @objc func tapPrintButton() {
         print("tabPrintButton")
+        print(Auth.auth().currentUser?.uid)
+        print("회원가입")
+        FireStoreCRUD.shared.createUser(email: "baem2@naver.com", password: "123456789")
+        
     }
     
     @objc func tapAddFirebaseButton() {
         print("tapAddFirebaseButton")
         
-        db.collection("GiftData").document("1").setData(["brandName":"엔제리너스", "productName":"따뜨탄커피"])
-        
+//        db.collection("GiftData").document("1").setData(["brandName":"엔제리너스", "productName":"따뜨탄커피"])
+//        FireStoreCRUD.shared.fetchData()
 //        var ref: DocumentReference? = nil
 //        ref = db.collection("GiftData").document("1").setdatafrom
         
         
 //        ref = db.collection("GiftData").addDocument(data: [
-//            "brandName": "Ada",
+//            "brandName": "Ada",1
 //            "productName": "Lovelace",
 ////            "born": 1815
 //        ]) { err in
