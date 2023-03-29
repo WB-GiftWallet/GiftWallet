@@ -25,7 +25,7 @@ class LoginViewModel {
     }
     
     func checkToken() {
-        socialLoginManager.checkToken()
+//        socialLoginManager.checkToken()
     }
     
 }

@@ -6,32 +6,52 @@
 //
 
 import UIKit
+import KakaoSDKAuth
+import KakaoSDKUser
+import KakaoSDKCommon
 
 class SceneDelegate: UIResponder, UIWindowSceneDelegate {
     
-    private let socialLoginManager = SocialLoginManager()
     var window: UIWindow?
     
     func scene(_ scene: UIScene, willConnectTo session: UISceneSession, options connectionOptions: UIScene.ConnectionOptions) {
         guard let windowScene = (scene as? UIWindowScene) else { return }
         let window = UIWindow(windowScene: windowScene)
         
-        // 처리를 해야함? (계정정보를 처리해야함.)
-//        socialLoginManager.checkToken()
-        // 액세스토큰인포가 nil이면 -> LoginVC로 이동
-        // 액세스토큰인포가 있다면 -> 파이어베이스 로그인? 어떻게? -> MainVC로 이동
+        let loginVC = LoginViewController()
         
-        let loginViewController = LoginViewController()
+        let mainViewModel = MainViewModel()
+        let etcSettingViewModel = EtcSettingViewModel()
+        let mainTabBarController = MainTabBarController(mainViewModel: mainViewModel,
+                                                        etcSettingViewModel: etcSettingViewModel)
+        let navigationMainController = UINavigationController(rootViewController: mainTabBarController)
+
+        if (AuthApi.hasToken()) {
+            UserApi.shared.accessTokenInfo { ( accessTokenInfo, error) in
+                if let error = error {
+                    if let sdkError = error as? SdkError, sdkError.isInvalidTokenError() == true  {
+                        //로그인 필요
+                        window.rootViewController = loginVC
+                    }
+                    else {
+                        //기타 에러
+                        window.rootViewController = loginVC
+                    }
+                }
+                else {
+                    //토큰 유효성 체크 성공(필요 시 토큰 갱신됨)
+                    window.rootViewController = navigationMainController
+                }
+            }
+        }
+        else {
+            // hasToken() == false
+            window.rootViewController = loginVC
+        }
         
-        
-//        let mainViewModel = MainViewModel()
-//        let etcSettingViewModel = EtcSettingViewModel()
-//        let mainTabBarController = MainTabBarController(mainViewModel: mainViewModel,
-//                                                        etcSettingViewModel: etcSettingViewModel)
-//        let navigationMainController = UINavigationController(rootViewController: mainTabBarController)
         window.backgroundColor = .white
-        window.rootViewController = loginViewController
         window.makeKeyAndVisible()
         self.window = window
+        
     }
 }
