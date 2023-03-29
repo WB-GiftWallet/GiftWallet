@@ -137,7 +137,6 @@ class TemporaryLoginViewController: UIViewController {
     
     @objc func tapLoginButton() {
         print("Tapped Login Button")
-//        Auth.auth().createUser(withEmail: <#T##String#>, password: <#T##String#>)
         Auth.auth().signIn(withEmail: idTextField.text!, password: passWordTextField.text!) { [weak self] authResult, error in
             
             if authResult != nil{

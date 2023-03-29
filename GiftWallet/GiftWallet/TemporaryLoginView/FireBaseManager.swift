@@ -31,4 +31,19 @@ class FireBaseManager {
             completion(.success(userUid))
         }
     }
+        
+    func existingLogin(email: String, password: String) {
+        Auth.auth().signIn(withEmail: email, password: password) { [weak self] authResult, error in
+          guard let strongSelf = self else { return }
+          
+        }
+    }
+    
+    func signOut() {
+        do {
+            try Auth.auth().signOut()
+        } catch {
+            print(error.localizedDescription)
+        }
+    }
 }
