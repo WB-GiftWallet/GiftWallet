@@ -46,4 +46,20 @@ class FireBaseManager {
             print(error.localizedDescription)
         }
     }
+    
+    func fetchData() throws {
+        guard let id = Auth.auth().currentUser?.uid else {
+            throw FireBaseManagerError.notHaveID
+        }
+        
+        db.collection(id.description).getDocuments { (snapshot, error) in
+            if error == nil && snapshot != nil {
+                for document in snapshot!.documents {
+                    print(document.data())
+                }
+            } else {
+                // error. do something
+            }
+        }
+    }
 }

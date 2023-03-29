@@ -163,22 +163,19 @@ class TemporaryLoginViewController: UIViewController {
     
     @objc func tapLogoutButton() {
         print("tapLogOutButton")
-        do {
-            
-            print("------로그아웃Start :", Auth.auth().currentUser?.email ?? "Not Login User")
-            try Auth.auth().signOut()
-            print("------로그아웃End :", Auth.auth().currentUser?.email ?? "Not Login User")
-            DispatchQueue.main.async {
-                self.idTextField.placeholder = "ID 입력"
-                self.passWordTextField.placeholder = "Password 입력."
-                self.loginButton.setTitle(" 로   그   인  ", for: .normal)
-            }
-        } catch let signOutError as NSError {
-            print ("Error signing out: %@", signOutError)
+        print("------로그아웃Start :", Auth.auth().currentUser?.email ?? "Not Login User")
+        FireBaseManager.shared.signOut()
+        
+        print("------로그아웃End :", Auth.auth().currentUser?.email ?? "Not Login User")
+        DispatchQueue.main.async {
+            self.idTextField.placeholder = "ID 입력"
+            self.passWordTextField.placeholder = "Password 입력."
+            self.loginButton.setTitle(" 로   그   인  ", for: .normal)
         }
     }
     @objc func tapMakeGiftButton() {
         print("tapMakeGiftButton")
+        try? FireBaseManager.shared.fetchData()
     }
     
     @objc func tapPrintButton() {

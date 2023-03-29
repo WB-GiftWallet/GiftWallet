@@ -8,4 +8,5 @@
 enum FireBaseManagerError: Error {
     case createUserFail
     case invaildUserID
+    case notHaveID
 }
