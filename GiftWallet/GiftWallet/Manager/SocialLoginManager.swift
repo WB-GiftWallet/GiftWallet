@@ -7,6 +7,7 @@
 
 import KakaoSDKAuth
 import KakaoSDKUser
+import KakaoSDKCommon
 
 struct SocialLoginManager {
 
@@ -16,6 +17,29 @@ struct SocialLoginManager {
 
 // MARK: 카카오 로그인 관련
 extension SocialLoginManager {
+    
+    func checkToken() {
+        if (AuthApi.hasToken()) {
+            UserApi.shared.accessTokenInfo { (_, error) in
+                if let error = error {
+                    if let sdkError = error as? SdkError, sdkError.isInvalidTokenError() == true  {
+                        //로그인 필요
+                    }
+                    else {
+                        //기타 에러
+                    }
+                }
+                else {
+                    //토큰 유효성 체크 성공(필요 시 토큰 갱신됨)
+                }
+            }
+        }
+        else {
+            //로그인 필요
+        }
+    }
+    
+    
     func checkLoginEnabledAndLogin(completion: @escaping (Result<User, Error>) -> Void) {
         if (UserApi.isKakaoTalkLoginAvailable()) {
             logInWithUserApplication(completion: completion)
@@ -34,7 +58,8 @@ extension SocialLoginManager {
                 print("loginWithKakaoTalk() success.")
                 
                 //do something
-                _ = oauthToken
+                print("오쓰토근:::::::::::", oauthToken?.accessToken)
+                
                 setUserInfo(completion: completion)
             }
         }
@@ -50,6 +75,7 @@ extension SocialLoginManager {
                 print("loginWithKakaoAccount() success.")
                 
                 //do something
+                print("오쓰토근:::::::::::", oauthToken)
                 _ = oauthToken
                 setUserInfo(completion: completion)
             }

@@ -16,9 +16,16 @@ class LoginViewModel {
             switch result {
             case .success(let success):
                 print(success)
+                // TODO: Firebase 처리로직
+                // TODO: Keychain 저장로직?
             case .failure(let failure):
                 print(failure)
             }
         }
     }
+    
+    func checkToken() {
+        socialLoginManager.checkToken()
+    }
+    
 }

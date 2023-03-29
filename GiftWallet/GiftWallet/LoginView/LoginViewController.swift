@@ -28,7 +28,8 @@ class LoginViewController: UIViewController {
     
     private func setupButton() {
         let kakaoLoginAction = UIAction { _ in
-            self.viewModel.kakaoLogin()
+//            self.viewModel.kakaoLogin()
+            self.viewModel.checkToken()
         }
         kakaoLoginButton.addAction(kakaoLoginAction, for: .touchUpInside)
     }
