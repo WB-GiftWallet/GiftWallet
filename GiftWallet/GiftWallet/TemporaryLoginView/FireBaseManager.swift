@@ -47,6 +47,7 @@ class FireBaseManager {
         }
     }
     
+    //TODO: Gift Data Return
     func fetchData() throws {
         guard let id = Auth.auth().currentUser?.uid else {
             throw FireBaseManagerError.notHaveID
@@ -61,5 +62,25 @@ class FireBaseManager {
                 // error. do something
             }
         }
+    }
+    
+    func saveData() throws {
+        guard let id = Auth.auth().currentUser?.uid else {
+            throw FireBaseManagerError.notHaveID
+        }
+
+        // 현재 Number = number
+        let number = 0
+        
+        db.collection(id.description).document(number.description).setData(["image":"엔제리너스",
+                                                                            "category":"엔제리너스",
+                                                                            "brandName":"엔제리너스",
+                                                                            "productName":"엔제리너스",
+                                                                            "memo":"엔제리너스",
+                                                                            "useableState":"엔제리너스",
+                                                                            "expireDate":"엔제리너스",
+                                                                            "useDate":"엔제리너스",
+                                                                           ])
+        
     }
 }

@@ -197,6 +197,9 @@ class TemporaryLoginViewController: UIViewController {
     
     @objc func tapAddFirebaseButton() {
         print("tapAddFirebaseButton")
+//        try? FireBaseManager.shared.saveData()
+//        FireBaseManager.shared.updateData(number: 0)
+        FireBaseManager.shared.deleteDate(number: 0)
         
 //        db.collection("GiftData").document("1").setData(["brandName":"엔제리너스", "productName":"따뜨탄커피"])
 //        FireStoreCRUD.shared.fetchData()
