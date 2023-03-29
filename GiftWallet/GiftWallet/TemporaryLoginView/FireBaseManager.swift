@@ -83,4 +83,15 @@ class FireBaseManager {
                                                                            ])
         
     }
+    
+    func updateData(number: Int/*, _ giftData: Gift */) {
+        let number = 0
+        guard let current = Auth.auth().currentUser?.uid else {
+            return
+        }
+        
+        db.collection(current).document(number.description).updateData(["brandName" : "고쳐졍"]) { error in
+            print(error?.localizedDescription)
+        }
+    }
 }
