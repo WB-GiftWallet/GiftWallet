@@ -13,11 +13,12 @@
 		1713141029D2E5E9007A3AF9 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 1713140F29D2E5E9007A3AF9 /* GoogleService-Info.plist */; };
 		171695B129B1B8CA00CF3E41 /* SearchTableViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 171695B029B1B8CA00CF3E41 /* SearchTableViewModel.swift */; };
 		1723BE8529C3142600AE06F9 /* IQKeyboardManagerSwift in Frameworks */ = {isa = PBXBuildFile; productRef = 1723BE8429C3142600AE06F9 /* IQKeyboardManagerSwift */; };
+		1759488929D49DF000E7D5B9 /* FireBaseManagerError.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1759488829D49DF000E7D5B9 /* FireBaseManagerError.swift */; };
 		17A950FF29B74DA2001E6D4F /* SearchViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 17A950FE29B74DA2001E6D4F /* SearchViewController.swift */; };
 		17A9510129B75101001E6D4F /* RecommendScrollView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 17A9510029B75101001E6D4F /* RecommendScrollView.swift */; };
 		17B579EA29D3300D00042D80 /* TemporaryLoginViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 17B579E929D3300300042D80 /* TemporaryLoginViewController.swift */; };
 		17B579EC29D3301D00042D80 /* TemporaryLoginViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 17B579EB29D3301900042D80 /* TemporaryLoginViewModel.swift */; };
-		17B579EF29D3337100042D80 /* FireStoreCRUD.swift in Sources */ = {isa = PBXBuildFile; fileRef = 17B579EE29D3337100042D80 /* FireStoreCRUD.swift */; };
+		17B579EF29D3337100042D80 /* FireBaseManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 17B579EE29D3337100042D80 /* FireBaseManager.swift */; };
 		17D5963729AF6F9800AFE039 /* SearchTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 17D5963629AF6F9800AFE039 /* SearchTableViewController.swift */; };
 		17D5963929B02CBD00AFE039 /* SearchGiftCustomCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 17D5963829B02CBD00AFE039 /* SearchGiftCustomCell.swift */; };
 		17D5963B29B0835800AFE039 /* Extension+Date.swift in Sources */ = {isa = PBXBuildFile; fileRef = 17D5963A29B0835800AFE039 /* Extension+Date.swift */; };
@@ -99,11 +100,12 @@
 /* Begin PBXFileReference section */
 		1713140F29D2E5E9007A3AF9 /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
 		171695B029B1B8CA00CF3E41 /* SearchTableViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchTableViewModel.swift; sourceTree = "<group>"; };
+		1759488829D49DF000E7D5B9 /* FireBaseManagerError.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FireBaseManagerError.swift; sourceTree = "<group>"; };
 		17A950FE29B74DA2001E6D4F /* SearchViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchViewController.swift; sourceTree = "<group>"; };
 		17A9510029B75101001E6D4F /* RecommendScrollView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RecommendScrollView.swift; sourceTree = "<group>"; };
 		17B579E929D3300300042D80 /* TemporaryLoginViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TemporaryLoginViewController.swift; sourceTree = "<group>"; };
 		17B579EB29D3301900042D80 /* TemporaryLoginViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TemporaryLoginViewModel.swift; sourceTree = "<group>"; };
-		17B579EE29D3337100042D80 /* FireStoreCRUD.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FireStoreCRUD.swift; sourceTree = "<group>"; };
+		17B579EE29D3337100042D80 /* FireBaseManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FireBaseManager.swift; sourceTree = "<group>"; };
 		17BCD48129C30F8900F9FC9C /* Package */ = {isa = PBXFileReference; lastKnownFileType = wrapper; path = Package; sourceTree = "<group>"; };
 		17D5963629AF6F9800AFE039 /* SearchTableViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchTableViewController.swift; sourceTree = "<group>"; };
 		17D5963829B02CBD00AFE039 /* SearchGiftCustomCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchGiftCustomCell.swift; sourceTree = "<group>"; };
@@ -204,7 +206,8 @@
 			children = (
 				17B579E929D3300300042D80 /* TemporaryLoginViewController.swift */,
 				17B579EB29D3301900042D80 /* TemporaryLoginViewModel.swift */,
-				17B579EE29D3337100042D80 /* FireStoreCRUD.swift */,
+				17B579EE29D3337100042D80 /* FireBaseManager.swift */,
+				1759488829D49DF000E7D5B9 /* FireBaseManagerError.swift */,
 			);
 			path = TemporaryLoginView;
 			sourceTree = "<group>";
@@ -646,9 +649,10 @@
 				D2B951B529B63545002E7C08 /* Extension+UIFont.swift in Sources */,
 				D218233629CBEF7B00855D15 /* PhotoPreviewViewController.swift in Sources */,
 				D27CA42B29B86ABF00EC5FC7 /* PagingCollectionViewCell.swift in Sources */,
+				1759488929D49DF000E7D5B9 /* FireBaseManagerError.swift in Sources */,
 				F6A4AB4B29A5DA1C009AEB78 /* DetailViewController.swift in Sources */,
 				D27CA42D29B89F1900EC5FC7 /* CustomButton.swift in Sources */,
-				17B579EF29D3337100042D80 /* FireStoreCRUD.swift in Sources */,
+				17B579EF29D3337100042D80 /* FireBaseManager.swift in Sources */,
 				D2CDDBEC29AF4C0700E000E3 /* AddViewModel.swift in Sources */,
 				171695B129B1B8CA00CF3E41 /* SearchTableViewModel.swift in Sources */,
 				FCAD20A529A91A55004214FD /* CoreDataError.swift in Sources */,

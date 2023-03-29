@@ -186,7 +186,16 @@ class TemporaryLoginViewController: UIViewController {
         print("tabPrintButton")
         print(Auth.auth().currentUser?.uid)
         print("회원가입")
-        FireStoreCRUD.shared.createUser(email: "baem2@naver.com", password: "123456789")
+        
+        FireBaseManager.shared.createUser(email: "baem6@naver.com", password: "123456789") { result in
+            switch result {
+                case .success(let uid):
+                    print(uid)
+                case .failure(let error):
+                    print(error)
+            }
+        }
+            
         
     }
     
