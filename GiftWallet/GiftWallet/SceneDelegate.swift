@@ -15,13 +15,26 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
         guard let windowScene = (scene as? UIWindowScene) else { return }
         let window = UIWindow(windowScene: windowScene)
         
+        let socialLoginManager = SocialLoginManager()
+        
+        let loginVC = LoginViewController()
+        
         let mainViewModel = MainViewModel()
         let etcSettingViewModel = EtcSettingViewModel()
         let mainTabBarController = MainTabBarController(mainViewModel: mainViewModel,
                                                         etcSettingViewModel: etcSettingViewModel)
         let navigationMainController = UINavigationController(rootViewController: mainTabBarController)
+
+        socialLoginManager.checkToken { hasToken in
+            switch hasToken {
+            case true:
+                window.rootViewController = navigationMainController
+            case false:
+                window.rootViewController = loginVC
+            }
+        }
+        
         window.backgroundColor = .white
-        window.rootViewController = navigationMainController
         window.makeKeyAndVisible()
         self.window = window
     }

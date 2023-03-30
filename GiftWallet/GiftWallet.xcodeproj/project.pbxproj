@@ -7,6 +7,10 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		1713140A29D2E5C0007A3AF9 /* FirebaseAuth in Frameworks */ = {isa = PBXBuildFile; productRef = 1713140929D2E5C0007A3AF9 /* FirebaseAuth */; };
+		1713140C29D2E5C0007A3AF9 /* FirebaseFirestore in Frameworks */ = {isa = PBXBuildFile; productRef = 1713140B29D2E5C0007A3AF9 /* FirebaseFirestore */; };
+		1713140E29D2E5C0007A3AF9 /* FirebaseFirestoreSwift in Frameworks */ = {isa = PBXBuildFile; productRef = 1713140D29D2E5C0007A3AF9 /* FirebaseFirestoreSwift */; };
+		1713141029D2E5E9007A3AF9 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 1713140F29D2E5E9007A3AF9 /* GoogleService-Info.plist */; };
 		171695B129B1B8CA00CF3E41 /* SearchTableViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 171695B029B1B8CA00CF3E41 /* SearchTableViewModel.swift */; };
 		1723BE8529C3142600AE06F9 /* IQKeyboardManagerSwift in Frameworks */ = {isa = PBXBuildFile; productRef = 1723BE8429C3142600AE06F9 /* IQKeyboardManagerSwift */; };
 		17A950FF29B74DA2001E6D4F /* SearchViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 17A950FE29B74DA2001E6D4F /* SearchViewController.swift */; };
@@ -15,6 +19,12 @@
 		17D5963929B02CBD00AFE039 /* SearchGiftCustomCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 17D5963829B02CBD00AFE039 /* SearchGiftCustomCell.swift */; };
 		17D5963B29B0835800AFE039 /* Extension+Date.swift in Sources */ = {isa = PBXBuildFile; fileRef = 17D5963A29B0835800AFE039 /* Extension+Date.swift */; };
 		D218233629CBEF7B00855D15 /* PhotoPreviewViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D218233529CBEF7B00855D15 /* PhotoPreviewViewController.swift */; };
+		D230BD1729D311A600B8E74E /* LoginViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D230BD1629D311A600B8E74E /* LoginViewController.swift */; };
+		D230BD1929D311B300B8E74E /* LoginViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = D230BD1829D311B300B8E74E /* LoginViewModel.swift */; };
+		D230BD1B29D311E700B8E74E /* SocialLoginManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = D230BD1A29D311E700B8E74E /* SocialLoginManager.swift */; };
+		D230BD1E29D31C3200B8E74E /* KakaoSDKAuth in Frameworks */ = {isa = PBXBuildFile; productRef = D230BD1D29D31C3200B8E74E /* KakaoSDKAuth */; };
+		D230BD2029D31C3200B8E74E /* KakaoSDKCommon in Frameworks */ = {isa = PBXBuildFile; productRef = D230BD1F29D31C3200B8E74E /* KakaoSDKCommon */; };
+		D230BD2229D31C3200B8E74E /* KakaoSDKUser in Frameworks */ = {isa = PBXBuildFile; productRef = D230BD2129D31C3200B8E74E /* KakaoSDKUser */; };
 		D24002D129B752DB00635FFC /* NotoSansKR-Regular.otf in Resources */ = {isa = PBXBuildFile; fileRef = D24002CB29B752DA00635FFC /* NotoSansKR-Regular.otf */; };
 		D24002D229B752DB00635FFC /* NotoSansKR-Thin.otf in Resources */ = {isa = PBXBuildFile; fileRef = D24002CC29B752DB00635FFC /* NotoSansKR-Thin.otf */; };
 		D24002D329B752DB00635FFC /* NotoSansKR-Black.otf in Resources */ = {isa = PBXBuildFile; fileRef = D24002CD29B752DB00635FFC /* NotoSansKR-Black.otf */; };
@@ -90,6 +100,7 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		1713140F29D2E5E9007A3AF9 /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
 		171695B029B1B8CA00CF3E41 /* SearchTableViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchTableViewModel.swift; sourceTree = "<group>"; };
 		17A950FE29B74DA2001E6D4F /* SearchViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchViewController.swift; sourceTree = "<group>"; };
 		17A9510029B75101001E6D4F /* RecommendScrollView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RecommendScrollView.swift; sourceTree = "<group>"; };
@@ -98,6 +109,9 @@
 		17D5963829B02CBD00AFE039 /* SearchGiftCustomCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchGiftCustomCell.swift; sourceTree = "<group>"; };
 		17D5963A29B0835800AFE039 /* Extension+Date.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Extension+Date.swift"; sourceTree = "<group>"; };
 		D218233529CBEF7B00855D15 /* PhotoPreviewViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PhotoPreviewViewController.swift; sourceTree = "<group>"; };
+		D230BD1629D311A600B8E74E /* LoginViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginViewController.swift; sourceTree = "<group>"; };
+		D230BD1829D311B300B8E74E /* LoginViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginViewModel.swift; sourceTree = "<group>"; };
+		D230BD1A29D311E700B8E74E /* SocialLoginManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SocialLoginManager.swift; sourceTree = "<group>"; };
 		D24002CB29B752DA00635FFC /* NotoSansKR-Regular.otf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "NotoSansKR-Regular.otf"; sourceTree = "<group>"; };
 		D24002CC29B752DB00635FFC /* NotoSansKR-Thin.otf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "NotoSansKR-Thin.otf"; sourceTree = "<group>"; };
 		D24002CD29B752DB00635FFC /* NotoSansKR-Black.otf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "NotoSansKR-Black.otf"; sourceTree = "<group>"; };
@@ -179,6 +193,12 @@
 			buildActionMask = 2147483647;
 			files = (
 				1723BE8529C3142600AE06F9 /* IQKeyboardManagerSwift in Frameworks */,
+				1713140A29D2E5C0007A3AF9 /* FirebaseAuth in Frameworks */,
+				1713140C29D2E5C0007A3AF9 /* FirebaseFirestore in Frameworks */,
+				D230BD2229D31C3200B8E74E /* KakaoSDKUser in Frameworks */,
+				1713140E29D2E5C0007A3AF9 /* FirebaseFirestoreSwift in Frameworks */,
+				D230BD2029D31C3200B8E74E /* KakaoSDKCommon in Frameworks */,
+				D230BD1E29D31C3200B8E74E /* KakaoSDKAuth in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -195,6 +215,15 @@
 				17A9510029B75101001E6D4F /* RecommendScrollView.swift */,
 			);
 			path = SearchView;
+			sourceTree = "<group>";
+		};
+		D230BD1529D3118A00B8E74E /* LoginView */ = {
+			isa = PBXGroup;
+			children = (
+				D230BD1629D311A600B8E74E /* LoginViewController.swift */,
+				D230BD1829D311B300B8E74E /* LoginViewModel.swift */,
+			);
+			path = LoginView;
 			sourceTree = "<group>";
 		};
 		D295E4B329A5E2D700E12CAF /* ModifyView */ = {
@@ -271,6 +300,7 @@
 			isa = PBXGroup;
 			children = (
 				D2CDDBDF29AF3CD300E000E3 /* VisionManager.swift */,
+				D230BD1A29D311E700B8E74E /* SocialLoginManager.swift */,
 			);
 			path = Manager;
 			sourceTree = "<group>";
@@ -384,6 +414,7 @@
 				17D5963529AF6F7300AFE039 /* SearchView */,
 				D2CDDBCB29ADFA8F00E000E3 /* UseCase */,
 				D2CDDBDE29AF3CC600E000E3 /* Manager */,
+				D230BD1529D3118A00B8E74E /* LoginView */,
 				D2CDDBE829AF4BE000E000E3 /* AddVIew */,
 				D2B6333E29ACD17500EE9ACE /* EtcUsageHistoryView */,
 				D2C7A45729A9DA3300EB6D56 /* EtcSettingView */,
@@ -396,6 +427,7 @@
 				FC1E747F29A207DC0010A4BA /* LaunchScreen.storyboard */,
 				FC1E747129A207DA0010A4BA /* AppDelegate.swift */,
 				FC1E747329A207DA0010A4BA /* SceneDelegate.swift */,
+				1713140F29D2E5E9007A3AF9 /* GoogleService-Info.plist */,
 				FC1E748229A207DC0010A4BA /* Info.plist */,
 				FC1E747A29A207DA0010A4BA /* GiftWallet.xcdatamodeld */,
 			);
@@ -464,6 +496,12 @@
 			name = GiftWallet;
 			packageProductDependencies = (
 				1723BE8429C3142600AE06F9 /* IQKeyboardManagerSwift */,
+				1713140929D2E5C0007A3AF9 /* FirebaseAuth */,
+				1713140B29D2E5C0007A3AF9 /* FirebaseFirestore */,
+				1713140D29D2E5C0007A3AF9 /* FirebaseFirestoreSwift */,
+				D230BD1D29D31C3200B8E74E /* KakaoSDKAuth */,
+				D230BD1F29D31C3200B8E74E /* KakaoSDKCommon */,
+				D230BD2129D31C3200B8E74E /* KakaoSDKUser */,
 			);
 			productName = GiftWallet;
 			productReference = FC1E746E29A207DA0010A4BA /* GiftWallet.app */;
@@ -503,6 +541,8 @@
 			mainGroup = FC1E746529A207DA0010A4BA;
 			packageReferences = (
 				1723BE8329C3142600AE06F9 /* XCRemoteSwiftPackageReference "IQKeyboardManager" */,
+				1713140829D2E5C0007A3AF9 /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */,
+				D230BD1C29D31C3200B8E74E /* XCRemoteSwiftPackageReference "kakao-ios-sdk" */,
 			);
 			productRefGroup = FC1E746F29A207DA0010A4BA /* Products */;
 			projectDirPath = "";
@@ -541,6 +581,7 @@
 				D24002D629B752DB00635FFC /* NotoSansKR-Medium.otf in Resources */,
 				D24002D329B752DB00635FFC /* NotoSansKR-Black.otf in Resources */,
 				D24002D429B752DB00635FFC /* NotoSansKR-Bold.otf in Resources */,
+				1713141029D2E5E9007A3AF9 /* GoogleService-Info.plist in Resources */,
 				D24002D829B7536B00635FFC /* BMJUA_otf.otf in Resources */,
 				FC1E747E29A207DC0010A4BA /* Assets.xcassets in Resources */,
 			);
@@ -576,6 +617,7 @@
 				D2A282B829A85EF2002CCF5A /* Observable.swift in Sources */,
 				D295E4B929A5F64200E12CAF /* FormSheetViewController.swift in Sources */,
 				D2CDDBE029AF3CD300E000E3 /* VisionManager.swift in Sources */,
+				D230BD1929D311B300B8E74E /* LoginViewModel.swift in Sources */,
 				D2CDDBCD29ADFACB00E000E3 /* DateCalCulateUseCase.swift in Sources */,
 				D2DAAA2329A4720300D70E8C /* Ext+DateFormatter.swift in Sources */,
 				D2C90B5829BF4DC1003C3611 /* ZoomImageViewController.swift in Sources */,
@@ -586,6 +628,7 @@
 				D2C7A45D29A9E77100EB6D56 /* EtcSettingTableViewCell.swift in Sources */,
 				17A950FF29B74DA2001E6D4F /* SearchViewController.swift in Sources */,
 				17D5963729AF6F9800AFE039 /* SearchTableViewController.swift in Sources */,
+				D230BD1B29D311E700B8E74E /* SocialLoginManager.swift in Sources */,
 				D2DAAA1C29A44B1600D70E8C /* MainCollectionViewCell.swift in Sources */,
 				FC074C0629A90361006AD199 /* GiftData+CoreDataProperties.swift in Sources */,
 				17A9510129B75101001E6D4F /* RecommendScrollView.swift in Sources */,
@@ -593,6 +636,7 @@
 				FC074C0129A8D5B5006AD199 /* CoreDataManager.swift in Sources */,
 				D2CDDBF429B0716000E000E3 /* CustomTextField.swift in Sources */,
 				D2CDDBEA29AF4BF500E000E3 /* AddViewController.swift in Sources */,
+				D230BD1729D311A600B8E74E /* LoginViewController.swift in Sources */,
 				FC074C0529A90361006AD199 /* GiftData+CoreDataClass.swift in Sources */,
 				D2DAAA2029A44B9200D70E8C /* ReusableView.swift in Sources */,
 				D2A282B629A85EBC002CCF5A /* Gift.swift in Sources */,
@@ -867,7 +911,7 @@
 					"@executable_path/Frameworks",
 				);
 				MARKETING_VERSION = 1.0;
-				PRODUCT_BUNDLE_IDENTIFIER = wb.GiftWalletl233;
+				PRODUCT_BUNDLE_IDENTIFIER = wb.GiftWallet;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_EMIT_LOC_STRINGS = YES;
 				SWIFT_VERSION = 5.0;
@@ -894,7 +938,7 @@
 					"@executable_path/Frameworks",
 				);
 				MARKETING_VERSION = 1.0;
-				PRODUCT_BUNDLE_IDENTIFIER = wb.GiftWalletl233;
+				PRODUCT_BUNDLE_IDENTIFIER = wb.GiftWallet;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_EMIT_LOC_STRINGS = YES;
 				SWIFT_VERSION = 5.0;
@@ -944,6 +988,14 @@
 /* End XCConfigurationList section */
 
 /* Begin XCRemoteSwiftPackageReference section */
+		1713140829D2E5C0007A3AF9 /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/firebase/firebase-ios-sdk";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 9.0.0;
+			};
+		};
 		1723BE8329C3142600AE06F9 /* XCRemoteSwiftPackageReference "IQKeyboardManager" */ = {
 			isa = XCRemoteSwiftPackageReference;
 			repositoryURL = "https://github.com/hackiftekhar/IQKeyboardManager.git";
@@ -953,13 +1005,51 @@
 				minimumVersion = 6.0.0;
 			};
 		};
+		D230BD1C29D31C3200B8E74E /* XCRemoteSwiftPackageReference "kakao-ios-sdk" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/kakao/kakao-ios-sdk";
+			requirement = {
+				branch = master;
+				kind = branch;
+			};
+		};
 /* End XCRemoteSwiftPackageReference section */
 
 /* Begin XCSwiftPackageProductDependency section */
+		1713140929D2E5C0007A3AF9 /* FirebaseAuth */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 1713140829D2E5C0007A3AF9 /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */;
+			productName = FirebaseAuth;
+		};
+		1713140B29D2E5C0007A3AF9 /* FirebaseFirestore */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 1713140829D2E5C0007A3AF9 /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */;
+			productName = FirebaseFirestore;
+		};
+		1713140D29D2E5C0007A3AF9 /* FirebaseFirestoreSwift */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 1713140829D2E5C0007A3AF9 /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */;
+			productName = FirebaseFirestoreSwift;
+		};
 		1723BE8429C3142600AE06F9 /* IQKeyboardManagerSwift */ = {
 			isa = XCSwiftPackageProductDependency;
 			package = 1723BE8329C3142600AE06F9 /* XCRemoteSwiftPackageReference "IQKeyboardManager" */;
 			productName = IQKeyboardManagerSwift;
+		};
+		D230BD1D29D31C3200B8E74E /* KakaoSDKAuth */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = D230BD1C29D31C3200B8E74E /* XCRemoteSwiftPackageReference "kakao-ios-sdk" */;
+			productName = KakaoSDKAuth;
+		};
+		D230BD1F29D31C3200B8E74E /* KakaoSDKCommon */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = D230BD1C29D31C3200B8E74E /* XCRemoteSwiftPackageReference "kakao-ios-sdk" */;
+			productName = KakaoSDKCommon;
+		};
+		D230BD2129D31C3200B8E74E /* KakaoSDKUser */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = D230BD1C29D31C3200B8E74E /* XCRemoteSwiftPackageReference "kakao-ios-sdk" */;
+			productName = KakaoSDKUser;
 		};
 /* End XCSwiftPackageProductDependency section */
 
