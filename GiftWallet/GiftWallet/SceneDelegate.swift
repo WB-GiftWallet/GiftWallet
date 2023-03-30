@@ -18,6 +18,8 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
         guard let windowScene = (scene as? UIWindowScene) else { return }
         let window = UIWindow(windowScene: windowScene)
         
+        let socialLoginManager = SocialLoginManager()
+        
         let loginVC = LoginViewController()
         
         let mainViewModel = MainViewModel()
@@ -26,32 +28,17 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
                                                         etcSettingViewModel: etcSettingViewModel)
         let navigationMainController = UINavigationController(rootViewController: mainTabBarController)
 
-        if (AuthApi.hasToken()) {
-            UserApi.shared.accessTokenInfo { ( accessTokenInfo, error) in
-                if let error = error {
-                    if let sdkError = error as? SdkError, sdkError.isInvalidTokenError() == true  {
-                        //로그인 필요
-                        window.rootViewController = loginVC
-                    }
-                    else {
-                        //기타 에러
-                        window.rootViewController = loginVC
-                    }
-                }
-                else {
-                    //토큰 유효성 체크 성공(필요 시 토큰 갱신됨)
-                    window.rootViewController = navigationMainController
-                }
+        socialLoginManager.checkToken { hasToken in
+            switch hasToken {
+            case true:
+                window.rootViewController = navigationMainController
+            case false:
+                window.rootViewController = loginVC
             }
-        }
-        else {
-            // hasToken() == false
-            window.rootViewController = loginVC
         }
         
         window.backgroundColor = .white
         window.makeKeyAndVisible()
         self.window = window
-        
     }
 }

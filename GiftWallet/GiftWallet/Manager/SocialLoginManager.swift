@@ -25,7 +25,7 @@ extension SocialLoginManager {
         }
     }
     
-    // 카카오
+    // 카카오(앱)으로 로그인)
     private func logInWithUserApplication(completion: @escaping (Result<User, Error>) -> Void) {
         UserApi.shared.loginWithKakaoTalk {(oauthToken, error) in
             if let error = error {
@@ -35,7 +35,6 @@ extension SocialLoginManager {
                 print("loginWithKakaoTalk() success.")
                 
                 //do something
-                print("오쓰토근:::::::::::", oauthToken?.accessToken)
                 
                 setUserInfo(completion: completion)
             }
@@ -67,6 +66,31 @@ extension SocialLoginManager {
                 guard let user = user else { return }
                 completion(.success(user))
             }
+        }
+    }
+    
+    func checkToken(handler: @escaping (Bool) -> Void) {
+        if (AuthApi.hasToken()) {
+            UserApi.shared.accessTokenInfo { ( accessTokenInfo, error) in
+                if let error = error {
+                    if let sdkError = error as? SdkError, sdkError.isInvalidTokenError() == true  {
+                        //로그인 필요
+                        handler(false)
+                    }
+                    else {
+                        //기타 에러
+                        handler(false)
+                    }
+                }
+                else {
+                    //토큰 유효성 체크 성공(필요 시 토큰 갱신됨)
+                    handler(true)
+                }
+            }
+        }
+        else {
+            // hasToken() == false
+            handler(false)
         }
     }
 }
