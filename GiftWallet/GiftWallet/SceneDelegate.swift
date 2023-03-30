@@ -6,9 +6,6 @@
 //
 
 import UIKit
-import KakaoSDKAuth
-import KakaoSDKUser
-import KakaoSDKCommon
 
 class SceneDelegate: UIResponder, UIWindowSceneDelegate {
     
