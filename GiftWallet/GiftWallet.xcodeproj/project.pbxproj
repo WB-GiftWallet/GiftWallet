@@ -10,7 +10,6 @@
 		1713140A29D2E5C0007A3AF9 /* FirebaseAuth in Frameworks */ = {isa = PBXBuildFile; productRef = 1713140929D2E5C0007A3AF9 /* FirebaseAuth */; };
 		1713140C29D2E5C0007A3AF9 /* FirebaseFirestore in Frameworks */ = {isa = PBXBuildFile; productRef = 1713140B29D2E5C0007A3AF9 /* FirebaseFirestore */; };
 		1713140E29D2E5C0007A3AF9 /* FirebaseFirestoreSwift in Frameworks */ = {isa = PBXBuildFile; productRef = 1713140D29D2E5C0007A3AF9 /* FirebaseFirestoreSwift */; };
-		1713141029D2E5E9007A3AF9 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 1713140F29D2E5E9007A3AF9 /* GoogleService-Info.plist */; };
 		171695B129B1B8CA00CF3E41 /* SearchTableViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 171695B029B1B8CA00CF3E41 /* SearchTableViewModel.swift */; };
 		1723BE8529C3142600AE06F9 /* IQKeyboardManagerSwift in Frameworks */ = {isa = PBXBuildFile; productRef = 1723BE8429C3142600AE06F9 /* IQKeyboardManagerSwift */; };
 		1759488929D49DF000E7D5B9 /* FireBaseManagerError.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1759488829D49DF000E7D5B9 /* FireBaseManagerError.swift */; };
@@ -20,6 +19,7 @@
 		17D5963729AF6F9800AFE039 /* SearchTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 17D5963629AF6F9800AFE039 /* SearchTableViewController.swift */; };
 		17D5963929B02CBD00AFE039 /* SearchGiftCustomCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 17D5963829B02CBD00AFE039 /* SearchGiftCustomCell.swift */; };
 		17D5963B29B0835800AFE039 /* Extension+Date.swift in Sources */ = {isa = PBXBuildFile; fileRef = 17D5963A29B0835800AFE039 /* Extension+Date.swift */; };
+		17DD10B429D6B4B9002B58D4 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 17DD10B329D6B4B9002B58D4 /* GoogleService-Info.plist */; };
 		D218233629CBEF7B00855D15 /* PhotoPreviewViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D218233529CBEF7B00855D15 /* PhotoPreviewViewController.swift */; };
 		D24002D129B752DB00635FFC /* NotoSansKR-Regular.otf in Resources */ = {isa = PBXBuildFile; fileRef = D24002CB29B752DA00635FFC /* NotoSansKR-Regular.otf */; };
 		D24002D229B752DB00635FFC /* NotoSansKR-Thin.otf in Resources */ = {isa = PBXBuildFile; fileRef = D24002CC29B752DB00635FFC /* NotoSansKR-Thin.otf */; };
@@ -96,7 +96,6 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
-		1713140F29D2E5E9007A3AF9 /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
 		171695B029B1B8CA00CF3E41 /* SearchTableViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchTableViewModel.swift; sourceTree = "<group>"; };
 		1759488829D49DF000E7D5B9 /* FireBaseManagerError.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FireBaseManagerError.swift; sourceTree = "<group>"; };
 		17A950FE29B74DA2001E6D4F /* SearchViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchViewController.swift; sourceTree = "<group>"; };
@@ -106,6 +105,7 @@
 		17D5963629AF6F9800AFE039 /* SearchTableViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchTableViewController.swift; sourceTree = "<group>"; };
 		17D5963829B02CBD00AFE039 /* SearchGiftCustomCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchGiftCustomCell.swift; sourceTree = "<group>"; };
 		17D5963A29B0835800AFE039 /* Extension+Date.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Extension+Date.swift"; sourceTree = "<group>"; };
+		17DD10B329D6B4B9002B58D4 /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
 		D218233529CBEF7B00855D15 /* PhotoPreviewViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PhotoPreviewViewController.swift; sourceTree = "<group>"; };
 		D24002CB29B752DA00635FFC /* NotoSansKR-Regular.otf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "NotoSansKR-Regular.otf"; sourceTree = "<group>"; };
 		D24002CC29B752DB00635FFC /* NotoSansKR-Thin.otf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "NotoSansKR-Thin.otf"; sourceTree = "<group>"; };
@@ -197,13 +197,13 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
-		17B579ED29D3302D00042D80 /* TemporaryLoginView */ = {
+		17B579ED29D3302D00042D80 /* FireBaseManager */ = {
 			isa = PBXGroup;
 			children = (
 				17B579EE29D3337100042D80 /* FireBaseManager.swift */,
 				1759488829D49DF000E7D5B9 /* FireBaseManagerError.swift */,
 			);
-			path = TemporaryLoginView;
+			path = FireBaseManager;
 			sourceTree = "<group>";
 		};
 		17D5963529AF6F7300AFE039 /* SearchView */ = {
@@ -332,6 +332,7 @@
 			children = (
 				D2DAAA1F29A44B9200D70E8C /* ReusableView.swift */,
 				D2A282B529A85EBC002CCF5A /* Gift.swift */,
+				17B579ED29D3302D00042D80 /* FireBaseManager */,
 				FC074C0229A9033B006AD199 /* CoreData */,
 				D2A282B729A85EF2002CCF5A /* Observable.swift */,
 				D2CDDBE629AF487600E000E3 /* BrandList.swift */,
@@ -401,7 +402,6 @@
 			isa = PBXGroup;
 			children = (
 				D2B951A729B63499002E7C08 /* Fonts */,
-				17B579ED29D3302D00042D80 /* TemporaryLoginView */,
 				D2CDDBF229B0713A00E000E3 /* CustomUI */,
 				17D5963529AF6F7300AFE039 /* SearchView */,
 				D2CDDBCB29ADFA8F00E000E3 /* UseCase */,
@@ -418,8 +418,8 @@
 				FC1E747F29A207DC0010A4BA /* LaunchScreen.storyboard */,
 				FC1E747129A207DA0010A4BA /* AppDelegate.swift */,
 				FC1E747329A207DA0010A4BA /* SceneDelegate.swift */,
-				1713140F29D2E5E9007A3AF9 /* GoogleService-Info.plist */,
 				FC1E748229A207DC0010A4BA /* Info.plist */,
+				17DD10B329D6B4B9002B58D4 /* GoogleService-Info.plist */,
 				FC1E747A29A207DA0010A4BA /* GiftWallet.xcdatamodeld */,
 			);
 			path = GiftWallet;
@@ -568,7 +568,7 @@
 				D24002D629B752DB00635FFC /* NotoSansKR-Medium.otf in Resources */,
 				D24002D329B752DB00635FFC /* NotoSansKR-Black.otf in Resources */,
 				D24002D429B752DB00635FFC /* NotoSansKR-Bold.otf in Resources */,
-				1713141029D2E5E9007A3AF9 /* GoogleService-Info.plist in Resources */,
+				17DD10B429D6B4B9002B58D4 /* GoogleService-Info.plist in Resources */,
 				D24002D829B7536B00635FFC /* BMJUA_otf.otf in Resources */,
 				FC1E747E29A207DC0010A4BA /* Assets.xcassets in Resources */,
 			);
