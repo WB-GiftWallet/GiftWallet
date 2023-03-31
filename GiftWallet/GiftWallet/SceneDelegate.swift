@@ -16,15 +16,14 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
         let window = UIWindow(windowScene: windowScene)
         
         //MARK: Conneting MainView
-//        let mainViewModel = MainViewModel()
-//        let etcSettingViewModel = EtcSettingViewModel()
-//        let mainTabBarController = MainTabBarController(mainViewModel: mainViewModel,
-//                                                        etcSettingViewModel: etcSettingViewModel)
-//        let navigationMainController = UINavigationController(rootViewController: mainTabBarController)
-//        window.backgroundColor = .white
-//        window.rootViewController = navigationMainController
+        let mainViewModel = MainViewModel()
+        let etcSettingViewModel = EtcSettingViewModel()
+        let mainTabBarController = MainTabBarController(mainViewModel: mainViewModel,
+                                                        etcSettingViewModel: etcSettingViewModel)
+        let navigationMainController = UINavigationController(rootViewController: mainTabBarController)
+        window.backgroundColor = .white
+        window.rootViewController = navigationMainController
         
-        window.rootViewController = UINavigationController(rootViewController: TemporaryLoginViewController())
         window.makeKeyAndVisible()
         self.window = window
     }
