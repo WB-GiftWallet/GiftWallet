@@ -55,6 +55,8 @@
 		D2CA7D8D29D6BBC9002D3BA2 /* KakaoSDKAuth in Frameworks */ = {isa = PBXBuildFile; productRef = D2CA7D8C29D6BBC9002D3BA2 /* KakaoSDKAuth */; };
 		D2CA7D8F29D6BBC9002D3BA2 /* KakaoSDKCommon in Frameworks */ = {isa = PBXBuildFile; productRef = D2CA7D8E29D6BBC9002D3BA2 /* KakaoSDKCommon */; };
 		D2CA7D9129D6BBC9002D3BA2 /* KakaoSDKUser in Frameworks */ = {isa = PBXBuildFile; productRef = D2CA7D9029D6BBC9002D3BA2 /* KakaoSDKUser */; };
+		D2CA7D9529D6BFC1002D3BA2 /* LoginViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = D2CA7D9429D6BFC1002D3BA2 /* LoginViewModel.swift */; };
+		D2CA7D9729D6BFD5002D3BA2 /* LoginViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D2CA7D9629D6BFD5002D3BA2 /* LoginViewController.swift */; };
 		D2CDDBCD29ADFACB00E000E3 /* DateCalCulateUseCase.swift in Sources */ = {isa = PBXBuildFile; fileRef = D2CDDBCC29ADFACB00E000E3 /* DateCalCulateUseCase.swift */; };
 		D2CDDBD529ADFE7700E000E3 /* DateCalculateUseCaseTest.swift in Sources */ = {isa = PBXBuildFile; fileRef = D2CDDBD429ADFE7700E000E3 /* DateCalculateUseCaseTest.swift */; };
 		D2CDDBE029AF3CD300E000E3 /* VisionManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = D2CDDBDF29AF3CD300E000E3 /* VisionManager.swift */; };
@@ -143,6 +145,8 @@
 		D2C7A45C29A9E77100EB6D56 /* EtcSettingTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EtcSettingTableViewCell.swift; sourceTree = "<group>"; };
 		D2C90B5729BF4DC1003C3611 /* ZoomImageViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ZoomImageViewController.swift; sourceTree = "<group>"; };
 		D2CA7D8929D6BAA0002D3BA2 /* SocialLoginManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SocialLoginManager.swift; sourceTree = "<group>"; };
+		D2CA7D9429D6BFC1002D3BA2 /* LoginViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginViewModel.swift; sourceTree = "<group>"; };
+		D2CA7D9629D6BFD5002D3BA2 /* LoginViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginViewController.swift; sourceTree = "<group>"; };
 		D2CDDBCC29ADFACB00E000E3 /* DateCalCulateUseCase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DateCalCulateUseCase.swift; sourceTree = "<group>"; };
 		D2CDDBD229ADFE7600E000E3 /* DateCalculateUseCaseTest.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = DateCalculateUseCaseTest.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		D2CDDBD429ADFE7700E000E3 /* DateCalculateUseCaseTest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DateCalculateUseCaseTest.swift; sourceTree = "<group>"; };
@@ -277,6 +281,15 @@
 				D2B6333C29ACCA4100EE9ACE /* Constant.swift */,
 			);
 			path = EtcSettingView;
+			sourceTree = "<group>";
+		};
+		D2CA7D9329D6BFA8002D3BA2 /* LoginView */ = {
+			isa = PBXGroup;
+			children = (
+				D2CA7D9429D6BFC1002D3BA2 /* LoginViewModel.swift */,
+				D2CA7D9629D6BFD5002D3BA2 /* LoginViewController.swift */,
+			);
+			path = LoginView;
 			sourceTree = "<group>";
 		};
 		D2CDDBCB29ADFA8F00E000E3 /* UseCase */ = {
@@ -415,6 +428,7 @@
 				17D5963529AF6F7300AFE039 /* SearchView */,
 				D2CDDBCB29ADFA8F00E000E3 /* UseCase */,
 				D2CDDBDE29AF3CC600E000E3 /* Manager */,
+				D2CA7D9329D6BFA8002D3BA2 /* LoginView */,
 				D2CDDBE829AF4BE000E000E3 /* AddVIew */,
 				D2B6333E29ACD17500EE9ACE /* EtcUsageHistoryView */,
 				D2C7A45729A9DA3300EB6D56 /* EtcSettingView */,
@@ -623,6 +637,7 @@
 				FC62FF1029A77B5A003E63B0 /* MainTabBarController.swift in Sources */,
 				D2CDDBE229AF3D2B00E000E3 /* AutoInputUseCase.swift in Sources */,
 				D2BB131529C0507300A2440B /* BarcodeViewController.swift in Sources */,
+				D2CA7D9529D6BFC1002D3BA2 /* LoginViewModel.swift in Sources */,
 				D2BB131729C0507D00A2440B /* BarcodeViewModel.swift in Sources */,
 				D2C7A45D29A9E77100EB6D56 /* EtcSettingTableViewCell.swift in Sources */,
 				17A950FF29B74DA2001E6D4F /* SearchViewController.swift in Sources */,
@@ -637,6 +652,7 @@
 				D2CDDBEA29AF4BF500E000E3 /* AddViewController.swift in Sources */,
 				FC074C0529A90361006AD199 /* GiftData+CoreDataClass.swift in Sources */,
 				D2DAAA2029A44B9200D70E8C /* ReusableView.swift in Sources */,
+				D2CA7D9729D6BFD5002D3BA2 /* LoginViewController.swift in Sources */,
 				D2A282B629A85EBC002CCF5A /* Gift.swift in Sources */,
 				D2B6334229ACD1CB00EE9ACE /* UsageHistoryViewController.swift in Sources */,
 				D2B6334029ACD1A100EE9ACE /* UsageHistoryViewModel.swift in Sources */,
