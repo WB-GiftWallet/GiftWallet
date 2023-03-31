@@ -222,6 +222,15 @@
 			path = SearchView;
 			sourceTree = "<group>";
 		};
+		17DD10B929D6E3B1002B58D4 /* TemporaryLoginView */ = {
+			isa = PBXGroup;
+			children = (
+				17DD10B529D6E1B5002B58D4 /* TemporaryViewController.swift */,
+				17DD10B729D6E1DC002B58D4 /* TemporaryViewModel.swift */,
+			);
+			path = TemporaryLoginView;
+			sourceTree = "<group>";
+		};
 		D295E4B329A5E2D700E12CAF /* ModifyView */ = {
 			isa = PBXGroup;
 			children = (
@@ -336,8 +345,6 @@
 			children = (
 				D2DAAA1F29A44B9200D70E8C /* ReusableView.swift */,
 				D2A282B529A85EBC002CCF5A /* Gift.swift */,
-				17DD10B529D6E1B5002B58D4 /* TemporaryViewController.swift */,
-				17DD10B729D6E1DC002B58D4 /* TemporaryViewModel.swift */,
 				17B579ED29D3302D00042D80 /* FireBaseManager */,
 				FC074C0229A9033B006AD199 /* CoreData */,
 				D2A282B729A85EF2002CCF5A /* Observable.swift */,
@@ -418,6 +425,7 @@
 				FC62FF1129A77B77003E63B0 /* MainTabbarController */,
 				D2D6B74D29A3DE6A00E6188C /* MainView */,
 				F6A4AB4729A5D9F1009AEB78 /* DetailView */,
+				17DD10B929D6E3B1002B58D4 /* TemporaryLoginView */,
 				D2DAAA1E29A44B3200D70E8C /* Model */,
 				D2DAAA2129A471D600D70E8C /* Extension */,
 				FC1E747D29A207DC0010A4BA /* Assets.xcassets */,

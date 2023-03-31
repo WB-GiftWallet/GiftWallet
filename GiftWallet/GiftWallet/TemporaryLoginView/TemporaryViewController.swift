@@ -15,13 +15,16 @@ class TemporaryViewController: UIViewController {
     var handle: AuthStateDidChangeListenerHandle?
     var db = Firestore.firestore()
     
-    let loginButton: UIButton = {
-        let button = UIButton()
+    let stackView: UIStackView = {
+        let stackView = UIStackView()
         
-        button.setTitle("  로  그  인  ", for: .normal)
-        button.backgroundColor = .systemBrown
+        stackView.translatesAutoresizingMaskIntoConstraints = false
+        stackView.axis = .vertical
+        stackView.spacing = 20
+        stackView.distribution = .equalSpacing
+        stackView.alignment = .center
         
-        return button
+        return stackView
     }()
     
     let idTextField: UITextField = {
@@ -40,53 +43,48 @@ class TemporaryViewController: UIViewController {
         return field
     }()
     
-    let stackView: UIStackView = {
-        let stackView = UIStackView()
+    let loginButton = UIButton(name: " 로그인 ")
+    let logOutButton = UIButton(name: " 로그아웃 ")
+    let createUserButton = UIButton(name: " 회원가입 ")
+    
+    lazy var loginStack: UIStackView = {
+        let stackView = UIStackView(arrangedSubviews: [loginButton, logOutButton, createUserButton])
         
-        stackView.translatesAutoresizingMaskIntoConstraints = false
-        stackView.axis = .vertical
-        stackView.spacing = 20
+        stackView.spacing = 10
+        stackView.axis = .horizontal
         stackView.distribution = .equalSpacing
-        stackView.alignment = .center
         
         return stackView
     }()
     
-    let logOutButton: UIButton = {
-        let button = UIButton()
+    lazy var tempStackView: UIStackView = {
+        let stackView = UIStackView(arrangedSubviews: [addGiftButton, statePrintButton, tempButton])
         
-        button.setTitle(" LogOut ", for: .normal)
-        button.backgroundColor = .systemBrown
+        stackView.spacing = 10
+        stackView.axis = .horizontal
+        stackView.distribution = .equalSpacing
         
-        return button
+        return stackView
     }()
     
-    let addGiftButton: UIButton = {
-        let button = UIButton()
+    let addGiftButton = UIButton(name: "데이터추가")
+    let statePrintButton = UIButton(name: "상태출력")
+    let tempButton = UIButton(name: "임시버튼")
+    
+    lazy var CRUDStack: UIStackView = {
+        let stackView = UIStackView(arrangedSubviews: [createButton, readButton, updateButton, deleteButton])
         
-        button.setTitle(" Make  Gift  Data ", for: .normal)
-        button.backgroundColor = .systemBrown
+        stackView.axis = .horizontal
+        stackView.distribution = .equalSpacing
+        stackView.spacing = 10
         
-        return button
+        return stackView
     }()
     
-    let printButton: UIButton = {
-        let button = UIButton()
-        
-        button.setTitle(" 출 력 버 튼 ", for: .normal)
-        button.backgroundColor = .systemBrown
-        
-        return button
-    }()
-    
-    let addFireStoreButton: UIButton = {
-        let button = UIButton()
-        
-        button.setTitle(" Add FireStore ", for: .normal)
-        button.backgroundColor = .systemBrown
-        
-        return button
-    }()
+    let createButton = UIButton(name: "CREATE")
+    let readButton = UIButton(name: "READ")
+    let updateButton = UIButton(name: "UPDATE")
+    let deleteButton = UIButton(name: "DELETE")
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -119,7 +117,7 @@ class TemporaryViewController: UIViewController {
         
         view.addSubview(stackView)
         
-        [idTextField, passWordTextField, loginButton, logOutButton, addGiftButton, printButton, addFireStoreButton].forEach(stackView.addArrangedSubview(_:))
+        [idTextField, passWordTextField, loginStack, tempStackView, CRUDStack].forEach(stackView.addArrangedSubview(_:))
         
         NSLayoutConstraint.activate([
             stackView.centerXAnchor.constraint(equalTo: view.safeAreaLayoutGuide.centerXAnchor),
@@ -130,9 +128,11 @@ class TemporaryViewController: UIViewController {
     func buttonAddTarget() {
         loginButton.addTarget(nil, action: #selector(tapLoginButton), for: .touchUpInside)
         logOutButton.addTarget(nil, action: #selector(tapLogoutButton), for: .touchUpInside)
-        addGiftButton.addTarget(nil, action: #selector(tapMakeGiftButton), for: .touchUpInside)
-        printButton.addTarget(nil, action: #selector(tapPrintButton), for: .touchUpInside)
-        addFireStoreButton.addTarget(nil, action: #selector(tapAddFirebaseButton), for: .touchUpInside)
+//        createUserButton.addTarget(<#T##target: Any?##Any?#>, action: <#T##Selector#>, for: <#T##UIControl.Event#>)
+        
+        addGiftButton.addTarget(nil, action: #selector(tapAddGiftButton), for: .touchUpInside)
+        statePrintButton.addTarget(nil, action: #selector(tapStatePrintButton), for: .touchUpInside)
+        tempButton.addTarget(nil, action: #selector(tapTempButton), for: .touchUpInside)
     }
     
     @objc func tapLoginButton() {
@@ -174,12 +174,12 @@ class TemporaryViewController: UIViewController {
             self.loginButton.setTitle(" 로   그   인  ", for: .normal)
         }
     }
-    @objc func tapMakeGiftButton() {
+    @objc func tapAddGiftButton() {
         print("tapMakeGiftButton")
         try? FireBaseManager.shared.fetchData()
     }
     
-    @objc func tapPrintButton() {
+    @objc func tapStatePrintButton() {
         print("tabPrintButton")
 //        print(Auth.auth().currentUser?.uid)
 //        print("회원가입")
@@ -202,10 +202,19 @@ class TemporaryViewController: UIViewController {
 //        }
     }
     
-    @objc func tapAddFirebaseButton() {
+    @objc func tapTempButton() {
         print("tapAddFirebaseButton")
 //        try? FireBaseManager.shared.saveData()
 //        FireBaseManager.shared.updateData(number: 0)
         FireBaseManager.shared.deleteDate(number: 0)
+    }
+}
+
+
+private extension UIButton {
+    convenience init(name: String) {
+        self.init()
+        self.setTitle(name, for: .normal)
+        self.backgroundColor = .systemBrown
     }
 }
