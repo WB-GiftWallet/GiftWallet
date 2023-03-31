@@ -180,19 +180,28 @@ class TemporaryLoginViewController: UIViewController {
     
     @objc func tapPrintButton() {
         print("tabPrintButton")
+//        print(Auth.auth().currentUser?.uid)
+//        print("회원가입")
+//
+//        FireBaseManager.shared.createUser(email: "baem6@naver.com", password: "123456789") { result in
+//            switch result {
+//                case .success(let uid):
+//                    print(uid)
+//                case .failure(let error):
+//                    print(error)
+//            }
+//        }
+//
+        print(Auth.auth().currentUser?.email)
         print(Auth.auth().currentUser?.uid)
-        print("회원가입")
-        
-        FireBaseManager.shared.createUser(email: "baem6@naver.com", password: "123456789") { result in
-            switch result {
-                case .success(let uid):
-                    print(uid)
-                case .failure(let error):
-                    print(error)
-            }
-        }
+        do {
             
-        
+            try FireBaseManager.shared.saveData(giftData: Gift(image: UIImage(named: "testImageEDIYA")!, category: nil, brandName: "EDIYA", productName: "커피1리터", memo: "맛난거", expireDate: Date(),useDate: Date()))
+        } catch FireBaseManagerError.dateError {
+            print("dateError")
+        } catch {
+        print("안대 ㅠ")
+        }
     }
     
     @objc func tapAddFirebaseButton() {

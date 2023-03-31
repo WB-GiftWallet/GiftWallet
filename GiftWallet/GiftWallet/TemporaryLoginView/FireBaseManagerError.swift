@@ -9,4 +9,8 @@ enum FireBaseManagerError: Error {
     case createUserFail
     case invaildUserID
     case notHaveID
+    
+    case invalidImage
+    case giftDataNotChangeString
+    case dateError
 }
