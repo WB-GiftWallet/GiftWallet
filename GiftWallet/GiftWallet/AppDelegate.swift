@@ -8,6 +8,7 @@
 import UIKit
 import CoreData
 import FirebaseCore
+import KakaoSDKCommon
 import IQKeyboardManagerSwift
 
 @main
@@ -21,6 +22,9 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         
         //MARK: FireBase Method
         FirebaseApp.configure()
+        
+        //MARK: KakaoSDK Init
+        KakaoSDK.initSDK(appKey: "57b785512f2d87179345c4743d7f096b")
         
         return true
     }
