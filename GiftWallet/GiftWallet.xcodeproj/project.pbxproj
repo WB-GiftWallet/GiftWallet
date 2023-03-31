@@ -51,6 +51,10 @@
 		D2C7A45B29A9DAB500EB6D56 /* EtcSttingViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = D2C7A45A29A9DAB500EB6D56 /* EtcSttingViewModel.swift */; };
 		D2C7A45D29A9E77100EB6D56 /* EtcSettingTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = D2C7A45C29A9E77100EB6D56 /* EtcSettingTableViewCell.swift */; };
 		D2C90B5829BF4DC1003C3611 /* ZoomImageViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D2C90B5729BF4DC1003C3611 /* ZoomImageViewController.swift */; };
+		D2CA7D8A29D6BAA0002D3BA2 /* SocialLoginManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = D2CA7D8929D6BAA0002D3BA2 /* SocialLoginManager.swift */; };
+		D2CA7D8D29D6BBC9002D3BA2 /* KakaoSDKAuth in Frameworks */ = {isa = PBXBuildFile; productRef = D2CA7D8C29D6BBC9002D3BA2 /* KakaoSDKAuth */; };
+		D2CA7D8F29D6BBC9002D3BA2 /* KakaoSDKCommon in Frameworks */ = {isa = PBXBuildFile; productRef = D2CA7D8E29D6BBC9002D3BA2 /* KakaoSDKCommon */; };
+		D2CA7D9129D6BBC9002D3BA2 /* KakaoSDKUser in Frameworks */ = {isa = PBXBuildFile; productRef = D2CA7D9029D6BBC9002D3BA2 /* KakaoSDKUser */; };
 		D2CDDBCD29ADFACB00E000E3 /* DateCalCulateUseCase.swift in Sources */ = {isa = PBXBuildFile; fileRef = D2CDDBCC29ADFACB00E000E3 /* DateCalCulateUseCase.swift */; };
 		D2CDDBD529ADFE7700E000E3 /* DateCalculateUseCaseTest.swift in Sources */ = {isa = PBXBuildFile; fileRef = D2CDDBD429ADFE7700E000E3 /* DateCalculateUseCaseTest.swift */; };
 		D2CDDBE029AF3CD300E000E3 /* VisionManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = D2CDDBDF29AF3CD300E000E3 /* VisionManager.swift */; };
@@ -138,6 +142,7 @@
 		D2C7A45A29A9DAB500EB6D56 /* EtcSttingViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EtcSttingViewModel.swift; sourceTree = "<group>"; };
 		D2C7A45C29A9E77100EB6D56 /* EtcSettingTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EtcSettingTableViewCell.swift; sourceTree = "<group>"; };
 		D2C90B5729BF4DC1003C3611 /* ZoomImageViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ZoomImageViewController.swift; sourceTree = "<group>"; };
+		D2CA7D8929D6BAA0002D3BA2 /* SocialLoginManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SocialLoginManager.swift; sourceTree = "<group>"; };
 		D2CDDBCC29ADFACB00E000E3 /* DateCalCulateUseCase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DateCalCulateUseCase.swift; sourceTree = "<group>"; };
 		D2CDDBD229ADFE7600E000E3 /* DateCalculateUseCaseTest.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = DateCalculateUseCaseTest.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		D2CDDBD429ADFE7700E000E3 /* DateCalculateUseCaseTest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DateCalculateUseCaseTest.swift; sourceTree = "<group>"; };
@@ -190,7 +195,10 @@
 				1723BE8529C3142600AE06F9 /* IQKeyboardManagerSwift in Frameworks */,
 				1713140A29D2E5C0007A3AF9 /* FirebaseAuth in Frameworks */,
 				1713140C29D2E5C0007A3AF9 /* FirebaseFirestore in Frameworks */,
+				D2CA7D9129D6BBC9002D3BA2 /* KakaoSDKUser in Frameworks */,
 				1713140E29D2E5C0007A3AF9 /* FirebaseFirestoreSwift in Frameworks */,
+				D2CA7D8F29D6BBC9002D3BA2 /* KakaoSDKCommon in Frameworks */,
+				D2CA7D8D29D6BBC9002D3BA2 /* KakaoSDKAuth in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -292,6 +300,7 @@
 			isa = PBXGroup;
 			children = (
 				D2CDDBDF29AF3CD300E000E3 /* VisionManager.swift */,
+				D2CA7D8929D6BAA0002D3BA2 /* SocialLoginManager.swift */,
 			);
 			path = Manager;
 			sourceTree = "<group>";
@@ -490,6 +499,9 @@
 				1713140929D2E5C0007A3AF9 /* FirebaseAuth */,
 				1713140B29D2E5C0007A3AF9 /* FirebaseFirestore */,
 				1713140D29D2E5C0007A3AF9 /* FirebaseFirestoreSwift */,
+				D2CA7D8C29D6BBC9002D3BA2 /* KakaoSDKAuth */,
+				D2CA7D8E29D6BBC9002D3BA2 /* KakaoSDKCommon */,
+				D2CA7D9029D6BBC9002D3BA2 /* KakaoSDKUser */,
 			);
 			productName = GiftWallet;
 			productReference = FC1E746E29A207DA0010A4BA /* GiftWallet.app */;
@@ -530,6 +542,7 @@
 			packageReferences = (
 				1723BE8329C3142600AE06F9 /* XCRemoteSwiftPackageReference "IQKeyboardManager" */,
 				1713140829D2E5C0007A3AF9 /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */,
+				D2CA7D8B29D6BBC9002D3BA2 /* XCRemoteSwiftPackageReference "kakao-ios-sdk" */,
 			);
 			productRefGroup = FC1E746F29A207DA0010A4BA /* Products */;
 			projectDirPath = "";
@@ -615,6 +628,7 @@
 				17A950FF29B74DA2001E6D4F /* SearchViewController.swift in Sources */,
 				17D5963729AF6F9800AFE039 /* SearchTableViewController.swift in Sources */,
 				D2DAAA1C29A44B1600D70E8C /* MainCollectionViewCell.swift in Sources */,
+				D2CA7D8A29D6BAA0002D3BA2 /* SocialLoginManager.swift in Sources */,
 				FC074C0629A90361006AD199 /* GiftData+CoreDataProperties.swift in Sources */,
 				17A9510129B75101001E6D4F /* RecommendScrollView.swift in Sources */,
 				FC1E747229A207DA0010A4BA /* AppDelegate.swift in Sources */,
@@ -917,7 +931,7 @@
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
-				DEVELOPMENT_TEAM = "";
+				DEVELOPMENT_TEAM = N2WW86KJNF;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = GiftWallet/Info.plist;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
@@ -996,6 +1010,14 @@
 				minimumVersion = 6.0.0;
 			};
 		};
+		D2CA7D8B29D6BBC9002D3BA2 /* XCRemoteSwiftPackageReference "kakao-ios-sdk" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/kakao/kakao-ios-sdk";
+			requirement = {
+				branch = master;
+				kind = branch;
+			};
+		};
 /* End XCRemoteSwiftPackageReference section */
 
 /* Begin XCSwiftPackageProductDependency section */
@@ -1018,6 +1040,21 @@
 			isa = XCSwiftPackageProductDependency;
 			package = 1723BE8329C3142600AE06F9 /* XCRemoteSwiftPackageReference "IQKeyboardManager" */;
 			productName = IQKeyboardManagerSwift;
+		};
+		D2CA7D8C29D6BBC9002D3BA2 /* KakaoSDKAuth */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = D2CA7D8B29D6BBC9002D3BA2 /* XCRemoteSwiftPackageReference "kakao-ios-sdk" */;
+			productName = KakaoSDKAuth;
+		};
+		D2CA7D8E29D6BBC9002D3BA2 /* KakaoSDKCommon */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = D2CA7D8B29D6BBC9002D3BA2 /* XCRemoteSwiftPackageReference "kakao-ios-sdk" */;
+			productName = KakaoSDKCommon;
+		};
+		D2CA7D9029D6BBC9002D3BA2 /* KakaoSDKUser */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = D2CA7D8B29D6BBC9002D3BA2 /* XCRemoteSwiftPackageReference "kakao-ios-sdk" */;
+			productName = KakaoSDKUser;
 		};
 /* End XCSwiftPackageProductDependency section */
 
