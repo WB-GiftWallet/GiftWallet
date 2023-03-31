@@ -27,7 +27,7 @@ extension SocialLoginManager {
     private func logInWithUserApplication(completion: @escaping (Result<User, Error>) -> Void) {
         UserApi.shared.loginWithKakaoTalk {(oauthToken, error) in
             if let error = error {
-                print(error)
+                print("이거에러:::::::::",error)
             }
             else {
                 print("loginWithKakaoTalk() success.")

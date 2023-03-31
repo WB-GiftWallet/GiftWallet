@@ -24,7 +24,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         FirebaseApp.configure()
         
         //MARK: KakaoSDK Init
-        KakaoSDK.initSDK(appKey: "57b785512f2d87179345c4743d7f096b")
+        KakaoSDK.initSDK(appKey: "16f9d943fc2e2b512f145c73a1263e39")
         
         return true
     }

@@ -15,6 +15,7 @@ class LoginViewController: UIViewController {
     private let kakaoLoginButton = {
         let button = UIButton()
         
+        button.backgroundColor = .yellow
         button.translatesAutoresizingMaskIntoConstraints = false
         
         return button
@@ -30,7 +31,8 @@ class LoginViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-
+        setupViews()
+        setupButton()
     }
 
     init(viewModel: LoginViewModel) {
@@ -42,6 +44,21 @@ class LoginViewController: UIViewController {
         fatalError("init(coder:) has not been implemented")
     }
     
+    private func setupButton() {
+        let kakaoLoginAction = UIAction { _ in
+            self.viewModel.kakaoLogin()
+        }
+        kakaoLoginButton.addAction(kakaoLoginAction, for: .touchUpInside)
+        
+        let appleLoginAction = UIAction { _ in
+            
+        }
+        appleLoginButton.addAction(appleLoginAction, for: .touchUpInside)
+        
+    }
+    
+    
+    
     private func setupViews() {
         [kakaoLoginButton, appleLoginButton].forEach(view.addSubview(_:))
         
@@ -51,11 +68,10 @@ class LoginViewController: UIViewController {
             kakaoLoginButton.widthAnchor.constraint(equalTo: view.widthAnchor, multiplier: 0.8),
             kakaoLoginButton.heightAnchor.constraint(equalTo: kakaoLoginButton.widthAnchor, multiplier: 0.2),
             
-            appleLoginButton.topAnchor.constraint(equalTo: view.topAnchor, constant: 30),
+            appleLoginButton.bottomAnchor.constraint(equalTo: view.bottomAnchor, constant: -30),
             appleLoginButton.centerXAnchor.constraint(equalTo: view.centerXAnchor),
             appleLoginButton.widthAnchor.constraint(equalTo: view.widthAnchor, multiplier: 0.8),
             appleLoginButton.heightAnchor.constraint(equalTo: appleLoginButton.widthAnchor, multiplier: 0.2),
-            
         ])
     }
     
