@@ -7,6 +7,7 @@
 
 import FirebaseFirestore
 import FirebaseAuth
+import UIKit
 
 class FireBaseManager {
     static let shared = FireBaseManager()
@@ -48,18 +49,23 @@ class FireBaseManager {
     }
     
     //TODO: Gift Data Return
-    func fetchData() throws {
+    func fetchData(completion: @escaping ([Gift]) -> Void) throws {
         guard let id = Auth.auth().currentUser?.uid else {
             throw FireBaseManagerError.notHaveID
         }
         
         db.collection(id.description).getDocuments { (snapshot, error) in
             if error == nil && snapshot != nil {
+                var giftData = [Gift]()
                 for document in snapshot!.documents {
-                    print(document.data())
+                    //TODO: [Gift] Return
+                    guard let gift = self.changeGiftData(document) else { return }
+                    giftData.append(gift)
                 }
+                
+                completion(giftData)
             } else {
-                // error. do something
+                print("FireBase Fetch Error")
             }
         }
     }
@@ -71,11 +77,11 @@ class FireBaseManager {
         }
         
         //TODO: ImageData Encoding
-//        guard let imageData = giftData.image.pngData() else {
-//            print("FireBaseManagerError.invalidImage")
-//            throw FireBaseManagerError.invalidImage
-//        }
-//        let image = imageData.base64EncodedString
+        //        guard let imageData = giftData.image.pngData() else {
+        //            print("FireBaseManagerError.invalidImage")
+        //            throw FireBaseManagerError.invalidImage
+        //        }
+        //        let image = imageData.base64EncodedString
         let image = "imageData"
         
         let categoryData = giftData.category?.rawValue ?? "Nil"
@@ -85,7 +91,6 @@ class FireBaseManager {
               let memo = giftData.memo else {
             throw FireBaseManagerError.giftDataNotChangeString
         }
-        
         
         guard let giftExpireDate = giftData.expireDate,
               let giftUseDate = giftData.useDate else {
@@ -128,6 +133,46 @@ class FireBaseManager {
         db.collection(current).document(number.description).delete { error in
             print(error?.localizedDescription)
         }
+    }
+}
+
+extension FireBaseManager {
+    //TODO: 시간 당겨지는현상 해결 [2023-04-01] -> [2023-03-31 15:00:00 +0000]
+    private func changeGiftData(_ document: QueryDocumentSnapshot) -> Gift? {
+        guard let image = UIImage(systemName: "applelogo"),
+              let brandName = document["brandName"] as? String,
+              let productName = document["productName"] as? String,
+              let memo = document["memo"] as? String,
+              let useableState = document["useableState"] as? Bool,
+              let expireDateString = document["expireDate"] as? String,
+              let useDateString = document["useDate"] as? String
+        else {
+            return nil
+        }
+        
+        let formatter = DateFormatter()
+        formatter.locale = Locale(identifier: "ko-kr")
+        formatter.timeZone = TimeZone(abbreviation: "KST")
+        formatter.dateFormat = "yyyyMMdd"
+        
+        guard let expireDate = formatter.date(from: expireDateString),
+              let useDate = formatter.date(from: useDateString)
+        else {
+            return nil
+        }
+        
+        let gift = Gift(
+            image: image,
+            category: Category(rawValue: document["category"] as! String),
+            brandName: brandName,
+            productName: productName,
+            memo: memo,
+            useableState: useableState,
+            expireDate: expireDate,
+            useDate: useDate
+        )
+        
+        return gift
     }
 }
 

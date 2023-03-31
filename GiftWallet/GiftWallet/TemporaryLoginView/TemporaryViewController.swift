@@ -14,6 +14,7 @@ class TemporaryViewController: UIViewController {
     let viewModel = TemporaryViewModel()
     var handle: AuthStateDidChangeListenerHandle?
     var db = Firestore.firestore()
+    var data = [Gift]()
     
     let stackView: UIStackView = {
         let stackView = UIStackView()
@@ -201,13 +202,23 @@ class TemporaryViewController: UIViewController {
     
     @objc func tapAddGiftButton() {
         print("tapMakeGiftButton")
-        try? FireBaseManager.shared.fetchData()
     }
     
     @objc func tapStatePrintButton() {
         print("tabPrintButton")
         print("Current Email : ", Auth.auth().currentUser?.email ?? "NOT EMAIL")
         print("Current UID : ", Auth.auth().currentUser?.uid ?? "NOT UID")
+        
+        for (i, v) in data.enumerated() {
+            print(i,i,i,i,i,i,i,i,i,i,i,i,i,i)
+            print(v.productName)
+            print(v.brandName)
+            print(v.category)
+            print(v.memo)
+            print(v.useableState)
+            print(v.expireDate)
+            print(v.useDate)
+        }
     }
     
     @objc func tapTempButton() {
@@ -219,13 +230,14 @@ class TemporaryViewController: UIViewController {
         
         do {
             try FireBaseManager.shared.saveData(
-                number: 10,
+                number: 12,
                 giftData: Gift(
                     image: UIImage(named: "testImageSTARBUCKSSMALL")!,
                     category: .chicken,
                     brandName: "집앞커피점",
                     productName: "나는",
                     memo: "이디양",
+                    useableState: false,
                     expireDate: Date(),
                     useDate: Date()
                 )
@@ -239,7 +251,10 @@ class TemporaryViewController: UIViewController {
         print("tapReadButton")
         
         do {
-            try FireBaseManager.shared.fetchData()
+            try FireBaseManager.shared.fetchData(completion: { giftDatas in
+                print(giftDatas)
+                self.data = giftDatas
+            })
         } catch {
             print(error.localizedDescription)
         }
