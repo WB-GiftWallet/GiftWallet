@@ -130,6 +130,7 @@
 		D2A282B729A85EF2002CCF5A /* Observable.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Observable.swift; sourceTree = "<group>"; };
 		D2A282BD29A8702B002CCF5A /* MainViewModelTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = MainViewModelTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		D2A282BF29A8702B002CCF5A /* MainViewModelTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainViewModelTests.swift; sourceTree = "<group>"; };
+		D2A4088429D6E82200633370 /* GiftWallet.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = GiftWallet.entitlements; sourceTree = "<group>"; };
 		D2B6333C29ACCA4100EE9ACE /* Constant.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Constant.swift; sourceTree = "<group>"; };
 		D2B6333F29ACD1A100EE9ACE /* UsageHistoryViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UsageHistoryViewModel.swift; sourceTree = "<group>"; };
 		D2B6334129ACD1CB00EE9ACE /* UsageHistoryViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UsageHistoryViewController.swift; sourceTree = "<group>"; };
@@ -423,6 +424,7 @@
 		FC1E747029A207DA0010A4BA /* GiftWallet */ = {
 			isa = PBXGroup;
 			children = (
+				D2A4088429D6E82200633370 /* GiftWallet.entitlements */,
 				D2B951A729B63499002E7C08 /* Fonts */,
 				D2CDDBF229B0713A00E000E3 /* CustomUI */,
 				17D5963529AF6F7300AFE039 /* SearchView */,
@@ -913,6 +915,7 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				CODE_SIGN_ENTITLEMENTS = GiftWallet/GiftWallet.entitlements;
 				CODE_SIGN_IDENTITY = "Apple Development";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				CODE_SIGN_STYLE = Manual;
@@ -945,6 +948,7 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				CODE_SIGN_ENTITLEMENTS = GiftWallet/GiftWallet.entitlements;
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_TEAM = N2WW86KJNF;

@@ -51,13 +51,18 @@ class LoginViewController: UIViewController {
         kakaoLoginButton.addAction(kakaoLoginAction, for: .touchUpInside)
         
         let appleLoginAction = UIAction { _ in
+            let provider = ASAuthorizationAppleIDProvider()
+            let request = provider.createRequest()
+            request.requestedScopes = [.fullName, .email]
+            
+            let controller = ASAuthorizationController(authorizationRequests: [request])
+            controller.delegate = self
+            controller.presentationContextProvider = self
+            controller.performRequests()
             
         }
         appleLoginButton.addAction(appleLoginAction, for: .touchUpInside)
-        
     }
-    
-    
     
     private func setupViews() {
         [kakaoLoginButton, appleLoginButton].forEach(view.addSubview(_:))
@@ -77,3 +82,47 @@ class LoginViewController: UIViewController {
     
     
 }
+
+extension LoginViewController: ASAuthorizationControllerDelegate {
+    // 성공 후 동작
+    func authorizationController(controller: ASAuthorizationController, didCompleteWithAuthorization authorization: ASAuthorization) {
+        switch authorization.credential {
+        case let credentials as ASAuthorizationAppleIDCredential:
+            
+//            let idToken = credentials.identityToken!
+//            let tokenStr = String(data: idToken, encoding: .utf8)
+//            print("tokenStr::" ,tokenStr)
+//
+//            guard let code = credentials.authorizationCode else { return }
+//            let codeStr = String(data: code, encoding: .utf8)
+//            print("codeStr:", codeStr)
+//
+//            let user = credentials.user
+//            print("user:::", user)
+//            ---
+//
+//            let firstName = credentials.fullName?.givenName
+//            let lastName = credentials.fullName?.familyName
+//            let email = credentials.email
+//            print(firstName, lastName, email)
+            break
+            
+        default:
+            break
+        }
+    }
+
+    func authorizationController(controller: ASAuthorizationController, didCompleteWithError error: Error) {
+        print("failed")
+    }
+    
+    
+}
+
+
+extension LoginViewController: ASAuthorizationControllerPresentationContextProviding {
+    func presentationAnchor(for controller: ASAuthorizationController) -> ASPresentationAnchor {
+        return view.window!
+    }
+}
+
