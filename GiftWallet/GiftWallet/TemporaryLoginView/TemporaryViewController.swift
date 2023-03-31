@@ -128,11 +128,16 @@ class TemporaryViewController: UIViewController {
     func buttonAddTarget() {
         loginButton.addTarget(nil, action: #selector(tapLoginButton), for: .touchUpInside)
         logOutButton.addTarget(nil, action: #selector(tapLogoutButton), for: .touchUpInside)
-//        createUserButton.addTarget(<#T##target: Any?##Any?#>, action: <#T##Selector#>, for: <#T##UIControl.Event#>)
+        createUserButton.addTarget(nil, action: #selector(tapCreateUserButton), for: .touchUpInside)
         
         addGiftButton.addTarget(nil, action: #selector(tapAddGiftButton), for: .touchUpInside)
         statePrintButton.addTarget(nil, action: #selector(tapStatePrintButton), for: .touchUpInside)
         tempButton.addTarget(nil, action: #selector(tapTempButton), for: .touchUpInside)
+        
+        createButton.addTarget(nil, action: #selector(tapCreateButton), for: .touchUpInside)
+        readButton.addTarget(nil, action: #selector(tapReadButton), for: .touchUpInside)
+        updateButton.addTarget(nil, action: #selector(tapUpdateButton), for: .touchUpInside)
+        deleteButton.addTarget(nil, action: #selector(tapDeleteButton), for: .touchUpInside)
     }
     
     @objc func tapLoginButton() {
@@ -174,6 +179,21 @@ class TemporaryViewController: UIViewController {
             self.loginButton.setTitle(" 로   그   인  ", for: .normal)
         }
     }
+    
+    @objc func tapCreateUserButton() {
+        print(Auth.auth().currentUser?.uid)
+        print("회원가입")
+        
+        FireBaseManager.shared.createUser(email: "baem6@naver.com", password: "123456789") { result in
+            switch result {
+                case .success(let uid):
+                    print(uid)
+                case .failure(let error):
+                    print(error)
+            }
+        }
+    }
+    
     @objc func tapAddGiftButton() {
         print("tapMakeGiftButton")
         try? FireBaseManager.shared.fetchData()
@@ -181,32 +201,60 @@ class TemporaryViewController: UIViewController {
     
     @objc func tapStatePrintButton() {
         print("tabPrintButton")
-//        print(Auth.auth().currentUser?.uid)
-//        print("회원가입")
-//
-//        FireBaseManager.shared.createUser(email: "baem6@naver.com", password: "123456789") { result in
-//            switch result {
-//                case .success(let uid):
-//                    print(uid)
-//                case .failure(let error):
-//                    print(error)
-//            }
-//        }
         
-//        do {
-//            try FireBaseManager.shared.saveData(giftData: Gift(image: UIImage(named: "testImageEDIYA")!, category: nil, brandName: "EDIYA", productName: "커피1리터", memo: "맛난거", expireDate: Date(),useDate: Date()))
-//        } catch FireBaseManagerError.dateError {
-//            print("dateError")
-//        } catch {
-//            print("안대 ㅠ")
-//        }
+        
+        //        do {
+        //            try FireBaseManager.shared.saveData(giftData: Gift(image: UIImage(named: "testImageEDIYA")!, category: nil, brandName: "EDIYA", productName: "커피1리터", memo: "맛난거", expireDate: Date(),useDate: Date()))
+        //        } catch FireBaseManagerError.dateError {
+        //            print("dateError")
+        //        } catch {
+        //            print("안대 ㅠ")
+        //        }
     }
     
     @objc func tapTempButton() {
-        print("tapAddFirebaseButton")
-//        try? FireBaseManager.shared.saveData()
-//        FireBaseManager.shared.updateData(number: 0)
-        FireBaseManager.shared.deleteDate(number: 0)
+        print("tapTempButton")
+    }
+    
+    @objc func tapCreateButton() {
+        print("tapCreateButton")
+        
+        do {
+            try FireBaseManager.shared.saveData(
+                number: 10,
+                giftData: Gift(
+                    image: UIImage(named: "testImageSTARBUCKSSMALL")!,
+                    category: .chicken,
+                    brandName: "집앞커피점",
+                    productName: "나는",
+                    memo: "이디양",
+                    expireDate: Date(),
+                    useDate: Date()
+                )
+            )
+        } catch {
+            print(error.localizedDescription)
+        }
+        
+    }
+    @objc func tapReadButton() {
+        print("tapReadButton")
+        
+        do {
+            try FireBaseManager.shared.fetchData()
+        } catch {
+            print(error.localizedDescription)
+        }
+        
+    }
+    @objc func tapUpdateButton() {
+        print("tapUpdateButton")
+        FireBaseManager.shared.updateData(number: 10)
+        
+    }
+    @objc func tapDeleteButton() {
+        print("tapDeleteButton")
+        FireBaseManager.shared.deleteDate(number: 10)
     }
 }
 
