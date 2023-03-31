@@ -15,6 +15,7 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
         guard let windowScene = (scene as? UIWindowScene) else { return }
         let window = UIWindow(windowScene: windowScene)
         
+        //MARK: Conneting MainView
         let mainViewModel = MainViewModel()
         let etcSettingViewModel = EtcSettingViewModel()
         let mainTabBarController = MainTabBarController(mainViewModel: mainViewModel,
@@ -22,6 +23,7 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
         let navigationMainController = UINavigationController(rootViewController: mainTabBarController)
         window.backgroundColor = .white
         window.rootViewController = navigationMainController
+        
         window.makeKeyAndVisible()
         self.window = window
     }
