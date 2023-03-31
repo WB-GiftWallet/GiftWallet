@@ -105,6 +105,11 @@ class TemporaryViewController: UIViewController {
         super.viewWillAppear(true)
         handle = Auth.auth().addStateDidChangeListener { auth, user in
             print("handler Start")
+            if let _ = Auth.auth().currentUser {
+                self.view.backgroundColor = .systemGray4
+            } else {
+                self.view.backgroundColor = .systemPink
+            }
         }
     }
     
@@ -181,10 +186,10 @@ class TemporaryViewController: UIViewController {
     }
     
     @objc func tapCreateUserButton() {
-        print(Auth.auth().currentUser?.uid)
+//        print(Auth.auth().currentUser?.uid)
         print("회원가입")
         
-        FireBaseManager.shared.createUser(email: "baem6@naver.com", password: "123456789") { result in
+        FireBaseManager.shared.createUser(email: idTextField.text!, password: passWordTextField.text!) { result in
             switch result {
                 case .success(let uid):
                     print(uid)
@@ -201,15 +206,8 @@ class TemporaryViewController: UIViewController {
     
     @objc func tapStatePrintButton() {
         print("tabPrintButton")
-        
-        
-        //        do {
-        //            try FireBaseManager.shared.saveData(giftData: Gift(image: UIImage(named: "testImageEDIYA")!, category: nil, brandName: "EDIYA", productName: "커피1리터", memo: "맛난거", expireDate: Date(),useDate: Date()))
-        //        } catch FireBaseManagerError.dateError {
-        //            print("dateError")
-        //        } catch {
-        //            print("안대 ㅠ")
-        //        }
+        print("Current Email : ", Auth.auth().currentUser?.email ?? "NOT EMAIL")
+        print("Current UID : ", Auth.auth().currentUser?.uid ?? "NOT UID")
     }
     
     @objc func tapTempButton() {
