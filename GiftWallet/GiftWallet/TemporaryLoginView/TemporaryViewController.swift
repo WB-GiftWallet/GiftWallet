@@ -211,13 +211,22 @@ class TemporaryViewController: UIViewController {
         
         for (i, v) in data.enumerated() {
             print(i,i,i,i,i,i,i,i,i,i,i,i,i,i)
-            print(v.productName)
-            print(v.brandName)
-            print(v.category)
-            print(v.memo)
+            print(v.productName!)
+            print(v.brandName!)
+            print(v.category!)
+            print(v.memo!)
             print(v.useableState)
-            print(v.expireDate)
-            print(v.useDate)
+            print(v.expireDate!)
+            print(v.useDate!)
+        }
+        
+        FireBaseManager.shared.fetchMostRecentNumber { result in
+            switch result {
+                case .success(let count):
+                    print("docu count:", count)
+                case .failure(let error):
+                    print(error.localizedDescription)
+            }
         }
     }
     

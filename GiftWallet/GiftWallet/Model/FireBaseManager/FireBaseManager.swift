@@ -176,9 +176,32 @@ extension FireBaseManager {
     }
 }
 
-//private extension  {
-//    func
-//}
+
+extension FireBaseManager {
+    func fetchMostRecentNumber(completion: @escaping (Result<Int, FireBaseManagerError>) -> Void) {
+        var recentNumber = 0
+        guard let id = Auth.auth().currentUser?.uid else {
+            completion(.failure(.invaildUserID))
+            return
+        }
+        
+        db.collection(id.description).getDocuments { snapshot, error in
+            if error == nil && snapshot != nil {
+                for document in snapshot!.documents {
+                    guard let docuNumber = Int(document.documentID) else {
+                        return
+                    }
+                    
+                    recentNumber = max(recentNumber, docuNumber)
+                }
+                
+                completion(.success(recentNumber))
+            } else {
+                print("FireBase Fetch Error")
+            }
+        }
+    }
+}
 
 /*
  extension CoreDataManager {
