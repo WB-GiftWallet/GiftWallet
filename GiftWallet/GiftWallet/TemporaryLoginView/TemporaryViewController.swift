@@ -264,7 +264,7 @@ class TemporaryViewController: UIViewController {
     
     @objc func tapDeleteButton() {
         print("tapDeleteButton")
-        FireBaseManager.shared.deleteDate(number: 10)
+        FireBaseManager.shared.deleteDate(10)
     }
 }
 

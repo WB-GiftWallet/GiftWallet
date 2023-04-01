@@ -131,11 +131,11 @@ class FireBaseManager {
         }
     }
     
-    func deleteDate(number: Int) {
-        let number = 0
+    func deleteDate(_ number: Int) {
         guard let current = Auth.auth().currentUser?.uid else {
             return
         }
+        
         db.collection(current).document(number.description).delete { error in
             print(error?.localizedDescription)
         }
