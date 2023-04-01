@@ -92,7 +92,7 @@ extension LoginViewController: ASAuthorizationControllerDelegate {
                                                             etcSettingViewModel: etcSettingViewModel)
             let navigationMainController = UINavigationController(rootViewController: mainTabBarController)
             self.present(navigationMainController, animated: true)
-        }
+        }        
     }
     
     // 실패시 동작

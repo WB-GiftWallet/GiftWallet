@@ -7,7 +7,6 @@
 
 import AuthenticationServices
 import CryptoKit
-import FirebaseAuth
 
 // MARK: 애플 로그인 관련
 
@@ -17,7 +16,7 @@ struct AppleLoginManager {
 
 
 extension AppleLoginManager {
-    func didCompleteLogin(controller: ASAuthorizationController, authorization: ASAuthorization, completion: @escaping () -> Void) {
+    func didCompleteLogin(controller: ASAuthorizationController, authorization: ASAuthorization, completion: @escaping ([String: String]) -> Void) {
         if let appleIDCredential = authorization.credential as? ASAuthorizationAppleIDCredential {
             guard let nonce = currentNonce else {
                 fatalError("Invalidstate: 로그인 콜백이 수신되었지만 로그인 요청이 전송되지 않았습니다.")
@@ -31,24 +30,13 @@ extension AppleLoginManager {
                 return
             }
             
-            let credential = OAuthProvider.credential(withProviderID: "apple.com", idToken: idTokenString, rawNonce: nonce)
-
-            Auth.auth().signIn(with: credential) { authResult, error in
-                if let error = error {
-                    print("Error Apple sign in: %@", error)
-                    return
-                }
-                // Apple 계정으로 firebase에 로그인 됬다.
-                print("애플로그인 완료")
-                completion()
-            }
+            completion(["idTokenString": idTokenString, "rawNonce": nonce])
         }
     }
     
     mutating func startSignInWithApple() -> ASAuthorizationAppleIDRequest {
         let nonce = randomNonceString()
         currentNonce = nonce
-        print("논스::", nonce)
         
         let appleIDProvider = ASAuthorizationAppleIDProvider()
         let request = appleIDProvider.createRequest()
