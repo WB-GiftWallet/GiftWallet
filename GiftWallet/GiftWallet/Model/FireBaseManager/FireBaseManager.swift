@@ -107,27 +107,65 @@ class FireBaseManager {
         let useDate = dateFormatter.string(from: giftUseDate)
         
         db.collection(id.description).document((self.maxItemNumber + 1).description).setData(["image":image,
-                                                                            "category":categoryData,
-                                                                            "brandName":brandName,
-                                                                            "productName":productName,
-                                                                            "memo":memo,
-                                                                            "useableState":giftData.useableState,
-                                                                            "expireDate": expireDate,
-                                                                            "useDate": useDate,
-                                                                           ])
+                                                                                              "category":categoryData,
+                                                                                              "brandName":brandName,
+                                                                                              "productName":productName,
+                                                                                              "memo":memo,
+                                                                                              "useableState": true,
+                                                                                              "expireDate": expireDate,
+                                                                                              "useDate": useDate,
+                                                                                             ])
         self.maxItemNumber += 1
         print(self.maxItemNumber)
         print("완료")
     }
     
-    func updateData(number: Int/*, _ giftData: Gift */) {
-        let number = 0
+    func updateData(_ giftData: Gift) throws {
         guard let current = Auth.auth().currentUser?.uid else {
             return
         }
         
-        db.collection(current).document(number.description).updateData(["brandName" : "고쳐졍"]) { error in
-            print(error?.localizedDescription)
+        let dataNumber = giftData.number
+        
+        //TODO: ImageData Encoding
+        //        guard let imageData = giftData.image.pngData() else {
+        //            print("FireBaseManagerError.invalidImage")
+        //            throw FireBaseManagerError.invalidImage
+        //        }
+        //        let image = imageData.base64EncodedString
+        let image = "imageData"
+        
+        let categoryData = giftData.category?.rawValue ?? "Nil"
+        
+        guard let brandName = giftData.brandName,
+              let productName = giftData.productName,
+              let memo = giftData.memo else {
+            throw FireBaseManagerError.giftDataNotChangeString
+        }
+        
+        guard let giftExpireDate = giftData.expireDate,
+              let giftUseDate = giftData.useDate else {
+            throw FireBaseManagerError.dateError
+        }
+        
+        let dateFormatter = DateFormatter()
+        dateFormatter.dateFormat = "yyyyMMdd"
+        let expireDate = dateFormatter.string(from: giftExpireDate)
+        let useDate = dateFormatter.string(from: giftUseDate)
+        
+        db.collection(current).document(String(dataNumber)).updateData(["image":image,
+                                                                "category":categoryData,
+                                                                "brandName":brandName,
+                                                                "productName":productName,
+                                                                "memo":memo,
+                                                                "useableState":giftData.useableState,
+                                                                "expireDate": expireDate,
+                                                                "useDate": useDate,
+                                                               ]) { error in
+            if let error = error {
+                print(error.localizedDescription)
+                return
+            }
         }
     }
     

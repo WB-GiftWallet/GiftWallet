@@ -259,12 +259,28 @@ class TemporaryViewController: UIViewController {
     
     @objc func tapUpdateButton() {
         print("tapUpdateButton")
-        FireBaseManager.shared.updateData(number: 10)
+        do {
+            var giftData = Gift(
+                image: UIImage(named: "testImageSTARBUCKSSMALL")!,
+                category: .chicken,
+                brandName: "업데이트 했습니다",
+                productName: "나는 업데이트",
+                memo: "이디양 어디야 업데이트",
+                useableState: true,
+                expireDate: Date(),
+                useDate: Date()
+            )
+            giftData.number = 5
+            
+            try FireBaseManager.shared.updateData(giftData)
+        } catch {
+            print(error.localizedDescription)
+        }
     }
     
     @objc func tapDeleteButton() {
         print("tapDeleteButton")
-        FireBaseManager.shared.deleteDate(10)
+        FireBaseManager.shared.deleteDate(1)
     }
 }
 
