@@ -176,7 +176,6 @@ extension FireBaseManager {
     }
 }
 
-
 extension FireBaseManager {
     func fetchMostRecentNumber(completion: @escaping (Result<Int, FireBaseManagerError>) -> Void) {
         var recentNumber = 0
@@ -191,10 +190,8 @@ extension FireBaseManager {
                     guard let docuNumber = Int(document.documentID) else {
                         return
                     }
-                    
                     recentNumber = max(recentNumber, docuNumber)
                 }
-                
                 completion(.success(recentNumber))
             } else {
                 print("FireBase Fetch Error")
@@ -202,22 +199,3 @@ extension FireBaseManager {
         }
     }
 }
-
-/*
- extension CoreDataManager {
-     private func fetchMostRecentNumber(context: NSManagedObjectContext) -> Int16 {
-         let request: NSFetchRequest<GiftData> = GiftData.fetchRequest()
-         request.sortDescriptors = [NSSortDescriptor(keyPath: \GiftData.number,
-                                                     ascending: false)]
-         request.fetchLimit = 1
-         if let lastGift = try? context.fetch(request).first {
-             let gift = GiftData(context: context)
-             gift.number = lastGift.number
-             return gift.number
-         } else {
-             return 0
-         }
-     }
- }
-
- */

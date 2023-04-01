@@ -187,7 +187,6 @@ class TemporaryViewController: UIViewController {
     }
     
     @objc func tapCreateUserButton() {
-//        print(Auth.auth().currentUser?.uid)
         print("회원가입")
         
         FireBaseManager.shared.createUser(email: idTextField.text!, password: passWordTextField.text!) { result in
@@ -254,8 +253,8 @@ class TemporaryViewController: UIViewController {
         } catch {
             print(error.localizedDescription)
         }
-        
     }
+    
     @objc func tapReadButton() {
         print("tapReadButton")
         
@@ -267,19 +266,18 @@ class TemporaryViewController: UIViewController {
         } catch {
             print(error.localizedDescription)
         }
-        
     }
+    
     @objc func tapUpdateButton() {
         print("tapUpdateButton")
         FireBaseManager.shared.updateData(number: 10)
-        
     }
+    
     @objc func tapDeleteButton() {
         print("tapDeleteButton")
         FireBaseManager.shared.deleteDate(number: 10)
     }
 }
-
 
 private extension UIButton {
     convenience init(name: String) {
