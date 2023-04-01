@@ -7,10 +7,13 @@
 
 import UIKit
 import AuthenticationServices
+import FirebaseAuth
+import CryptoKit
 
 class LoginViewController: UIViewController {
 
     private let viewModel: LoginViewModel
+    fileprivate var currentNonce: String?
     
     private let kakaoLoginButton = {
         let button = UIButton()
@@ -51,9 +54,7 @@ class LoginViewController: UIViewController {
         kakaoLoginButton.addAction(kakaoLoginAction, for: .touchUpInside)
         
         let appleLoginAction = UIAction { _ in
-            let provider = ASAuthorizationAppleIDProvider()
-            let request = provider.createRequest()
-            request.requestedScopes = [.fullName, .email]
+            let request = self.startSignInWithAppleFlow()
             
             let controller = ASAuthorizationController(authorizationRequests: [request])
             controller.delegate = self
@@ -86,39 +87,39 @@ class LoginViewController: UIViewController {
 extension LoginViewController: ASAuthorizationControllerDelegate {
     // 성공 후 동작
     func authorizationController(controller: ASAuthorizationController, didCompleteWithAuthorization authorization: ASAuthorization) {
-        switch authorization.credential {
-        case let credentials as ASAuthorizationAppleIDCredential:
+        
+        if let appleIDCredential = authorization.credential as? ASAuthorizationAppleIDCredential {
+            guard let nonce = currentNonce else {
+                fatalError("Invalidstate: 로그인 콜백이 수신되었지만 로그인 요청이 전송되지 않았습니다.")
+            }
+            guard let appleIDToken = appleIDCredential.identityToken else {
+                print("ID토큰을 가져올 수 없습니다.")
+                return
+            }
+            guard let idTokenString = String(data: appleIDToken, encoding: .utf8) else {
+                print("데이터에서 토큰 문자열을 나열할 수 없습니다: \(appleIDToken.debugDescription)")
+                return
+            }
             
-//            let idToken = credentials.identityToken!
-//            let tokenStr = String(data: idToken, encoding: .utf8)
-//            print("tokenStr::" ,tokenStr)
-//
-//            guard let code = credentials.authorizationCode else { return }
-//            let codeStr = String(data: code, encoding: .utf8)
-//            print("codeStr:", codeStr)
-//
-//            let user = credentials.user
-//            print("user:::", user)
-//            ---
-//
-//            let firstName = credentials.fullName?.givenName
-//            let lastName = credentials.fullName?.familyName
-//            let email = credentials.email
-//            print(firstName, lastName, email)
-            break
+            let credential = OAuthProvider.credential(withProviderID: "apple.com", idToken: idTokenString, rawNonce: nonce)
             
-        default:
-            break
+            Auth.auth().signIn(with: credential) { authResult, error in
+                if let error = error {
+                    print("Error Apple sign in: %@", error)
+                    return
+                }
+                // Apple 계정으로 firebase에 로그인 됬다.
+                print("애플로그인 완료")
+            }
         }
+        
     }
 
+    // 실패시 동작
     func authorizationController(controller: ASAuthorizationController, didCompleteWithError error: Error) {
         print("failed")
     }
-    
-    
 }
-
 
 extension LoginViewController: ASAuthorizationControllerPresentationContextProviding {
     func presentationAnchor(for controller: ASAuthorizationController) -> ASPresentationAnchor {
@@ -126,3 +127,57 @@ extension LoginViewController: ASAuthorizationControllerPresentationContextProvi
     }
 }
 
+extension LoginViewController {
+    func startSignInWithAppleFlow() -> ASAuthorizationAppleIDRequest {
+        let nonce = randomNonceString()
+        currentNonce = nonce
+        let appleIDProvider = ASAuthorizationAppleIDProvider()
+        let request = appleIDProvider.createRequest()
+        request.requestedScopes = [.fullName, .email]
+        request.nonce = sha256(nonce)
+        
+        return request
+    }
+    
+    private func sha256(_ input: String) -> String {
+        let inputData = Data(input.utf8)
+        let hashedData = SHA256.hash(data: inputData)
+        let hashString = hashedData.compactMap {
+            return String(format: "%02x", $0 )
+        }.joined()
+        
+        return hashString
+    }
+    
+    private func randomNonceString(length: Int = 32) -> String {
+        precondition(length > 0)
+        let charset: Array<Character> =
+            Array("0123456789ABCDEFGHIJKLMNOPQRSTUVXYZabcdefghijklmnopqrstuvwxyz-._")
+        var result = ""
+        var remainingLength = length
+        
+        while remainingLength > 0 {
+            let randoms: [UInt8] = (0 ..< 16).map { _ in
+                var random: UInt8 = 0
+                let errorCode = SecRandomCopyBytes(kSecRandomDefault, 1, &random)
+                if errorCode != errSecSuccess {
+                    fatalError("Unable to generate nonce. SecRandomCopyBytes failed with OSStatus \(errorCode)")
+                }
+                return random
+            }
+            
+            randoms.forEach { random in
+                if remainingLength == 0 {
+                    return
+                }
+                
+                if random < charset.count {
+                    result.append(charset[Int(random)])
+                    remainingLength -= 1
+                }
+            }
+        }
+        
+        return result
+    }
+}
