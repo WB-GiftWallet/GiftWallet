@@ -137,7 +137,10 @@ class FireBaseManager {
         }
         
         db.collection(current).document(number.description).delete { error in
-            print(error?.localizedDescription)
+            if let error = error {
+                print(error.localizedDescription)
+                return
+            }
         }
     }
 }
