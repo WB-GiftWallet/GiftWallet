@@ -6,13 +6,14 @@
 //
 
 import Foundation
+import AuthenticationServices
 
 class LoginViewModel {
- 
-    private let socialLoginManager = SocialLoginManager()
+    private let kakaoLoginManager = KakaoLoginManager()
+    private var appleLoginManager = AppleLoginManager()
     
     func kakaoLogin() {
-        socialLoginManager.checkLoginEnabledAndLogin { result in
+        kakaoLoginManager.checkLoginEnabledAndLogin { result in
             switch result {
             case .success(let success):
                 print("석세서:::::::::::::",success)
@@ -20,6 +21,15 @@ class LoginViewModel {
                 print("폴트:::::::::::::",failure)
             }
         }
+    }
+    
+    func appleLogin() -> ASAuthorizationAppleIDRequest {
+        return appleLoginManager.startSignInWithApple()
+    }
+    
+    
+    func didCompleteAppleLogin(controller: ASAuthorizationController, authorization: ASAuthorization, completion: @escaping () -> Void) {
+        appleLoginManager.didCompleteLogin(controller: controller, authorization: authorization, completion: completion)
     }
     
 }

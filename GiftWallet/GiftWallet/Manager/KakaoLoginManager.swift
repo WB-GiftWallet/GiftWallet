@@ -1,5 +1,5 @@
 //
-//  SocialLoginManager.swift
+//  KakaoLoginManager.swift
 //  GiftWallet
 //
 //  Created by 서현웅 on 2023/03/31.
@@ -9,12 +9,11 @@ import KakaoSDKAuth
 import KakaoSDKUser
 import KakaoSDKCommon
 
-struct SocialLoginManager {
-    
+struct KakaoLoginManager {
 }
 
 // MARK: 카카오로그인관련
-extension SocialLoginManager {
+extension KakaoLoginManager {
     func checkLoginEnabledAndLogin(completion: @escaping (Result<User, Error>) -> Void) {
         if (UserApi.isKakaoTalkLoginAvailable()) {
             logInWithUserApplication(completion: completion)
@@ -92,3 +91,5 @@ extension SocialLoginManager {
         }
     }
 }
+
+

@@ -29,6 +29,7 @@
 		D24002D629B752DB00635FFC /* NotoSansKR-Medium.otf in Resources */ = {isa = PBXBuildFile; fileRef = D24002D029B752DB00635FFC /* NotoSansKR-Medium.otf */; };
 		D24002D829B7536B00635FFC /* BMJUA_otf.otf in Resources */ = {isa = PBXBuildFile; fileRef = D24002D729B7536B00635FFC /* BMJUA_otf.otf */; };
 		D24002DB29B75B5200635FFC /* DetailViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = D24002DA29B75B5200635FFC /* DetailViewModel.swift */; };
+		D246B39929D7CF7E00A5BB2F /* AppleLoginManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = D246B39829D7CF7E00A5BB2F /* AppleLoginManager.swift */; };
 		D27CA42929B84F6F00EC5FC7 /* ZoomImageViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = D27CA42829B84F6F00EC5FC7 /* ZoomImageViewModel.swift */; };
 		D27CA42B29B86ABF00EC5FC7 /* PagingCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = D27CA42A29B86ABF00EC5FC7 /* PagingCollectionViewCell.swift */; };
 		D27CA42D29B89F1900EC5FC7 /* CustomButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = D27CA42C29B89F1900EC5FC7 /* CustomButton.swift */; };
@@ -51,7 +52,7 @@
 		D2C7A45B29A9DAB500EB6D56 /* EtcSttingViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = D2C7A45A29A9DAB500EB6D56 /* EtcSttingViewModel.swift */; };
 		D2C7A45D29A9E77100EB6D56 /* EtcSettingTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = D2C7A45C29A9E77100EB6D56 /* EtcSettingTableViewCell.swift */; };
 		D2C90B5829BF4DC1003C3611 /* ZoomImageViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D2C90B5729BF4DC1003C3611 /* ZoomImageViewController.swift */; };
-		D2CA7D8A29D6BAA0002D3BA2 /* SocialLoginManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = D2CA7D8929D6BAA0002D3BA2 /* SocialLoginManager.swift */; };
+		D2CA7D8A29D6BAA0002D3BA2 /* KakaoLoginManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = D2CA7D8929D6BAA0002D3BA2 /* KakaoLoginManager.swift */; };
 		D2CA7D8D29D6BBC9002D3BA2 /* KakaoSDKAuth in Frameworks */ = {isa = PBXBuildFile; productRef = D2CA7D8C29D6BBC9002D3BA2 /* KakaoSDKAuth */; };
 		D2CA7D8F29D6BBC9002D3BA2 /* KakaoSDKCommon in Frameworks */ = {isa = PBXBuildFile; productRef = D2CA7D8E29D6BBC9002D3BA2 /* KakaoSDKCommon */; };
 		D2CA7D9129D6BBC9002D3BA2 /* KakaoSDKUser in Frameworks */ = {isa = PBXBuildFile; productRef = D2CA7D9029D6BBC9002D3BA2 /* KakaoSDKUser */; };
@@ -121,6 +122,7 @@
 		D24002D029B752DB00635FFC /* NotoSansKR-Medium.otf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "NotoSansKR-Medium.otf"; sourceTree = "<group>"; };
 		D24002D729B7536B00635FFC /* BMJUA_otf.otf */ = {isa = PBXFileReference; lastKnownFileType = file; path = BMJUA_otf.otf; sourceTree = "<group>"; };
 		D24002DA29B75B5200635FFC /* DetailViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DetailViewModel.swift; sourceTree = "<group>"; };
+		D246B39829D7CF7E00A5BB2F /* AppleLoginManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppleLoginManager.swift; sourceTree = "<group>"; };
 		D27CA42829B84F6F00EC5FC7 /* ZoomImageViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ZoomImageViewModel.swift; sourceTree = "<group>"; };
 		D27CA42A29B86ABF00EC5FC7 /* PagingCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PagingCollectionViewCell.swift; sourceTree = "<group>"; };
 		D27CA42C29B89F1900EC5FC7 /* CustomButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomButton.swift; sourceTree = "<group>"; };
@@ -145,7 +147,7 @@
 		D2C7A45A29A9DAB500EB6D56 /* EtcSttingViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EtcSttingViewModel.swift; sourceTree = "<group>"; };
 		D2C7A45C29A9E77100EB6D56 /* EtcSettingTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EtcSettingTableViewCell.swift; sourceTree = "<group>"; };
 		D2C90B5729BF4DC1003C3611 /* ZoomImageViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ZoomImageViewController.swift; sourceTree = "<group>"; };
-		D2CA7D8929D6BAA0002D3BA2 /* SocialLoginManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SocialLoginManager.swift; sourceTree = "<group>"; };
+		D2CA7D8929D6BAA0002D3BA2 /* KakaoLoginManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = KakaoLoginManager.swift; sourceTree = "<group>"; };
 		D2CA7D9429D6BFC1002D3BA2 /* LoginViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginViewModel.swift; sourceTree = "<group>"; };
 		D2CA7D9629D6BFD5002D3BA2 /* LoginViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginViewController.swift; sourceTree = "<group>"; };
 		D2CDDBCC29ADFACB00E000E3 /* DateCalCulateUseCase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DateCalCulateUseCase.swift; sourceTree = "<group>"; };
@@ -314,7 +316,8 @@
 			isa = PBXGroup;
 			children = (
 				D2CDDBDF29AF3CD300E000E3 /* VisionManager.swift */,
-				D2CA7D8929D6BAA0002D3BA2 /* SocialLoginManager.swift */,
+				D2CA7D8929D6BAA0002D3BA2 /* KakaoLoginManager.swift */,
+				D246B39829D7CF7E00A5BB2F /* AppleLoginManager.swift */,
 			);
 			path = Manager;
 			sourceTree = "<group>";
@@ -631,6 +634,7 @@
 				D2C7A45929A9DA6C00EB6D56 /* EtcSettingViewController.swift in Sources */,
 				D24002DB29B75B5200635FFC /* DetailViewModel.swift in Sources */,
 				D2A282B829A85EF2002CCF5A /* Observable.swift in Sources */,
+				D246B39929D7CF7E00A5BB2F /* AppleLoginManager.swift in Sources */,
 				D295E4B929A5F64200E12CAF /* FormSheetViewController.swift in Sources */,
 				D2CDDBE029AF3CD300E000E3 /* VisionManager.swift in Sources */,
 				D2CDDBCD29ADFACB00E000E3 /* DateCalCulateUseCase.swift in Sources */,
@@ -645,7 +649,7 @@
 				17A950FF29B74DA2001E6D4F /* SearchViewController.swift in Sources */,
 				17D5963729AF6F9800AFE039 /* SearchTableViewController.swift in Sources */,
 				D2DAAA1C29A44B1600D70E8C /* MainCollectionViewCell.swift in Sources */,
-				D2CA7D8A29D6BAA0002D3BA2 /* SocialLoginManager.swift in Sources */,
+				D2CA7D8A29D6BAA0002D3BA2 /* KakaoLoginManager.swift in Sources */,
 				FC074C0629A90361006AD199 /* GiftData+CoreDataProperties.swift in Sources */,
 				17A9510129B75101001E6D4F /* RecommendScrollView.swift in Sources */,
 				FC1E747229A207DA0010A4BA /* AppDelegate.swift in Sources */,
