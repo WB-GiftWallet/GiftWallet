@@ -14,8 +14,19 @@ class FireBaseManager {
     
     private var db = Firestore.firestore()
     private var CurrentuserID = Auth.auth().currentUser?.uid
+    private var number = 0
     
-    private init() {}
+    private init() {
+        self.fetchMostRecentNumber { result in
+            switch result {
+                case .success(let number):
+                    self.number = number
+                case .failure(let error):
+                    print(error.localizedDescription)
+                    print("ERROR: FetchMostRecentNumber")
+            }
+        }
+    }
     
     func createUser(email: String, password: String, completion: @escaping (Result<String, FireBaseManagerError>) -> Void) {
         Auth.auth().createUser(withEmail: email, password: password) { authResult, error in
@@ -70,7 +81,7 @@ class FireBaseManager {
         }
     }
     
-    func saveData(number: Int,giftData: Gift) throws {
+    func saveData(giftData: Gift) throws {
         guard let id = Auth.auth().currentUser?.uid else {
             print("throw FireBaseManagerError.notHaveID")
             throw FireBaseManagerError.notHaveID
@@ -102,7 +113,7 @@ class FireBaseManager {
         let expireDate = dateFormatter.string(from: giftExpireDate)
         let useDate = dateFormatter.string(from: giftUseDate)
         
-        db.collection(id.description).document(number.description).setData(["image":image,
+        db.collection(id.description).document((self.number + 1).description).setData(["image":image,
                                                                             "category":categoryData,
                                                                             "brandName":brandName,
                                                                             "productName":productName,
@@ -111,6 +122,8 @@ class FireBaseManager {
                                                                             "expireDate": expireDate,
                                                                             "useDate": useDate,
                                                                            ])
+        self.number += 1
+        print(self.number)
         print("완료")
     }
     
@@ -176,6 +189,7 @@ extension FireBaseManager {
     }
 }
 
+//TODO: 매번 호출할떄마다 전체를 돌리기엔 너무 비용이 많이들지 않는가?
 extension FireBaseManager {
     func fetchMostRecentNumber(completion: @escaping (Result<Int, FireBaseManagerError>) -> Void) {
         var recentNumber = 0

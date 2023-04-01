@@ -238,13 +238,61 @@ class TemporaryViewController: UIViewController {
         
         do {
             try FireBaseManager.shared.saveData(
-                number: 12,
                 giftData: Gift(
                     image: UIImage(named: "testImageSTARBUCKSSMALL")!,
                     category: .chicken,
                     brandName: "집앞커피점",
                     productName: "나는",
                     memo: "이디양",
+                    useableState: false,
+                    expireDate: Date(),
+                    useDate: Date()
+                )
+            )
+        } catch {
+            print(error.localizedDescription)
+        }
+        
+        do {
+            try FireBaseManager.shared.saveData(
+                giftData: Gift(
+                    image: UIImage(named: "testImageSTARBUCKSSMALL")!,
+                    category: .chicken,
+                    brandName: "집앞커피점",
+                    productName: "나는",
+                    memo: "이디양",
+                    useableState: true,
+                    expireDate: Date(),
+                    useDate: Date()
+                )
+            )
+        } catch {
+            print(error.localizedDescription)
+        }
+        do {
+            try FireBaseManager.shared.saveData(
+                giftData: Gift(
+                    image: UIImage(named: "testImageSTARBUCKSSMALL")!,
+                    category: .chicken,
+                    brandName: "집앞커피점",
+                    productName: "나는",
+                    memo: "이디양",
+                    useableState: true,
+                    expireDate: Date(),
+                    useDate: Date()
+                )
+            )
+        } catch {
+            print(error.localizedDescription)
+        }
+        do {
+            try FireBaseManager.shared.saveData(
+                giftData: Gift(
+                    image: UIImage(named: "testImageSTARBUCKSSMALL")!,
+                    category: .chicken,
+                    brandName: "집앞커피점23",
+                    productName: "나는4",
+                    memo: "이디양dkdldk",
                     useableState: false,
                     expireDate: Date(),
                     useDate: Date()
