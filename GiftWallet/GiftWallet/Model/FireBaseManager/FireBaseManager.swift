@@ -14,18 +14,10 @@ class FireBaseManager {
     
     private var db = Firestore.firestore()
     private var CurrentuserID = Auth.auth().currentUser?.uid
-    private var number = 0
+    private var maxItemNumber = 0
     
     private init() {
-        self.fetchMostRecentNumber { result in
-            switch result {
-                case .success(let number):
-                    self.number = number
-                case .failure(let error):
-                    print(error.localizedDescription)
-                    print("ERROR: FetchMostRecentNumber")
-            }
-        }
+        self.initializingItemNumber()
     }
     
     func createUser(email: String, password: String, completion: @escaping (Result<String, FireBaseManagerError>) -> Void) {
@@ -41,13 +33,14 @@ class FireBaseManager {
             }
             
             completion(.success(userUid))
+            self.initializingItemNumber()
         }
     }
     
     func existingLogin(email: String, password: String) {
         Auth.auth().signIn(withEmail: email, password: password) { [weak self] authResult, error in
             guard let strongSelf = self else { return }
-            
+            self?.initializingItemNumber()
         }
     }
     
@@ -113,7 +106,7 @@ class FireBaseManager {
         let expireDate = dateFormatter.string(from: giftExpireDate)
         let useDate = dateFormatter.string(from: giftUseDate)
         
-        db.collection(id.description).document((self.number + 1).description).setData(["image":image,
+        db.collection(id.description).document((self.maxItemNumber + 1).description).setData(["image":image,
                                                                             "category":categoryData,
                                                                             "brandName":brandName,
                                                                             "productName":productName,
@@ -122,8 +115,8 @@ class FireBaseManager {
                                                                             "expireDate": expireDate,
                                                                             "useDate": useDate,
                                                                            ])
-        self.number += 1
-        print(self.number)
+        self.maxItemNumber += 1
+        print(self.maxItemNumber)
         print("완료")
     }
     
@@ -189,9 +182,22 @@ extension FireBaseManager {
     }
 }
 
-//TODO: 매번 호출할떄마다 전체를 돌리기엔 너무 비용이 많이들지 않는가?
+//MARK: Item Number Setting Method
 extension FireBaseManager {
-    func fetchMostRecentNumber(completion: @escaping (Result<Int, FireBaseManagerError>) -> Void) {
+    
+    private func initializingItemNumber() {
+        self.fetchMostRecentNumber { result in
+            switch result {
+                case .success(let number):
+                    self.maxItemNumber = number
+                case .failure(let error):
+                    print(error.localizedDescription)
+                    print("ERROR: FetchMostRecentNumber")
+            }
+        }
+    }
+    
+    private func fetchMostRecentNumber(completion: @escaping (Result<Int, FireBaseManagerError>) -> Void) {
         var recentNumber = 0
         guard let id = Auth.auth().currentUser?.uid else {
             completion(.failure(.invaildUserID))

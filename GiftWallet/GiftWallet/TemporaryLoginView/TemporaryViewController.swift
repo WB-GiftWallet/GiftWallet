@@ -218,15 +218,6 @@ class TemporaryViewController: UIViewController {
             print(v.expireDate!)
             print(v.useDate!)
         }
-        
-        FireBaseManager.shared.fetchMostRecentNumber { result in
-            switch result {
-                case .success(let count):
-                    print("docu count:", count)
-                case .failure(let error):
-                    print(error.localizedDescription)
-            }
-        }
     }
     
     @objc func tapTempButton() {
@@ -235,7 +226,6 @@ class TemporaryViewController: UIViewController {
     
     @objc func tapCreateButton() {
         print("tapCreateButton")
-        
         do {
             try FireBaseManager.shared.saveData(
                 giftData: Gift(
@@ -244,55 +234,6 @@ class TemporaryViewController: UIViewController {
                     brandName: "집앞커피점",
                     productName: "나는",
                     memo: "이디양",
-                    useableState: false,
-                    expireDate: Date(),
-                    useDate: Date()
-                )
-            )
-        } catch {
-            print(error.localizedDescription)
-        }
-        
-        do {
-            try FireBaseManager.shared.saveData(
-                giftData: Gift(
-                    image: UIImage(named: "testImageSTARBUCKSSMALL")!,
-                    category: .chicken,
-                    brandName: "집앞커피점",
-                    productName: "나는",
-                    memo: "이디양",
-                    useableState: true,
-                    expireDate: Date(),
-                    useDate: Date()
-                )
-            )
-        } catch {
-            print(error.localizedDescription)
-        }
-        do {
-            try FireBaseManager.shared.saveData(
-                giftData: Gift(
-                    image: UIImage(named: "testImageSTARBUCKSSMALL")!,
-                    category: .chicken,
-                    brandName: "집앞커피점",
-                    productName: "나는",
-                    memo: "이디양",
-                    useableState: true,
-                    expireDate: Date(),
-                    useDate: Date()
-                )
-            )
-        } catch {
-            print(error.localizedDescription)
-        }
-        do {
-            try FireBaseManager.shared.saveData(
-                giftData: Gift(
-                    image: UIImage(named: "testImageSTARBUCKSSMALL")!,
-                    category: .chicken,
-                    brandName: "집앞커피점23",
-                    productName: "나는4",
-                    memo: "이디양dkdldk",
                     useableState: false,
                     expireDate: Date(),
                     useDate: Date()
