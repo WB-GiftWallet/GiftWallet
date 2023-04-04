@@ -247,13 +247,14 @@ class TemporaryViewController: UIViewController {
     @objc func tapReadButton() {
         print("tapReadButton")
         
-        do {
-            try FireBaseManager.shared.fetchData(completion: { giftDatas in
-                print(giftDatas)
-                self.data = giftDatas
-            })
-        } catch {
-            print(error.localizedDescription)
+        FireBaseManager.shared.fetchData { result in
+            switch result {
+                case .success(let data):
+                    print(data)
+                    self.data = data
+                case .failure(let error):
+                    print(error.localizedDescription)
+            }
         }
     }
     

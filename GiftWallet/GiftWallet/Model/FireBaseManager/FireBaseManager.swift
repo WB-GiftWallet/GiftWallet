@@ -59,9 +59,9 @@ class FireBaseManager {
     }
 
     //MARK: FireBase CRUD
-    func fetchData(completion: @escaping ([Gift]) -> Void) throws {
+    func fetchData(completion: @escaping  (Result<[Gift], FireBaseManagerError>) -> Void) {
         guard let id = Auth.auth().currentUser?.uid else {
-            throw FireBaseManagerError.notHaveID
+            return completion(.failure(.notHaveID))
         }
         
         db.collection(id.description).getDocuments { (snapshot, error) in
@@ -72,9 +72,9 @@ class FireBaseManager {
                     giftData.append(gift)
                 }
                 
-                completion(giftData)
+                completion(.success(giftData))
             } else {
-                print("FireBase Fetch Error")
+                completion(.failure(.fetchDataError))
             }
         }
     }
