@@ -288,7 +288,24 @@ extension FireBaseManager {
         }
     }
     
-    private func downLoadImageData() {
+    private func downLoadImageData(dataNumber: Int, completion: @escaping (Data) -> Void) {
+        guard let id = Auth.auth().currentUser?.uid else {
+            return
+        }
         
+        let storageRef = storage.reference()
+        let imageReference = storageRef.child("image").child("USER_\(id)").child("image_\(dataNumber).png")
+        
+        imageReference.getData(maxSize: 1 * 1024 * 1024) { data, error in
+            if error != nil {
+                print("Image Get Data ERROR")
+            }
+            
+            guard let data = data else {
+                return
+            }
+            
+            completion(data)
+        }
     }
 }
