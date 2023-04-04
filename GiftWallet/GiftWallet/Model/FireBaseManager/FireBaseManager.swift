@@ -6,14 +6,20 @@
 //
 
 import FirebaseFirestore
+import FirebaseStorage
+import FirebaseCore
 import FirebaseAuth
 import UIKit
 
 class FireBaseManager {
     static let shared = FireBaseManager()
     
+    //MARK: FireBase Property
     private var db = Firestore.firestore()
+    private let storage = Storage.storage()
+    //    private let storageReference: StorageReference = Storage.storage().reference()
     private var CurrentuserID = Auth.auth().currentUser?.uid
+    
     private var maxItemNumber = 0
     
     private init() {
@@ -154,14 +160,14 @@ class FireBaseManager {
         let useDate = dateFormatter.string(from: giftUseDate)
         
         db.collection(current).document(String(dataNumber)).updateData(["image":image,
-                                                                "category":categoryData,
-                                                                "brandName":brandName,
-                                                                "productName":productName,
-                                                                "memo":memo,
-                                                                "useableState":giftData.useableState,
-                                                                "expireDate": expireDate,
-                                                                "useDate": useDate,
-                                                               ]) { error in
+                                                                        "category":categoryData,
+                                                                        "brandName":brandName,
+                                                                        "productName":productName,
+                                                                        "memo":memo,
+                                                                        "useableState":giftData.useableState,
+                                                                        "expireDate": expireDate,
+                                                                        "useDate": useDate,
+                                                                       ]) { error in
             if let error = error {
                 print(error.localizedDescription)
                 return
@@ -223,7 +229,7 @@ extension FireBaseManager {
     }
 }
 
-//MARK: Item Number Setting Method
+//MARK: -Item Number Setting Method
 extension FireBaseManager {
     
     private func initializingItemNumber() {
@@ -258,5 +264,34 @@ extension FireBaseManager {
                 print("FireBase Fetch Error")
             }
         }
+    }
+}
+
+//MARK: -FireStorage
+extension FireBaseManager {
+    
+    private func upLoadImageData(image: UIImage, userID: String, dataNumber: Int, completion: @escaping (URL) -> Void) {
+        let storageReference = storage.reference()
+        
+        guard let data = image.pngData() else {
+            return
+        }
+        
+        let imageReference = storageReference.child("image").child("USER_\(userID)").child("image_\(dataNumber).png")
+        
+        // UploadTask
+        let _ = imageReference.putData(data, metadata: nil) { (_, error) in
+            imageReference.downloadURL { (url, error) in
+                guard let downloadURL = url else {
+                    return
+                }
+                
+                completion(downloadURL)
+            }
+        }
+    }
+    
+    private func downLoadImageData() {
+        
     }
 }
