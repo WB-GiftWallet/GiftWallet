@@ -20,7 +20,6 @@ class EtcSettingTableViewCell: UITableViewCell, ReusableView {
         let label = UILabel()
         
         label.translatesAutoresizingMaskIntoConstraints = false
-        label.text = "이용내역"
         
         return label
     }()
@@ -57,11 +56,15 @@ class EtcSettingTableViewCell: UITableViewCell, ReusableView {
     func configureCell(section: Int, index: Int) {
         switch section {
         case 0:
-            settingListLabel.text = Constant.AccountInfo(rawValue: index)?.labelDescription
+            settingListLabel.text = Constant.History(rawValue: index)?.labelDescription
             statusLabel.text = nil
         case 1:
             settingListLabel.text = Constant.AuthorizeSetting(rawValue: index)?.labelDescription
             setupAttributes(index)
+        case 2:
+            settingListLabel.text = Constant.AccountSetting(rawValue: index)?.labelDescription
+            settingListLabel.textColor = .red
+            self.accessoryType = .none
         default:
             break
         }

@@ -10,17 +10,20 @@ import Foundation
 class EtcSettingViewModel {
     
     var sectionNumber: Int {
-        return 2
+        return 3
     }
     
     func setupNumberOfRowsInSection(section: Int) -> Int {
         switch section {
         case 0:
-            return 2
+            return 1
         case 1:
             return 3
+        case 2:
+            return 1
         default:
             return 0
+            
         }
     }
     

@@ -8,28 +8,28 @@
 import Foundation
 
 enum Constant: Int {
-    case accountInfo
+    case history
     case authorizeSetting
+    case accountSetting
     
     var sectionDescription: String {
         switch self {
-        case .accountInfo:
-            return "계정정보"
+        case .history:
+            return "사용내역"
         case .authorizeSetting:
             return "권한 설정"
+        case .accountSetting:
+            return "계정 설정"
         }
     }
     
-    enum AccountInfo: Int {
+    enum History: Int {
         case useHistory
-        case noneDefine
         
         var labelDescription: String {
             switch self {
             case .useHistory:
                 return "사용내역"
-            case .noneDefine:
-                return "미정"
             }
         }
     }
@@ -50,4 +50,16 @@ enum Constant: Int {
             }
         }
     }
+    
+    enum AccountSetting: Int {
+        case deleteAccount
+        
+        var labelDescription: String {
+            switch self {
+            case .deleteAccount:
+                return "탈퇴하기"
+            }
+        }
+    }
+    
 }
