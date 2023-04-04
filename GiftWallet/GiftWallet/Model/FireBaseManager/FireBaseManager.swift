@@ -26,6 +26,7 @@ class FireBaseManager {
         self.initializingItemNumber()
     }
     
+    //MARK: Login, Logout, createUser Method
     func createUser(email: String, password: String, completion: @escaping (Result<String, FireBaseManagerError>) -> Void) {
         Auth.auth().createUser(withEmail: email, password: password) { authResult, error in
             if error != nil {
@@ -45,7 +46,6 @@ class FireBaseManager {
     
     func existingLogin(email: String, password: String) {
         Auth.auth().signIn(withEmail: email, password: password) { [weak self] authResult, error in
-            guard let strongSelf = self else { return }
             self?.initializingItemNumber()
         }
     }
@@ -57,8 +57,8 @@ class FireBaseManager {
             print(error.localizedDescription)
         }
     }
-    
-    //TODO: Gift Data Return
+
+    //MARK: FireBase CRUD
     func fetchData(completion: @escaping ([Gift]) -> Void) throws {
         guard let id = Auth.auth().currentUser?.uid else {
             throw FireBaseManagerError.notHaveID
@@ -68,7 +68,6 @@ class FireBaseManager {
             if error == nil && snapshot != nil {
                 var giftData = [Gift]()
                 for document in snapshot!.documents {
-                    //TODO: [Gift] Return
                     guard let gift = self.changeGiftData(document) else { return }
                     giftData.append(gift)
                 }
@@ -120,8 +119,6 @@ class FireBaseManager {
                                                                                                   "useDate": useDate,
                                                                                                  ])
             self.maxItemNumber += 1
-            print(self.maxItemNumber)
-            print("완료")
         }
     }
     
@@ -136,7 +133,6 @@ class FireBaseManager {
             print("FireBaseManagerError.invalidImage")
             throw FireBaseManagerError.invalidImage
         }
-        
         
         let categoryData = giftData.category?.rawValue ?? "Nil"
         
@@ -171,8 +167,6 @@ class FireBaseManager {
                     return
                 }
             }
-            
-            print("완료")
         }
     }
     
@@ -240,7 +234,6 @@ extension FireBaseManager {
                     self.maxItemNumber = number
                 case .failure(let error):
                     print(error.localizedDescription)
-                    print("ERROR: FetchMostRecentNumber")
             }
         }
     }
@@ -273,8 +266,6 @@ extension FireBaseManager {
     
     private func upLoadImageData(imageData: Data, userID: String, dataNumber: Int, completion: @escaping (URL) -> Void) {
         let storageReference = storage.reference()
-        
-        print(dataNumber)
         let imageReference = storageReference.child("image").child("USER_\(userID)").child("image_\(dataNumber).png")
         
         let _ = imageReference.putData(imageData, metadata: nil) { (_, error) in
