@@ -126,19 +126,17 @@ class FireBaseManager {
     }
     
     func updateData(_ giftData: Gift) throws {
-        guard let current = Auth.auth().currentUser?.uid else {
+        guard let id = Auth.auth().currentUser?.uid else {
             return
         }
         
         let dataNumber = giftData.number
         
-        //TODO: ImageData Encoding
-        //        guard let imageData = giftData.image.pngData() else {
-        //            print("FireBaseManagerError.invalidImage")
-        //            throw FireBaseManagerError.invalidImage
-        //        }
-        //        let image = imageData.base64EncodedString
-        let image = "imageData"
+        guard let imageData = giftData.image.pngData() else {
+            print("FireBaseManagerError.invalidImage")
+            throw FireBaseManagerError.invalidImage
+        }
+        
         
         let categoryData = giftData.category?.rawValue ?? "Nil"
         
@@ -158,19 +156,23 @@ class FireBaseManager {
         let expireDate = dateFormatter.string(from: giftExpireDate)
         let useDate = dateFormatter.string(from: giftUseDate)
         
-        db.collection(current).document(String(dataNumber)).updateData(["image":image,
-                                                                        "category":categoryData,
-                                                                        "brandName":brandName,
-                                                                        "productName":productName,
-                                                                        "memo":memo,
-                                                                        "useableState":giftData.useableState,
-                                                                        "expireDate": expireDate,
-                                                                        "useDate": useDate,
-                                                                       ]) { error in
-            if let error = error {
-                print(error.localizedDescription)
-                return
+        upLoadImageData(imageData: imageData, userID: id, dataNumber: giftData.number) { url in
+            self.db.collection(id.description).document(String(dataNumber)).updateData(["image":url.absoluteString,
+                                                                                        "category":categoryData,
+                                                                                        "brandName":brandName,
+                                                                                        "productName":productName,
+                                                                                        "memo":memo,
+                                                                                        "useableState":giftData.useableState,
+                                                                                        "expireDate": expireDate,
+                                                                                        "useDate": useDate,
+                                                                                       ]) { error in
+                if let error = error {
+                    print(error.localizedDescription)
+                    return
+                }
             }
+            
+            print("완료")
         }
     }
     
