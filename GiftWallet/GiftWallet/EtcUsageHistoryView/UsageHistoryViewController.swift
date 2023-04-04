@@ -39,7 +39,7 @@ class UsageHistoryViewController: UIViewController {
     }
     
     private func setupNavigation() {
-        title = "주문·배송"
+        title = "이용내역"
     }
     
     private func setupTableViewAttributes() {
@@ -65,18 +65,42 @@ class UsageHistoryViewController: UIViewController {
 
 extension UsageHistoryViewController: UITableViewDataSource {
     func numberOfSections(in tableView: UITableView) -> Int {
-        return viewModel.unavailableGifts.count
+        return 2
+    }
+    
+    func tableView(_ tableView: UITableView, titleForHeaderInSection section: Int) -> String? {
+        switch section {
+        case 0:
+            return "기간만료"
+        case 1:
+            return "사용완료"
+        default:
+            return nil
+        }
     }
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return viewModel.unavailableGifts.count
+        switch section {
+        case 0:
+            return viewModel.expiredGifts.count
+        case 1:
+            return viewModel.unUesableGifts.count
+        default:
+            return 0
+        }
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: HistoryTableViewCell.reuseIdentifier, for: indexPath) as? HistoryTableViewCell ?? HistoryTableViewCell()
         
-        cell.configureCell(data: viewModel.unavailableGifts[indexPath.row])
-        
+        switch indexPath.section {
+        case 0:
+            cell.configureCell(data: viewModel.expiredGifts[indexPath.row], section: indexPath.section)
+        case 1:
+            cell.configureCell(data: viewModel.unUesableGifts[indexPath.row], section: indexPath.section)
+        default:
+            break
+        }
         return cell
     }
 }
@@ -84,5 +108,9 @@ extension UsageHistoryViewController: UITableViewDataSource {
 extension UsageHistoryViewController: UITableViewDelegate {
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
         return view.frame.height / 10
+    }
+    
+    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        tableView.deselectRow(at: indexPath, animated: false)
     }
 }

@@ -14,6 +14,7 @@ class HistoryTableViewCell: UITableViewCell, ReusableView {
         
         imageView.layer.cornerRadius = 15
         imageView.clipsToBounds = true
+        imageView.contentMode = .scaleAspectFit
         imageView.translatesAutoresizingMaskIntoConstraints = false
         
         return imageView
@@ -23,7 +24,7 @@ class HistoryTableViewCell: UITableViewCell, ReusableView {
         let label = UILabel()
         
         label.textColor = .systemGray
-        label.font = .boldSystemFont(ofSize: 12)
+        label.font = UIFont(style: .bold, size: 12)
         
         return label
     }()
@@ -32,7 +33,7 @@ class HistoryTableViewCell: UITableViewCell, ReusableView {
        let label = UILabel()
         
         label.textColor = .black
-        label.font = .systemFont(ofSize: 16)
+        label.font = UIFont(style: .regular, size: 16)
         
         return label
     }()
@@ -40,8 +41,7 @@ class HistoryTableViewCell: UITableViewCell, ReusableView {
     private let statusLabel = {
        let label = UILabel()
         
-        label.textColor = .systemGreen
-        label.font = .boldSystemFont(ofSize: 14)
+        label.font = UIFont(style: .medium, size: 14)
         
         return label
     }()
@@ -83,11 +83,24 @@ class HistoryTableViewCell: UITableViewCell, ReusableView {
         ])
     }
     
-    func configureCell(data: Gift) {
+    func configureCell(data: Gift, section: Int) {
         productImageView.image = data.image
         brandLabel.text = data.brandName
         productLabel.text = data.productName
-        statusLabel.text = "사용완료"
+        configureStatusLabel(section: section)
+    }
+    
+    private func configureStatusLabel(section: Int) {
+        switch section {
+        case 0:
+            statusLabel.text = "기간만료"
+            statusLabel.textColor = .systemRed
+        case 1:
+            statusLabel.text = "사용완료"
+            statusLabel.textColor = .systemGreen
+        default:
+            break
+        }
     }
     
 }
