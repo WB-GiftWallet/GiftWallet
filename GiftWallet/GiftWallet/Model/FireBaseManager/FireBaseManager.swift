@@ -17,7 +17,6 @@ class FireBaseManager {
     //MARK: FireBase Property
     private var db = Firestore.firestore()
     private let storage = Storage.storage()
-    //    private let storageReference: StorageReference = Storage.storage().reference()
     private var CurrentuserID = Auth.auth().currentUser?.uid
     
     private var maxItemNumber = 0
@@ -57,7 +56,7 @@ class FireBaseManager {
             print(error.localizedDescription)
         }
     }
-
+    
     //MARK: FireBase CRUD
     func fetchData(completion: @escaping  (Result<[Gift], FireBaseManagerError>) -> Void) {
         guard let id = Auth.auth().currentUser?.uid else {
@@ -81,12 +80,10 @@ class FireBaseManager {
     
     func saveData(giftData: Gift) throws {
         guard let id = Auth.auth().currentUser?.uid else {
-            print("throw FireBaseManagerError.notHaveID")
             throw FireBaseManagerError.notHaveID
         }
         
         guard let imageData = giftData.image.pngData() else {
-            print("FireBaseManagerError.invalidImage")
             throw FireBaseManagerError.invalidImage
         }
         
@@ -110,14 +107,14 @@ class FireBaseManager {
         
         upLoadImageData(imageData: imageData, userID: id, dataNumber: maxItemNumber) { url in
             self.db.collection(id.description).document((self.maxItemNumber + 1).description).setData(["image":url.absoluteString,
-                                                                                                  "category":categoryData,
-                                                                                                  "brandName":brandName,
-                                                                                                  "productName":productName,
-                                                                                                  "memo":memo,
-                                                                                                  "useableState": true,
-                                                                                                  "expireDate": expireDate,
-                                                                                                  "useDate": useDate,
-                                                                                                 ])
+                                                                                                       "category":categoryData,
+                                                                                                       "brandName":brandName,
+                                                                                                       "productName":productName,
+                                                                                                       "memo":memo,
+                                                                                                       "useableState": true,
+                                                                                                       "expireDate": expireDate,
+                                                                                                       "useDate": useDate,
+                                                                                                      ])
             self.maxItemNumber += 1
         }
     }
