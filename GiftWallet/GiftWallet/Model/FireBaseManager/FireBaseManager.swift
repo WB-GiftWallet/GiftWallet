@@ -299,4 +299,15 @@ extension FireBaseManager {
             completion(data)
         }
     }
+
+
+extension FireBaseManager {
+    func signInWithCredential(authCredential: AuthCredential, completion: ((AuthDataResult?, Error?) -> Void)?) {
+        Auth.auth().signIn(with: authCredential, completion: completion)
+    }
+    
+    func makeAppleAuthProviderCredential(idToken: String, rawNonce: String) -> OAuthCredential {
+        return OAuthProvider.credential(withProviderID: "apple.com", idToken: idToken, rawNonce: rawNonce)
+    }
+    
 }

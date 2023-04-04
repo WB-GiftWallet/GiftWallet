@@ -32,6 +32,7 @@
 		D24002D629B752DB00635FFC /* NotoSansKR-Medium.otf in Resources */ = {isa = PBXBuildFile; fileRef = D24002D029B752DB00635FFC /* NotoSansKR-Medium.otf */; };
 		D24002D829B7536B00635FFC /* BMJUA_otf.otf in Resources */ = {isa = PBXBuildFile; fileRef = D24002D729B7536B00635FFC /* BMJUA_otf.otf */; };
 		D24002DB29B75B5200635FFC /* DetailViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = D24002DA29B75B5200635FFC /* DetailViewModel.swift */; };
+		D246B39929D7CF7E00A5BB2F /* AppleLoginManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = D246B39829D7CF7E00A5BB2F /* AppleLoginManager.swift */; };
 		D27CA42929B84F6F00EC5FC7 /* ZoomImageViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = D27CA42829B84F6F00EC5FC7 /* ZoomImageViewModel.swift */; };
 		D27CA42B29B86ABF00EC5FC7 /* PagingCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = D27CA42A29B86ABF00EC5FC7 /* PagingCollectionViewCell.swift */; };
 		D27CA42D29B89F1900EC5FC7 /* CustomButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = D27CA42C29B89F1900EC5FC7 /* CustomButton.swift */; };
@@ -54,6 +55,12 @@
 		D2C7A45B29A9DAB500EB6D56 /* EtcSttingViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = D2C7A45A29A9DAB500EB6D56 /* EtcSttingViewModel.swift */; };
 		D2C7A45D29A9E77100EB6D56 /* EtcSettingTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = D2C7A45C29A9E77100EB6D56 /* EtcSettingTableViewCell.swift */; };
 		D2C90B5829BF4DC1003C3611 /* ZoomImageViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D2C90B5729BF4DC1003C3611 /* ZoomImageViewController.swift */; };
+		D2CA7D8A29D6BAA0002D3BA2 /* KakaoLoginManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = D2CA7D8929D6BAA0002D3BA2 /* KakaoLoginManager.swift */; };
+		D2CA7D8D29D6BBC9002D3BA2 /* KakaoSDKAuth in Frameworks */ = {isa = PBXBuildFile; productRef = D2CA7D8C29D6BBC9002D3BA2 /* KakaoSDKAuth */; };
+		D2CA7D8F29D6BBC9002D3BA2 /* KakaoSDKCommon in Frameworks */ = {isa = PBXBuildFile; productRef = D2CA7D8E29D6BBC9002D3BA2 /* KakaoSDKCommon */; };
+		D2CA7D9129D6BBC9002D3BA2 /* KakaoSDKUser in Frameworks */ = {isa = PBXBuildFile; productRef = D2CA7D9029D6BBC9002D3BA2 /* KakaoSDKUser */; };
+		D2CA7D9529D6BFC1002D3BA2 /* LoginViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = D2CA7D9429D6BFC1002D3BA2 /* LoginViewModel.swift */; };
+		D2CA7D9729D6BFD5002D3BA2 /* LoginViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D2CA7D9629D6BFD5002D3BA2 /* LoginViewController.swift */; };
 		D2CDDBCD29ADFACB00E000E3 /* DateCalCulateUseCase.swift in Sources */ = {isa = PBXBuildFile; fileRef = D2CDDBCC29ADFACB00E000E3 /* DateCalCulateUseCase.swift */; };
 		D2CDDBD529ADFE7700E000E3 /* DateCalculateUseCaseTest.swift in Sources */ = {isa = PBXBuildFile; fileRef = D2CDDBD429ADFE7700E000E3 /* DateCalculateUseCaseTest.swift */; };
 		D2CDDBE029AF3CD300E000E3 /* VisionManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = D2CDDBDF29AF3CD300E000E3 /* VisionManager.swift */; };
@@ -120,6 +127,7 @@
 		D24002D029B752DB00635FFC /* NotoSansKR-Medium.otf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "NotoSansKR-Medium.otf"; sourceTree = "<group>"; };
 		D24002D729B7536B00635FFC /* BMJUA_otf.otf */ = {isa = PBXFileReference; lastKnownFileType = file; path = BMJUA_otf.otf; sourceTree = "<group>"; };
 		D24002DA29B75B5200635FFC /* DetailViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DetailViewModel.swift; sourceTree = "<group>"; };
+		D246B39829D7CF7E00A5BB2F /* AppleLoginManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppleLoginManager.swift; sourceTree = "<group>"; };
 		D27CA42829B84F6F00EC5FC7 /* ZoomImageViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ZoomImageViewModel.swift; sourceTree = "<group>"; };
 		D27CA42A29B86ABF00EC5FC7 /* PagingCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PagingCollectionViewCell.swift; sourceTree = "<group>"; };
 		D27CA42C29B89F1900EC5FC7 /* CustomButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomButton.swift; sourceTree = "<group>"; };
@@ -129,6 +137,7 @@
 		D2A282B729A85EF2002CCF5A /* Observable.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Observable.swift; sourceTree = "<group>"; };
 		D2A282BD29A8702B002CCF5A /* MainViewModelTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = MainViewModelTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		D2A282BF29A8702B002CCF5A /* MainViewModelTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainViewModelTests.swift; sourceTree = "<group>"; };
+		D2A4088429D6E82200633370 /* GiftWallet.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = GiftWallet.entitlements; sourceTree = "<group>"; };
 		D2B6333C29ACCA4100EE9ACE /* Constant.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Constant.swift; sourceTree = "<group>"; };
 		D2B6333F29ACD1A100EE9ACE /* UsageHistoryViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UsageHistoryViewModel.swift; sourceTree = "<group>"; };
 		D2B6334129ACD1CB00EE9ACE /* UsageHistoryViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UsageHistoryViewController.swift; sourceTree = "<group>"; };
@@ -143,6 +152,9 @@
 		D2C7A45A29A9DAB500EB6D56 /* EtcSttingViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EtcSttingViewModel.swift; sourceTree = "<group>"; };
 		D2C7A45C29A9E77100EB6D56 /* EtcSettingTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EtcSettingTableViewCell.swift; sourceTree = "<group>"; };
 		D2C90B5729BF4DC1003C3611 /* ZoomImageViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ZoomImageViewController.swift; sourceTree = "<group>"; };
+		D2CA7D8929D6BAA0002D3BA2 /* KakaoLoginManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = KakaoLoginManager.swift; sourceTree = "<group>"; };
+		D2CA7D9429D6BFC1002D3BA2 /* LoginViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginViewModel.swift; sourceTree = "<group>"; };
+		D2CA7D9629D6BFD5002D3BA2 /* LoginViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginViewController.swift; sourceTree = "<group>"; };
 		D2CDDBCC29ADFACB00E000E3 /* DateCalCulateUseCase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DateCalCulateUseCase.swift; sourceTree = "<group>"; };
 		D2CDDBD229ADFE7600E000E3 /* DateCalculateUseCaseTest.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = DateCalculateUseCaseTest.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		D2CDDBD429ADFE7700E000E3 /* DateCalculateUseCaseTest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DateCalculateUseCaseTest.swift; sourceTree = "<group>"; };
@@ -196,7 +208,10 @@
 				1713140A29D2E5C0007A3AF9 /* FirebaseAuth in Frameworks */,
 				1713140C29D2E5C0007A3AF9 /* FirebaseFirestore in Frameworks */,
 				173B69A729DC94C500B28954 /* FirebaseStorage in Frameworks */,
+				D2CA7D9129D6BBC9002D3BA2 /* KakaoSDKUser in Frameworks */,
 				1713140E29D2E5C0007A3AF9 /* FirebaseFirestoreSwift in Frameworks */,
+				D2CA7D8F29D6BBC9002D3BA2 /* KakaoSDKCommon in Frameworks */,
+				D2CA7D8D29D6BBC9002D3BA2 /* KakaoSDKAuth in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -293,6 +308,15 @@
 			path = EtcSettingView;
 			sourceTree = "<group>";
 		};
+		D2CA7D9329D6BFA8002D3BA2 /* LoginView */ = {
+			isa = PBXGroup;
+			children = (
+				D2CA7D9429D6BFC1002D3BA2 /* LoginViewModel.swift */,
+				D2CA7D9629D6BFD5002D3BA2 /* LoginViewController.swift */,
+			);
+			path = LoginView;
+			sourceTree = "<group>";
+		};
 		D2CDDBCB29ADFA8F00E000E3 /* UseCase */ = {
 			isa = PBXGroup;
 			children = (
@@ -314,6 +338,8 @@
 			isa = PBXGroup;
 			children = (
 				D2CDDBDF29AF3CD300E000E3 /* VisionManager.swift */,
+				D2CA7D8929D6BAA0002D3BA2 /* KakaoLoginManager.swift */,
+				D246B39829D7CF7E00A5BB2F /* AppleLoginManager.swift */,
 			);
 			path = Manager;
 			sourceTree = "<group>";
@@ -424,11 +450,13 @@
 		FC1E747029A207DA0010A4BA /* GiftWallet */ = {
 			isa = PBXGroup;
 			children = (
+				D2A4088429D6E82200633370 /* GiftWallet.entitlements */,
 				D2B951A729B63499002E7C08 /* Fonts */,
 				D2CDDBF229B0713A00E000E3 /* CustomUI */,
 				17D5963529AF6F7300AFE039 /* SearchView */,
 				D2CDDBCB29ADFA8F00E000E3 /* UseCase */,
 				D2CDDBDE29AF3CC600E000E3 /* Manager */,
+				D2CA7D9329D6BFA8002D3BA2 /* LoginView */,
 				D2CDDBE829AF4BE000E000E3 /* AddVIew */,
 				D2B6333E29ACD17500EE9ACE /* EtcUsageHistoryView */,
 				D2C7A45729A9DA3300EB6D56 /* EtcSettingView */,
@@ -515,6 +543,9 @@
 				1713140B29D2E5C0007A3AF9 /* FirebaseFirestore */,
 				1713140D29D2E5C0007A3AF9 /* FirebaseFirestoreSwift */,
 				173B69A629DC94C500B28954 /* FirebaseStorage */,
+				D2CA7D8C29D6BBC9002D3BA2 /* KakaoSDKAuth */,
+				D2CA7D8E29D6BBC9002D3BA2 /* KakaoSDKCommon */,
+				D2CA7D9029D6BBC9002D3BA2 /* KakaoSDKUser */,
 			);
 			productName = GiftWallet;
 			productReference = FC1E746E29A207DA0010A4BA /* GiftWallet.app */;
@@ -555,6 +586,7 @@
 			packageReferences = (
 				1723BE8329C3142600AE06F9 /* XCRemoteSwiftPackageReference "IQKeyboardManager" */,
 				1713140829D2E5C0007A3AF9 /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */,
+				D2CA7D8B29D6BBC9002D3BA2 /* XCRemoteSwiftPackageReference "kakao-ios-sdk" */,
 			);
 			productRefGroup = FC1E746F29A207DA0010A4BA /* Products */;
 			projectDirPath = "";
@@ -627,6 +659,7 @@
 				D2C7A45929A9DA6C00EB6D56 /* EtcSettingViewController.swift in Sources */,
 				D24002DB29B75B5200635FFC /* DetailViewModel.swift in Sources */,
 				D2A282B829A85EF2002CCF5A /* Observable.swift in Sources */,
+				D246B39929D7CF7E00A5BB2F /* AppleLoginManager.swift in Sources */,
 				D295E4B929A5F64200E12CAF /* FormSheetViewController.swift in Sources */,
 				D2CDDBE029AF3CD300E000E3 /* VisionManager.swift in Sources */,
 				D2CDDBCD29ADFACB00E000E3 /* DateCalCulateUseCase.swift in Sources */,
@@ -635,11 +668,13 @@
 				FC62FF1029A77B5A003E63B0 /* MainTabBarController.swift in Sources */,
 				D2CDDBE229AF3D2B00E000E3 /* AutoInputUseCase.swift in Sources */,
 				D2BB131529C0507300A2440B /* BarcodeViewController.swift in Sources */,
+				D2CA7D9529D6BFC1002D3BA2 /* LoginViewModel.swift in Sources */,
 				D2BB131729C0507D00A2440B /* BarcodeViewModel.swift in Sources */,
 				D2C7A45D29A9E77100EB6D56 /* EtcSettingTableViewCell.swift in Sources */,
 				17A950FF29B74DA2001E6D4F /* SearchViewController.swift in Sources */,
 				17D5963729AF6F9800AFE039 /* SearchTableViewController.swift in Sources */,
 				D2DAAA1C29A44B1600D70E8C /* MainCollectionViewCell.swift in Sources */,
+				D2CA7D8A29D6BAA0002D3BA2 /* KakaoLoginManager.swift in Sources */,
 				FC074C0629A90361006AD199 /* GiftData+CoreDataProperties.swift in Sources */,
 				17A9510129B75101001E6D4F /* RecommendScrollView.swift in Sources */,
 				FC1E747229A207DA0010A4BA /* AppDelegate.swift in Sources */,
@@ -648,6 +683,7 @@
 				D2CDDBEA29AF4BF500E000E3 /* AddViewController.swift in Sources */,
 				FC074C0529A90361006AD199 /* GiftData+CoreDataClass.swift in Sources */,
 				D2DAAA2029A44B9200D70E8C /* ReusableView.swift in Sources */,
+				D2CA7D9729D6BFD5002D3BA2 /* LoginViewController.swift in Sources */,
 				D2A282B629A85EBC002CCF5A /* Gift.swift in Sources */,
 				D2B6334229ACD1CB00EE9ACE /* UsageHistoryViewController.swift in Sources */,
 				D2B6334029ACD1A100EE9ACE /* UsageHistoryViewModel.swift in Sources */,
@@ -910,6 +946,7 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				CODE_SIGN_ENTITLEMENTS = GiftWallet/GiftWallet.entitlements;
 				CODE_SIGN_IDENTITY = "Apple Development";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				CODE_SIGN_STYLE = Manual;
@@ -942,9 +979,10 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				CODE_SIGN_ENTITLEMENTS = GiftWallet/GiftWallet.entitlements;
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
-				DEVELOPMENT_TEAM = "";
+				DEVELOPMENT_TEAM = N2WW86KJNF;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = GiftWallet/Info.plist;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
@@ -956,7 +994,7 @@
 					"@executable_path/Frameworks",
 				);
 				MARKETING_VERSION = 1.0;
-				PRODUCT_BUNDLE_IDENTIFIER = wb.GiftWallet;
+				PRODUCT_BUNDLE_IDENTIFIER = wb.GiftWallet12;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_EMIT_LOC_STRINGS = YES;
 				SWIFT_VERSION = 5.0;
@@ -1023,6 +1061,14 @@
 				minimumVersion = 6.0.0;
 			};
 		};
+		D2CA7D8B29D6BBC9002D3BA2 /* XCRemoteSwiftPackageReference "kakao-ios-sdk" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/kakao/kakao-ios-sdk";
+			requirement = {
+				branch = master;
+				kind = branch;
+			};
+		};
 /* End XCRemoteSwiftPackageReference section */
 
 /* Begin XCSwiftPackageProductDependency section */
@@ -1050,6 +1096,20 @@
 			isa = XCSwiftPackageProductDependency;
 			package = 1713140829D2E5C0007A3AF9 /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */;
 			productName = FirebaseStorage;
+		D2CA7D8C29D6BBC9002D3BA2 /* KakaoSDKAuth */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = D2CA7D8B29D6BBC9002D3BA2 /* XCRemoteSwiftPackageReference "kakao-ios-sdk" */;
+			productName = KakaoSDKAuth;
+		};
+		D2CA7D8E29D6BBC9002D3BA2 /* KakaoSDKCommon */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = D2CA7D8B29D6BBC9002D3BA2 /* XCRemoteSwiftPackageReference "kakao-ios-sdk" */;
+			productName = KakaoSDKCommon;
+		};
+		D2CA7D9029D6BBC9002D3BA2 /* KakaoSDKUser */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = D2CA7D8B29D6BBC9002D3BA2 /* XCRemoteSwiftPackageReference "kakao-ios-sdk" */;
+			productName = KakaoSDKUser;
 		};
 /* End XCSwiftPackageProductDependency section */
 
