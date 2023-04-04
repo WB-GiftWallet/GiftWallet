@@ -12,6 +12,7 @@
 		1713140E29D2E5C0007A3AF9 /* FirebaseFirestoreSwift in Frameworks */ = {isa = PBXBuildFile; productRef = 1713140D29D2E5C0007A3AF9 /* FirebaseFirestoreSwift */; };
 		171695B129B1B8CA00CF3E41 /* SearchTableViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 171695B029B1B8CA00CF3E41 /* SearchTableViewModel.swift */; };
 		1723BE8529C3142600AE06F9 /* IQKeyboardManagerSwift in Frameworks */ = {isa = PBXBuildFile; productRef = 1723BE8429C3142600AE06F9 /* IQKeyboardManagerSwift */; };
+		173B69A729DC94C500B28954 /* FirebaseStorage in Frameworks */ = {isa = PBXBuildFile; productRef = 173B69A629DC94C500B28954 /* FirebaseStorage */; };
 		1759488929D49DF000E7D5B9 /* FireBaseManagerError.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1759488829D49DF000E7D5B9 /* FireBaseManagerError.swift */; };
 		17A950FF29B74DA2001E6D4F /* SearchViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 17A950FE29B74DA2001E6D4F /* SearchViewController.swift */; };
 		17A9510129B75101001E6D4F /* RecommendScrollView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 17A9510029B75101001E6D4F /* RecommendScrollView.swift */; };
@@ -194,6 +195,7 @@
 				1723BE8529C3142600AE06F9 /* IQKeyboardManagerSwift in Frameworks */,
 				1713140A29D2E5C0007A3AF9 /* FirebaseAuth in Frameworks */,
 				1713140C29D2E5C0007A3AF9 /* FirebaseFirestore in Frameworks */,
+				173B69A729DC94C500B28954 /* FirebaseStorage in Frameworks */,
 				1713140E29D2E5C0007A3AF9 /* FirebaseFirestoreSwift in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -201,6 +203,13 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		173B69A529DC94C500B28954 /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			name = Frameworks;
+			sourceTree = "<group>";
+		};
 		17B579ED29D3302D00042D80 /* FireBaseManager */ = {
 			isa = PBXGroup;
 			children = (
@@ -398,6 +407,7 @@
 				D2CDDBD329ADFE7700E000E3 /* DateCalculateUseCaseTest */,
 				17BCD48129C30F8900F9FC9C /* Package */,
 				FC1E746F29A207DA0010A4BA /* Products */,
+				173B69A529DC94C500B28954 /* Frameworks */,
 			);
 			sourceTree = "<group>";
 		};
@@ -504,6 +514,7 @@
 				1713140929D2E5C0007A3AF9 /* FirebaseAuth */,
 				1713140B29D2E5C0007A3AF9 /* FirebaseFirestore */,
 				1713140D29D2E5C0007A3AF9 /* FirebaseFirestoreSwift */,
+				173B69A629DC94C500B28954 /* FirebaseStorage */,
 			);
 			productName = GiftWallet;
 			productReference = FC1E746E29A207DA0010A4BA /* GiftWallet.app */;
@@ -1034,6 +1045,11 @@
 			isa = XCSwiftPackageProductDependency;
 			package = 1723BE8329C3142600AE06F9 /* XCRemoteSwiftPackageReference "IQKeyboardManager" */;
 			productName = IQKeyboardManagerSwift;
+		};
+		173B69A629DC94C500B28954 /* FirebaseStorage */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 1713140829D2E5C0007A3AF9 /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */;
+			productName = FirebaseStorage;
 		};
 /* End XCSwiftPackageProductDependency section */
 
