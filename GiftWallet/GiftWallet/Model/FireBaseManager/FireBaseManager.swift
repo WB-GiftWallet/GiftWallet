@@ -86,13 +86,10 @@ class FireBaseManager {
             throw FireBaseManagerError.notHaveID
         }
         
-        //TODO: ImageData Encoding
-        //        guard let imageData = giftData.image.pngData() else {
-        //            print("FireBaseManagerError.invalidImage")
-        //            throw FireBaseManagerError.invalidImage
-        //        }
-        //        let image = imageData.base64EncodedString
-        let image = "imageData"
+        guard let imageData = giftData.image.pngData() else {
+            print("FireBaseManagerError.invalidImage")
+            throw FireBaseManagerError.invalidImage
+        }
         
         let categoryData = giftData.category?.rawValue ?? "Nil"
         
@@ -112,18 +109,20 @@ class FireBaseManager {
         let expireDate = dateFormatter.string(from: giftExpireDate)
         let useDate = dateFormatter.string(from: giftUseDate)
         
-        db.collection(id.description).document((self.maxItemNumber + 1).description).setData(["image":image,
-                                                                                              "category":categoryData,
-                                                                                              "brandName":brandName,
-                                                                                              "productName":productName,
-                                                                                              "memo":memo,
-                                                                                              "useableState": true,
-                                                                                              "expireDate": expireDate,
-                                                                                              "useDate": useDate,
-                                                                                             ])
-        self.maxItemNumber += 1
-        print(self.maxItemNumber)
-        print("완료")
+        upLoadImageData(imageData: imageData, userID: id, dataNumber: maxItemNumber) { url in
+            self.db.collection(id.description).document((self.maxItemNumber + 1).description).setData(["image":url.absoluteString,
+                                                                                                  "category":categoryData,
+                                                                                                  "brandName":brandName,
+                                                                                                  "productName":productName,
+                                                                                                  "memo":memo,
+                                                                                                  "useableState": true,
+                                                                                                  "expireDate": expireDate,
+                                                                                                  "useDate": useDate,
+                                                                                                 ])
+            self.maxItemNumber += 1
+            print(self.maxItemNumber)
+            print("완료")
+        }
     }
     
     func updateData(_ giftData: Gift) throws {
@@ -270,17 +269,13 @@ extension FireBaseManager {
 //MARK: -FireStorage
 extension FireBaseManager {
     
-    private func upLoadImageData(image: UIImage, userID: String, dataNumber: Int, completion: @escaping (URL) -> Void) {
+    private func upLoadImageData(imageData: Data, userID: String, dataNumber: Int, completion: @escaping (URL) -> Void) {
         let storageReference = storage.reference()
         
-        guard let data = image.pngData() else {
-            return
-        }
-        
+        print(dataNumber)
         let imageReference = storageReference.child("image").child("USER_\(userID)").child("image_\(dataNumber).png")
         
-        // UploadTask
-        let _ = imageReference.putData(data, metadata: nil) { (_, error) in
+        let _ = imageReference.putData(imageData, metadata: nil) { (_, error) in
             imageReference.downloadURL { (url, error) in
                 guard let downloadURL = url else {
                     return
