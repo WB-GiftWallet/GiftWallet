@@ -33,4 +33,7 @@ extension UIColor {
     static let unenableButton = UIColor(r: 245, g: 245, b: 245)
     
     static let emptyImage = UIColor(r: 235, g: 235, b: 235)
+    
+    static let kakaoButton = UIColor(r: 254, g: 229, b: 0)
+    static let kakaoButtonTitle = UIColor(r: 0, g: 0, b: 0, alpha: 0.85)
 }

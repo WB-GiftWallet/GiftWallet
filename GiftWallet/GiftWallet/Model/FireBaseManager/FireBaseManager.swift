@@ -34,8 +34,11 @@ class FireBaseManager {
     
     func existingLogin(email: String, password: String) {
         Auth.auth().signIn(withEmail: email, password: password) { [weak self] authResult, error in
-            guard let strongSelf = self else { return }
-            
+            if error != nil {
+                self?.createUser(email: email, password: password, completion: { _ in
+                    self?.existingLogin(email: email, password: password)
+                })
+            }
         }
     }
     
@@ -153,3 +156,15 @@ class FireBaseManager {
  }
 
  */
+
+
+extension FireBaseManager {
+    func signInWithCredential(authCredential: AuthCredential, completion: ((AuthDataResult?, Error?) -> Void)?) {
+        Auth.auth().signIn(with: authCredential, completion: completion)
+    }
+    
+    func makeAppleAuthProviderCredential(idToken: String, rawNonce: String) -> OAuthCredential {
+        return OAuthProvider.credential(withProviderID: "apple.com", idToken: idToken, rawNonce: rawNonce)
+    }
+    
+}

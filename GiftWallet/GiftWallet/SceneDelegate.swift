@@ -6,6 +6,7 @@
 //
 
 import UIKit
+import KakaoSDKAuth
 
 class SceneDelegate: UIResponder, UIWindowSceneDelegate {
     
@@ -21,10 +22,19 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
         let mainTabBarController = MainTabBarController(mainViewModel: mainViewModel,
                                                         etcSettingViewModel: etcSettingViewModel)
         let navigationMainController = UINavigationController(rootViewController: mainTabBarController)
+        
         window.backgroundColor = .white
         window.rootViewController = navigationMainController
-        
         window.makeKeyAndVisible()
         self.window = window
     }
+    
+    func scene(_ scene: UIScene, openURLContexts URLContexts: Set<UIOpenURLContext>) {
+        if let url = URLContexts.first?.url {
+            if (AuthApi.isKakaoTalkLoginUrl(url)) {
+                _ = AuthController.handleOpenUrl(url: url)
+            }
+        }
+    }
+    
 }
