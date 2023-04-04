@@ -13,11 +13,14 @@ class LoginViewModel {
     private var appleLoginManager = AppleLoginManager()
     private let firebaseManager = FireBaseManager.shared
     
-    func kakaoLogin() {
+    func kakaoLogin(completion: @escaping () -> Void) {
         kakaoLoginManager.checkLoginEnabledAndLogin { result in
             switch result {
-            case .success(let success):
-                print("석세서:::::::::::::",success)
+            case .success(let user):
+                guard let userEmail = user.kakaoAccount?.email,
+                      let userID = user.id?.description else { return }
+                self.firebaseManager.existingLogin(email: userEmail, password: userID)
+                completion()
             case .failure(let failure):
                 print("폴트:::::::::::::",failure)
             }

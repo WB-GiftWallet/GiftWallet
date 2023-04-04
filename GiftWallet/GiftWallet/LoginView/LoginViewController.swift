@@ -49,7 +49,9 @@ class LoginViewController: UIViewController {
     
     private func setupButton() {
         let kakaoLoginAction = UIAction { _ in
-            self.viewModel.kakaoLogin()
+            self.viewModel.kakaoLogin {
+                self.dismiss(animated: true)
+            }
         }
         kakaoLoginButton.addAction(kakaoLoginAction, for: .touchUpInside)
         
@@ -88,12 +90,7 @@ extension LoginViewController: ASAuthorizationControllerDelegate {
     // 성공 후 동작
     func authorizationController(controller: ASAuthorizationController, didCompleteWithAuthorization authorization: ASAuthorization) {
         viewModel.didCompleteAppleLogin(controller: controller, authorization: authorization) {
-            let mainViewModel = MainViewModel()
-            let etcSettingViewModel = EtcSettingViewModel()
-            let mainTabBarController = MainTabBarController(mainViewModel: mainViewModel,
-                                                            etcSettingViewModel: etcSettingViewModel)
-            let navigationMainController = UINavigationController(rootViewController: mainTabBarController)
-            self.present(navigationMainController, animated: true)
+            self.dismiss(animated: true)
         }        
     }
     
