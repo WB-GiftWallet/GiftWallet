@@ -107,6 +107,7 @@ class FireBaseManager {
         
         upLoadImageData(imageData: imageData, userID: id, dataNumber: maxItemNumber) { url in
             self.db.collection(id.description).document((self.maxItemNumber + 1).description).setData(["image":url.absoluteString,
+                                                                                                       "number":self.maxItemNumber + 1,
                                                                                                        "category":categoryData,
                                                                                                        "brandName":brandName,
                                                                                                        "productName":productName,
@@ -184,7 +185,8 @@ class FireBaseManager {
 extension FireBaseManager {
     //TODO: 시간 당겨지는현상 해결 [2023-04-01] -> [2023-03-31 15:00:00 +0000]
     private func changeGiftData(_ document: QueryDocumentSnapshot) -> Gift? {
-        guard let image = UIImage(systemName: "applelogo"),
+        guard let imageURL = document["image"] as? String,
+              let number = document["number"] as? Int,
               let brandName = document["brandName"] as? String,
               let productName = document["productName"] as? String,
               let memo = document["memo"] as? String,
@@ -207,7 +209,8 @@ extension FireBaseManager {
         }
         
         let gift = Gift(
-            image: image,
+            //TODO: image 받아오기
+            image: UIImage(systemName: "applelogo")!,
             category: Category(rawValue: document["category"] as! String),
             brandName: brandName,
             productName: productName,
