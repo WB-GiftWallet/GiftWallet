@@ -18,18 +18,49 @@ class LoginViewController: UIViewController {
     private let kakaoLoginButton = {
         let button = UIButton()
         
-        button.backgroundColor = .yellow
+        button.layer.cornerRadius = 12.0
+        button.backgroundColor = UIColor.kakaoButton
+        button.setTitle("카카오 로그인", for: .normal)
+        button.setTitleColor(UIColor.kakaoButtonTitle, for: .normal)
+        button.titleLabel?.font = UIFont.systemFont(ofSize: 15, weight: .semibold)
+        button.setImage(UIImage(named: "kakao.ball")?.withRenderingMode(.alwaysTemplate), for: .normal)
+        button.contentVerticalAlignment = .center
+        button.contentHorizontalAlignment = .center
+        button.tintColor = .black
+        button.imageEdgeInsets = UIEdgeInsets.init(top: 0, left: 0, bottom: 0, right: 12)
+
         button.translatesAutoresizingMaskIntoConstraints = false
         
         return button
     }()
     
     private let appleLoginButton = {
-        let button = ASAuthorizationAppleIDButton(type: .signIn, style: .black)
-        
+        let button = UIButton()
+                
+        button.layer.cornerRadius = 12.0
+        button.backgroundColor = .black
+        button.setTitle("Apple로 로그인", for: .normal)
+        button.setTitleColor(UIColor.white, for: .normal)
+        button.titleLabel?.font = UIFont.systemFont(ofSize: 15, weight: .semibold)
+        button.setImage(UIImage(systemName: "apple.logo"), for: .normal)
+        button.contentVerticalAlignment = .center
+        button.contentHorizontalAlignment = .center
+        button.tintColor = .white
+        button.imageEdgeInsets = UIEdgeInsets.init(top: 0, left: 0, bottom: 0, right: 12)
         button.translatesAutoresizingMaskIntoConstraints = false
         
         return button
+    }()
+
+    private let buttonVerticalStackView = {
+       let stackView = UIStackView()
+        
+        stackView.axis = .vertical
+        stackView.distribution = .fill
+        stackView.spacing = 5
+        stackView.translatesAutoresizingMaskIntoConstraints = false
+        
+        return stackView
     }()
     
     override func viewDidLoad() {
@@ -70,18 +101,19 @@ class LoginViewController: UIViewController {
     private func setupViews() {
         view.backgroundColor = .white
         
-        [kakaoLoginButton, appleLoginButton].forEach(view.addSubview(_:))
+        [kakaoLoginButton, appleLoginButton].forEach(buttonVerticalStackView.addArrangedSubview(_:))
+        [buttonVerticalStackView].forEach(view.addSubview(_:))
         
         NSLayoutConstraint.activate([
-            kakaoLoginButton.topAnchor.constraint(equalTo: view.topAnchor, constant: 30),
-            kakaoLoginButton.centerXAnchor.constraint(equalTo: view.centerXAnchor),
-            kakaoLoginButton.widthAnchor.constraint(equalTo: view.widthAnchor, multiplier: 0.8),
-            kakaoLoginButton.heightAnchor.constraint(equalTo: kakaoLoginButton.widthAnchor, multiplier: 0.2),
+            buttonVerticalStackView.centerXAnchor.constraint(equalTo: view.centerXAnchor),
+            buttonVerticalStackView.centerYAnchor.constraint(equalTo: view.centerYAnchor),
             
-            appleLoginButton.bottomAnchor.constraint(equalTo: view.bottomAnchor, constant: -30),
-            appleLoginButton.centerXAnchor.constraint(equalTo: view.centerXAnchor),
-            appleLoginButton.widthAnchor.constraint(equalTo: view.widthAnchor, multiplier: 0.8),
-            appleLoginButton.heightAnchor.constraint(equalTo: appleLoginButton.widthAnchor, multiplier: 0.2),
+            
+            kakaoLoginButton.widthAnchor.constraint(equalToConstant: 300),
+            kakaoLoginButton.heightAnchor.constraint(equalToConstant: 45),
+            
+            appleLoginButton.widthAnchor.constraint(equalToConstant: 300),
+            appleLoginButton.heightAnchor.constraint(equalToConstant: 45),
         ])
     }
 }
