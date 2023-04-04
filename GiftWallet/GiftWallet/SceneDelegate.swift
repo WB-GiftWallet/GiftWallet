@@ -23,12 +23,8 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
                                                         etcSettingViewModel: etcSettingViewModel)
         let navigationMainController = UINavigationController(rootViewController: mainTabBarController)
         
-        let loginViewModel = LoginViewModel()
-        let loginViewController = LoginViewController(viewModel: loginViewModel)
-        
         window.backgroundColor = .white
-        window.rootViewController = loginViewController
-        
+        window.rootViewController = navigationMainController
         window.makeKeyAndVisible()
         self.window = window
     }

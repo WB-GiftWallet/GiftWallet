@@ -78,3 +78,12 @@ extension MainViewModel {
         }
     }
 }
+
+// MARK: TokenCheck 함수
+extension MainViewModel {
+    func checkToken(completion: @escaping (Bool) -> Void) {
+        DispatchQueue.main.async {
+            KakaoLoginManager().checkToken(handler: completion)
+        }
+    }
+}

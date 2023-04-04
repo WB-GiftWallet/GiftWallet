@@ -66,6 +66,8 @@ class LoginViewController: UIViewController {
     }
     
     private func setupViews() {
+        view.backgroundColor = .white
+        
         [kakaoLoginButton, appleLoginButton].forEach(view.addSubview(_:))
         
         NSLayoutConstraint.activate([
