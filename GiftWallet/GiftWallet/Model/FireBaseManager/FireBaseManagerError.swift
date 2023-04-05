@@ -13,4 +13,7 @@ enum FireBaseManagerError: Error {
     case invalidImage
     case giftDataNotChangeString
     case dateError
+    
+    //MARK: CRUD
+    case fetchDataError
 }
