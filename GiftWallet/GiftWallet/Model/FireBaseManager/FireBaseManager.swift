@@ -6,26 +6,16 @@
 //
 
 import FirebaseFirestore
-import FirebaseStorage
-import FirebaseCore
 import FirebaseAuth
-import UIKit
 
 class FireBaseManager {
     static let shared = FireBaseManager()
     
-    //MARK: FireBase Property
     private var db = Firestore.firestore()
-    private let storage = Storage.storage()
     private var CurrentuserID = Auth.auth().currentUser?.uid
     
-    private var maxItemNumber = 0
+    private init() {}
     
-    private init() {
-        self.initializingItemNumber()
-    }
-    
-    //MARK: Login, Logout, createUser Method
     func createUser(email: String, password: String, completion: @escaping (Result<String, FireBaseManagerError>) -> Void) {
         Auth.auth().createUser(withEmail: email, password: password) { authResult, error in
             if error != nil {
@@ -39,13 +29,16 @@ class FireBaseManager {
             }
             
             completion(.success(userUid))
-            self.initializingItemNumber()
         }
     }
     
     func existingLogin(email: String, password: String) {
         Auth.auth().signIn(withEmail: email, password: password) { [weak self] authResult, error in
-            self?.initializingItemNumber()
+            if error != nil {
+                self?.createUser(email: email, password: password, completion: { _ in
+                    self?.existingLogin(email: email, password: password)
+                })
+            }
         }
     }
     
@@ -57,248 +50,112 @@ class FireBaseManager {
         }
     }
     
-    //MARK: FireBase CRUD
-    func fetchData(completion: @escaping  (Result<[Gift], FireBaseManagerError>) -> Void) {
-        guard let id = Auth.auth().currentUser?.uid else {
-            return completion(.failure(.notHaveID))
-        }
-        
-        db.collection(id.description).getDocuments { (snapshot, error) in
-            if error == nil && snapshot != nil {
-                var giftData = [Gift]()
-                for document in snapshot!.documents {
-                    guard let gift = self.changeGiftData(document) else { return }
-                    giftData.append(gift)
-                }
-                
-                completion(.success(giftData))
-            } else {
-                completion(.failure(.fetchDataError))
-            }
-        }
-    }
-    
-    func saveData(giftData: Gift) throws {
+    //TODO: Gift Data Return
+    func fetchData() throws {
         guard let id = Auth.auth().currentUser?.uid else {
             throw FireBaseManagerError.notHaveID
         }
         
-        guard let imageData = giftData.image.pngData() else {
-            throw FireBaseManagerError.invalidImage
-        }
-        
-        let categoryData = giftData.category?.rawValue ?? "Nil"
-        
-        guard let brandName = giftData.brandName,
-              let productName = giftData.productName,
-              let memo = giftData.memo else {
-            throw FireBaseManagerError.giftDataNotChangeString
-        }
-        
-        guard let giftExpireDate = giftData.expireDate,
-              let giftUseDate = giftData.useDate else {
-            throw FireBaseManagerError.dateError
-        }
-        
-        let dateFormatter = DateFormatter()
-        dateFormatter.dateFormat = "yyyyMMdd"
-        let expireDate = dateFormatter.string(from: giftExpireDate)
-        let useDate = dateFormatter.string(from: giftUseDate)
-        
-        upLoadImageData(imageData: imageData, userID: id, dataNumber: maxItemNumber) { url in
-            self.db.collection(id.description).document((self.maxItemNumber + 1).description).setData(["image":url.absoluteString,
-                                                                                                       "number":self.maxItemNumber + 1,
-                                                                                                       "category":categoryData,
-                                                                                                       "brandName":brandName,
-                                                                                                       "productName":productName,
-                                                                                                       "memo":memo,
-                                                                                                       "useableState": true,
-                                                                                                       "expireDate": expireDate,
-                                                                                                       "useDate": useDate,
-                                                                                                      ])
-            self.maxItemNumber += 1
-        }
-    }
-    
-    func updateData(_ giftData: Gift) throws {
-        guard let id = Auth.auth().currentUser?.uid else {
-            return
-        }
-        
-        let dataNumber = giftData.number
-        
-        guard let imageData = giftData.image.pngData() else {
-            print("FireBaseManagerError.invalidImage")
-            throw FireBaseManagerError.invalidImage
-        }
-        
-        let categoryData = giftData.category?.rawValue ?? "Nil"
-        
-        guard let brandName = giftData.brandName,
-              let productName = giftData.productName,
-              let memo = giftData.memo else {
-            throw FireBaseManagerError.giftDataNotChangeString
-        }
-        
-        guard let giftExpireDate = giftData.expireDate,
-              let giftUseDate = giftData.useDate else {
-            throw FireBaseManagerError.dateError
-        }
-        
-        let dateFormatter = DateFormatter()
-        dateFormatter.dateFormat = "yyyyMMdd"
-        let expireDate = dateFormatter.string(from: giftExpireDate)
-        let useDate = dateFormatter.string(from: giftUseDate)
-        
-        upLoadImageData(imageData: imageData, userID: id, dataNumber: giftData.number) { url in
-            self.db.collection(id.description).document(String(dataNumber)).updateData(["image":url.absoluteString,
-                                                                                        "category":categoryData,
-                                                                                        "brandName":brandName,
-                                                                                        "productName":productName,
-                                                                                        "memo":memo,
-                                                                                        "useableState":giftData.useableState,
-                                                                                        "expireDate": expireDate,
-                                                                                        "useDate": useDate,
-                                                                                       ]) { error in
-                if let error = error {
-                    print(error.localizedDescription)
-                    return
+        db.collection(id.description).getDocuments { (snapshot, error) in
+            if error == nil && snapshot != nil {
+                for document in snapshot!.documents {
+                    print(document.data())
                 }
+            } else {
+                // error. do something
             }
         }
     }
     
-    func deleteDate(_ number: Int) {
+    func saveData(number: Int,giftData: Gift) throws {
+        guard let id = Auth.auth().currentUser?.uid else {
+            print("throw FireBaseManagerError.notHaveID")
+            throw FireBaseManagerError.notHaveID
+        }
+        
+        //TODO: ImageData Encoding
+//        guard let imageData = giftData.image.pngData() else {
+//            print("FireBaseManagerError.invalidImage")
+//            throw FireBaseManagerError.invalidImage
+//        }
+//        let image = imageData.base64EncodedString
+        let image = "imageData"
+        
+        let categoryData = giftData.category?.rawValue ?? "Nil"
+        
+        guard let brandName = giftData.brandName,
+              let productName = giftData.productName,
+              let memo = giftData.memo else {
+            throw FireBaseManagerError.giftDataNotChangeString
+        }
+        
+        
+        guard let giftExpireDate = giftData.expireDate,
+              let giftUseDate = giftData.useDate else {
+            throw FireBaseManagerError.dateError
+        }
+        
+        let dateFormatter = DateFormatter()
+        dateFormatter.dateFormat = "yyyyMMdd"
+        let expireDate = dateFormatter.string(from: giftExpireDate)
+        let useDate = dateFormatter.string(from: giftUseDate)
+        
+        db.collection(id.description).document(number.description).setData(["image":image,
+                                                                            "category":categoryData,
+                                                                            "brandName":brandName,
+                                                                            "productName":productName,
+                                                                            "memo":memo,
+                                                                            "useableState":giftData.useableState,
+                                                                            "expireDate": expireDate,
+                                                                            "useDate": useDate,
+                                                                           ])
+        print("완료")
+    }
+    
+    func updateData(number: Int/*, _ giftData: Gift */) {
+        let number = 0
         guard let current = Auth.auth().currentUser?.uid else {
             return
         }
         
+        db.collection(current).document(number.description).updateData(["brandName" : "고쳐졍"]) { error in
+            print(error?.localizedDescription)
+        }
+    }
+    
+    func deleteDate(number: Int) {
+        let number = 0
+        guard let current = Auth.auth().currentUser?.uid else {
+            return
+        }
         db.collection(current).document(number.description).delete { error in
-            if let error = error {
-                print(error.localizedDescription)
-                return
-            }
+            print(error?.localizedDescription)
         }
     }
 }
 
-extension FireBaseManager {
-    //TODO: 시간 당겨지는현상 해결 [2023-04-01] -> [2023-03-31 15:00:00 +0000]
-    private func changeGiftData(_ document: QueryDocumentSnapshot) -> Gift? {
-        guard let imageURL = document["image"] as? String,
-              let number = document["number"] as? Int,
-              let brandName = document["brandName"] as? String,
-              let productName = document["productName"] as? String,
-              let memo = document["memo"] as? String,
-              let useableState = document["useableState"] as? Bool,
-              let expireDateString = document["expireDate"] as? String,
-              let useDateString = document["useDate"] as? String
-        else {
-            return nil
-        }
-        
-        let formatter = DateFormatter()
-        formatter.locale = Locale(identifier: "ko-kr")
-        formatter.timeZone = TimeZone(abbreviation: "KST")
-        formatter.dateFormat = "yyyyMMdd"
-        
-        guard let expireDate = formatter.date(from: expireDateString),
-              let useDate = formatter.date(from: useDateString)
-        else {
-            return nil
-        }
-        
-        let gift = Gift(
-            //TODO: image 받아오기
-            image: UIImage(systemName: "applelogo")!,
-            category: Category(rawValue: document["category"] as! String),
-            brandName: brandName,
-            productName: productName,
-            memo: memo,
-            useableState: useableState,
-            expireDate: expireDate,
-            useDate: useDate
-        )
-        
-        return gift
-    }
-}
+//private extension  {
+//    func
+//}
 
-//MARK: -Item Number Setting Method
-extension FireBaseManager {
-    
-    private func initializingItemNumber() {
-        self.fetchMostRecentNumber { result in
-            switch result {
-                case .success(let number):
-                    self.maxItemNumber = number
-                case .failure(let error):
-                    print(error.localizedDescription)
-            }
-        }
-    }
-    
-    private func fetchMostRecentNumber(completion: @escaping (Result<Int, FireBaseManagerError>) -> Void) {
-        var recentNumber = 0
-        guard let id = Auth.auth().currentUser?.uid else {
-            completion(.failure(.invaildUserID))
-            return
-        }
-        
-        db.collection(id.description).getDocuments { snapshot, error in
-            if error == nil && snapshot != nil {
-                for document in snapshot!.documents {
-                    guard let docuNumber = Int(document.documentID) else {
-                        return
-                    }
-                    recentNumber = max(recentNumber, docuNumber)
-                }
-                completion(.success(recentNumber))
-            } else {
-                print("FireBase Fetch Error")
-            }
-        }
-    }
-}
+/*
+ extension CoreDataManager {
+     private func fetchMostRecentNumber(context: NSManagedObjectContext) -> Int16 {
+         let request: NSFetchRequest<GiftData> = GiftData.fetchRequest()
+         request.sortDescriptors = [NSSortDescriptor(keyPath: \GiftData.number,
+                                                     ascending: false)]
+         request.fetchLimit = 1
+         if let lastGift = try? context.fetch(request).first {
+             let gift = GiftData(context: context)
+             gift.number = lastGift.number
+             return gift.number
+         } else {
+             return 0
+         }
+     }
+ }
 
-//MARK: -FireStorage
-extension FireBaseManager {
-    
-    private func upLoadImageData(imageData: Data, userID: String, dataNumber: Int, completion: @escaping (URL) -> Void) {
-        let storageReference = storage.reference()
-        let imageReference = storageReference.child("image").child("USER_\(userID)").child("image_\(dataNumber).png")
-        
-        let _ = imageReference.putData(imageData, metadata: nil) { (_, error) in
-            imageReference.downloadURL { (url, error) in
-                guard let downloadURL = url else {
-                    return
-                }
-                
-                completion(downloadURL)
-            }
-        }
-    }
-    
-    private func downLoadImageData(dataNumber: Int, completion: @escaping (Data) -> Void) {
-        guard let id = Auth.auth().currentUser?.uid else {
-            return
-        }
-        
-        let storageRef = storage.reference()
-        let imageReference = storageRef.child("image").child("USER_\(id)").child("image_\(dataNumber).png")
-        
-        imageReference.getData(maxSize: 1 * 1024 * 1024) { data, error in
-            if error != nil {
-                print("Image Get Data ERROR")
-            }
-            
-            guard let data = data else {
-                return
-            }
-            
-            completion(data)
-        }
-    }
+ */
 
 
 extension FireBaseManager {

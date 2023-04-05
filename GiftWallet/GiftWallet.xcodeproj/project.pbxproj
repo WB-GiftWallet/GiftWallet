@@ -12,7 +12,6 @@
 		1713140E29D2E5C0007A3AF9 /* FirebaseFirestoreSwift in Frameworks */ = {isa = PBXBuildFile; productRef = 1713140D29D2E5C0007A3AF9 /* FirebaseFirestoreSwift */; };
 		171695B129B1B8CA00CF3E41 /* SearchTableViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 171695B029B1B8CA00CF3E41 /* SearchTableViewModel.swift */; };
 		1723BE8529C3142600AE06F9 /* IQKeyboardManagerSwift in Frameworks */ = {isa = PBXBuildFile; productRef = 1723BE8429C3142600AE06F9 /* IQKeyboardManagerSwift */; };
-		173B69A729DC94C500B28954 /* FirebaseStorage in Frameworks */ = {isa = PBXBuildFile; productRef = 173B69A629DC94C500B28954 /* FirebaseStorage */; };
 		1759488929D49DF000E7D5B9 /* FireBaseManagerError.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1759488829D49DF000E7D5B9 /* FireBaseManagerError.swift */; };
 		17A950FF29B74DA2001E6D4F /* SearchViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 17A950FE29B74DA2001E6D4F /* SearchViewController.swift */; };
 		17A9510129B75101001E6D4F /* RecommendScrollView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 17A9510029B75101001E6D4F /* RecommendScrollView.swift */; };
@@ -21,8 +20,6 @@
 		17D5963929B02CBD00AFE039 /* SearchGiftCustomCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 17D5963829B02CBD00AFE039 /* SearchGiftCustomCell.swift */; };
 		17D5963B29B0835800AFE039 /* Extension+Date.swift in Sources */ = {isa = PBXBuildFile; fileRef = 17D5963A29B0835800AFE039 /* Extension+Date.swift */; };
 		17DD10B429D6B4B9002B58D4 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 17DD10B329D6B4B9002B58D4 /* GoogleService-Info.plist */; };
-		17DD10B629D6E1B5002B58D4 /* TemporaryViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 17DD10B529D6E1B5002B58D4 /* TemporaryViewController.swift */; };
-		17DD10B829D6E1DC002B58D4 /* TemporaryViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 17DD10B729D6E1DC002B58D4 /* TemporaryViewModel.swift */; };
 		D218233629CBEF7B00855D15 /* PhotoPreviewViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D218233529CBEF7B00855D15 /* PhotoPreviewViewController.swift */; };
 		D24002D129B752DB00635FFC /* NotoSansKR-Regular.otf in Resources */ = {isa = PBXBuildFile; fileRef = D24002CB29B752DA00635FFC /* NotoSansKR-Regular.otf */; };
 		D24002D229B752DB00635FFC /* NotoSansKR-Thin.otf in Resources */ = {isa = PBXBuildFile; fileRef = D24002CC29B752DB00635FFC /* NotoSansKR-Thin.otf */; };
@@ -116,8 +113,6 @@
 		17D5963829B02CBD00AFE039 /* SearchGiftCustomCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchGiftCustomCell.swift; sourceTree = "<group>"; };
 		17D5963A29B0835800AFE039 /* Extension+Date.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Extension+Date.swift"; sourceTree = "<group>"; };
 		17DD10B329D6B4B9002B58D4 /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
-		17DD10B529D6E1B5002B58D4 /* TemporaryViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TemporaryViewController.swift; sourceTree = "<group>"; };
-		17DD10B729D6E1DC002B58D4 /* TemporaryViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TemporaryViewModel.swift; sourceTree = "<group>"; };
 		D218233529CBEF7B00855D15 /* PhotoPreviewViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PhotoPreviewViewController.swift; sourceTree = "<group>"; };
 		D24002CB29B752DA00635FFC /* NotoSansKR-Regular.otf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "NotoSansKR-Regular.otf"; sourceTree = "<group>"; };
 		D24002CC29B752DB00635FFC /* NotoSansKR-Thin.otf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "NotoSansKR-Thin.otf"; sourceTree = "<group>"; };
@@ -207,7 +202,6 @@
 				1723BE8529C3142600AE06F9 /* IQKeyboardManagerSwift in Frameworks */,
 				1713140A29D2E5C0007A3AF9 /* FirebaseAuth in Frameworks */,
 				1713140C29D2E5C0007A3AF9 /* FirebaseFirestore in Frameworks */,
-				173B69A729DC94C500B28954 /* FirebaseStorage in Frameworks */,
 				D2CA7D9129D6BBC9002D3BA2 /* KakaoSDKUser in Frameworks */,
 				1713140E29D2E5C0007A3AF9 /* FirebaseFirestoreSwift in Frameworks */,
 				D2CA7D8F29D6BBC9002D3BA2 /* KakaoSDKCommon in Frameworks */,
@@ -218,13 +212,6 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
-		173B69A529DC94C500B28954 /* Frameworks */ = {
-			isa = PBXGroup;
-			children = (
-			);
-			name = Frameworks;
-			sourceTree = "<group>";
-		};
 		17B579ED29D3302D00042D80 /* FireBaseManager */ = {
 			isa = PBXGroup;
 			children = (
@@ -244,15 +231,6 @@
 				17A9510029B75101001E6D4F /* RecommendScrollView.swift */,
 			);
 			path = SearchView;
-			sourceTree = "<group>";
-		};
-		17DD10B929D6E3B1002B58D4 /* TemporaryLoginView */ = {
-			isa = PBXGroup;
-			children = (
-				17DD10B529D6E1B5002B58D4 /* TemporaryViewController.swift */,
-				17DD10B729D6E1DC002B58D4 /* TemporaryViewModel.swift */,
-			);
-			path = TemporaryLoginView;
 			sourceTree = "<group>";
 		};
 		D295E4B329A5E2D700E12CAF /* ModifyView */ = {
@@ -433,7 +411,6 @@
 				D2CDDBD329ADFE7700E000E3 /* DateCalculateUseCaseTest */,
 				17BCD48129C30F8900F9FC9C /* Package */,
 				FC1E746F29A207DA0010A4BA /* Products */,
-				173B69A529DC94C500B28954 /* Frameworks */,
 			);
 			sourceTree = "<group>";
 		};
@@ -463,7 +440,6 @@
 				FC62FF1129A77B77003E63B0 /* MainTabbarController */,
 				D2D6B74D29A3DE6A00E6188C /* MainView */,
 				F6A4AB4729A5D9F1009AEB78 /* DetailView */,
-				17DD10B929D6E3B1002B58D4 /* TemporaryLoginView */,
 				D2DAAA1E29A44B3200D70E8C /* Model */,
 				D2DAAA2129A471D600D70E8C /* Extension */,
 				FC1E747D29A207DC0010A4BA /* Assets.xcassets */,
@@ -542,7 +518,6 @@
 				1713140929D2E5C0007A3AF9 /* FirebaseAuth */,
 				1713140B29D2E5C0007A3AF9 /* FirebaseFirestore */,
 				1713140D29D2E5C0007A3AF9 /* FirebaseFirestoreSwift */,
-				173B69A629DC94C500B28954 /* FirebaseStorage */,
 				D2CA7D8C29D6BBC9002D3BA2 /* KakaoSDKAuth */,
 				D2CA7D8E29D6BBC9002D3BA2 /* KakaoSDKCommon */,
 				D2CA7D9029D6BBC9002D3BA2 /* KakaoSDKUser */,
@@ -691,9 +666,7 @@
 				FC1E747C29A207DA0010A4BA /* GiftWallet.xcdatamodeld in Sources */,
 				17D5963B29B0835800AFE039 /* Extension+Date.swift in Sources */,
 				D2B6333D29ACCA4100EE9ACE /* Constant.swift in Sources */,
-				17DD10B829D6E1DC002B58D4 /* TemporaryViewModel.swift in Sources */,
 				D2B7AE6129B7301A000AC592 /* CustomGiftTagUIView.swift in Sources */,
-				17DD10B629D6E1B5002B58D4 /* TemporaryViewController.swift in Sources */,
 				D295E4B529A5E2F400E12CAF /* UpdateGiftInfoViewController.swift in Sources */,
 				D2B6334429ACEAB700EE9ACE /* HistoryTableViewCell.swift in Sources */,
 				FC1E747429A207DA0010A4BA /* SceneDelegate.swift in Sources */,
@@ -1092,10 +1065,6 @@
 			package = 1723BE8329C3142600AE06F9 /* XCRemoteSwiftPackageReference "IQKeyboardManager" */;
 			productName = IQKeyboardManagerSwift;
 		};
-		173B69A629DC94C500B28954 /* FirebaseStorage */ = {
-			isa = XCSwiftPackageProductDependency;
-			package = 1713140829D2E5C0007A3AF9 /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */;
-			productName = FirebaseStorage;
 		D2CA7D8C29D6BBC9002D3BA2 /* KakaoSDKAuth */ = {
 			isa = XCSwiftPackageProductDependency;
 			package = D2CA7D8B29D6BBC9002D3BA2 /* XCRemoteSwiftPackageReference "kakao-ios-sdk" */;
