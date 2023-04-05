@@ -72,6 +72,7 @@
 		D2DAAA2029A44B9200D70E8C /* ReusableView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D2DAAA1F29A44B9200D70E8C /* ReusableView.swift */; };
 		D2DAAA2329A4720300D70E8C /* Ext+DateFormatter.swift in Sources */ = {isa = PBXBuildFile; fileRef = D2DAAA2229A4720300D70E8C /* Ext+DateFormatter.swift */; };
 		D2DAAA2529A47CD500D70E8C /* CustomCollectionView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D2DAAA2429A47CD500D70E8C /* CustomCollectionView.swift */; };
+		D2F14C7F29DD185400F1B3D5 /* FirebaseStorage in Frameworks */ = {isa = PBXBuildFile; productRef = D2F14C7E29DD185400F1B3D5 /* FirebaseStorage */; };
 		F6A4AB4B29A5DA1C009AEB78 /* DetailViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F6A4AB4929A5DA1C009AEB78 /* DetailViewController.swift */; };
 		FC074C0129A8D5B5006AD199 /* CoreDataManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = FC074C0029A8D5B5006AD199 /* CoreDataManager.swift */; };
 		FC074C0529A90361006AD199 /* GiftData+CoreDataClass.swift in Sources */ = {isa = PBXBuildFile; fileRef = FC074C0329A90361006AD199 /* GiftData+CoreDataClass.swift */; };
@@ -204,6 +205,7 @@
 				1713140C29D2E5C0007A3AF9 /* FirebaseFirestore in Frameworks */,
 				D2CA7D9129D6BBC9002D3BA2 /* KakaoSDKUser in Frameworks */,
 				1713140E29D2E5C0007A3AF9 /* FirebaseFirestoreSwift in Frameworks */,
+				D2F14C7F29DD185400F1B3D5 /* FirebaseStorage in Frameworks */,
 				D2CA7D8F29D6BBC9002D3BA2 /* KakaoSDKCommon in Frameworks */,
 				D2CA7D8D29D6BBC9002D3BA2 /* KakaoSDKAuth in Frameworks */,
 			);
@@ -377,6 +379,13 @@
 			path = Extension;
 			sourceTree = "<group>";
 		};
+		D2F14C7D29DD185400F1B3D5 /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			name = Frameworks;
+			sourceTree = "<group>";
+		};
 		F6A4AB4729A5D9F1009AEB78 /* DetailView */ = {
 			isa = PBXGroup;
 			children = (
@@ -411,6 +420,7 @@
 				D2CDDBD329ADFE7700E000E3 /* DateCalculateUseCaseTest */,
 				17BCD48129C30F8900F9FC9C /* Package */,
 				FC1E746F29A207DA0010A4BA /* Products */,
+				D2F14C7D29DD185400F1B3D5 /* Frameworks */,
 			);
 			sourceTree = "<group>";
 		};
@@ -521,6 +531,7 @@
 				D2CA7D8C29D6BBC9002D3BA2 /* KakaoSDKAuth */,
 				D2CA7D8E29D6BBC9002D3BA2 /* KakaoSDKCommon */,
 				D2CA7D9029D6BBC9002D3BA2 /* KakaoSDKUser */,
+				D2F14C7E29DD185400F1B3D5 /* FirebaseStorage */,
 			);
 			productName = GiftWallet;
 			productReference = FC1E746E29A207DA0010A4BA /* GiftWallet.app */;
@@ -1079,6 +1090,11 @@
 			isa = XCSwiftPackageProductDependency;
 			package = D2CA7D8B29D6BBC9002D3BA2 /* XCRemoteSwiftPackageReference "kakao-ios-sdk" */;
 			productName = KakaoSDKUser;
+		};
+		D2F14C7E29DD185400F1B3D5 /* FirebaseStorage */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 1713140829D2E5C0007A3AF9 /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */;
+			productName = FirebaseStorage;
 		};
 /* End XCSwiftPackageProductDependency section */
 

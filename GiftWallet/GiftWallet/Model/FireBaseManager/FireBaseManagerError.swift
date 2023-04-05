@@ -6,6 +6,7 @@
 //
 
 enum FireBaseManagerError: Error {
+    case fetchDataError
     case createUserFail
     case invaildUserID
     case notHaveID
