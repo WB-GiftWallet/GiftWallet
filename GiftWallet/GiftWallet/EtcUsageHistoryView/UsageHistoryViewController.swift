@@ -40,6 +40,7 @@ class UsageHistoryViewController: UIViewController {
     
     private func setupNavigation() {
         title = "이용내역"
+        navigationController?.navigationBar.tintColor = .black
     }
     
     private func setupTableViewAttributes() {

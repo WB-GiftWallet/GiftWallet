@@ -175,6 +175,7 @@ extension EtcSettingViewController: UITableViewDelegate {
         if indexPath.section == 0, indexPath.row == 0 {
             sceneConversion()
         }
+        tableView.deselectRow(at: indexPath, animated: false)
     }
     
     private func sceneConversion() {
