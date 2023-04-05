@@ -171,7 +171,6 @@ class MainViewController: UIViewController, UISearchBarDelegate, UISearchControl
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        checkToken()
         setupViews()
         setupButton()
         bind()
@@ -196,18 +195,8 @@ class MainViewController: UIViewController, UISearchBarDelegate, UISearchControl
         }
     }
     
-    private func checkToken() {
-        self.viewModel.checkToken { hasToken in
-            switch hasToken {
-            case true:
-                print("fetch 데이타")
-            case false:
-                let loginViewModel = LoginViewModel()
-                let loginViewController = LoginViewController(viewModel: loginViewModel)
-                loginViewController.modalPresentationStyle = .fullScreen
-                self.present(loginViewController, animated: false)
-            }
-        }
+    override func viewWillLayoutSubviews() {
+        super.viewWillLayoutSubviews()
     }
     
     private func updateCollectionViewData() {
@@ -216,6 +205,7 @@ class MainViewController: UIViewController, UISearchBarDelegate, UISearchControl
             self.resizeViewsAutoLayoutBasedOnGiftsData()
         }
     }
+    
     
     private func setupButton() {
         let searchButtonAction = UIAction { _ in

@@ -10,15 +10,6 @@
       }
     },
     {
-      "identity" : "alamofire",
-      "kind" : "remoteSourceControl",
-      "location" : "https://github.com/Alamofire/Alamofire.git",
-      "state" : {
-        "revision" : "78424be314842833c04bc3bef5b72e85fff99204",
-        "version" : "5.6.4"
-      }
-    },
-    {
       "identity" : "boringssl-swiftpm",
       "kind" : "remoteSourceControl",
       "location" : "https://github.com/firebase/boringssl-SwiftPM.git",
@@ -88,15 +79,6 @@
       "state" : {
         "revision" : "0ea3febb36cfcec2afb5841fd8809a9c0fa545b3",
         "version" : "6.5.11"
-      }
-    },
-    {
-      "identity" : "kakao-ios-sdk",
-      "kind" : "remoteSourceControl",
-      "location" : "https://github.com/kakao/kakao-ios-sdk",
-      "state" : {
-        "branch" : "master",
-        "revision" : "081772ea5f0a88088723651ee4588a6b232b6522"
       }
     },
     {
