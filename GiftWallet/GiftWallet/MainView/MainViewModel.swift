@@ -11,6 +11,7 @@ import UIKit
 class MainViewModel {
     private let useCase = DateCalculateUseCase()
     private let coreDataManager = CoreDataManager.shared
+    private let firebaseManager = FireBaseManager.shared
     
     var allGifts: [Gift] = []
     var expireGifts: Observable<[Gift]> = .init([])
@@ -80,10 +81,8 @@ extension MainViewModel {
 }
 
 // MARK: TokenCheck 함수
-extension MainViewModel {
-    func checkToken(completion: @escaping (Bool) -> Void) {
-        DispatchQueue.main.async {
-            KakaoLoginManager().checkToken(handler: completion)
-        }
-    }
-}
+//extension MainViewModel {
+//    func checkToken(completion: @escaping (Bool) -> Void) {
+//        print(firebaseManager.returnFirebaseUid())
+//    }
+//}

@@ -6,6 +6,7 @@
 //
 
 import UIKit
+import FirebaseAuth
 
 class MainViewController: UIViewController, UISearchBarDelegate, UISearchControllerDelegate {
     
@@ -171,7 +172,7 @@ class MainViewController: UIViewController, UISearchBarDelegate, UISearchControl
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        checkToken()
+        presentLoginViewIfNeeded()
         setupViews()
         setupButton()
         bind()
@@ -196,12 +197,10 @@ class MainViewController: UIViewController, UISearchBarDelegate, UISearchControl
         }
     }
     
-    private func checkToken() {
-        self.viewModel.checkToken { hasToken in
-            switch hasToken {
-            case true:
-                print("fetch 데이타")
-            case false:
+    // TODO: MVVM
+    private func presentLoginViewIfNeeded() {
+        if Auth.auth().currentUser?.uid == nil {
+            DispatchQueue.main.async {
                 let loginViewModel = LoginViewModel()
                 let loginViewController = LoginViewController(viewModel: loginViewModel)
                 loginViewController.modalPresentationStyle = .fullScreen
