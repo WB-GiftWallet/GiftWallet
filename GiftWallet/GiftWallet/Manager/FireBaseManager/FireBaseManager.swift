@@ -54,6 +54,7 @@ class FireBaseManager {
                     switch result {
                     case .success(let gifts):
                         print(gifts)
+                        
                         try! CoreDataManager.shared.updateAllData(gifts)
                     case .failure(let error):
                         print(error)
@@ -81,6 +82,7 @@ class FireBaseManager {
             if error == nil && snapshot != nil {
                 var giftData = [Gift]()
                 for document in snapshot!.documents {
+                    print("다큐먼트:", document)
                     guard let gift = self.changeGiftData(document) else { return }
                     giftData.append(gift)
                 }
@@ -205,25 +207,28 @@ class FireBaseManager {
 extension FireBaseManager {
     //TODO: 시간 당겨지는현상 해결 [2023-04-01] -> [2023-03-31 15:00:00 +0000]
     private func changeGiftData(_ document: QueryDocumentSnapshot) -> Gift? {
+        // 필수값 프로퍼티
         guard let imageURL = document["image"] as? String,
               let number = document["number"] as? Int,
               let brandName = document["brandName"] as? String,
               let productName = document["productName"] as? String,
-              let memo = document["memo"] as? String,
               let useableState = document["useableState"] as? Bool,
-              let expireDateString = document["expireDate"] as? String,
-              let useDateString = document["useDate"] as? String
-        else {
-            return nil
-        }
+              let expireDateString = document["expireDate"] as? String else { return nil }
+        // 선택값 프로퍼티
+        let memo = document["memo"] as? String?
+        let useDateString = document["useDate"] as? String?
         
         let formatter = DateFormatter()
         formatter.locale = Locale(identifier: "ko-kr")
         formatter.timeZone = TimeZone(abbreviation: "KST")
         formatter.dateFormat = "yyyyMMdd"
         
-        guard let expireDate = formatter.date(from: expireDateString),
-              let useDate = formatter.date(from: useDateString)
+        var useDate: Date? = nil
+        if let dateString = useDateString {
+            useDate = formatter.date(from: dateString!)
+        }
+        
+        guard let expireDate = formatter.date(from: expireDateString)
         else {
             return nil
         }
@@ -231,15 +236,15 @@ extension FireBaseManager {
         let gift = Gift(
             //TODO: image 받아오기
             image: UIImage(systemName: "applelogo")!,
-            category: Category(rawValue: document["category"] as! String),
+            category: nil,
             brandName: brandName,
             productName: productName,
-            memo: memo,
+            memo: memo as? String,
             useableState: useableState,
             expireDate: expireDate,
             useDate: useDate
         )
-        
+
         return gift
     }
 }
