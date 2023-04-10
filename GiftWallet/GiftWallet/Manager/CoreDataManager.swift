@@ -92,6 +92,40 @@ final class CoreDataManager {
         }
     }
     
+    func updateAllData(_ gifts: [Gift]) throws {
+        guard let context = appDelegate?.persistentContainer.viewContext else {
+            throw CoreDataError.contextInvalid
+        }
+        
+        let deleteFetch = NSFetchRequest<NSFetchRequestResult>(entityName: "GiftData")
+        let deleteRequest = NSBatchDeleteRequest(fetchRequest: deleteFetch)
+        try context.execute(deleteRequest)
+        try context.save()
+        
+        let entity = NSEntityDescription.entity(forEntityName: "GiftData", in: context)
+        for gift in gifts {
+            if let entity = entity {
+                let giftData = GiftData(entity: entity, insertInto: context)
+                
+                giftData.number = Int16(gift.number)
+                giftData.image = gift.image.pngData()
+                giftData.category = gift.category?.rawValue
+                giftData.brandName = gift.brandName
+                giftData.productName = gift.productName
+                giftData.memo = gift.memo
+                giftData.useableState = gift.useableState
+                giftData.expireDate = gift.expireDate
+                giftData.useDate = gift.useDate
+            }
+        }
+        
+        do {
+            try context.save()
+        } catch {
+            print(error.localizedDescription)
+        }
+    }
+    
     func deleteDate(id number: Int16) throws {
         guard let context = appDelegate?.persistentContainer.viewContext else {
             throw CoreDataError.contextInvalid
