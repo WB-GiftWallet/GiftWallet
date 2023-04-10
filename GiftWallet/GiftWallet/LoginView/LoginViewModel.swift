@@ -11,6 +11,7 @@ import AuthenticationServices
 class LoginViewModel {
     private let kakaoLoginManager = KakaoLoginManager()
     private var appleLoginManager = AppleLoginManager()
+    private let coreDataManager = CoreDataManager.shared
     private let firebaseManager = FireBaseManager.shared
     
     func kakaoLogin(completion: @escaping () -> Void) {
@@ -19,8 +20,15 @@ class LoginViewModel {
             case .success(let user):
                 guard let userEmail = user.kakaoAccount?.email,
                       let userID = user.id?.description else { return }
-                self.firebaseManager.existingLogin(email: userEmail, password: userID)
+                self.firebaseManager.signInWithEmail(email: userEmail, password: userID) { gifts in
+                    do {
+                        try self.coreDataManager.updateAllData(gifts)
+                    } catch {
+                        print(error.localizedDescription)
+                    }
+                }
                 completion()
+                
             case .failure(let failure):
                 print("폴트:::::::::::::",failure)
             }

@@ -43,7 +43,7 @@ class FireBaseManager {
         }
     }
     
-    func existingLogin(email: String, password: String) {
+    func signInWithEmail(email: String, password: String, completion: @escaping ([Gift]) -> Void) {
         Auth.auth().signIn(withEmail: email, password: password) { [weak self] authResult, error in
             if error != nil {
                 self?.createUser(email: email, password: password) { result in
@@ -53,15 +53,17 @@ class FireBaseManager {
                 self?.fetchData(completion: { result in
                     switch result {
                     case .success(let gifts):
-                        print(gifts)
-                        
-                        try! CoreDataManager.shared.updateAllData(gifts)
+                        completion(gifts)
                     case .failure(let error):
                         print(error)
                     }
                 })
             }
         }
+    }
+    
+    func signInWithCredential(authCredential: AuthCredential, completion: ((AuthDataResult?, Error?) -> Void)?) {
+        Auth.auth().signIn(with: authCredential, completion: completion)
     }
     
     func signOut() {
@@ -327,10 +329,6 @@ extension FireBaseManager {
 }
 
 extension FireBaseManager {
-    func signInWithCredential(authCredential: AuthCredential, completion: ((AuthDataResult?, Error?) -> Void)?) {
-        Auth.auth().signIn(with: authCredential, completion: completion)
-    }
-    
     func makeAppleAuthProviderCredential(idToken: String, rawNonce: String) -> OAuthCredential {
         return OAuthProvider.credential(withProviderID: "apple.com", idToken: idToken, rawNonce: rawNonce)
     }
