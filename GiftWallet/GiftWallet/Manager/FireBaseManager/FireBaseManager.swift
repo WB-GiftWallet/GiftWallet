@@ -17,7 +17,7 @@ class FireBaseManager {
     //MARK: FireBase Property
     private var db = Firestore.firestore()
     private let storage = Storage.storage()
-    private var CurrentuserID = Auth.auth().currentUser?.uid
+    var currentUserID = Auth.auth().currentUser?.uid
     
     private var maxItemNumber = 0
     
@@ -26,7 +26,7 @@ class FireBaseManager {
     }
     
     //MARK: Login, Logout, createUser Method
-    func createUser(email: String, password: String, completion: @escaping (Result<String, FireBaseManagerError>) -> Void) {
+    private func createUser(email: String, password: String, completion: @escaping (Result<String, FireBaseManagerError>) -> Void) {
         Auth.auth().createUser(withEmail: email, password: password) { authResult, error in
             if error != nil {
                 completion(.failure(.createUserFail))

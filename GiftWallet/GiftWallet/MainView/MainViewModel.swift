@@ -80,9 +80,13 @@ extension MainViewModel {
     }
 }
 
-// MARK: TokenCheck 함수
-//extension MainViewModel {
-//    func checkToken(completion: @escaping (Bool) -> Void) {
-//        print(firebaseManager.returnFirebaseUid())
-//    }
-//}
+// MARK: Login 상태관련 함수
+extension MainViewModel {
+    func checkIfUserLoggedIn(completion: @escaping () -> Void) {
+        if firebaseManager.currentUserID == nil {
+            DispatchQueue.main.async {
+                completion()
+            }
+        }
+    }
+}

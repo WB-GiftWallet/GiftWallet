@@ -199,13 +199,11 @@ class MainViewController: UIViewController, UISearchBarDelegate, UISearchControl
     
     // TODO: MVVM
     private func presentLoginViewIfNeeded() {
-        if Auth.auth().currentUser?.uid == nil {
-            DispatchQueue.main.async {
-                let loginViewModel = LoginViewModel()
-                let loginViewController = LoginViewController(viewModel: loginViewModel)
-                loginViewController.modalPresentationStyle = .fullScreen
-                self.present(loginViewController, animated: false)
-            }
+        viewModel.checkIfUserLoggedIn {
+            let loginViewModel = LoginViewModel()
+            let loginViewController = LoginViewController(viewModel: loginViewModel)
+            loginViewController.modalPresentationStyle = .fullScreen
+            self.present(loginViewController, animated: true)
         }
     }
     
