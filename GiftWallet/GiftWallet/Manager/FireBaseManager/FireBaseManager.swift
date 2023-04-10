@@ -45,7 +45,20 @@ class FireBaseManager {
     
     func existingLogin(email: String, password: String) {
         Auth.auth().signIn(withEmail: email, password: password) { [weak self] authResult, error in
-            self?.initializingItemNumber()
+            if error != nil {
+                self?.createUser(email: email, password: password) { result in
+                    // 필요시, 추가 액선
+                }
+            } else {
+                self?.fetchData(completion: { result in
+                    switch result {
+                    case .success(let gifts):
+                        print(gifts)
+                    case .failure(let error):
+                        print(error)
+                    }
+                })
+            }
         }
     }
     
@@ -82,28 +95,28 @@ class FireBaseManager {
         guard let id = Auth.auth().currentUser?.uid else {
             throw FireBaseManagerError.notHaveID
         }
+
+        // 선택값 프로퍼티
+        let categoryData = giftData.category?.rawValue ?? ""
+        let memo = giftData.memo ?? ""
         
+        // 필수값 프로퍼티
         guard let imageData = giftData.image.pngData() else {
             throw FireBaseManagerError.invalidImage
         }
         
-        let categoryData = giftData.category?.rawValue ?? "Nil"
-        
         guard let brandName = giftData.brandName,
-              let productName = giftData.productName,
-              let memo = giftData.memo else {
+              let productName = giftData.productName else {
             throw FireBaseManagerError.giftDataNotChangeString
         }
         
-        guard let giftExpireDate = giftData.expireDate,
-              let giftUseDate = giftData.useDate else {
+        guard let giftExpireDate = giftData.expireDate else {
             throw FireBaseManagerError.dateError
         }
         
         let dateFormatter = DateFormatter()
         dateFormatter.dateFormat = "yyyyMMdd"
         let expireDate = dateFormatter.string(from: giftExpireDate)
-        let useDate = dateFormatter.string(from: giftUseDate)
         
         upLoadImageData(imageData: imageData, userID: id, dataNumber: maxItemNumber) { url in
             self.db.collection(id.description).document((self.maxItemNumber + 1).description).setData(["image":url.absoluteString,
@@ -114,7 +127,6 @@ class FireBaseManager {
                                                                                                        "memo":memo,
                                                                                                        "useableState": true,
                                                                                                        "expireDate": expireDate,
-                                                                                                       "useDate": useDate,
                                                                                                       ])
             self.maxItemNumber += 1
         }

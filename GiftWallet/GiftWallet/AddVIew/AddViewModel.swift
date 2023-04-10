@@ -10,6 +10,7 @@ import UIKit
 class AddViewModel {
     
     private let coreDataManager = CoreDataManager.shared
+    private let firebaseManager = FireBaseManager.shared
     private let visionManager = VisionManager()
     private let autoInputUseCase = AutoInputUseCase()
     private let dateCalculateUseCase = DateCalculateUseCase()
@@ -41,6 +42,15 @@ class AddViewModel {
         }
     }
     
+    func createFireStoreDocument() {
+        guard let gift = gift else { return }
+        
+        do {
+            try firebaseManager.saveData(giftData: gift)
+        } catch {
+            print(error.localizedDescription)
+        }
+    }
     
     func createCoreData(completion: @escaping () -> Void) {
         guard let gift = gift else { return }

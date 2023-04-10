@@ -94,6 +94,7 @@ class AddViewController: UIViewController {
                 self.sceneConversion()
             case .expireDate:
                 self.viewModel.buttonActionByPage(page: self.page, inputText)
+                self.viewModel.createFireStoreDocument()
                 self.viewModel.createCoreData {
                     self.dismiss(animated: true)
                 }
