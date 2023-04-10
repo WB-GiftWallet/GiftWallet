@@ -113,7 +113,7 @@ class FireBaseManager {
         }
 
         // 선택값 프로퍼티
-        let categoryData = giftData.category?.rawValue
+        let category = giftData.category?.rawValue
         let memo = giftData.memo
         
         
@@ -143,7 +143,7 @@ class FireBaseManager {
         upLoadImageData(imageData: imageData, userID: id, dataNumber: maxItemNumber) { url in
             self.db.collection(id.description).document((self.maxItemNumber + 1).description).setData(["image":url.absoluteString,
                                                                                                        "number":self.maxItemNumber + 1,
-                                                                                                       "category":categoryData,
+                                                                                                       "category":category,
                                                                                                        "brandName":brandName,
                                                                                                        "productName":productName,
                                                                                                        "memo":memo,
@@ -156,38 +156,40 @@ class FireBaseManager {
     }
     
     func updateData(_ giftData: Gift) throws {
-        guard let id = Auth.auth().currentUser?.uid else {
+        guard let id = currentUserID else {
             return
         }
         
         let dataNumber = giftData.number
+        let category = giftData.category?.rawValue
+        let memo = giftData.memo
+        var useDate: String? = nil
         
         guard let imageData = giftData.image.pngData() else {
             print("FireBaseManagerError.invalidImage")
             throw FireBaseManagerError.invalidImage
         }
-        
-        let categoryData = giftData.category?.rawValue ?? "Nil"
-        
+                
         guard let brandName = giftData.brandName,
-              let productName = giftData.productName,
-              let memo = giftData.memo else {
+              let productName = giftData.productName else {
             throw FireBaseManagerError.giftDataNotChangeString
         }
         
-        guard let giftExpireDate = giftData.expireDate,
-              let giftUseDate = giftData.useDate else {
+        guard let giftExpireDate = giftData.expireDate else {
             throw FireBaseManagerError.dateError
         }
         
         let dateFormatter = DateFormatter()
         dateFormatter.dateFormat = "yyyyMMdd"
         let expireDate = dateFormatter.string(from: giftExpireDate)
-        let useDate = dateFormatter.string(from: giftUseDate)
         
+        if let giftUseDate = giftData.useDate {
+            useDate = dateFormatter.string(from: giftUseDate)
+        }
+                
         upLoadImageData(imageData: imageData, userID: id, dataNumber: giftData.number) { url in
             self.db.collection(id.description).document(String(dataNumber)).updateData(["image":url.absoluteString,
-                                                                                        "category":categoryData,
+                                                                                        "category": category,
                                                                                         "brandName":brandName,
                                                                                         "productName":productName,
                                                                                         "memo":memo,
