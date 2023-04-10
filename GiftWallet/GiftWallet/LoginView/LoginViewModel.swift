@@ -46,11 +46,13 @@ class LoginViewModel {
                   let rawNonce = userInfo["rawNonce"] else { return }
             let credentail = self.firebaseManager.makeAppleAuthProviderCredential(idToken: idTokenString, rawNonce: rawNonce)
             
-            self.firebaseManager.signInWithCredential(authCredential: credentail) { authResult, error in
-                if let error = error {
-                    print("Error Apple Sign in: %@", error)
+            self.firebaseManager.signInWithCredential(authCredential: credentail) { gifts in
+                do {
+                    try self.coreDataManager.updateAllData(gifts)
+                    completion()
+                } catch {
+                    print(error.localizedDescription)
                 }
-                completion()
             }
         }
     }

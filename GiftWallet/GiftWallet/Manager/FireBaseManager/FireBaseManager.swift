@@ -62,8 +62,19 @@ class FireBaseManager {
         }
     }
     
-    func signInWithCredential(authCredential: AuthCredential, completion: ((AuthDataResult?, Error?) -> Void)?) {
-        Auth.auth().signIn(with: authCredential, completion: completion)
+    func signInWithCredential(authCredential: AuthCredential, completion: @escaping ([Gift]) -> Void) {
+        Auth.auth().signIn(with: authCredential) { [weak self] authResult, error in
+            if error == nil {
+                self?.fetchData { result in
+                    switch result {
+                    case .success(let gifts):
+                        completion(gifts)
+                    case .failure(let error):
+                        print(error)
+                    }
+                }
+            }
+        }
     }
     
     func signOut() {
