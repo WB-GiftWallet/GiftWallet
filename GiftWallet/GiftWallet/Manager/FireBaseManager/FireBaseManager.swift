@@ -54,6 +54,7 @@ class FireBaseManager {
                     switch result {
                     case .success(let gifts):
                         print(gifts)
+                        try! CoreDataManager.shared.updateAllData(gifts)
                     case .failure(let error):
                         print(error)
                     }
@@ -97,8 +98,9 @@ class FireBaseManager {
         }
 
         // 선택값 프로퍼티
-        let categoryData = giftData.category?.rawValue ?? ""
-        let memo = giftData.memo ?? ""
+        let categoryData = giftData.category?.rawValue
+        let memo = giftData.memo
+        
         
         // 필수값 프로퍼티
         guard let imageData = giftData.image.pngData() else {
@@ -118,6 +120,11 @@ class FireBaseManager {
         dateFormatter.dateFormat = "yyyyMMdd"
         let expireDate = dateFormatter.string(from: giftExpireDate)
         
+        var strUseDate: String? = nil
+        if let useDate = giftData.useDate {
+            strUseDate = dateFormatter.string(from: useDate)
+        }
+        
         upLoadImageData(imageData: imageData, userID: id, dataNumber: maxItemNumber) { url in
             self.db.collection(id.description).document((self.maxItemNumber + 1).description).setData(["image":url.absoluteString,
                                                                                                        "number":self.maxItemNumber + 1,
@@ -125,8 +132,9 @@ class FireBaseManager {
                                                                                                        "brandName":brandName,
                                                                                                        "productName":productName,
                                                                                                        "memo":memo,
-                                                                                                       "useableState": true,
+                                                                                                       "useableState": giftData.useableState,
                                                                                                        "expireDate": expireDate,
+                                                                                                       "useDate": strUseDate
                                                                                                       ])
             self.maxItemNumber += 1
         }
