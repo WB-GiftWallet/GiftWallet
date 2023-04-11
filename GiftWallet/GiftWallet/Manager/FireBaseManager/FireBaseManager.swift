@@ -19,11 +19,7 @@ class FireBaseManager {
     private let storage = Storage.storage()
     var currentUserID = Auth.auth().currentUser?.uid
     
-    private var maxItemNumber = 0
-    
-    private init() {
-        self.initializingItemNumber()
-    }
+    private init() { }
     
     //MARK: Login, Logout, createUser Method
     private func createUser(email: String, password: String, completion: @escaping (Result<String, FireBaseManagerError>) -> Void) {
@@ -39,7 +35,6 @@ class FireBaseManager {
             }
             
             completion(.success(userUid))
-            self.initializingItemNumber()
         }
     }
     
@@ -107,7 +102,7 @@ class FireBaseManager {
         }
     }
     
-    func saveData(giftData: Gift) throws {
+    func saveData(giftData: Gift, number: Int) throws {
         guard let id = Auth.auth().currentUser?.uid else {
             throw FireBaseManagerError.notHaveID
         }
@@ -140,18 +135,17 @@ class FireBaseManager {
             strUseDate = dateFormatter.string(from: useDate)
         }
         
-        upLoadImageData(imageData: imageData, userID: id, dataNumber: maxItemNumber) { url in
-            self.db.collection(id.description).document((self.maxItemNumber + 1).description).setData(["image":url.absoluteString,
-                                                                                                       "number":self.maxItemNumber + 1,
-                                                                                                       "category":category,
-                                                                                                       "brandName":brandName,
-                                                                                                       "productName":productName,
-                                                                                                       "memo":memo,
-                                                                                                       "useableState": giftData.useableState,
-                                                                                                       "expireDate": expireDate,
-                                                                                                       "useDate": strUseDate
-                                                                                                      ])
-            self.maxItemNumber += 1
+        upLoadImageData(imageData: imageData, userID: id, dataNumber: number) { url in
+            self.db.collection(id.description).document((number).description).setData(["image":url.absoluteString,
+                                                                                       "number":number,
+                                                                                       "category":category,
+                                                                                       "brandName":brandName,
+                                                                                       "productName":productName,
+                                                                                       "memo":memo,
+                                                                                       "useableState": giftData.useableState,
+                                                                                       "expireDate": expireDate,
+                                                                                       "useDate": strUseDate
+                                                                                      ])
         }
     }
     
@@ -263,43 +257,6 @@ extension FireBaseManager {
         )
         
         return gift
-    }
-}
-
-//MARK: -Item Number Setting Method
-extension FireBaseManager {
-    
-    private func initializingItemNumber() {
-        self.fetchMostRecentNumber { result in
-            switch result {
-            case .success(let number):
-                self.maxItemNumber = number
-            case .failure(let error):
-                print(error.localizedDescription)
-            }
-        }
-    }
-    
-    private func fetchMostRecentNumber(completion: @escaping (Result<Int, FireBaseManagerError>) -> Void) {
-        var recentNumber = 0
-        guard let id = Auth.auth().currentUser?.uid else {
-            completion(.failure(.invaildUserID))
-            return
-        }
-        
-        db.collection(id.description).getDocuments { snapshot, error in
-            if error == nil && snapshot != nil {
-                for document in snapshot!.documents {
-                    guard let docuNumber = Int(document.documentID) else {
-                        return
-                    }
-                    recentNumber = max(recentNumber, docuNumber)
-                }
-                completion(.success(recentNumber))
-            } else {
-                print("FireBase Fetch Error")
-            }
-        }
     }
 }
 
