@@ -92,7 +92,7 @@ extension Gift {
     
     static func addSampleData() {
         Gift.sampleCoreGifts.forEach { gift in
-            try? CoreDataManager.shared.saveData(gift)
+//            try? CoreDataManager.shared.saveData(gift)
         }
     }
 }

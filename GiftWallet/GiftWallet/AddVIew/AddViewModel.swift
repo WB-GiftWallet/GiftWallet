@@ -42,22 +42,22 @@ class AddViewModel {
         }
     }
     
-    func createFireStoreDocument() {
+    func createFireStoreDocument(_ number: Int, completion: @escaping () -> Void) {
         guard let gift = gift else { return }
         
         do {
-            try firebaseManager.saveData(giftData: gift)
+            try firebaseManager.saveData(giftData: gift, number: number)
+            completion()
         } catch {
             print(error.localizedDescription)
         }
     }
     
-    func createCoreData(completion: @escaping () -> Void) {
+    func createCoreData(completion: @escaping (Int16) -> Void) {
         guard let gift = gift else { return }
         
         do {
-            try coreDataManager.saveData(gift)
-            completion()
+            try coreDataManager.saveData(gift, completion: completion)
         } catch {
             print(error.localizedDescription)
         }
