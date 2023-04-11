@@ -42,7 +42,7 @@ struct Gift {
         
         self.number = Int(giftData.number)
         self.image = image
-        self.category = Category.bread
+        self.category = nil
         self.brandName = giftData.brandName
         self.productName = giftData.productName
         self.memo = giftData.memo

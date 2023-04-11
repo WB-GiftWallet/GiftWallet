@@ -111,7 +111,7 @@ class FireBaseManager {
         guard let id = Auth.auth().currentUser?.uid else {
             throw FireBaseManagerError.notHaveID
         }
-
+        
         // 선택값 프로퍼티
         let category = giftData.category?.rawValue
         let memo = giftData.memo
@@ -169,7 +169,7 @@ class FireBaseManager {
             print("FireBaseManagerError.invalidImage")
             throw FireBaseManagerError.invalidImage
         }
-                
+        
         guard let brandName = giftData.brandName,
               let productName = giftData.productName else {
             throw FireBaseManagerError.giftDataNotChangeString
@@ -186,20 +186,21 @@ class FireBaseManager {
         if let giftUseDate = giftData.useDate {
             useDate = dateFormatter.string(from: giftUseDate)
         }
-                
+        
         upLoadImageData(imageData: imageData, userID: id, dataNumber: giftData.number) { url in
-            self.db.collection(id.description).document(String(dataNumber)).updateData(["image":url.absoluteString,
-                                                                                        "category": category,
-                                                                                        "brandName":brandName,
-                                                                                        "productName":productName,
-                                                                                        "memo":memo,
-                                                                                        "useableState":giftData.useableState,
-                                                                                        "expireDate": expireDate,
-                                                                                        "useDate": useDate,
-                                                                                       ]) { error in
+            let data: [AnyHashable: Any] = ["image":url.absoluteString,
+                                            "category": category,
+                                            "brandName":brandName,
+                                            "productName":productName,
+                                            "memo":memo,
+                                            "useableState":giftData.useableState,
+                                            "expireDate": expireDate,
+                                            "useDate": useDate
+            ]
+            
+            self.db.collection(id.description).document(String(dataNumber)).updateData(data) { error in
                 if let error = error {
-                    print(error.localizedDescription)
-                    return
+                    print("업데이트에러확인용:", error.localizedDescription)
                 }
             }
         }
@@ -230,6 +231,7 @@ extension FireBaseManager {
               let useableState = document["useableState"] as? Bool,
               let expireDateString = document["expireDate"] as? String else { return nil }
         // 선택값 프로퍼티
+        let category = document["category"] as? Category?
         let memo = document["memo"] as? String?
         let useDateString = document["useDate"] as? String?
         
@@ -251,7 +253,7 @@ extension FireBaseManager {
         let gift = Gift(
             //TODO: image 받아오기
             image: UIImage(systemName: "applelogo")!,
-            category: nil,
+            category: category as? Category,
             brandName: brandName,
             productName: productName,
             memo: memo as? String,
@@ -259,7 +261,7 @@ extension FireBaseManager {
             expireDate: expireDate,
             useDate: useDate
         )
-
+        
         return gift
     }
 }
@@ -270,10 +272,10 @@ extension FireBaseManager {
     private func initializingItemNumber() {
         self.fetchMostRecentNumber { result in
             switch result {
-                case .success(let number):
-                    self.maxItemNumber = number
-                case .failure(let error):
-                    print(error.localizedDescription)
+            case .success(let number):
+                self.maxItemNumber = number
+            case .failure(let error):
+                print(error.localizedDescription)
             }
         }
     }
