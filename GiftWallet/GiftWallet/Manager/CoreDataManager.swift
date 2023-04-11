@@ -30,7 +30,7 @@ final class CoreDataManager {
         return .failure(.coreDataError)
     }
     
-    func saveData(_ giftData: Gift) throws {
+    func saveData(_ giftData: Gift, completion: @escaping (Int16) -> Void) throws {
         guard let context = appDelegate?.persistentContainer.viewContext else {
             throw CoreDataError.contextInvalid
         }
@@ -52,6 +52,7 @@ final class CoreDataManager {
             info.setValue(giftData.useDate, forKey: "useDate")
             do {
                 try context.save()
+                completion(giftDataMostRecentNumber)
             } catch {
                 print(error.localizedDescription)
             }
