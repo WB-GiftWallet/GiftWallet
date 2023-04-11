@@ -501,6 +501,7 @@ extension MainViewController: UICollectionViewDelegate {
         let alertController = UIAlertController(title: nil, message: "선택한 쿠폰을 완전히 제거합니다.", preferredStyle: .actionSheet)
         let okAction = UIAlertAction(title: "네", style: .destructive) { _ in
             self.viewModel.deleteCoreData(targetGiftNumber: gift.number)
+            self.viewModel.deleteFirebaseStoreDocument(targetGiftNumber: gift.number)
             self.updateCollectionViewData()
         }
         

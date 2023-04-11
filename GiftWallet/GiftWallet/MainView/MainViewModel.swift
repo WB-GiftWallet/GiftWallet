@@ -68,7 +68,10 @@ extension MainViewModel {
         } catch {
             print(error.localizedDescription)
         }
-        
+    }
+    
+    func deleteFirebaseStoreDocument(targetGiftNumber: Int) {
+        firebaseManager.deleteDate(targetGiftNumber)
     }
     
     private func updateCoreData(gift: Gift) {
