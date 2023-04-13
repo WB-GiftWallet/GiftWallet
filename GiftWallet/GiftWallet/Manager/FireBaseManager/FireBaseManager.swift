@@ -200,6 +200,33 @@ class FireBaseManager {
         }
     }
     
+    func updateUseableState(_ giftData: Gift) {
+        guard let id = currentUserID else { return }
+        
+        let data: [AnyHashable: Any] = ["useableState": giftData.useableState]
+        
+        self.db.collection(id.description).document(String(giftData.number)).updateData(data) { error in
+            if let error = error {
+                print("업데이트에러용", error.localizedDescription)
+            }
+        }
+    }
+    
+    func updateMemoAndUseableState(_ giftData: Gift) {
+        guard let id = currentUserID else { return }
+        
+        let data: [AnyHashable: Any] = [
+            "useableState": giftData.useableState,
+            "memo": giftData.memo
+        ]
+        
+        self.db.collection(id.description).document(String(giftData.number)).updateData(data) { error in
+            if let error = error {
+                print("업데이트에러용", error.localizedDescription)
+            }
+        }
+    }
+    
     func deleteDate(_ number: Int) {
         guard let current = Auth.auth().currentUser?.uid else {
             return

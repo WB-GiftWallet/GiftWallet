@@ -53,10 +53,12 @@ extension MainViewModel {
             var gift = recentGifts.value[index]
             gift.useableState = false
             updateCoreData(gift: gift)
+            updateUseableStateFirebaseStoreDocument(gift: gift)
         } else if let index = expireGifts.value.firstIndex(where: { $0.number == updategiftNumber }) {
             var gift = expireGifts.value[index]
             gift.useableState = false
             updateCoreData(gift: gift)
+            updateUseableStateFirebaseStoreDocument(gift: gift)
         }
     }
     
@@ -70,10 +72,6 @@ extension MainViewModel {
         }
     }
     
-    func deleteFirebaseStoreDocument(targetGiftNumber: Int) {
-        firebaseManager.deleteDate(targetGiftNumber)
-    }
-    
     private func updateCoreData(gift: Gift) {
         do {
             try coreDataManager.updateData(gift)
@@ -81,6 +79,15 @@ extension MainViewModel {
             print(error.localizedDescription)
         }
     }
+
+    func deleteFirebaseStoreDocument(targetGiftNumber: Int) {
+        firebaseManager.deleteDate(targetGiftNumber)
+    }
+    
+    func updateUseableStateFirebaseStoreDocument(gift: Gift) {
+        firebaseManager.updateUseableState(gift)
+    }
+    
 }
 
 // MARK: Login 상태관련 함수

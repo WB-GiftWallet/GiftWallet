@@ -10,6 +10,7 @@ import Foundation
 class DetailViewModel {
     
     private let coredataManager = CoreDataManager.shared
+    private let firebaseManager = FireBaseManager.shared
     
     var gifts: [Gift]
     var indexPathItem: Int?
@@ -44,4 +45,9 @@ class DetailViewModel {
             print(error.localizedDescription)
         }
     }
+    
+    func updateMemoAndUseableStateFirebaseStoreDocument(gift: Gift) {
+        firebaseManager.updateMemoAndUseableState(gift)
+    }
+    
 }
