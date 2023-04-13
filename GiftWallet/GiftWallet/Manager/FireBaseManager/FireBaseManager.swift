@@ -244,9 +244,10 @@ class FireBaseManager {
 extension FireBaseManager {
     //TODO: 시간 당겨지는현상 해결 [2023-04-01] -> [2023-03-31 15:00:00 +0000]
     private func changeGiftData(_ document: QueryDocumentSnapshot) -> Gift? {
+        
+        
         // 필수값 프로퍼티
-        guard let imageURL = document["image"] as? String,
-              let number = document["number"] as? Int,
+        guard let number = document["number"] as? Int,
               let brandName = document["brandName"] as? String,
               let productName = document["productName"] as? String,
               let useableState = document["useableState"] as? Bool,
@@ -255,6 +256,12 @@ extension FireBaseManager {
         let category = document["category"] as? Category?
         let memo = document["memo"] as? String?
         let useDateString = document["useDate"] as? String?
+        
+        
+        var image: UIImage?
+        self.downLoadImageData(dataNumber: number) { url in
+            image = UIImage(contentsOfFile: url.path)
+        }
         
         let formatter = DateFormatter()
         formatter.locale = Locale(identifier: "ko-kr")
@@ -273,7 +280,7 @@ extension FireBaseManager {
         
         let gift = Gift(
             //TODO: image 받아오기
-            image: UIImage(systemName: "applelogo")!,
+            image: image ?? UIImage(systemName: "multiply").unsafelyUnwrapped,
             category: category as? Category,
             brandName: brandName,
             productName: productName,
@@ -305,24 +312,25 @@ extension FireBaseManager {
         }
     }
     
-    private func downLoadImageData(dataNumber: Int, completion: @escaping (Data) -> Void) {
+    private func downLoadImageData(dataNumber: Int, completion: @escaping (URL) -> Void) {
         guard let id = Auth.auth().currentUser?.uid else {
             return
         }
         
         let storageRef = storage.reference()
         let imageReference = storageRef.child("image").child("USER_\(id)").child("image_\(dataNumber).png")
+  
+        let localURL = URL(fileURLWithPath: NSTemporaryDirectory()).appendingPathComponent("image.png")
         
-        imageReference.getData(maxSize: 1 * 1024 * 1024) { data, error in
-            if error != nil {
-                print("Image Get Data ERROR")
+        let downLoadTask = imageReference.write(toFile: localURL) { url, error in
+            if let error {
+                print(error)
             }
             
-            guard let data = data else {
-                return
+            if let url = url {
+                completion(url)
             }
             
-            completion(data)
         }
     }
 }
