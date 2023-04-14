@@ -9,23 +9,20 @@ import UserNotifications
 
 class UserNotificationManager {
     private let notificationID: String
+    private let notificationContents: NotificationContents
+    
     private let content = UNMutableNotificationContent()
     private var dateComponents = DateComponents()
     
-    init(notificationID: String) {
+    init(notificationID: String, notificationContents: NotificationContents) {
         self.notificationID = notificationID
-    }
-    
-    func settingContents() {
-        content.title = "기한 임박!!"
-        content.body = "오늘 사라지는 기프티콘이 있어요!"
-        
-        content.sound = .default
+        self.notificationContents = notificationContents
     }
     
     func requestNotification() {
-        let trigger = UNCalendarNotificationTrigger(dateMatching: dateComponents, repeats: true)
+        setContents(contents: notificationContents)
         
+        let trigger = UNCalendarNotificationTrigger(dateMatching: dateComponents, repeats: true)
         let request = UNNotificationRequest(identifier: notificationID, content: content, trigger: trigger)
         
         let notificationCenter = UNUserNotificationCenter.current()
@@ -33,5 +30,17 @@ class UserNotificationManager {
             if error != nil {
             }
         }
+    }
+    
+    private func setContents(contents: NotificationContents) {
+        content.title = contents.title
+        content.body = contents.body
+        
+        content.sound = .default
+    }
+    
+    func setDateComponents() {
+        dateComponents.hour = 20
+        dateComponents.minute = 00
     }
 }
