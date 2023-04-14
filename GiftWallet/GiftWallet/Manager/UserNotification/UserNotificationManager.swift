@@ -21,6 +21,7 @@ class UserNotificationManager {
     
     func requestNotification() {
         setContents(contents: notificationContents)
+        setDateComponents()
         
         let trigger = UNCalendarNotificationTrigger(dateMatching: dateComponents, repeats: true)
         let request = UNNotificationRequest(identifier: notificationID, content: content, trigger: trigger)
@@ -39,8 +40,17 @@ class UserNotificationManager {
         content.sound = .default
     }
     
-    func setDateComponents() {
-        dateComponents.hour = 20
-        dateComponents.minute = 00
+    private func setDateComponents() {
+        dateComponents.hour = UserDefaults.standard.integer(forKey: "NotificationHour")
+        dateComponents.minute = UserDefaults.standard.integer(forKey: "NotificationMinute")
     }
 }
+
+struct userDefualtTimeSetting {
+    
+    static func timeSetting(hour: Int, minute: Int) {
+        UserDefaults.standard.set(hour, forKey: "NotificationHour")
+        UserDefaults.standard.set(minute, forKey: "NotificationMinute")
+    }
+}
+
