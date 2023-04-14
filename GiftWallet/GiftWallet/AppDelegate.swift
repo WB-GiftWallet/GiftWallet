@@ -26,6 +26,15 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         //MARK: KakaoSDK Init
         KakaoSDK.initSDK(appKey: "16f9d943fc2e2b512f145c73a1263e39")
         
+        //MARK: Notifiaction 권한 승인 로직
+        let center = UNUserNotificationCenter.current()
+        center.requestAuthorization(options: [.alert, .sound, .badge]) { granted, error in
+            if let error = error {
+                // Handle the error here.
+                print("error: ", error)
+            }
+        }
+        
         return true
     }
 
