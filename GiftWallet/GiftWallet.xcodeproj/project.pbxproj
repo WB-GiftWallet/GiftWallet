@@ -216,6 +216,14 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		17457D0B29E98CE30018162D /* UserNotification */ = {
+			isa = PBXGroup;
+			children = (
+				17457D0429E7F7650018162D /* UserNotificationManager.swift */,
+			);
+			path = UserNotification;
+			sourceTree = "<group>";
+		};
 		17B579ED29D3302D00042D80 /* FireBaseManager */ = {
 			isa = PBXGroup;
 			children = (
@@ -324,7 +332,7 @@
 				D2CDDBDF29AF3CD300E000E3 /* VisionManager.swift */,
 				D2CA7D8929D6BAA0002D3BA2 /* KakaoLoginManager.swift */,
 				D246B39829D7CF7E00A5BB2F /* AppleLoginManager.swift */,
-				17457D0429E7F7650018162D /* UserNotificationManager.swift */,
+				17457D0B29E98CE30018162D /* UserNotification */,
 			);
 			path = Manager;
 			sourceTree = "<group>";
