@@ -8,21 +8,21 @@
 import UserNotifications
 
 class UserNotificationManager {
-    private let notificationID: String
-    private let notificationContents: NotificationContents
+    private let notificationID: String = "UserNotification"
     
     private let content = UNMutableNotificationContent()
     private var dateComponents = DateComponents()
     
-    init(notificationID: String, notificationContents: NotificationContents) {
-        self.notificationID = notificationID
-        self.notificationContents = notificationContents
-    }
     
     func requestNotification() {
-        mostRecentExpireItemFetchFromCoreData()
-        setContents(contents: notificationContents)
-        setDateComponents()
+        let mostRecentExpireDay = mostRecentExpireItemFetchFromCoreData()
+        do {
+            let notificationContents: NotificationContents = try setNotificationContents(mostRecentExpireDay)
+            setContents(contents: notificationContents)
+            setDateComponents()
+        } catch {
+            print(error.localizedDescription)
+        }
         
         let trigger = UNCalendarNotificationTrigger(dateMatching: dateComponents, repeats: true)
         let request = UNNotificationRequest(identifier: notificationID, content: content, trigger: trigger)
@@ -41,23 +41,36 @@ class UserNotificationManager {
         content.sound = .default
     }
     
+    // TODO: UserDefaults를 이용한 알람 타임 등록
     private func setDateComponents() {
         dateComponents.hour = UserDefaults.standard.integer(forKey: "NotificationHour")
         dateComponents.minute = UserDefaults.standard.integer(forKey: "NotificationMinute")
     }
     
-    
+    private func setNotificationContents(_ mostRecentExpireDay: Int) throws -> NotificationContents {
+        
+        switch mostRecentExpireDay {
+            case 0:
+                return .one
+            case 1...2:
+                return .three
+            case 3...6:
+                return .seven
+            default:
+                throw NotificationError.outOfNumbersMostRecent
+        }
+    }
 }
 
-//MARK: CoreData 데이터 mostRecentExpireDate 가져오기
+// MARK: CoreData 데이터 mostRecentExpireDate 가져오기
 extension UserNotificationManager {
-    private func mostRecentExpireItemFetchFromCoreData() {
+    private func mostRecentExpireItemFetchFromCoreData() -> Int {
         let gifts = fetchFiltedData()
-        var mostExpireDate: Int = 7
         let dateFormatter = DateFormatter(dateFormatte: DateFormatteConvention.yyyyMMdd)
+        var mostExpireDate: Int = 7
         
         for gift in gifts {
-            guard let expireDate = gift.expireDate else { return }
+            guard let expireDate = gift.expireDate else { return 7 }
             print(judgeGapOfDay(date: expireDate))
             switch judgeGapOfDay(date: expireDate) {
                 case 0:
@@ -71,6 +84,8 @@ extension UserNotificationManager {
                     continue
             }
         }
+        
+        return mostExpireDate
     }
     
     private func fetchFiltedData() -> [Gift] {
@@ -97,7 +112,7 @@ extension UserNotificationManager {
     }
 }
 
-extension DateFormatter {
+private extension DateFormatter {
     convenience init(dateFormatte: DateFormatteConvention) {
         self.init()
         self.locale = Locale(identifier: "ko_KR")
@@ -106,6 +121,19 @@ extension DateFormatter {
     }
 }
 
-enum DateFormatteConvention: String {
+private enum DateFormatteConvention: String {
     case yyyyMMdd
+}
+
+struct userDefualtTimeSetting {
+    
+    func timeSetting(hour: Int, minute: Int) {
+        UserDefaults.standard.set(hour, forKey: "NotificationHour")
+        UserDefaults.standard.set(minute, forKey: "NotificationMinute")
+    }
+}
+
+enum NotificationError: Error {
+    case outOfNumbersMostRecent
+    case notHaveMostRecentDay
 }
