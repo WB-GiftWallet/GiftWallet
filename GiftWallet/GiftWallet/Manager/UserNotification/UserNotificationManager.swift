@@ -9,10 +9,8 @@ import UserNotifications
 
 class UserNotificationManager {
     private let notificationID: String = "UserNotification"
-    
     private let content = UNMutableNotificationContent()
     private var dateComponents = DateComponents()
-    
     
     func requestNotification() {
         let mostRecentExpireDay = mostRecentExpireItemFetchFromCoreData()
