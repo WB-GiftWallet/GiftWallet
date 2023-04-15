@@ -113,7 +113,7 @@ class FireBaseManager {
         
         
         // 필수값 프로퍼티
-        guard let imageData = giftData.image.pngData() else {
+        guard let imageData = compressImage(giftData.image, value: 1.0) else {
             throw FireBaseManagerError.invalidImage
         }
         
@@ -134,7 +134,7 @@ class FireBaseManager {
         if let useDate = giftData.useDate {
             strUseDate = dateFormatter.string(from: useDate)
         }
-        
+
         upLoadImageData(imageData: imageData, userID: id, dataNumber: number) { url in
             self.db.collection(id.description).document((number).description).setData(["image":url.absoluteString,
                                                                                        "number":number,
@@ -243,7 +243,7 @@ class FireBaseManager {
 
 extension FireBaseManager {
     //TODO: 시간 당겨지는현상 해결 [2023-04-01] -> [2023-03-31 15:00:00 +0000]
-    private func changeGiftData(_ document: QueryDocumentSnapshot) -> Gift? {
+    private func changeGiftData(_ document: QueryDocumentSnapshot, completion: (Gift) -> Void) {
         
         
         // 필수값 프로퍼티
@@ -251,17 +251,11 @@ extension FireBaseManager {
               let brandName = document["brandName"] as? String,
               let productName = document["productName"] as? String,
               let useableState = document["useableState"] as? Bool,
-              let expireDateString = document["expireDate"] as? String else { return nil }
+              let expireDateString = document["expireDate"] as? String else { return }
         // 선택값 프로퍼티
         let category = document["category"] as? Category?
         let memo = document["memo"] as? String?
         let useDateString = document["useDate"] as? String?
-        
-        
-        var image: UIImage?
-        self.downLoadImageData(dataNumber: number) { url in
-            image = UIImage(contentsOfFile: url.path)
-        }
         
         let formatter = DateFormatter()
         formatter.locale = Locale(identifier: "ko-kr")
@@ -273,24 +267,25 @@ extension FireBaseManager {
             useDate = formatter.date(from: dateString!)
         }
         
-        guard let expireDate = formatter.date(from: expireDateString)
-        else {
-            return nil
+        guard let expireDate = formatter.date(from: expireDateString) else { return }
+        
+        self.downLoadImageData(dataNumber: number) { data in
+            if let image = UIImage(data: data) {
+                let gift = Gift(
+                    //TODO: image 받아오기
+                    image: ima,
+                    category: category as? Category,
+                    brandName: brandName,
+                    productName: productName,
+                    memo: memo as? String,
+                    useableState: useableState,
+                    expireDate: expireDate,
+                    useDate: useDate
+                )
+                completion(gift)
+            }
+
         }
-        
-        let gift = Gift(
-            //TODO: image 받아오기
-            image: image ?? UIImage(systemName: "multiply").unsafelyUnwrapped,
-            category: category as? Category,
-            brandName: brandName,
-            productName: productName,
-            memo: memo as? String,
-            useableState: useableState,
-            expireDate: expireDate,
-            useDate: useDate
-        )
-        
-        return gift
     }
 }
 
@@ -312,7 +307,7 @@ extension FireBaseManager {
         }
     }
     
-    private func downLoadImageData(dataNumber: Int, completion: @escaping (URL) -> Void) {
+    private func downLoadImageData(dataNumber: Int, completion: @escaping (Data) -> Void) {
         guard let id = Auth.auth().currentUser?.uid else {
             return
         }
@@ -320,18 +315,27 @@ extension FireBaseManager {
         let storageRef = storage.reference()
         let imageReference = storageRef.child("image").child("USER_\(id)").child("image_\(dataNumber).png")
   
-        let localURL = URL(fileURLWithPath: NSTemporaryDirectory()).appendingPathComponent("image.png")
-        
-        let downLoadTask = imageReference.write(toFile: localURL) { url, error in
-            if let error {
-                print(error)
+        imageReference.getData(maxSize: 1 * 1024 * 1024) { data, error in
+            if let error = error {
+                print(error.localizedDescription)
             }
             
-            if let url = url {
-                completion(url)
+            if let data = data {
+                print("완료됨")
+                completion(data)
             }
-            
         }
+    }
+    
+    private func compressImage(_ image: UIImage, value: Double) -> Data? {
+        guard let compressedImage = image.jpegData(compressionQuality: value) else { return nil }
+        let maxCapacity = 1048576 // 1MB
+        
+        if compressedImage.count > maxCapacity {
+            return compressImage(image, value: value - 0.1)
+        }
+        
+        return compressedImage
     }
 }
 
