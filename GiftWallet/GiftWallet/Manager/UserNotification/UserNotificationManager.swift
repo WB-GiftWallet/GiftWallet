@@ -11,29 +11,38 @@ class UserNotificationManager {
     private let notificationID: String = "UserNotification"
     private let content = UNMutableNotificationContent()
     private var dateComponents = DateComponents()
+    private var recentSevenDays = Array(repeating: Int.zero, count: 7)
     
-//    func requestNotification() {
-//        let mostRecentExpireDay = mostRecentExpireItemFetchForSevenDayFromCoreData()
-//        
-//        do {
-//            let notificationContents: NotificationContents = try setNotificationContents(mostRecentExpireDay)
-//            setContents(contents: notificationContents)
-//            setDateComponents()
-//        } catch {
-//            print(error.localizedDescription)
-//        }
-//        
+    func requestNotification() {
+        //MARK: 7일 정렬
+        do {
+            recentSevenDays = try mostRecentExpireItemFetchForSevenDayFromCoreData()
+        } catch NotificationError.doNotFetchCoreData {
+            print(NotificationError.doNotFetchCoreData.localizedDescription)
+        } catch {
+            print(error.localizedDescription)
+        }
+        
+        
+        do {
+            let notificationContents: NotificationExpireDayContents = try setNotificationContents(mostRecentExpireDay)
+            setContents(contents: notificationContents)
+            setDateComponents()
+        } catch {
+            print(error.localizedDescription)
+        }
+//
 //        let trigger = UNCalendarNotificationTrigger(dateMatching: dateComponents, repeats: true)
 //        let request = UNNotificationRequest(identifier: notificationID, content: content, trigger: trigger)
-//        
+//
 //        let notificationCenter = UNUserNotificationCenter.current()
 //        notificationCenter.add(request) { (error) in
 //            if error != nil {
 //            }
 //        }
-//    }
+    }
     
-    private func setContents(contents: NotificationContents) {
+    private func setContents(contents: NotificationExpireDayContents) {
         content.title = contents.title
         content.body = contents.body
         
@@ -46,15 +55,15 @@ class UserNotificationManager {
         dateComponents.minute = UserDefaults.standard.integer(forKey: "NotificationMinute")
     }
     
-    private func setNotificationContents(_ mostRecentExpireDay: Int) throws -> NotificationContents {
+    private func setNotificationContents(_ mostRecentExpireDay: Int) throws -> NotificationExpireDayContents {
         
         switch mostRecentExpireDay {
             case 0:
-                return .one
+                return .today
             case 1...2:
-                return .three
+                return .underThree
             case 3...6:
-                return .seven
+                return .underSeven
             default:
                 throw NotificationError.outOfNumbersMostRecent
         }
