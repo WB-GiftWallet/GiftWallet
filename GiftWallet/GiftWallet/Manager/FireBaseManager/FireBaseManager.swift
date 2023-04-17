@@ -91,8 +91,9 @@ class FireBaseManager {
                 var giftData = [Gift]()
                 for document in snapshot!.documents {
                     print("다큐먼트:", document)
-                    guard let gift = self.changeGiftData(document) else { return }
-                    giftData.append(gift)
+                    self.changeGiftData(document) { gift in
+                        giftData.append(gift)
+                    }
                 }
                 
                 completion(.success(giftData))
@@ -113,9 +114,7 @@ class FireBaseManager {
         
         
         // 필수값 프로퍼티
-        guard let imageData = compressImage(giftData.image, value: 1.0) else {
-            throw FireBaseManagerError.invalidImage
-        }
+        let imageData = giftData.image
         
         guard let brandName = giftData.brandName,
               let productName = giftData.productName else {
@@ -159,10 +158,8 @@ class FireBaseManager {
         let memo = giftData.memo
         var useDate: String? = nil
         
-        guard let imageData = giftData.image.pngData() else {
-            print("FireBaseManagerError.invalidImage")
-            throw FireBaseManagerError.invalidImage
-        }
+        let imageData = giftData.image
+
         
         guard let brandName = giftData.brandName,
               let productName = giftData.productName else {
@@ -243,7 +240,7 @@ class FireBaseManager {
 
 extension FireBaseManager {
     //TODO: 시간 당겨지는현상 해결 [2023-04-01] -> [2023-03-31 15:00:00 +0000]
-    private func changeGiftData(_ document: QueryDocumentSnapshot, completion: (Gift) -> Void) {
+    private func changeGiftData(_ document: QueryDocumentSnapshot, completion: @escaping (Gift) -> Void) {
         
         
         // 필수값 프로퍼티
@@ -264,6 +261,7 @@ extension FireBaseManager {
         
         var useDate: Date? = nil
         if let dateString = useDateString {
+            
             useDate = formatter.date(from: dateString!)
         }
         
@@ -273,7 +271,7 @@ extension FireBaseManager {
             if let image = UIImage(data: data) {
                 let gift = Gift(
                     //TODO: image 받아오기
-                    image: ima,
+                    image: image,
                     category: category as? Category,
                     brandName: brandName,
                     productName: productName,
@@ -292,11 +290,13 @@ extension FireBaseManager {
 //MARK: -FireStorage
 extension FireBaseManager {
     
-    private func upLoadImageData(imageData: Data, userID: String, dataNumber: Int, completion: @escaping (URL) -> Void) {
+    private func upLoadImageData(imageData: UIImage, userID: String, dataNumber: Int, completion: @escaping (URL) -> Void) {
         let storageReference = storage.reference()
         let imageReference = storageReference.child("image").child("USER_\(userID)").child("image_\(dataNumber).png")
         
-        let _ = imageReference.putData(imageData, metadata: nil) { (_, error) in
+        guard let compressedData = compressImage(imageData, value: 1) else { return }
+        
+        let _ = imageReference.putData(compressedData, metadata: nil) { (_, error) in
             imageReference.downloadURL { (url, error) in
                 guard let downloadURL = url else {
                     return
