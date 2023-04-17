@@ -12,25 +12,26 @@ class UserNotificationManager {
     private let content = UNMutableNotificationContent()
     private var dateComponents = DateComponents()
     
-    func requestNotification() {
-        let mostRecentExpireDay = mostRecentExpireItemFetchFromCoreData()
-        do {
-            let notificationContents: NotificationContents = try setNotificationContents(mostRecentExpireDay)
-            setContents(contents: notificationContents)
-            setDateComponents()
-        } catch {
-            print(error.localizedDescription)
-        }
-        
-        let trigger = UNCalendarNotificationTrigger(dateMatching: dateComponents, repeats: true)
-        let request = UNNotificationRequest(identifier: notificationID, content: content, trigger: trigger)
-        
-        let notificationCenter = UNUserNotificationCenter.current()
-        notificationCenter.add(request) { (error) in
-            if error != nil {
-            }
-        }
-    }
+//    func requestNotification() {
+//        let mostRecentExpireDay = mostRecentExpireItemFetchForSevenDayFromCoreData()
+//        
+//        do {
+//            let notificationContents: NotificationContents = try setNotificationContents(mostRecentExpireDay)
+//            setContents(contents: notificationContents)
+//            setDateComponents()
+//        } catch {
+//            print(error.localizedDescription)
+//        }
+//        
+//        let trigger = UNCalendarNotificationTrigger(dateMatching: dateComponents, repeats: true)
+//        let request = UNNotificationRequest(identifier: notificationID, content: content, trigger: trigger)
+//        
+//        let notificationCenter = UNUserNotificationCenter.current()
+//        notificationCenter.add(request) { (error) in
+//            if error != nil {
+//            }
+//        }
+//    }
     
     private func setContents(contents: NotificationContents) {
         content.title = contents.title
@@ -62,28 +63,26 @@ class UserNotificationManager {
 
 // MARK: CoreData 데이터 mostRecentExpireDate 가져오기
 extension UserNotificationManager {
-    private func mostRecentExpireItemFetchFromCoreData() -> Int {
+    private func mostRecentExpireItemFetchForSevenDayFromCoreData() throws -> [Int] {
         let gifts = fetchFiltedData()
         let dateFormatter = DateFormatter(dateFormatte: DateFormatteConvention.yyyyMMdd)
-        var mostExpireDate: Int = 7
+        var sevenDays = Array(repeating: 0, count: 7)
         
         for gift in gifts {
-            guard let expireDate = gift.expireDate else { return 7 }
-            print(judgeGapOfDay(date: expireDate))
-            switch judgeGapOfDay(date: expireDate) {
-                case 0:
-                    mostExpireDate = 0
-                    break
-                case 1...2:
-                    mostExpireDate = min(2, mostExpireDate)
-                case 3...6:
-                    mostExpireDate = min(6, mostExpireDate)
+            guard let expireDate = gift.expireDate else {
+                throw NotificationError.doNotFetchCoreData
+            }
+            
+            let day = judgeGapOfDay(date: expireDate)
+            switch day {
+                case 0...6:
+                    sevenDays[day] += 1
                 default:
                     continue
             }
         }
         
-        return mostExpireDate
+        return sevenDays
     }
     
     private func fetchFiltedData() -> [Gift] {
@@ -134,4 +133,5 @@ struct userDefualtTimeSetting {
 enum NotificationError: Error {
     case outOfNumbersMostRecent
     case notHaveMostRecentDay
+    case doNotFetchCoreData
 }
