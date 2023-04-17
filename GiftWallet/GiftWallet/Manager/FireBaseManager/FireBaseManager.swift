@@ -11,6 +11,7 @@ import FirebaseCore
 import FirebaseAuth
 import UIKit
 
+// MARK: 프로퍼티
 class FireBaseManager {
     static let shared = FireBaseManager()
     
@@ -20,8 +21,10 @@ class FireBaseManager {
     var currentUserID = Auth.auth().currentUser?.uid
     
     private init() { }
-    
-    //MARK: Login, Logout, createUser Method
+}
+
+//MARK: FirebaseAuthentification 관련
+extension FireBaseManager {
     private func createUser(email: String, password: String, completion: @escaping (Result<String, FireBaseManagerError>) -> Void) {
         Auth.auth().createUser(withEmail: email, password: password) { authResult, error in
             if error != nil {
@@ -79,8 +82,10 @@ class FireBaseManager {
             print(error.localizedDescription)
         }
     }
-    
-    //MARK: FireBase CRUD
+}
+
+//MARK: FireStoreDatabase CRUD 관련
+extension FireBaseManager {
     func fetchData(completion: @escaping  (Result<[Gift], FireBaseManagerError>) -> Void) {
         guard let id = Auth.auth().currentUser?.uid else {
             return completion(.failure(.notHaveID))
@@ -239,6 +244,7 @@ class FireBaseManager {
     }
 }
 
+// MARK: 내부처리 지역함수
 extension FireBaseManager {
     //TODO: 시간 당겨지는현상 해결 [2023-04-01] -> [2023-03-31 15:00:00 +0000]
     private func changeGiftData(_ document: QueryDocumentSnapshot, completion: @escaping (Gift) -> Void) {
@@ -283,7 +289,7 @@ extension FireBaseManager {
     }
 }
 
-//MARK: -FireStorage
+//MARK: FireStorage 다운로드 + 업로드 관련
 extension FireBaseManager {
     private func upLoadImageData(imageData: UIImage, userID: String, dataNumber: Int, completion: @escaping (URL) -> Void) {
         let storageReference = storage.reference()
@@ -296,7 +302,7 @@ extension FireBaseManager {
                 guard let downloadURL = url else {
                     return
                 }
-    
+                
                 completion(downloadURL)
             }
         }
@@ -334,6 +340,7 @@ extension FireBaseManager {
     }
 }
 
+// MARK: AppleLogin시, Credential 생성 관련 함수
 extension FireBaseManager {
     func makeAppleAuthProviderCredential(idToken: String, rawNonce: String) -> OAuthCredential {
         return OAuthProvider.credential(withProviderID: "apple.com", idToken: idToken, rawNonce: rawNonce)
