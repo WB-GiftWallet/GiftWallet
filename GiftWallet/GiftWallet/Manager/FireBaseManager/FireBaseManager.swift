@@ -86,17 +86,21 @@ class FireBaseManager {
             return completion(.failure(.notHaveID))
         }
         
+        let dispatchGroup = DispatchGroup()
+        
         db.collection(id.description).getDocuments { (snapshot, error) in
             if error == nil && snapshot != nil {
                 var giftData = [Gift]()
                 for document in snapshot!.documents {
-                    print("다큐먼트:", document)
+                    dispatchGroup.enter()
                     self.changeGiftData(document) { gift in
                         giftData.append(gift)
+                        dispatchGroup.leave()
                     }
                 }
-                
-                completion(.success(giftData))
+                dispatchGroup.notify(queue: .main) {
+                    completion(.success(giftData))
+                }
             } else {
                 completion(.failure(.fetchDataError))
             }
@@ -133,7 +137,7 @@ class FireBaseManager {
         if let useDate = giftData.useDate {
             strUseDate = dateFormatter.string(from: useDate)
         }
-
+        
         upLoadImageData(imageData: imageData, userID: id, dataNumber: number) { url in
             self.db.collection(id.description).document((number).description).setData(["image":url.absoluteString,
                                                                                        "number":number,
@@ -157,10 +161,7 @@ class FireBaseManager {
         let category = giftData.category?.rawValue
         let memo = giftData.memo
         var useDate: String? = nil
-        
         let imageData = giftData.image
-
-        
         guard let brandName = giftData.brandName,
               let productName = giftData.productName else {
             throw FireBaseManagerError.giftDataNotChangeString
@@ -241,8 +242,6 @@ class FireBaseManager {
 extension FireBaseManager {
     //TODO: 시간 당겨지는현상 해결 [2023-04-01] -> [2023-03-31 15:00:00 +0000]
     private func changeGiftData(_ document: QueryDocumentSnapshot, completion: @escaping (Gift) -> Void) {
-        
-        
         // 필수값 프로퍼티
         guard let number = document["number"] as? Int,
               let brandName = document["brandName"] as? String,
@@ -261,7 +260,6 @@ extension FireBaseManager {
         
         var useDate: Date? = nil
         if let dateString = useDateString {
-            
             useDate = formatter.date(from: dateString!)
         }
         
@@ -270,7 +268,6 @@ extension FireBaseManager {
         self.downLoadImageData(dataNumber: number) { data in
             if let image = UIImage(data: data) {
                 let gift = Gift(
-                    //TODO: image 받아오기
                     image: image,
                     category: category as? Category,
                     brandName: brandName,
@@ -282,14 +279,12 @@ extension FireBaseManager {
                 )
                 completion(gift)
             }
-
         }
     }
 }
 
 //MARK: -FireStorage
 extension FireBaseManager {
-    
     private func upLoadImageData(imageData: UIImage, userID: String, dataNumber: Int, completion: @escaping (URL) -> Void) {
         let storageReference = storage.reference()
         let imageReference = storageReference.child("image").child("USER_\(userID)").child("image_\(dataNumber).png")
@@ -301,7 +296,7 @@ extension FireBaseManager {
                 guard let downloadURL = url else {
                     return
                 }
-                
+    
                 completion(downloadURL)
             }
         }
@@ -314,14 +309,14 @@ extension FireBaseManager {
         
         let storageRef = storage.reference()
         let imageReference = storageRef.child("image").child("USER_\(id)").child("image_\(dataNumber).png")
-  
+        
         imageReference.getData(maxSize: 1 * 1024 * 1024) { data, error in
             if let error = error {
                 print(error.localizedDescription)
             }
             
             if let data = data {
-                print("완료됨")
+                
                 completion(data)
             }
         }
@@ -343,5 +338,4 @@ extension FireBaseManager {
     func makeAppleAuthProviderCredential(idToken: String, rawNonce: String) -> OAuthCredential {
         return OAuthProvider.credential(withProviderID: "apple.com", idToken: idToken, rawNonce: rawNonce)
     }
-    
 }
