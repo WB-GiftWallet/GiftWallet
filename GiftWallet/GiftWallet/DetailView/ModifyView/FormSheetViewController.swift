@@ -248,10 +248,10 @@ extension FormSheetViewController: PHPickerViewControllerDelegate {
         } else {
             self.dismiss(animated: true) {
                 guard let formattedImage = self.getImage(results: results) else { return }
-                var gift = self.viewModel.gift
-                gift.image = formattedImage
+                self.viewModel.gift.image = formattedImage
                 self.viewModel.coreDataUpdate()
-                self.delegate?.didUpdateGift(updatedGift: gift)
+                self.viewModel.firebaseUpdate()
+                self.delegate?.didUpdateGift(updatedGift: self.viewModel.gift)
                 self.dismiss(animated: true)
             }
         }
