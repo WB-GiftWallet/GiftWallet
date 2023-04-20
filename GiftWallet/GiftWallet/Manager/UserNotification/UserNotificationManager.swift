@@ -14,10 +14,10 @@ class UserNotificationManager {
     private func requestNotification() {
         
         //MARK: [Fetch] 30+6일 정렬
-        var recentThirtyDays = [Int]()
+        var recent36Days = [Int]()
         
         do {
-            recentThirtyDays = try mostRecentExpireItemFetchForThirtyDaysFromCoreData()
+            recent36Days = try mostRecentExpireItemFetchFor_36_DaysFromCoreData()
         } catch NotificationError.doNotFetchCoreData {
             print(NotificationError.doNotFetchCoreData.localizedDescription)
         } catch {
@@ -27,42 +27,59 @@ class UserNotificationManager {
         //MARK: 현재부터 0~6일 남은 것 중 가장 조금 남은 것 NotificationExpireDayContents로 반환
         var notificationContents: NotificationExpireDayContents?
         
-        for day in 0...6 {
-            if recentThirtyDays[day] == 0 {
+        //MARK: 0~29일까지 조건이 맞다면 noti
+        for startDay in 0...29 {
+            var totalValue = 0
+            
+            totalValue += recent36Days[startDay]
+            
+            if recent36Days[startDay] != 0 {
                 notificationContents = .today
-            } else if recentThirtyDays[day] > 0 && recentThirtyDays[day] <= 2 {
+                
+                totalValue = recent36Days[startDay]
+                
+            } else if recent36Days[startDay+2] != 0 {
                 notificationContents = .underThree
-            } else if recentThirtyDays[day] > 2 && recentThirtyDays[day] <= 6 {
+                
+                for i in startDay...startDay+2 {
+                    totalValue += recent36Days[i]
+                }
+                
+            } else if recent36Days[startDay+6] != 0 {
                 notificationContents = .underSeven
+                
+                for i in startDay...startDay+6 {
+                    totalValue += recent36Days[i]
+                }
             } else {
+                //MARK: noti 없음 == continue
                 continue
             }
             
-            break
-        }
-        
-        //MARK: nil 이면 0~6 범위, -> return
-        guard let notificationContents = notificationContents else {
-            return
-        }
-        
-        //MARK: Contents (1, 3, 7 알람에 해당하는)
-        let contentsOfToday = setContents(contents: notificationContents)
-        
-        //TODO: DateComponenets 특정 시간 -> 매일 다른 시간 설정 해야함
-        setDateComponents()
-        
-        //MARK: Trigger Setting
-        let trigger = UNCalendarNotificationTrigger(dateMatching: dateComponents, repeats: true)
-        
-        //MARK: Request Setting
-        //TODO: Identifier 설정 -> id를 해당 일 "1", "2" 혹은 "NotificationDay1" 명확하게?
-        let request = UNNotificationRequest(identifier: notificationID, content: contentsOfToday, trigger: trigger)
-        
-        //MARK: Add UserNotification
-        let notificationCenter = UNUserNotificationCenter.current()
-        notificationCenter.add(request) { (error) in
-            if error != nil {
+            
+            //MARK: nil 이면 0~6 범위, -> return
+            guard let notificationContents = notificationContents else {
+                return
+            }
+            
+            //MARK: Contents (1, 3, 7 알람에 해당하는)
+            let contentsOfToday = setContents(contents: notificationContents)
+            
+            //TODO: DateComponenets 특정 시간 -> 매일 다른 시간 설정 해야함
+            setDateComponents()
+            
+            //MARK: Trigger Setting
+            let trigger = UNCalendarNotificationTrigger(dateMatching: dateComponents, repeats: true)
+            
+            //MARK: Request Setting
+            //TODO: Identifier 설정 -> id를 해당 일 "1", "2" 혹은 "NotificationDay1" 명확하게?
+            let request = UNNotificationRequest(identifier: notificationID, content: contentsOfToday, trigger: trigger)
+            
+            //MARK: Add UserNotification
+            let notificationCenter = UNUserNotificationCenter.current()
+            notificationCenter.add(request) { (error) in
+                if error != nil {
+                }
             }
         }
     }
@@ -100,7 +117,7 @@ class UserNotificationManager {
 
 // MARK: CoreData 데이터 mostRecentExpireDate 가져오기
 extension UserNotificationManager {
-    private func mostRecentExpireItemFetchForThirtyDaysFromCoreData() throws -> [Int] {
+    private func mostRecentExpireItemFetchFor_36_DaysFromCoreData() throws -> [Int] {
         let gifts = fetchFiltedData()
         let dateFormatter = DateFormatter(dateFormatte: DateFormatteConvention.yyyyMMdd)
         var thirtyDays = Array(repeating: 0, count: 36)
