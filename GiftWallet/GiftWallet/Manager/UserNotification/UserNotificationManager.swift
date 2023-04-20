@@ -8,45 +8,73 @@
 import UserNotifications
 
 class UserNotificationManager {
-    private let notificationID: String = "UserNotification"
-    private let content = UNMutableNotificationContent()
+    private let notificationID: String = "UserNotification" // "20230120"
     private var dateComponents = DateComponents()
-    private var recentSevenDays = Array(repeating: Int.zero, count: 7)
     
-    func requestNotification() {
-        //MARK: 7일 정렬
+    private func requestNotification() {
+        
+        //MARK: [Fetch] 30+6일 정렬
+        var recentThirtyDays = [Int]()
+        
         do {
-            recentSevenDays = try mostRecentExpireItemFetchForSevenDayFromCoreData()
+            recentThirtyDays = try mostRecentExpireItemFetchForThirtyDaysFromCoreData()
         } catch NotificationError.doNotFetchCoreData {
             print(NotificationError.doNotFetchCoreData.localizedDescription)
         } catch {
             print(error.localizedDescription)
         }
         
+        //MARK: 현재부터 0~6일 남은 것 중 가장 조금 남은 것 NotificationExpireDayContents로 반환
+        var notificationContents: NotificationExpireDayContents?
         
-        do {
-            let notificationContents: NotificationExpireDayContents = try setNotificationContents(mostRecentExpireDay)
-            setContents(contents: notificationContents)
-            setDateComponents()
-        } catch {
-            print(error.localizedDescription)
+        for day in 0...6 {
+            if recentThirtyDays[day] == 0 {
+                notificationContents = .today
+            } else if recentThirtyDays[day] > 0 && recentThirtyDays[day] <= 2 {
+                notificationContents = .underThree
+            } else if recentThirtyDays[day] > 2 && recentThirtyDays[day] <= 6 {
+                notificationContents = .underSeven
+            } else {
+                continue
+            }
+            
+            break
         }
-//
-//        let trigger = UNCalendarNotificationTrigger(dateMatching: dateComponents, repeats: true)
-//        let request = UNNotificationRequest(identifier: notificationID, content: content, trigger: trigger)
-//
-//        let notificationCenter = UNUserNotificationCenter.current()
-//        notificationCenter.add(request) { (error) in
-//            if error != nil {
-//            }
-//        }
+        
+        //MARK: nil 이면 0~6 범위, -> return
+        guard let notificationContents = notificationContents else {
+            return
+        }
+        
+        //MARK: Contents (1, 3, 7 알람에 해당하는)
+        let contentsOfToday = setContents(contents: notificationContents)
+        
+        //TODO: DateComponenets 특정 시간 -> 매일 다른 시간 설정 해야함
+        setDateComponents()
+        
+        //MARK: Trigger Setting
+        let trigger = UNCalendarNotificationTrigger(dateMatching: dateComponents, repeats: true)
+        
+        //MARK: Request Setting
+        //TODO: Identifier 설정 -> id를 해당 일 "1", "2" 혹은 "NotificationDay1" 명확하게?
+        let request = UNNotificationRequest(identifier: notificationID, content: contentsOfToday, trigger: trigger)
+        
+        //MARK: Add UserNotification
+        let notificationCenter = UNUserNotificationCenter.current()
+        notificationCenter.add(request) { (error) in
+            if error != nil {
+            }
+        }
     }
     
-    private func setContents(contents: NotificationExpireDayContents) {
+    private func setContents(contents: NotificationExpireDayContents) -> UNMutableNotificationContent {
+        let content = UNMutableNotificationContent()
+        
         content.title = contents.title
         content.body = contents.body
-        
         content.sound = .default
+        
+        return content
     }
     
     // TODO: UserDefaults를 이용한 알람 타임 등록
@@ -72,10 +100,10 @@ class UserNotificationManager {
 
 // MARK: CoreData 데이터 mostRecentExpireDate 가져오기
 extension UserNotificationManager {
-    private func mostRecentExpireItemFetchForSevenDayFromCoreData() throws -> [Int] {
+    private func mostRecentExpireItemFetchForThirtyDaysFromCoreData() throws -> [Int] {
         let gifts = fetchFiltedData()
         let dateFormatter = DateFormatter(dateFormatte: DateFormatteConvention.yyyyMMdd)
-        var sevenDays = Array(repeating: 0, count: 7)
+        var thirtyDays = Array(repeating: 0, count: 36)
         
         for gift in gifts {
             guard let expireDate = gift.expireDate else {
@@ -85,13 +113,13 @@ extension UserNotificationManager {
             let day = judgeGapOfDay(date: expireDate)
             switch day {
                 case 0...6:
-                    sevenDays[day] += 1
+                    thirtyDays[day] += 1
                 default:
                     continue
             }
         }
         
-        return sevenDays
+        return thirtyDays
     }
     
     private func fetchFiltedData() -> [Gift] {
@@ -143,4 +171,5 @@ enum NotificationError: Error {
     case outOfNumbersMostRecent
     case notHaveMostRecentDay
     case doNotFetchCoreData
+    case overData
 }
