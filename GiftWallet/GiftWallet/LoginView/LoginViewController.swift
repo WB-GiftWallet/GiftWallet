@@ -13,7 +13,9 @@ import CryptoKit
 class LoginViewController: UIViewController {
     
     private let viewModel: LoginViewModel
+    var delegate: DidFetchGiftDelegate?
     fileprivate var currentNonce: String?
+    
     
     private let kakaoLoginButton = {
         let button = UIButton()
@@ -82,6 +84,8 @@ class LoginViewController: UIViewController {
         let kakaoLoginAction = UIAction { _ in
             self.viewModel.kakaoLogin {
                 self.dismiss(animated: true)
+            } updateDataCompletion: {
+                self.delegate?.finishedFetch()
             }
         }
         kakaoLoginButton.addAction(kakaoLoginAction, for: .touchUpInside)
@@ -121,9 +125,13 @@ class LoginViewController: UIViewController {
 extension LoginViewController: ASAuthorizationControllerDelegate {
     // 성공 후 동작
     func authorizationController(controller: ASAuthorizationController, didCompleteWithAuthorization authorization: ASAuthorization) {
-        viewModel.didCompleteAppleLogin(controller: controller, authorization: authorization) {
+        self.viewModel.didCompleteAppleLogin(controller: controller, authorization: authorization) {
             self.dismiss(animated: true)
-        }        
+        } updateDataCompletion: {
+            self.delegate?.finishedFetch()
+        }
+
+        
     }
     
     // 실패시 동작
@@ -136,4 +144,8 @@ extension LoginViewController: ASAuthorizationControllerPresentationContextProvi
     func presentationAnchor(for controller: ASAuthorizationController) -> ASPresentationAnchor {
         return view.window!
     }
+}
+
+protocol DidFetchGiftDelegate {
+    func finishedFetch()
 }

@@ -93,7 +93,7 @@ final class CoreDataManager {
         }
     }
     
-    func updateAllData(_ gifts: [Gift]) throws {
+    func updateAllData(_ gifts: [Gift], completion: @escaping () -> Void) throws {
         guard let context = appDelegate?.persistentContainer.viewContext else {
             throw CoreDataError.contextInvalid
         }
@@ -124,6 +124,7 @@ final class CoreDataManager {
         
         do {
             try context.save()
+            completion()
         } catch {
             print(error.localizedDescription)
         }

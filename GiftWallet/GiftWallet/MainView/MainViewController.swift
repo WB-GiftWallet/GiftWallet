@@ -7,6 +7,7 @@
 
 import UIKit
 import FirebaseAuth
+import SkeletonView
 
 class MainViewController: UIViewController, UISearchBarDelegate, UISearchControllerDelegate {
     
@@ -199,10 +200,26 @@ class MainViewController: UIViewController, UISearchBarDelegate, UISearchControl
     
     private func presentLoginViewIfNeeded() {
         viewModel.checkIfUserLoggedIn {
+            self.setupViewSkeletonable(true)
+            
             let loginViewModel = LoginViewModel()
             let loginViewController = LoginViewController(viewModel: loginViewModel)
+            loginViewController.delegate = self
             loginViewController.modalPresentationStyle = .fullScreen
             self.present(loginViewController, animated: false)
+        }
+    }
+    
+    private func setupViewSkeletonable(_ bool: Bool) {
+        let target = [searchButton, expireCollectionViewHeaderLabel, recentCollectionViewHeaderLabel ,expireCollectionView, recentCollectionView]
+        let skeletonAnimation = SkeletonAnimationBuilder().makeSlidingAnimation(withDirection: .bottomRightTopLeft)
+        
+        target.forEach { $0.isSkeletonable = true }
+        
+        if bool {
+            target.forEach { $0.showAnimatedGradientSkeleton(usingGradient: .init(baseColor: .clouds), animation: skeletonAnimation, transition: .crossDissolve(0.25)) }
+        } else {
+            target.forEach { $0.hideSkeleton() }
         }
     }
     
@@ -524,9 +541,23 @@ extension MainViewController: UICollectionViewDelegateFlowLayout {
     }
 }
 
+// MARK: Skeleton DataSource
+extension MainViewController: SkeletonCollectionViewDataSource {
+    func collectionSkeletonView(_ skeletonView: UICollectionView, cellIdentifierForItemAt indexPath: IndexPath) -> SkeletonView.ReusableCellIdentifier {
+        return MainCollectionViewCell.reuseIdentifier
+    }
+}
+
 // MARK: GiftDidDismissDelegate Protocol 관련
 extension MainViewController: GiftDidDismissDelegate {
     func didDismissDetailViewController() {
         updateCollectionViewData()
+    }
+}
+
+// MARK: DidFetchGiftDelegate Protocol 관련
+extension MainViewController: DidFetchGiftDelegate {
+    func finishedFetch() {
+        setupViewSkeletonable(false)
     }
 }
