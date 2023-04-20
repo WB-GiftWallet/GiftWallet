@@ -8,7 +8,7 @@
 import UserNotifications
 
 class UserNotificationManager {
-    private let notificationID: String = "UserNotification" // "20230120"
+//    private let notificationID: String = "UserNotification"
     private var dateComponents = DateComponents()
     
     private func requestNotification() {
@@ -27,9 +27,12 @@ class UserNotificationManager {
         //MARK: 현재부터 0~6일 남은 것 중 가장 조금 남은 것 NotificationExpireDayContents로 반환
         var notificationContents: NotificationExpireDayContents?
         
-        //MARK: 0~29일까지 조건이 맞다면 noti
+        // MARK: 0~29일까지 조건이 맞다면 noti
         for startDay in 0...29 {
-            var totalValue = 0
+            
+            // MARK: Notification id 생성 및 startDay 따른 (Noti 정보 & Contents 구성) Setting
+            let notifiactionIdentifier = "Notification\(startDay)"
+            var totalValue: Int = .zero
             
             totalValue += recent36Days[startDay]
             
@@ -56,7 +59,6 @@ class UserNotificationManager {
                 continue
             }
             
-            
             //MARK: nil 이면 0~6 범위, -> return
             guard let notificationContents = notificationContents else {
                 return
@@ -73,7 +75,7 @@ class UserNotificationManager {
             
             //MARK: Request Setting
             //TODO: Identifier 설정 -> id를 해당 일 "1", "2" 혹은 "NotificationDay1" 명확하게?
-            let request = UNNotificationRequest(identifier: notificationID, content: contentsOfToday, trigger: trigger)
+            let request = UNNotificationRequest(identifier: notifiactionIdentifier, content: contentsOfToday, trigger: trigger)
             
             //MARK: Add UserNotification
             let notificationCenter = UNUserNotificationCenter.current()
