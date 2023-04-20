@@ -14,7 +14,7 @@ class LoginViewModel {
     private let coreDataManager = CoreDataManager.shared
     private let firebaseManager = FireBaseManager.shared
     
-    func kakaoLogin(completion: @escaping () -> Void) {
+    func kakaoLogin(completion: @escaping () -> Void, updateDataCompletion: @escaping () -> Void) {
         kakaoLoginManager.checkLoginEnabledAndLogin { result in
             switch result {
             case .success(let user):
@@ -22,7 +22,7 @@ class LoginViewModel {
                       let userID = user.id?.description else { return }
                 self.firebaseManager.signInWithEmail(email: userEmail, password: userID) { gifts in
                     do {
-                        try self.coreDataManager.updateAllData(gifts)
+                        try self.coreDataManager.updateAllData(gifts, completion: updateDataCompletion)
                     } catch {
                         print(error.localizedDescription)
                     }
@@ -40,7 +40,10 @@ class LoginViewModel {
     }
     
     
-    func didCompleteAppleLogin(controller: ASAuthorizationController, authorization: ASAuthorization, completion: @escaping () -> Void) {
+    func didCompleteAppleLogin(controller: ASAuthorizationController,
+                               authorization: ASAuthorization,
+                               completion: @escaping () -> Void,
+                               updateDataCompletion: @escaping () -> Void) {
         appleLoginManager.didCompleteLogin(controller: controller, authorization: authorization) { userInfo in
             guard let idTokenString = userInfo["idTokenString"],
                   let rawNonce = userInfo["rawNonce"] else { return }
@@ -48,7 +51,7 @@ class LoginViewModel {
             
             self.firebaseManager.signInWithCredential(authCredential: credentail) { gifts in
                 do {
-                    try self.coreDataManager.updateAllData(gifts)
+                    try self.coreDataManager.updateAllData(gifts, completion: updateDataCompletion)
                     completion()
                 } catch {
                     print(error.localizedDescription)

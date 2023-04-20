@@ -200,21 +200,27 @@ class MainViewController: UIViewController, UISearchBarDelegate, UISearchControl
     
     private func presentLoginViewIfNeeded() {
         viewModel.checkIfUserLoggedIn {
-            self.setupViewSkeletonable()
+            self.setupViewSkeletonable(true)
             
             let loginViewModel = LoginViewModel()
             let loginViewController = LoginViewController(viewModel: loginViewModel)
+            loginViewController.delegate = self
             loginViewController.modalPresentationStyle = .fullScreen
             self.present(loginViewController, animated: false)
         }
     }
     
-    private func setupViewSkeletonable() {
-        let target = [expireCollectionViewHeaderLabel, recentCollectionViewHeaderLabel ,expireCollectionView, recentCollectionView]
+    private func setupViewSkeletonable(_ bool: Bool) {
+        let target = [searchButton, expireCollectionViewHeaderLabel, recentCollectionViewHeaderLabel ,expireCollectionView, recentCollectionView]
         let skeletonAnimation = SkeletonAnimationBuilder().makeSlidingAnimation(withDirection: .bottomRightTopLeft)
         
         target.forEach { $0.isSkeletonable = true }
-        target.forEach { $0.showAnimatedGradientSkeleton(usingGradient: .init(baseColor: .clouds), animation: skeletonAnimation, transition: .crossDissolve(0.25)) }
+        
+        if bool {
+            target.forEach { $0.showAnimatedGradientSkeleton(usingGradient: .init(baseColor: .clouds), animation: skeletonAnimation, transition: .crossDissolve(0.25)) }
+        } else {
+            target.forEach { $0.hideSkeleton() }
+        }
     }
     
     private func updateCollectionViewData() {
@@ -546,5 +552,12 @@ extension MainViewController: SkeletonCollectionViewDataSource {
 extension MainViewController: GiftDidDismissDelegate {
     func didDismissDetailViewController() {
         updateCollectionViewData()
+    }
+}
+
+// MARK: DidFetchGiftDelegate Protocol 관련
+extension MainViewController: DidFetchGiftDelegate {
+    func finishedFetch() {
+        setupViewSkeletonable(false)
     }
 }
