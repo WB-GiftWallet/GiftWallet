@@ -202,7 +202,7 @@ class MainViewController: UIViewController, UISearchBarDelegate, UISearchControl
             let loginViewModel = LoginViewModel()
             let loginViewController = LoginViewController(viewModel: loginViewModel)
             loginViewController.modalPresentationStyle = .fullScreen
-            self.present(loginViewController, animated: true)
+            self.present(loginViewController, animated: false)
         }
     }
     
