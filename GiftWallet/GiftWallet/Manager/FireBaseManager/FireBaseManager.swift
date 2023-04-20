@@ -11,6 +11,7 @@ import FirebaseCore
 import FirebaseAuth
 import UIKit
 
+// MARK: 프로퍼티
 class FireBaseManager {
     static let shared = FireBaseManager()
     
@@ -20,8 +21,10 @@ class FireBaseManager {
     var currentUserID = Auth.auth().currentUser?.uid
     
     private init() { }
-    
-    //MARK: Login, Logout, createUser Method
+}
+
+//MARK: FirebaseAuthentification 관련
+extension FireBaseManager {
     private func createUser(email: String, password: String, completion: @escaping (Result<String, FireBaseManagerError>) -> Void) {
         Auth.auth().createUser(withEmail: email, password: password) { authResult, error in
             if error != nil {
@@ -79,23 +82,30 @@ class FireBaseManager {
             print(error.localizedDescription)
         }
     }
-    
-    //MARK: FireBase CRUD
+}
+
+//MARK: FireStoreDatabase CRUD 관련
+extension FireBaseManager {
     func fetchData(completion: @escaping  (Result<[Gift], FireBaseManagerError>) -> Void) {
         guard let id = Auth.auth().currentUser?.uid else {
             return completion(.failure(.notHaveID))
         }
         
+        let dispatchGroup = DispatchGroup()
+        
         db.collection(id.description).getDocuments { (snapshot, error) in
             if error == nil && snapshot != nil {
                 var giftData = [Gift]()
                 for document in snapshot!.documents {
-                    print("다큐먼트:", document)
-                    guard let gift = self.changeGiftData(document) else { return }
-                    giftData.append(gift)
+                    dispatchGroup.enter()
+                    self.changeGiftData(document) { gift in
+                        giftData.append(gift)
+                        dispatchGroup.leave()
+                    }
                 }
-                
-                completion(.success(giftData))
+                dispatchGroup.notify(queue: .main) {
+                    completion(.success(giftData))
+                }
             } else {
                 completion(.failure(.fetchDataError))
             }
@@ -113,9 +123,7 @@ class FireBaseManager {
         
         
         // 필수값 프로퍼티
-        guard let imageData = giftData.image.pngData() else {
-            throw FireBaseManagerError.invalidImage
-        }
+        let imageData = giftData.image
         
         guard let brandName = giftData.brandName,
               let productName = giftData.productName else {
@@ -158,12 +166,7 @@ class FireBaseManager {
         let category = giftData.category?.rawValue
         let memo = giftData.memo
         var useDate: String? = nil
-        
-        guard let imageData = giftData.image.pngData() else {
-            print("FireBaseManagerError.invalidImage")
-            throw FireBaseManagerError.invalidImage
-        }
-        
+        let imageData = giftData.image
         guard let brandName = giftData.brandName,
               let productName = giftData.productName else {
             throw FireBaseManagerError.giftDataNotChangeString
@@ -241,16 +244,16 @@ class FireBaseManager {
     }
 }
 
+// MARK: 내부처리 지역함수
 extension FireBaseManager {
     //TODO: 시간 당겨지는현상 해결 [2023-04-01] -> [2023-03-31 15:00:00 +0000]
-    private func changeGiftData(_ document: QueryDocumentSnapshot) -> Gift? {
+    private func changeGiftData(_ document: QueryDocumentSnapshot, completion: @escaping (Gift) -> Void) {
         // 필수값 프로퍼티
-        guard let imageURL = document["image"] as? String,
-              let number = document["number"] as? Int,
+        guard let number = document["number"] as? Int,
               let brandName = document["brandName"] as? String,
               let productName = document["productName"] as? String,
               let useableState = document["useableState"] as? Bool,
-              let expireDateString = document["expireDate"] as? String else { return nil }
+              let expireDateString = document["expireDate"] as? String else { return }
         // 선택값 프로퍼티
         let category = document["category"] as? Category?
         let memo = document["memo"] as? String?
@@ -266,35 +269,35 @@ extension FireBaseManager {
             useDate = formatter.date(from: dateString!)
         }
         
-        guard let expireDate = formatter.date(from: expireDateString)
-        else {
-            return nil
+        guard let expireDate = formatter.date(from: expireDateString) else { return }
+        
+        self.downLoadImageData(dataNumber: number) { data in
+            if let image = UIImage(data: data) {
+                let gift = Gift(
+                    image: image,
+                    category: category as? Category,
+                    brandName: brandName,
+                    productName: productName,
+                    memo: memo as? String,
+                    useableState: useableState,
+                    expireDate: expireDate,
+                    useDate: useDate
+                )
+                completion(gift)
+            }
         }
-        
-        let gift = Gift(
-            //TODO: image 받아오기
-            image: UIImage(systemName: "applelogo")!,
-            category: category as? Category,
-            brandName: brandName,
-            productName: productName,
-            memo: memo as? String,
-            useableState: useableState,
-            expireDate: expireDate,
-            useDate: useDate
-        )
-        
-        return gift
     }
 }
 
-//MARK: -FireStorage
+//MARK: FireStorage 다운로드 + 업로드 관련
 extension FireBaseManager {
-    
-    private func upLoadImageData(imageData: Data, userID: String, dataNumber: Int, completion: @escaping (URL) -> Void) {
+    private func upLoadImageData(imageData: UIImage, userID: String, dataNumber: Int, completion: @escaping (URL) -> Void) {
         let storageReference = storage.reference()
-        let imageReference = storageReference.child("image").child("USER_\(userID)").child("image_\(dataNumber).png")
+        let imageReference = storageReference.child("image").child("USER_\(userID)").child("image_\(dataNumber)")
         
-        let _ = imageReference.putData(imageData, metadata: nil) { (_, error) in
+        guard let compressedData = compressImage(imageData, value: 1) else { return }
+        
+        let _ = imageReference.putData(compressedData, metadata: nil) { (_, error) in
             imageReference.downloadURL { (url, error) in
                 guard let downloadURL = url else {
                     return
@@ -311,25 +314,35 @@ extension FireBaseManager {
         }
         
         let storageRef = storage.reference()
-        let imageReference = storageRef.child("image").child("USER_\(id)").child("image_\(dataNumber).png")
+        let imageReference = storageRef.child("image").child("USER_\(id)").child("image_\(dataNumber)")
         
         imageReference.getData(maxSize: 1 * 1024 * 1024) { data, error in
-            if error != nil {
-                print("Image Get Data ERROR")
+            if let error = error {
+                print(error.localizedDescription)
             }
             
-            guard let data = data else {
-                return
+            if let data = data {
+                
+                completion(data)
             }
-            
-            completion(data)
         }
+    }
+    
+    private func compressImage(_ image: UIImage, value: Double) -> Data? {
+        guard let compressedImage = image.jpegData(compressionQuality: value) else { return nil }
+        let maxCapacity = 1048576 // 1MB
+        
+        if compressedImage.count > maxCapacity {
+            return compressImage(image, value: value - 0.1)
+        }
+        
+        return compressedImage
     }
 }
 
+// MARK: AppleLogin시, Credential 생성 관련 함수
 extension FireBaseManager {
     func makeAppleAuthProviderCredential(idToken: String, rawNonce: String) -> OAuthCredential {
         return OAuthProvider.credential(withProviderID: "apple.com", idToken: idToken, rawNonce: rawNonce)
     }
-    
 }
