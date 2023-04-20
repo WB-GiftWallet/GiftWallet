@@ -103,20 +103,22 @@ final class CoreDataManager {
         try context.execute(deleteRequest)
         try context.save()
         
+        var giftDataMostRecentNumber = 0
+        
         let entity = NSEntityDescription.entity(forEntityName: "GiftData", in: context)
         for gift in gifts {
             if let entity = entity {
-                let giftData = GiftData(entity: entity, insertInto: context)
-                
-                giftData.number = Int16(gift.number)
-                giftData.image = gift.image.pngData()
-                giftData.category = gift.category?.rawValue
-                giftData.brandName = gift.brandName
-                giftData.productName = gift.productName
-                giftData.memo = gift.memo
-                giftData.useableState = gift.useableState
-                giftData.expireDate = gift.expireDate
-                giftData.useDate = gift.useDate
+                let info = NSManagedObject(entity: entity, insertInto: context)
+                giftDataMostRecentNumber += 1
+                info.setValue(giftDataMostRecentNumber, forKey: "number")
+                info.setValue(gift.image.pngData(), forKey: "image")
+                info.setValue(gift.category?.rawValue, forKey: "category")
+                info.setValue(gift.brandName, forKey: "brandName")
+                info.setValue(gift.productName, forKey: "productName")
+                info.setValue(gift.memo, forKey: "memo")
+                info.setValue(gift.useableState, forKey: "useableState")
+                info.setValue(gift.expireDate, forKey: "expireDate")
+                info.setValue(gift.useDate, forKey: "useDate")
             }
         }
         

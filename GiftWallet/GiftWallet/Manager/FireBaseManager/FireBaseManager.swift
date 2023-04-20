@@ -293,7 +293,7 @@ extension FireBaseManager {
 extension FireBaseManager {
     private func upLoadImageData(imageData: UIImage, userID: String, dataNumber: Int, completion: @escaping (URL) -> Void) {
         let storageReference = storage.reference()
-        let imageReference = storageReference.child("image").child("USER_\(userID)").child("image_\(dataNumber).png")
+        let imageReference = storageReference.child("image").child("USER_\(userID)").child("image_\(dataNumber)")
         
         guard let compressedData = compressImage(imageData, value: 1) else { return }
         
@@ -314,7 +314,7 @@ extension FireBaseManager {
         }
         
         let storageRef = storage.reference()
-        let imageReference = storageRef.child("image").child("USER_\(id)").child("image_\(dataNumber).png")
+        let imageReference = storageRef.child("image").child("USER_\(id)").child("image_\(dataNumber)")
         
         imageReference.getData(maxSize: 1 * 1024 * 1024) { data, error in
             if let error = error {
