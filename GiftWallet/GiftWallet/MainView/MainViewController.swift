@@ -7,6 +7,7 @@
 
 import UIKit
 import FirebaseAuth
+import SkeletonView
 
 class MainViewController: UIViewController, UISearchBarDelegate, UISearchControllerDelegate {
     
@@ -199,11 +200,21 @@ class MainViewController: UIViewController, UISearchBarDelegate, UISearchControl
     
     private func presentLoginViewIfNeeded() {
         viewModel.checkIfUserLoggedIn {
+            self.setupViewSkeletonable()
+            
             let loginViewModel = LoginViewModel()
             let loginViewController = LoginViewController(viewModel: loginViewModel)
             loginViewController.modalPresentationStyle = .fullScreen
             self.present(loginViewController, animated: false)
         }
+    }
+    
+    private func setupViewSkeletonable() {
+        let target = [expireCollectionViewHeaderLabel, recentCollectionViewHeaderLabel ,expireCollectionView, recentCollectionView]
+        let skeletonAnimation = SkeletonAnimationBuilder().makeSlidingAnimation(withDirection: .bottomRightTopLeft)
+        
+        target.forEach { $0.isSkeletonable = true }
+        target.forEach { $0.showAnimatedGradientSkeleton(usingGradient: .init(baseColor: .clouds), animation: skeletonAnimation, transition: .crossDissolve(0.25)) }
     }
     
     private func updateCollectionViewData() {
@@ -521,6 +532,13 @@ extension MainViewController: UICollectionViewDelegateFlowLayout {
     
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, minimumInteritemSpacingForSectionAt section: Int) -> CGFloat {
         return 10
+    }
+}
+
+// MARK: Skeleton DataSource
+extension MainViewController: SkeletonCollectionViewDataSource {
+    func collectionSkeletonView(_ skeletonView: UICollectionView, cellIdentifierForItemAt indexPath: IndexPath) -> SkeletonView.ReusableCellIdentifier {
+        return MainCollectionViewCell.reuseIdentifier
     }
 }
 

@@ -30,6 +30,7 @@
 		D24002D829B7536B00635FFC /* BMJUA_otf.otf in Resources */ = {isa = PBXBuildFile; fileRef = D24002D729B7536B00635FFC /* BMJUA_otf.otf */; };
 		D24002DB29B75B5200635FFC /* DetailViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = D24002DA29B75B5200635FFC /* DetailViewModel.swift */; };
 		D246B39929D7CF7E00A5BB2F /* AppleLoginManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = D246B39829D7CF7E00A5BB2F /* AppleLoginManager.swift */; };
+		D26019CD29F12ADF00931FBD /* SkeletonView in Frameworks */ = {isa = PBXBuildFile; productRef = D26019CC29F12ADF00931FBD /* SkeletonView */; };
 		D27CA42929B84F6F00EC5FC7 /* ZoomImageViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = D27CA42829B84F6F00EC5FC7 /* ZoomImageViewModel.swift */; };
 		D27CA42B29B86ABF00EC5FC7 /* PagingCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = D27CA42A29B86ABF00EC5FC7 /* PagingCollectionViewCell.swift */; };
 		D27CA42D29B89F1900EC5FC7 /* CustomButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = D27CA42C29B89F1900EC5FC7 /* CustomButton.swift */; };
@@ -207,6 +208,7 @@
 				1713140E29D2E5C0007A3AF9 /* FirebaseFirestoreSwift in Frameworks */,
 				D2F14C7F29DD185400F1B3D5 /* FirebaseStorage in Frameworks */,
 				D2CA7D8F29D6BBC9002D3BA2 /* KakaoSDKCommon in Frameworks */,
+				D26019CD29F12ADF00931FBD /* SkeletonView in Frameworks */,
 				D2CA7D8D29D6BBC9002D3BA2 /* KakaoSDKAuth in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -532,6 +534,7 @@
 				D2CA7D8E29D6BBC9002D3BA2 /* KakaoSDKCommon */,
 				D2CA7D9029D6BBC9002D3BA2 /* KakaoSDKUser */,
 				D2F14C7E29DD185400F1B3D5 /* FirebaseStorage */,
+				D26019CC29F12ADF00931FBD /* SkeletonView */,
 			);
 			productName = GiftWallet;
 			productReference = FC1E746E29A207DA0010A4BA /* GiftWallet.app */;
@@ -573,6 +576,7 @@
 				1723BE8329C3142600AE06F9 /* XCRemoteSwiftPackageReference "IQKeyboardManager" */,
 				1713140829D2E5C0007A3AF9 /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */,
 				D2CA7D8B29D6BBC9002D3BA2 /* XCRemoteSwiftPackageReference "kakao-ios-sdk" */,
+				D26019CB29F12ADF00931FBD /* XCRemoteSwiftPackageReference "SkeletonView" */,
 			);
 			productRefGroup = FC1E746F29A207DA0010A4BA /* Products */;
 			projectDirPath = "";
@@ -1045,6 +1049,14 @@
 				minimumVersion = 6.0.0;
 			};
 		};
+		D26019CB29F12ADF00931FBD /* XCRemoteSwiftPackageReference "SkeletonView" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/Juanpe/SkeletonView.git";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 1.0.0;
+			};
+		};
 		D2CA7D8B29D6BBC9002D3BA2 /* XCRemoteSwiftPackageReference "kakao-ios-sdk" */ = {
 			isa = XCRemoteSwiftPackageReference;
 			repositoryURL = "https://github.com/kakao/kakao-ios-sdk";
@@ -1075,6 +1087,11 @@
 			isa = XCSwiftPackageProductDependency;
 			package = 1723BE8329C3142600AE06F9 /* XCRemoteSwiftPackageReference "IQKeyboardManager" */;
 			productName = IQKeyboardManagerSwift;
+		};
+		D26019CC29F12ADF00931FBD /* SkeletonView */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = D26019CB29F12ADF00931FBD /* XCRemoteSwiftPackageReference "SkeletonView" */;
+			productName = SkeletonView;
 		};
 		D2CA7D8C29D6BBC9002D3BA2 /* KakaoSDKAuth */ = {
 			isa = XCSwiftPackageProductDependency;
