@@ -101,7 +101,7 @@ class EtcSettingViewController: UIViewController {
     
     private func setupButton() {
         let logoutAction = UIAction { _ in
-            // TODO: 로그아웃 구현
+            self.showAlert()
         }
         logoutButton.addAction(logoutAction, for: .touchUpInside)
     }
@@ -114,6 +114,17 @@ class EtcSettingViewController: UIViewController {
     private func setupNavigation() {
     }
     
+    private func showAlert() {
+        let alertController = UIAlertController(title: nil, message: "로그아웃 합니다.", preferredStyle: .alert)
+        let okAction = UIAlertAction(title: "네", style: .destructive) { _ in
+            self.viewModel.signOut()
+        }
+        
+        let noAction = UIAlertAction(title: "아니오", style: .cancel)
+        
+        [okAction, noAction].forEach(alertController.addAction(_:))
+        present(alertController, animated: true)
+    }
     
     private func setupViews() {
         [nameLabel, idLabel].forEach(profileVerticalStackView.addArrangedSubview(_:))

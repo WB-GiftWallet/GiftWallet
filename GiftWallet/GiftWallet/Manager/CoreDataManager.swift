@@ -65,7 +65,7 @@ final class CoreDataManager {
         }
         let fetchRequest = NSFetchRequest<NSFetchRequestResult>.init(entityName: "GiftData")
         fetchRequest.predicate = NSPredicate(format: "number = %@", String(giftData.number) as CVarArg)
-
+        
         do {
             let test = try context.fetch(fetchRequest)
             guard let updatingData = test[0] as? NSManagedObject else { return }
@@ -152,7 +152,20 @@ final class CoreDataManager {
             print(error.localizedDescription)
         }
     }
+    
+    func deleteAllData() throws {
+        guard let context = appDelegate?.persistentContainer.viewContext else {
+            throw CoreDataError.contextInvalid
+        }
+        
+        let deleteFetch = NSFetchRequest<NSFetchRequestResult>(entityName: "GiftData")
+        let deleteRequest = NSBatchDeleteRequest(fetchRequest: deleteFetch)
+        
+        try context.execute(deleteRequest)
+        try context.save()
+    }
 }
+
 
 extension CoreDataManager {
     private func fetchMostRecentNumber(context: NSManagedObjectContext) -> Int16 {
