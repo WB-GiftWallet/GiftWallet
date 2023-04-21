@@ -20,8 +20,11 @@ class LoginViewModel {
             switch result {
             case .success(let user):
                 guard let userEmail = user.kakaoAccount?.email,
-                      let userID = user.id?.description else { return }
+                      let userID = user.id?.description,
+                      let userName = user.properties,
+                      let userNickName = userName["nickname"] else { return }
                 self.firebaseManager.signInWithEmail(email: userEmail, password: userID) { gifts in
+                    self.firebaseManager.changeProfile(name: userNickName)
                     
                     do {
                         try self.coreDataManager.updateAllData(gifts, completion: updateDataCompletion)
