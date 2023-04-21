@@ -222,6 +222,7 @@ extension DetailViewController: CellElementTappedDelegate {
         viewModel.toggleToUnUsableState(indexPathRow)
         viewModel.coreDataUpdate(indexPathRow)
         viewModel.updateMemoAndUseableStateFirebaseStoreDocument(gift: viewModel.gifts[indexPathRow])
+        self.delegate?.didDismissDetailViewController()
         self.dismiss(animated: true)
     }
     
