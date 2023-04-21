@@ -9,6 +9,16 @@ import Foundation
 
 class EtcSettingViewModel {
     
+    private let firebaseManager = FireBaseManager.shared
+    
+    var userName: String? {
+        return firebaseManager.currentUserInfo?.displayName
+    }
+    
+    var userEmail: String? {
+        return firebaseManager.currentUserInfo?.email
+    }
+    
     var sectionNumber: Int {
         return 2
     }

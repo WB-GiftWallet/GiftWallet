@@ -14,15 +14,18 @@ class LoginViewModel {
     private let coreDataManager = CoreDataManager.shared
     private let firebaseManager = FireBaseManager.shared
     
-    func kakaoLogin(completion: @escaping () -> Void, updateDataCompletion: @escaping () -> Void) {
+    func kakaoLogin(completion: @escaping () -> Void,
+                    updateDataCompletion: @escaping () -> Void) {
         kakaoLoginManager.checkLoginEnabledAndLogin { result in
             switch result {
             case .success(let user):
                 guard let userEmail = user.kakaoAccount?.email,
                       let userID = user.id?.description else { return }
                 self.firebaseManager.signInWithEmail(email: userEmail, password: userID) { gifts in
+                    
                     do {
                         try self.coreDataManager.updateAllData(gifts, completion: updateDataCompletion)
+                        
                     } catch {
                         print(error.localizedDescription)
                     }
@@ -46,10 +49,16 @@ class LoginViewModel {
                                updateDataCompletion: @escaping () -> Void) {
         appleLoginManager.didCompleteLogin(controller: controller, authorization: authorization) { userInfo in
             guard let idTokenString = userInfo["idTokenString"],
-                  let rawNonce = userInfo["rawNonce"] else { return }
+                  let rawNonce = userInfo["rawNonce"],
+                  let fullName = userInfo["fullName"] else { return }
+                            
             let credentail = self.firebaseManager.makeAppleAuthProviderCredential(idToken: idTokenString, rawNonce: rawNonce)
             
             self.firebaseManager.signInWithCredential(authCredential: credentail) { gifts in
+                if fullName != "" {
+                    self.firebaseManager.changeProfile(name: fullName)
+                }
+                
                 do {
                     try self.coreDataManager.updateAllData(gifts, completion: updateDataCompletion)
                     completion()

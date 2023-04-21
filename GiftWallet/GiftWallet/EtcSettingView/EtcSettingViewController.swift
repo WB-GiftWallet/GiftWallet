@@ -14,7 +14,7 @@ class EtcSettingViewController: UIViewController {
     private let nameLabel = {
        let label = UILabel()
         
-        label.text = "서현웅"
+        label.text = "이름오류"
         label.font = .boldSystemFont(ofSize: 25)
         
         return label
@@ -23,7 +23,7 @@ class EtcSettingViewController: UIViewController {
     private let idLabel = {
        let label = UILabel()
         
-        label.text = "workplayhard1@naver.com"
+        label.text = "아이디오류"
         label.font = .systemFont(ofSize: 15)
         
         return label
@@ -86,8 +86,25 @@ class EtcSettingViewController: UIViewController {
         setupTableViewAttributes()
         setupNavigation()
         setupViews()
+        configureUserProfile()
+        setupButton()
     }
     
+    private func configureUserProfile() {
+        guard let userName = viewModel.userName,
+              let userEmamil = viewModel.userEmail else { return }
+        
+        nameLabel.text = userName
+        idLabel.text = userEmamil
+    }
+    
+    
+    private func setupButton() {
+        let logoutAction = UIAction { _ in
+            // TODO: 로그아웃 구현
+        }
+        logoutButton.addAction(logoutAction, for: .touchUpInside)
+    }
     
     private func setupTableViewAttributes() {
         settingTableView.delegate = self
