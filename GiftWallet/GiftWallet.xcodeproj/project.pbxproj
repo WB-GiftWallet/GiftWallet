@@ -11,7 +11,10 @@
 		1713140C29D2E5C0007A3AF9 /* FirebaseFirestore in Frameworks */ = {isa = PBXBuildFile; productRef = 1713140B29D2E5C0007A3AF9 /* FirebaseFirestore */; };
 		1713140E29D2E5C0007A3AF9 /* FirebaseFirestoreSwift in Frameworks */ = {isa = PBXBuildFile; productRef = 1713140D29D2E5C0007A3AF9 /* FirebaseFirestoreSwift */; };
 		171695B129B1B8CA00CF3E41 /* SearchTableViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 171695B029B1B8CA00CF3E41 /* SearchTableViewModel.swift */; };
+		171DE6D729F3AABA00F66486 /* UserNotificationError.swift in Sources */ = {isa = PBXBuildFile; fileRef = 171DE6D629F3AABA00F66486 /* UserNotificationError.swift */; };
 		1723BE8529C3142600AE06F9 /* IQKeyboardManagerSwift in Frameworks */ = {isa = PBXBuildFile; productRef = 1723BE8429C3142600AE06F9 /* IQKeyboardManagerSwift */; };
+		17457D0529E7F7650018162D /* UserNotificationManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 17457D0429E7F7650018162D /* UserNotificationManager.swift */; };
+		17457D0D29E9A26E0018162D /* NotificationExpireDayContents.swift in Sources */ = {isa = PBXBuildFile; fileRef = 17457D0C29E9A26E0018162D /* NotificationExpireDayContents.swift */; };
 		1759488929D49DF000E7D5B9 /* FireBaseManagerError.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1759488829D49DF000E7D5B9 /* FireBaseManagerError.swift */; };
 		17A950FF29B74DA2001E6D4F /* SearchViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 17A950FE29B74DA2001E6D4F /* SearchViewController.swift */; };
 		17A9510129B75101001E6D4F /* RecommendScrollView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 17A9510029B75101001E6D4F /* RecommendScrollView.swift */; };
@@ -106,6 +109,9 @@
 
 /* Begin PBXFileReference section */
 		171695B029B1B8CA00CF3E41 /* SearchTableViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchTableViewModel.swift; sourceTree = "<group>"; };
+		171DE6D629F3AABA00F66486 /* UserNotificationError.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserNotificationError.swift; sourceTree = "<group>"; };
+		17457D0429E7F7650018162D /* UserNotificationManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserNotificationManager.swift; sourceTree = "<group>"; };
+		17457D0C29E9A26E0018162D /* NotificationExpireDayContents.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NotificationExpireDayContents.swift; sourceTree = "<group>"; };
 		1759488829D49DF000E7D5B9 /* FireBaseManagerError.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FireBaseManagerError.swift; sourceTree = "<group>"; };
 		17A950FE29B74DA2001E6D4F /* SearchViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchViewController.swift; sourceTree = "<group>"; };
 		17A9510029B75101001E6D4F /* RecommendScrollView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RecommendScrollView.swift; sourceTree = "<group>"; };
@@ -216,6 +222,16 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		17457D0B29E98CE30018162D /* UserNotification */ = {
+			isa = PBXGroup;
+			children = (
+				17457D0429E7F7650018162D /* UserNotificationManager.swift */,
+				17457D0C29E9A26E0018162D /* NotificationExpireDayContents.swift */,
+				171DE6D629F3AABA00F66486 /* UserNotificationError.swift */,
+			);
+			path = UserNotification;
+			sourceTree = "<group>";
+		};
 		17B579ED29D3302D00042D80 /* FireBaseManager */ = {
 			isa = PBXGroup;
 			children = (
@@ -320,10 +336,11 @@
 			isa = PBXGroup;
 			children = (
 				17B579ED29D3302D00042D80 /* FireBaseManager */,
+				FC074C0029A8D5B5006AD199 /* CoreDataManager.swift */,
 				D2CDDBDF29AF3CD300E000E3 /* VisionManager.swift */,
 				D2CA7D8929D6BAA0002D3BA2 /* KakaoLoginManager.swift */,
 				D246B39829D7CF7E00A5BB2F /* AppleLoginManager.swift */,
-				FC074C0029A8D5B5006AD199 /* CoreDataManager.swift */,
+				17457D0B29E98CE30018162D /* UserNotification */,
 			);
 			path = Manager;
 			sourceTree = "<group>";
@@ -649,12 +666,14 @@
 				D2C7A45929A9DA6C00EB6D56 /* EtcSettingViewController.swift in Sources */,
 				D24002DB29B75B5200635FFC /* DetailViewModel.swift in Sources */,
 				D2A282B829A85EF2002CCF5A /* Observable.swift in Sources */,
+				17457D0529E7F7650018162D /* UserNotificationManager.swift in Sources */,
 				D246B39929D7CF7E00A5BB2F /* AppleLoginManager.swift in Sources */,
 				D295E4B929A5F64200E12CAF /* FormSheetViewController.swift in Sources */,
 				D2CDDBE029AF3CD300E000E3 /* VisionManager.swift in Sources */,
 				D2CDDBCD29ADFACB00E000E3 /* DateCalCulateUseCase.swift in Sources */,
 				D2DAAA2329A4720300D70E8C /* Ext+DateFormatter.swift in Sources */,
 				D2C90B5829BF4DC1003C3611 /* ZoomImageViewController.swift in Sources */,
+				17457D0D29E9A26E0018162D /* NotificationExpireDayContents.swift in Sources */,
 				FC62FF1029A77B5A003E63B0 /* MainTabBarController.swift in Sources */,
 				D2CDDBE229AF3D2B00E000E3 /* AutoInputUseCase.swift in Sources */,
 				D2BB131529C0507300A2440B /* BarcodeViewController.swift in Sources */,
@@ -688,6 +707,7 @@
 				D2C7A45B29A9DAB500EB6D56 /* EtcSttingViewModel.swift in Sources */,
 				D2D6B74F29A3DEC900E6188C /* MainViewController.swift in Sources */,
 				D2D6B75129A3DEE900E6188C /* MainViewModel.swift in Sources */,
+				171DE6D729F3AABA00F66486 /* UserNotificationError.swift in Sources */,
 				D2BB131929C2082300A2440B /* UpdateViewModel.swift in Sources */,
 				D2B951B529B63545002E7C08 /* Extension+UIFont.swift in Sources */,
 				D218233629CBEF7B00855D15 /* PhotoPreviewViewController.swift in Sources */,
