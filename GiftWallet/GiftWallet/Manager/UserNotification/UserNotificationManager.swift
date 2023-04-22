@@ -201,3 +201,23 @@ enum NotificationError: Error {
     case doNotFetchCoreData
     case overData
 }
+
+//MARK: -TEST Logic
+extension UserNotificationManager {
+    
+    // MARK: 1분 단위 테스트 Logic
+    // setupNotificationDateComponents -> TEST_setupNotificationDateComponents 변경하여 사용
+    // day -> minute 단위로 실행됨
+    private func TEST_setupNotificationDateComponents(after notiDay: Int) -> DateComponents? {
+        let now = Date()
+
+        var notiDateComponent = DateComponents()
+        notiDateComponent.minute = notiDay
+
+        let calendar = Calendar.current
+        guard let dateAfterDays = calendar.date(byAdding: notiDateComponent, to: now) else { return nil }
+        let dateComponentsAfterDays = calendar.dateComponents([.year, .month, .day, .hour, .minute], from: dateAfterDays)
+        
+        return dateComponentsAfterDays
+    }
+}
