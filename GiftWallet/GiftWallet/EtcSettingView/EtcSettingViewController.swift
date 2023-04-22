@@ -33,10 +33,13 @@ class EtcSettingViewController: UIViewController {
         let button = UIButton()
         
         button.setTitle("로그아웃", for: .normal)
-        button.titleLabel?.font = UIFont(style: .regular, size: 16)
-        button.setTitleColor(UIColor.white, for: .normal)
-        button.backgroundColor = .black
+        button.titleLabel?.font = UIFont.boldSystemFont(ofSize: 13)
+//        button.titleLabel?.font = UIFont(style: .regular, size: 16)
+        button.setTitleColor(UIColor.red, for: .normal)
+//        button.backgroundColor = .black
         button.layer.cornerRadius = 10
+        button.layer.borderWidth = 1
+        button.layer.borderColor = UIColor.red.cgColor
         button.translatesAutoresizingMaskIntoConstraints = false
         
         return button
@@ -114,7 +117,7 @@ class EtcSettingViewController: UIViewController {
     }
     
     private func showAlert() {
-        let alertController = UIAlertController(title: nil, message: "로그아웃 합니다.", preferredStyle: .alert)
+        let alertController = UIAlertController(title: nil, message: "로그아웃 합니다.", preferredStyle: .actionSheet)
         let okAction = UIAlertAction(title: "네", style: .destructive) { _ in
             self.viewModel.signOut()
             self.tabBarController?.selectedIndex = 0
@@ -151,9 +154,9 @@ class EtcSettingViewController: UIViewController {
             profileVerticalStackView.leadingAnchor.constraint(equalTo: simpleProfileHeaderHorizontalStackView.leadingAnchor, constant: 10),
             profileVerticalStackView.centerYAnchor.constraint(equalTo: simpleProfileHeaderHorizontalStackView.centerYAnchor),
             
-            logoutButton.trailingAnchor.constraint(equalTo: simpleProfileHeaderHorizontalStackView.trailingAnchor, constant: -10),
-            logoutButton.widthAnchor.constraint(equalTo: simpleProfileHeaderHorizontalStackView.widthAnchor, multiplier: 0.2),
-            logoutButton.heightAnchor.constraint(equalTo: simpleProfileHeaderHorizontalStackView.heightAnchor, multiplier: 0.3),
+            logoutButton.trailingAnchor.constraint(equalTo: simpleProfileHeaderHorizontalStackView.trailingAnchor, constant: -20),
+            logoutButton.widthAnchor.constraint(equalTo: simpleProfileHeaderHorizontalStackView.widthAnchor, multiplier: 0.15),
+            logoutButton.heightAnchor.constraint(equalTo: simpleProfileHeaderHorizontalStackView.heightAnchor, multiplier: 0.2),
             logoutButton.centerYAnchor.constraint(equalTo: simpleProfileHeaderHorizontalStackView.centerYAnchor),
             
             settingTableView.topAnchor.constraint(equalTo: simpleProfileHeaderHorizontalStackView.bottomAnchor, constant: 20),
