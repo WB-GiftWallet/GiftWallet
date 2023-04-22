@@ -7,11 +7,16 @@
 
 import UserNotifications
 
-class UserNotificationManager {
+class UserNotificationManager: UNUserNotificationCenter {
     
     func requestNotification() throws {
+        // MARK: notification 삭제
+        for identifier in 0...29 {
+            let id = "Notification\(identifier)"
+            removePendingNotificationRequests(withIdentifiers: [id])
+        }
         
-        //MARK: [Fetch] 30+6일 정렬
+        // MARK: [Fetch] 30+6일 정렬
         var recent36Days = [Int]()
         
         do {
@@ -20,7 +25,7 @@ class UserNotificationManager {
             print(error.localizedDescription)
         }
         
-        //MARK: 현재부터 0~6일 남은 것 중 가장 조금 남은 것 NotificationExpireDayContents로 반환
+        // MARK: 현재부터 0~6일 남은 것 중 가장 조금 남은 것 NotificationExpireDayContents로 반환
         var notificationContents: NotificationExpireDayContents?
         
         // MARK: 0~29일까지 조건이 맞다면 noti
@@ -70,11 +75,10 @@ class UserNotificationManager {
             //MARK: Trigger Setting
             let trigger = UNCalendarNotificationTrigger(dateMatching: dateComponents, repeats: true)
             
-            //MARK: Request Setting
-            //TODO: Identifier 설정 -> id를 해당 일 "1", "2" 혹은 "NotificationDay1" 명확하게?
+            // MARK: Request Setting
             let request = UNNotificationRequest(identifier: notifiactionIdentifier, content: contentsOfToday, trigger: trigger)
             
-            //MARK: Add UserNotification
+            // MARK: Add UserNotification
             let notificationCenter = UNUserNotificationCenter.current()
             notificationCenter.add(request) { (error) in
                 if error != nil {
