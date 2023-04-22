@@ -183,15 +183,6 @@ private enum DateFormatteConvention: String {
     case yyyyMMdd
 }
 
-struct userDefualtTimeSetting {
-    
-    func timeSetting(hour: Int, minute: Int) {
-        UserDefaults.standard.set(hour, forKey: "NotificationHour")
-        UserDefaults.standard.set(minute, forKey: "NotificationMinute")
-    }
-}
-
-
 //MARK: -TEST Logic
 extension UserNotificationManager {
     
