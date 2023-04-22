@@ -231,10 +231,7 @@ class MainViewController: UIViewController, UISearchBarDelegate, UISearchControl
     }
     
     private func setupButton() {
-        let searchButtonAction = UIAction { _ in
-            // MARK: 임시 signOut 구문
-            FireBaseManager.shared.signOut()
-            
+        let searchButtonAction = UIAction { _ in            
             let gifts = self.viewModel.recentGifts.value + self.viewModel.expireGifts.value
             let observableGifts: Observable<[Gift]> = .init(gifts)
             let searchTableViewModel = SearchTableViewModel(allGiftData: observableGifts)
