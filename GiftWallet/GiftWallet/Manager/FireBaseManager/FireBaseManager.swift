@@ -18,6 +18,11 @@ class FireBaseManager {
     //MARK: FireBase Property
     private var db = Firestore.firestore()
     private let storage = Storage.storage()
+    
+    var currentUserInfo: User? {
+        return Auth.auth().currentUser
+    }
+    
     var currentUserID = Auth.auth().currentUser?.uid
     
     private init() { }
@@ -81,6 +86,16 @@ extension FireBaseManager {
         } catch {
             print(error.localizedDescription)
         }
+    }
+    
+    func changeProfile(name: String) {
+        let changeRequest = Auth.auth().currentUser?.createProfileChangeRequest()
+        changeRequest?.displayName = name
+        changeRequest?.commitChanges(completion: { error in
+            if let error = error {
+                print("프로필설정실패", error.localizedDescription)
+            }
+        })
     }
 }
 

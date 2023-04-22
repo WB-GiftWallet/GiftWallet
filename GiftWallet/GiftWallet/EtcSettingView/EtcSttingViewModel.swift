@@ -9,6 +9,30 @@ import Foundation
 
 class EtcSettingViewModel {
     
+    private let firebaseManager = FireBaseManager.shared
+    private let coreDataManager = CoreDataManager.shared
+    
+    var userName: String? {
+        return firebaseManager.currentUserInfo?.displayName
+    }
+    
+    var userEmail: String? {
+        return firebaseManager.currentUserInfo?.email
+    }
+    
+    func signOut() {
+        firebaseManager.signOut()
+        deleteAllCoreData()
+    }
+    
+    private func deleteAllCoreData() {
+        do {
+            try coreDataManager.deleteAllData()
+        } catch {
+            print(error.localizedDescription)
+        }
+    }
+    
     var sectionNumber: Int {
         return 2
     }

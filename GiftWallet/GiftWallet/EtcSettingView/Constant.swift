@@ -29,7 +29,7 @@ enum Constant: Int {
             case .useHistory:
                 return "사용내역"
             case .noneDefine:
-                return "미정"
+                return "회원탈퇴"
             }
         }
     }

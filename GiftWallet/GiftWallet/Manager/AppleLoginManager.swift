@@ -30,8 +30,20 @@ extension AppleLoginManager {
                 return
             }
             
-            completion(["idTokenString": idTokenString, "rawNonce": nonce])
+            if let givenName = appleIDCredential.fullName?.givenName,
+               let familyName = appleIDCredential.fullName?.familyName {
+                
+                let fullName = "\(familyName)\(givenName)"
+                
+                completion(["idTokenString": idTokenString, "rawNonce": nonce, "fullName": fullName])
+            } else {
+                guard let fullName = appleIDCredential.fullName?.description else { return }
+                
+                completion(["idTokenString": idTokenString, "rawNonce": nonce, "fullName": fullName])
+            }
+            
         }
+        
     }
     
     mutating func startSignInWithApple() -> ASAuthorizationAppleIDRequest {
