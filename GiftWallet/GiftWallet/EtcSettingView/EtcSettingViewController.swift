@@ -34,9 +34,7 @@ class EtcSettingViewController: UIViewController {
         
         button.setTitle("로그아웃", for: .normal)
         button.titleLabel?.font = UIFont.boldSystemFont(ofSize: 13)
-//        button.titleLabel?.font = UIFont(style: .regular, size: 16)
         button.setTitleColor(UIColor.red, for: .normal)
-//        button.backgroundColor = .black
         button.layer.cornerRadius = 10
         button.layer.borderWidth = 1
         button.layer.borderColor = UIColor.red.cgColor
@@ -177,24 +175,11 @@ extension EtcSettingViewController: UITableViewDataSource {
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = settingTableView.dequeueReusableCell(withIdentifier: EtcSettingTableViewCell.reuseIdentifier,
                                                         for: indexPath) as? EtcSettingTableViewCell ?? EtcSettingTableViewCell()
+        cell.etcCellElementTappedDelegate = self
         cell.accessoryType = .disclosureIndicator
-        bind(cell: cell)
         cell.configureCell(section: indexPath.section, index: indexPath.row)
         
         return cell
-    }
-    
-    private func bind(cell: EtcSettingTableViewCell) {
-        cell.senderStatus.bind { status in
-            let reloadTargetIndex = IndexPath(row: 0, section: 1)
-            let targetCell = self.settingTableView.cellForRow(at: reloadTargetIndex) as? EtcSettingTableViewCell ?? EtcSettingTableViewCell()
-            switch status {
-            case true:
-                targetCell.statusLabel.text = "ON"
-            case false:
-                targetCell.statusLabel.text = "OFF"
-            }
-        }
     }
     
     func numberOfSections(in tableView: UITableView) -> Int {
@@ -234,4 +219,30 @@ extension EtcSettingViewController: UITableViewDelegate {
         let timeSeetingViewController = TimeSettingViewController()
         navigationController?.pushViewController(timeSeetingViewController, animated: true)
     }
+}
+
+extension EtcSettingViewController: EtcCellElementTappedDelegate {
+    func toggledSwitch(sender: UISwitch, completion: @escaping (Bool) -> Void) {
+        showToggleAlert(sender: sender, completion: completion)
+    }
+    
+    private func showToggleAlert(sender: UISwitch, completion: @escaping (Bool) -> Void) {
+        let alertController = UIAlertController(title: nil, message: "푸시알림 설정을 변경할까요?", preferredStyle: .actionSheet)
+        let okAction = UIAlertAction(title: "네", style: .destructive) { _ in
+            let cell = self.settingTableView.cellForRow(at: IndexPath(row: 0, section: 1)) as? EtcSettingTableViewCell
+            
+            cell?.statusLabel.text = sender.isOn ? "ON" : "OFF"
+            completion(sender.isOn)
+        }
+        
+        let noAction = UIAlertAction(title: "아니오", style: .cancel) { _ in
+            let cell = self.settingTableView.cellForRow(at: IndexPath(row: 0, section: 1)) as? EtcSettingTableViewCell
+            cell?.statusLabel.text = !sender.isOn ? "ON" : "OFF"
+            completion(!sender.isOn)
+        }
+        
+        [okAction, noAction].forEach(alertController.addAction(_:))
+        present(alertController, animated: true)
+    }
+    
 }

@@ -8,13 +8,8 @@
 import UIKit
 
 class EtcSettingTableViewCell: UITableViewCell, ReusableView {
-    var senderStatus: Observable<Bool> = .init(true)
-    
-    var eightCompletion: (Bool) -> Void = {_ in }
-    
-    func check(completion: @escaping (Bool) -> Void) {
-        print("AA")
-    }
+
+    var etcCellElementTappedDelegate: EtcCellElementTappedDelegate?
     
     let settingListLabel = {
         let label = UILabel()
@@ -36,8 +31,6 @@ class EtcSettingTableViewCell: UITableViewCell, ReusableView {
     lazy var pushSwitch = {
         let switchButton = UISwitch()
         
-        switchButton.isOn = true
-//        switchButton.setOn(true, animated: true)
         switchButton.addTarget(self, action: #selector(setupPushSwitchAction(sender:)), for: .valueChanged)
         switchButton.translatesAutoresizingMaskIntoConstraints = false
         switchButton.isHidden = true
@@ -47,6 +40,7 @@ class EtcSettingTableViewCell: UITableViewCell, ReusableView {
     
     override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
         super.init(style: style, reuseIdentifier: reuseIdentifier)
+        setupPushSwitch()
         setupViews()
     }
     
@@ -54,14 +48,21 @@ class EtcSettingTableViewCell: UITableViewCell, ReusableView {
         fatalError("init(coder:) has not been implemented")
     }
     
+    private func setupPushSwitch() {
+        if let value = UserDefaults.standard.value(forKey: "PushAlarm") as? Bool {
+            self.pushSwitch.isOn = value
+        }
+    }
+    
     func configureCell(section: Int, index: Int) {
         switch section {
         case 0:
             settingListLabel.text = Constant.AccountInfo(rawValue: index)?.labelDescription
             statusLabel.text = nil
+            setupAttributesAccontInfoCell(index)
         case 1:
             settingListLabel.text = Constant.AuthorizeSetting(rawValue: index)?.labelDescription
-            setupAttributes(index)
+            setupAttributesAuthorizeSettingCell(index)
         default:
             break
         }
@@ -69,10 +70,25 @@ class EtcSettingTableViewCell: UITableViewCell, ReusableView {
     
     @objc
     private func setupPushSwitchAction(sender: UISwitch) {
-        senderStatus.value.toggle()
+        etcCellElementTappedDelegate?.toggledSwitch(sender: sender, completion: { value in
+            UserDefaults.standard.setValue(value, forKey: "PushAlarm")
+            self.pushSwitch.setOn(value, animated: true)
+        })
     }
     
-    private func setupAttributes(_ index: Int) {
+    private func setupAttributesAccontInfoCell(_ index: Int) {
+        if index == 1 {
+            self.accessoryType = .none
+            self.settingListLabel.textColor = .red
+        }
+    }
+    
+    private func setupAttributesAuthorizeSettingCell(_ index: Int) {
+        if index == 0 {
+            let value = UserDefaults.standard.bool(forKey: "PushAlarm")
+            statusLabel.text = value ? "ON" : "OFF"
+        }
+        
         if index == 0 || index == 1 {
             self.accessoryType = .none
         }
@@ -99,3 +115,6 @@ class EtcSettingTableViewCell: UITableViewCell, ReusableView {
     
 }
 
+protocol EtcCellElementTappedDelegate {
+    func toggledSwitch(sender: UISwitch, completion: @escaping (Bool) -> Void)
+}
