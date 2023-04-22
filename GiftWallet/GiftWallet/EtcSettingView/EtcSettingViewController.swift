@@ -15,7 +15,7 @@ class EtcSettingViewController: UIViewController {
        let label = UILabel()
         
         label.text = "이름오류"
-        label.font = .boldSystemFont(ofSize: 25)
+        label.font = UIFont(style: .bold, size: 25)
         
         return label
     }()
@@ -24,7 +24,7 @@ class EtcSettingViewController: UIViewController {
        let label = UILabel()
         
         label.text = "아이디오류"
-        label.font = .systemFont(ofSize: 15)
+        label.font = UIFont(style: .medium, size: 15)
         
         return label
     }()
@@ -33,9 +33,11 @@ class EtcSettingViewController: UIViewController {
         let button = UIButton()
         
         button.setTitle("로그아웃", for: .normal)
+        button.titleLabel?.font = UIFont(style: .regular, size: 16)
         button.setTitleColor(UIColor.white, for: .normal)
         button.backgroundColor = .black
         button.layer.cornerRadius = 10
+        button.translatesAutoresizingMaskIntoConstraints = false
         
         return button
     }()
@@ -45,24 +47,21 @@ class EtcSettingViewController: UIViewController {
         
         stackView.axis = .vertical
         stackView.spacing = 5
+        stackView.translatesAutoresizingMaskIntoConstraints = false
         
         return stackView
     }()
     
     private let simpleProfileHeaderHorizontalStackView = {
-        let stackView = UIStackView()
-        
-        stackView.axis = .horizontal
-        stackView.distribution = .fill
-        stackView.alignment = .center
-        
+        let stackView = UIView()
+    
         stackView.translatesAutoresizingMaskIntoConstraints = false
 
         return stackView
     }()
     
     private let settingTableView = {
-       let tableView = UITableView()
+        let tableView = UITableView(frame: .zero, style: .insetGrouped)
         
         tableView.register(EtcSettingTableViewCell.self,
                            forCellReuseIdentifier: EtcSettingTableViewCell.reuseIdentifier)
@@ -133,23 +132,29 @@ class EtcSettingViewController: UIViewController {
     
     private func setupViews() {
         [nameLabel, idLabel].forEach(profileVerticalStackView.addArrangedSubview(_:))
-        [profileVerticalStackView, logoutButton].forEach(simpleProfileHeaderHorizontalStackView.addArrangedSubview(_:))
+        [profileVerticalStackView, logoutButton].forEach(simpleProfileHeaderHorizontalStackView.addSubview(_:))
         
         [simpleProfileHeaderHorizontalStackView, settingTableView].forEach(view.addSubview(_:))
         
         let safeArea = view.safeAreaLayoutGuide
         
-        simpleProfileHeaderHorizontalStackView.backgroundColor = .red
+        view.backgroundColor = .secondarySystemBackground
+        simpleProfileHeaderHorizontalStackView.backgroundColor = .white
+        simpleProfileHeaderHorizontalStackView.layer.cornerRadius = 10
         
         NSLayoutConstraint.activate([
-            logoutButton.widthAnchor.constraint(equalTo: simpleProfileHeaderHorizontalStackView.widthAnchor, multiplier: 0.2),
-            logoutButton.heightAnchor.constraint(equalTo: simpleProfileHeaderHorizontalStackView.heightAnchor, multiplier: 0.3),
-            
-            simpleProfileHeaderHorizontalStackView.topAnchor.constraint(equalTo: safeArea.topAnchor),
-            simpleProfileHeaderHorizontalStackView.leadingAnchor.constraint(equalTo: safeArea.leadingAnchor, constant: 15),
-            simpleProfileHeaderHorizontalStackView.trailingAnchor.constraint(equalTo: safeArea.trailingAnchor, constant: -15),
+            simpleProfileHeaderHorizontalStackView.topAnchor.constraint(equalTo: safeArea.topAnchor, constant: 20),
+            simpleProfileHeaderHorizontalStackView.widthAnchor.constraint(equalTo: safeArea.widthAnchor, multiplier: 0.9),
+            simpleProfileHeaderHorizontalStackView.centerXAnchor.constraint(equalTo: safeArea.centerXAnchor),
             simpleProfileHeaderHorizontalStackView.heightAnchor.constraint(equalTo: safeArea.heightAnchor, multiplier: 0.15),
             
+            profileVerticalStackView.leadingAnchor.constraint(equalTo: simpleProfileHeaderHorizontalStackView.leadingAnchor, constant: 10),
+            profileVerticalStackView.centerYAnchor.constraint(equalTo: simpleProfileHeaderHorizontalStackView.centerYAnchor),
+            
+            logoutButton.trailingAnchor.constraint(equalTo: simpleProfileHeaderHorizontalStackView.trailingAnchor, constant: -10),
+            logoutButton.widthAnchor.constraint(equalTo: simpleProfileHeaderHorizontalStackView.widthAnchor, multiplier: 0.2),
+            logoutButton.heightAnchor.constraint(equalTo: simpleProfileHeaderHorizontalStackView.heightAnchor, multiplier: 0.3),
+            logoutButton.centerYAnchor.constraint(equalTo: simpleProfileHeaderHorizontalStackView.centerYAnchor),
             
             settingTableView.topAnchor.constraint(equalTo: simpleProfileHeaderHorizontalStackView.bottomAnchor, constant: 20),
             settingTableView.leadingAnchor.constraint(equalTo: safeArea.leadingAnchor),
