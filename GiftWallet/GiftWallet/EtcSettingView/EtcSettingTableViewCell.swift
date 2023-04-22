@@ -91,6 +91,7 @@ class EtcSettingTableViewCell: UITableViewCell, ReusableView {
         
         if index == 0 || index == 1 {
             self.accessoryType = .none
+            self.selectionStyle = .none
         }
         if index == 1 {
             pushSwitch.isHidden = false

@@ -204,8 +204,6 @@ extension EtcSettingViewController: UITableViewDelegate {
             timeSettingViewSceneConversion()
         }
         
-        
-        
         tableView.deselectRow(at: indexPath, animated: true)
     }
     
