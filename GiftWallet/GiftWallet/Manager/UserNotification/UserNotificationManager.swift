@@ -8,10 +8,8 @@
 import UserNotifications
 
 class UserNotificationManager {
-//    private let notificationID: String = "UserNotification"
-    private var dateComponents = DateComponents()
     
-    private func requestNotification() {
+    func requestNotification() {
         
         //MARK: [Fetch] 30+6일 정렬
         var recent36Days = [Int]()
@@ -64,11 +62,13 @@ class UserNotificationManager {
                 return
             }
             
-            //MARK: Contents (1, 3, 7 알람에 해당하는)
-            let contentsOfToday = setContents(contents: notificationContents)
+            //MARK: Contents (1, 3, 7 알람에 해당하는) Setting
+            let contentsOfToday = setContents(totalValue, notificationContents)
             
-            //TODO: DateComponenets 특정 시간 -> 매일 다른 시간 설정 해야함
-            setDateComponents()
+            guard let dateComponents = setupNotificationDateComponents(after: startDay) else {
+                print("DATE COMPONENTS ERROR")
+                return
+            }
             
             //MARK: Trigger Setting
             let trigger = UNCalendarNotificationTrigger(dateMatching: dateComponents, repeats: true)
@@ -86,20 +86,29 @@ class UserNotificationManager {
         }
     }
     
-    private func setContents(contents: NotificationExpireDayContents) -> UNMutableNotificationContent {
+    private func setupNotificationDateComponents(after notiDay: Int) -> DateComponents? {
+        let now = Date()
+        var notiDateComponent = DateComponents()
+        notiDateComponent.day = notiDay
+        
+        let calendar = Calendar.current
+        guard let dateAfterDays = calendar.date(byAdding: notiDateComponent, to: now) else { return nil }
+        var dateComponentsAfterDays = calendar.dateComponents([.year, .month, .day], from: dateAfterDays)
+        
+        //MARK: 시간대 Setting
+        dateComponentsAfterDays.hour = UserDefaults.standard.integer(forKey: "NotificationHour")
+        
+        return dateComponentsAfterDays
+    }
+    
+    private func setContents(_ expireCount: Int, _ contents: NotificationExpireDayContents) -> UNMutableNotificationContent {
         let content = UNMutableNotificationContent()
         
-        content.title = contents.title
+        content.title = contents.title + "\(expireCount) 개 남았슴니당"
         content.body = contents.body
         content.sound = .default
         
         return content
-    }
-    
-    // TODO: UserDefaults를 이용한 알람 타임 등록
-    private func setDateComponents() {
-        dateComponents.hour = UserDefaults.standard.integer(forKey: "NotificationHour")
-        dateComponents.minute = UserDefaults.standard.integer(forKey: "NotificationMinute")
     }
     
     private func setNotificationContents(_ mostRecentExpireDay: Int) throws -> NotificationExpireDayContents {
@@ -131,7 +140,7 @@ extension UserNotificationManager {
             
             let day = judgeGapOfDay(date: expireDate)
             switch day {
-                case 0...6:
+                case 0...36:
                     thirtyDays[day] += 1
                 default:
                     continue

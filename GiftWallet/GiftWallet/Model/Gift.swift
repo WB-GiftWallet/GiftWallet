@@ -91,9 +91,11 @@ extension Gift {
     ]
     
     static func addSampleData() {
-        Gift.sampleCoreGifts.forEach { gift in
-//            try? CoreDataManager.shared.saveData(gift)
-        }
+//        Gift.sampleCoreGifts.forEach { gift in
+//            try? CoreDataManager.shared.saveData(gift, completion: { int in
+//                print(int)
+//            })
+//        }
     }
 }
 
