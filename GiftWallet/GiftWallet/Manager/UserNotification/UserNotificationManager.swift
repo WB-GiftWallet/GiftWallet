@@ -9,15 +9,13 @@ import UserNotifications
 
 class UserNotificationManager {
     
-    func requestNotification() {
+    func requestNotification() throws {
         
         //MARK: [Fetch] 30+6일 정렬
         var recent36Days = [Int]()
         
         do {
             recent36Days = try mostRecentExpireItemFetchFor_36_DaysFromCoreData()
-        } catch NotificationError.doNotFetchCoreData {
-            print(NotificationError.doNotFetchCoreData.localizedDescription)
         } catch {
             print(error.localizedDescription)
         }
@@ -59,15 +57,14 @@ class UserNotificationManager {
             
             //MARK: nil 이면 0~6 범위, -> return
             guard let notificationContents = notificationContents else {
-                return
+                throw NotificationError.noExpireContents
             }
             
             //MARK: Contents (1, 3, 7 알람에 해당하는) Setting
             let contentsOfToday = setContents(totalValue, notificationContents)
             
             guard let dateComponents = setupNotificationDateComponents(after: startDay) else {
-                print("DATE COMPONENTS ERROR")
-                return
+                throw NotificationError.dateComponentsIsNil
             }
             
             //MARK: Trigger Setting
@@ -130,7 +127,6 @@ class UserNotificationManager {
 extension UserNotificationManager {
     private func mostRecentExpireItemFetchFor_36_DaysFromCoreData() throws -> [Int] {
         let gifts = fetchFiltedData()
-        let dateFormatter = DateFormatter(dateFormatte: DateFormatteConvention.yyyyMMdd)
         var thirtyDays = Array(repeating: 0, count: 36)
         
         for gift in gifts {
@@ -195,12 +191,6 @@ struct userDefualtTimeSetting {
     }
 }
 
-enum NotificationError: Error {
-    case outOfNumbersMostRecent
-    case notHaveMostRecentDay
-    case doNotFetchCoreData
-    case overData
-}
 
 //MARK: -TEST Logic
 extension UserNotificationManager {
