@@ -12,6 +12,8 @@
 		1713140E29D2E5C0007A3AF9 /* FirebaseFirestoreSwift in Frameworks */ = {isa = PBXBuildFile; productRef = 1713140D29D2E5C0007A3AF9 /* FirebaseFirestoreSwift */; };
 		171695B129B1B8CA00CF3E41 /* SearchTableViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 171695B029B1B8CA00CF3E41 /* SearchTableViewModel.swift */; };
 		171DE6D729F3AABA00F66486 /* UserNotificationError.swift in Sources */ = {isa = PBXBuildFile; fileRef = 171DE6D629F3AABA00F66486 /* UserNotificationError.swift */; };
+		171E10D129F3BDC300E578D1 /* AlarmListViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 171E10D029F3BDC300E578D1 /* AlarmListViewController.swift */; };
+		171E10D429F3C01600E578D1 /* AlarmListViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 171E10D329F3C01600E578D1 /* AlarmListViewModel.swift */; };
 		1723BE8529C3142600AE06F9 /* IQKeyboardManagerSwift in Frameworks */ = {isa = PBXBuildFile; productRef = 1723BE8429C3142600AE06F9 /* IQKeyboardManagerSwift */; };
 		17457D0529E7F7650018162D /* UserNotificationManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 17457D0429E7F7650018162D /* UserNotificationManager.swift */; };
 		17457D0D29E9A26E0018162D /* NotificationExpireDayContents.swift in Sources */ = {isa = PBXBuildFile; fileRef = 17457D0C29E9A26E0018162D /* NotificationExpireDayContents.swift */; };
@@ -110,6 +112,8 @@
 /* Begin PBXFileReference section */
 		171695B029B1B8CA00CF3E41 /* SearchTableViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchTableViewModel.swift; sourceTree = "<group>"; };
 		171DE6D629F3AABA00F66486 /* UserNotificationError.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserNotificationError.swift; sourceTree = "<group>"; };
+		171E10D029F3BDC300E578D1 /* AlarmListViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AlarmListViewController.swift; sourceTree = "<group>"; };
+		171E10D329F3C01600E578D1 /* AlarmListViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AlarmListViewModel.swift; sourceTree = "<group>"; };
 		17457D0429E7F7650018162D /* UserNotificationManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserNotificationManager.swift; sourceTree = "<group>"; };
 		17457D0C29E9A26E0018162D /* NotificationExpireDayContents.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NotificationExpireDayContents.swift; sourceTree = "<group>"; };
 		1759488829D49DF000E7D5B9 /* FireBaseManagerError.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FireBaseManagerError.swift; sourceTree = "<group>"; };
@@ -222,6 +226,15 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		171E10D229F3BDCB00E578D1 /* AlarmListView */ = {
+			isa = PBXGroup;
+			children = (
+				171E10D029F3BDC300E578D1 /* AlarmListViewController.swift */,
+				171E10D329F3C01600E578D1 /* AlarmListViewModel.swift */,
+			);
+			path = AlarmListView;
+			sourceTree = "<group>";
+		};
 		17457D0B29E98CE30018162D /* UserNotification */ = {
 			isa = PBXGroup;
 			children = (
@@ -467,6 +480,7 @@
 				D2B6333E29ACD17500EE9ACE /* EtcUsageHistoryView */,
 				D2C7A45729A9DA3300EB6D56 /* EtcSettingView */,
 				FC62FF1129A77B77003E63B0 /* MainTabbarController */,
+				171E10D229F3BDCB00E578D1 /* AlarmListView */,
 				D2D6B74D29A3DE6A00E6188C /* MainView */,
 				F6A4AB4729A5D9F1009AEB78 /* DetailView */,
 				D2DAAA1E29A44B3200D70E8C /* Model */,
@@ -667,6 +681,7 @@
 				D24002DB29B75B5200635FFC /* DetailViewModel.swift in Sources */,
 				D2A282B829A85EF2002CCF5A /* Observable.swift in Sources */,
 				17457D0529E7F7650018162D /* UserNotificationManager.swift in Sources */,
+				171E10D429F3C01600E578D1 /* AlarmListViewModel.swift in Sources */,
 				D246B39929D7CF7E00A5BB2F /* AppleLoginManager.swift in Sources */,
 				D295E4B929A5F64200E12CAF /* FormSheetViewController.swift in Sources */,
 				D2CDDBE029AF3CD300E000E3 /* VisionManager.swift in Sources */,
@@ -675,6 +690,7 @@
 				D2C90B5829BF4DC1003C3611 /* ZoomImageViewController.swift in Sources */,
 				17457D0D29E9A26E0018162D /* NotificationExpireDayContents.swift in Sources */,
 				FC62FF1029A77B5A003E63B0 /* MainTabBarController.swift in Sources */,
+				171E10D129F3BDC300E578D1 /* AlarmListViewController.swift in Sources */,
 				D2CDDBE229AF3D2B00E000E3 /* AutoInputUseCase.swift in Sources */,
 				D2BB131529C0507300A2440B /* BarcodeViewController.swift in Sources */,
 				D2CA7D9529D6BFC1002D3BA2 /* LoginViewModel.swift in Sources */,
