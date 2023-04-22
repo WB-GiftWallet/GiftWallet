@@ -31,6 +31,7 @@
 		D24002DB29B75B5200635FFC /* DetailViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = D24002DA29B75B5200635FFC /* DetailViewModel.swift */; };
 		D246B39929D7CF7E00A5BB2F /* AppleLoginManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = D246B39829D7CF7E00A5BB2F /* AppleLoginManager.swift */; };
 		D26019CD29F12ADF00931FBD /* SkeletonView in Frameworks */ = {isa = PBXBuildFile; productRef = D26019CC29F12ADF00931FBD /* SkeletonView */; };
+		D26019CF29F3A28600931FBD /* TimeSettingViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D26019CE29F3A28600931FBD /* TimeSettingViewController.swift */; };
 		D27CA42929B84F6F00EC5FC7 /* ZoomImageViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = D27CA42829B84F6F00EC5FC7 /* ZoomImageViewModel.swift */; };
 		D27CA42B29B86ABF00EC5FC7 /* PagingCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = D27CA42A29B86ABF00EC5FC7 /* PagingCollectionViewCell.swift */; };
 		D27CA42D29B89F1900EC5FC7 /* CustomButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = D27CA42C29B89F1900EC5FC7 /* CustomButton.swift */; };
@@ -125,6 +126,7 @@
 		D24002D729B7536B00635FFC /* BMJUA_otf.otf */ = {isa = PBXFileReference; lastKnownFileType = file; path = BMJUA_otf.otf; sourceTree = "<group>"; };
 		D24002DA29B75B5200635FFC /* DetailViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DetailViewModel.swift; sourceTree = "<group>"; };
 		D246B39829D7CF7E00A5BB2F /* AppleLoginManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppleLoginManager.swift; sourceTree = "<group>"; };
+		D26019CE29F3A28600931FBD /* TimeSettingViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TimeSettingViewController.swift; sourceTree = "<group>"; };
 		D27CA42829B84F6F00EC5FC7 /* ZoomImageViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ZoomImageViewModel.swift; sourceTree = "<group>"; };
 		D27CA42A29B86ABF00EC5FC7 /* PagingCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PagingCollectionViewCell.swift; sourceTree = "<group>"; };
 		D27CA42C29B89F1900EC5FC7 /* CustomButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomButton.swift; sourceTree = "<group>"; };
@@ -286,6 +288,7 @@
 				D2C7A45A29A9DAB500EB6D56 /* EtcSttingViewModel.swift */,
 				D2C7A45C29A9E77100EB6D56 /* EtcSettingTableViewCell.swift */,
 				D2B6333C29ACCA4100EE9ACE /* Constant.swift */,
+				D26019CE29F3A28600931FBD /* TimeSettingViewController.swift */,
 			);
 			path = EtcSettingView;
 			sourceTree = "<group>";
@@ -698,6 +701,7 @@
 				17B579EF29D3337100042D80 /* FireBaseManager.swift in Sources */,
 				D2CDDBEC29AF4C0700E000E3 /* AddViewModel.swift in Sources */,
 				171695B129B1B8CA00CF3E41 /* SearchTableViewModel.swift in Sources */,
+				D26019CF29F3A28600931FBD /* TimeSettingViewController.swift in Sources */,
 				FCAD20A529A91A55004214FD /* CoreDataError.swift in Sources */,
 				D2B951A529B62151002E7C08 /* Extension+UIColor.swift in Sources */,
 				17D5963929B02CBD00AFE039 /* SearchGiftCustomCell.swift in Sources */,

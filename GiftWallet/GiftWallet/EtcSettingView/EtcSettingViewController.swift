@@ -212,12 +212,23 @@ extension EtcSettingViewController: UITableViewDelegate {
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         if indexPath.section == 0, indexPath.row == 0 {
             sceneConversion()
+        } else if indexPath.section == 1, indexPath.row == 2 {
+            timeSettingViewSceneConversion()
         }
+        
+        
+        
+        tableView.deselectRow(at: indexPath, animated: true)
     }
     
     private func sceneConversion() {
         let UsageHistoryViewModel = UsageHistoryViewModel()
         let usageHistoryViewController = UsageHistoryViewController(viewModel: UsageHistoryViewModel)
         navigationController?.pushViewController(usageHistoryViewController, animated: true)
+    }
+    
+    private func timeSettingViewSceneConversion() {
+        let timeSeetingViewController = TimeSettingViewController()
+        navigationController?.pushViewController(timeSeetingViewController, animated: true)
     }
 }
