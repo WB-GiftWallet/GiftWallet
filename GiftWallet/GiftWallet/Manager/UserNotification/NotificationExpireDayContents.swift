@@ -14,22 +14,22 @@ enum NotificationExpireDayContents {
     var title: String {
         switch self {
             case .today:
-                return "기한 임박!!"
+                return "오늘 사라지는 기프티콘이 있어요!"
             case .underThree:
-                return "기한 임박!!"
+                return "곧 만료되는 기프티콘이 있어요!"
             case .underSeven:
-                return "기한 임박!!"
+                return "일주일 내에 만료되는 기프티콘이 있어요!"
         }
     }
     
     var body: String {
         switch self {
             case .today:
-                return "오늘 사라지는 기프티콘이 있어요!"
+                return "기한 임박!!"
             case .underThree:
-                return "곧 만료되는 기프티콘이 있어요!"
+                return "기한 임박!!"
             case .underSeven:
-                return "일주일 내에 만료되는 기프티콘이 있어요!"
+                return "기한 임박!!"
         }
     }
 }

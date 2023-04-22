@@ -104,8 +104,8 @@ class UserNotificationManager {
     private func setContents(_ expireCount: Int, _ contents: NotificationExpireDayContents) -> UNMutableNotificationContent {
         let content = UNMutableNotificationContent()
         
-        content.title = contents.title + "\(expireCount) 개 남았슴니당"
-        content.body = contents.body
+        content.title = contents.title
+        content.body = "\(expireCount)개 " + contents.body
         content.sound = .default
         
         return content
