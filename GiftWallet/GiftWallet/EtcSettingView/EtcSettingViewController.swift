@@ -86,16 +86,26 @@ class EtcSettingViewController: UIViewController {
         setupTableViewAttributes()
         setupNavigation()
         setupViews()
-        configureUserProfile()
         setupButton()
+    }
+    
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        configureUserProfile()
     }
     
     private func configureUserProfile() {
         guard let userName = viewModel.userName,
               let userEmamil = viewModel.userEmail else { return }
         
+        // TODO: UserEmail 애플일 때, 별도처리
+        if userEmamil.contains("@privaterelay.appleid.com") {
+            idLabel.text = "@private.appleID.com"
+        } else {
+            idLabel.text = userEmamil
+        }
+        
         nameLabel.text = userName
-        idLabel.text = userEmamil
     }
     
     
