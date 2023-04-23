@@ -23,7 +23,9 @@ class FireBaseManager {
         return Auth.auth().currentUser
     }
     
-    var currentUserID = Auth.auth().currentUser?.uid
+    var currentUserID: String? {
+      return Auth.auth().currentUser?.uid
+    }
     
     private init() { }
 }

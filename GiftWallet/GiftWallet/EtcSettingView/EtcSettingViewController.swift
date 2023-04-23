@@ -8,11 +8,11 @@
 import UIKit
 
 class EtcSettingViewController: UIViewController {
-
+    
     let viewModel: EtcSettingViewModel
-
+    
     private let nameLabel = {
-       let label = UILabel()
+        let label = UILabel()
         
         label.text = "이름오류"
         label.font = UIFont(style: .bold, size: 25)
@@ -21,7 +21,7 @@ class EtcSettingViewController: UIViewController {
     }()
     
     private let idLabel = {
-       let label = UILabel()
+        let label = UILabel()
         
         label.text = "아이디오류"
         label.font = UIFont(style: .medium, size: 15)
@@ -44,7 +44,7 @@ class EtcSettingViewController: UIViewController {
     }()
     
     private let profileVerticalStackView = {
-       let stackView = UIStackView()
+        let stackView = UIStackView()
         
         stackView.axis = .vertical
         stackView.spacing = 5
@@ -55,9 +55,9 @@ class EtcSettingViewController: UIViewController {
     
     private let simpleProfileHeaderHorizontalStackView = {
         let stackView = UIView()
-    
+        
         stackView.translatesAutoresizingMaskIntoConstraints = false
-
+        
         return stackView
     }()
     
@@ -128,11 +128,17 @@ class EtcSettingViewController: UIViewController {
         let alertController = UIAlertController(title: nil, message: "로그아웃 합니다.", preferredStyle: .actionSheet)
         let okAction = UIAlertAction(title: "네", style: .destructive) { _ in
             self.viewModel.signOut()
-            self.tabBarController?.selectedIndex = 0
-            let loginViewModel = LoginViewModel()
-            let loginViewController = LoginViewController(viewModel: loginViewModel)
-            loginViewController.modalPresentationStyle = .fullScreen
-            self.present(loginViewController, animated: true)
+            
+            if let tabController = self.tabBarController,
+               let mainViewController = tabController.viewControllers?.first,
+               let typeCastingMainViewController = mainViewController as? MainViewController {
+                self.tabBarController?.selectedViewController = typeCastingMainViewController
+                let loginViewModel = LoginViewModel()
+                let loginViewController = LoginViewController(viewModel: loginViewModel)
+                loginViewController.delegate = typeCastingMainViewController
+                loginViewController.modalPresentationStyle = .fullScreen
+                self.present(loginViewController, animated: true)
+            }
         }
         
         let noAction = UIAlertAction(title: "아니오", style: .cancel)
@@ -177,7 +183,7 @@ class EtcSettingViewController: UIViewController {
 
 extension EtcSettingViewController: UITableViewDataSource {
     
-
+    
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         return viewModel.setupNumberOfRowsInSection(section: section)
     }

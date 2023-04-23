@@ -556,5 +556,6 @@ extension MainViewController: GiftDidDismissDelegate {
 extension MainViewController: DidFetchGiftDelegate {
     func finishedFetch() {
         setupViewSkeletonable(false)
+        updateCollectionViewData()
     }
 }
