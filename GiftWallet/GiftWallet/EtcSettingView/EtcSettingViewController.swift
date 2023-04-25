@@ -100,7 +100,7 @@ class EtcSettingViewController: UIViewController {
         
         // TODO: UserEmail 애플일 때, 별도처리
         if userEmamil.contains("@privaterelay.appleid.com") {
-            idLabel.text = "@private.appleID.com"
+            idLabel.text = "\(userName)@private.appleID.com"
         } else {
             idLabel.text = userEmamil
         }
