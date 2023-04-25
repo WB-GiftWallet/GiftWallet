@@ -20,7 +20,9 @@ class MainViewController: UIViewController, UISearchBarDelegate, UISearchControl
     private lazy var contentScrollView: UIScrollView = {
         
         let scrollView = UIScrollView()
+        
         scrollView.backgroundColor = .white
+        scrollView.showsVerticalScrollIndicator = false
         scrollView.isScrollEnabled = true
         scrollView.translatesAutoresizingMaskIntoConstraints = false
         
@@ -133,7 +135,6 @@ class MainViewController: UIViewController, UISearchBarDelegate, UISearchControl
     private lazy var recentCollectionView: CustomCollectionView = {
         let collectionView = CustomCollectionView()
         
-//        collectionView.collectionViewFlowLayout.scrollDirection = .horizontal
         collectionView.delegate = self
         collectionView.dataSource = self
         
