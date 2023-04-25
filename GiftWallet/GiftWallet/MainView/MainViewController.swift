@@ -116,7 +116,6 @@ class MainViewController: UIViewController, UISearchBarDelegate, UISearchControl
         
         collectionView.delegate = self
         collectionView.dataSource = self
-        collectionView.translatesAutoresizingMaskIntoConstraints = false
         
         return collectionView
     }()
@@ -134,7 +133,7 @@ class MainViewController: UIViewController, UISearchBarDelegate, UISearchControl
     private lazy var recentCollectionView: CustomCollectionView = {
         let collectionView = CustomCollectionView()
         
-        collectionView.collectionViewFlowLayout.scrollDirection = .horizontal
+//        collectionView.collectionViewFlowLayout.scrollDirection = .horizontal
         collectionView.delegate = self
         collectionView.dataSource = self
         
@@ -274,7 +273,7 @@ class MainViewController: UIViewController, UISearchBarDelegate, UISearchControl
             contentView.trailingAnchor.constraint(equalTo: contentScrollView.contentLayoutGuide.trailingAnchor),
             contentView.bottomAnchor.constraint(equalTo: contentScrollView.contentLayoutGuide.bottomAnchor),
             contentView.widthAnchor.constraint(equalTo: contentScrollView.widthAnchor),
-            contentView.heightAnchor.constraint(equalTo: contentScrollView.heightAnchor, multiplier: 1.2),
+            contentView.heightAnchor.constraint(equalTo: contentScrollView.heightAnchor, multiplier: 1.3),
             
             searchButton.topAnchor.constraint(equalTo: safeArea.topAnchor, constant: 10),
             searchButton.centerXAnchor.constraint(equalTo: contentView.centerXAnchor),
