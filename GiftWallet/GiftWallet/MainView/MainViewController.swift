@@ -104,7 +104,7 @@ class MainViewController: UIViewController, UISearchBarDelegate, UISearchControl
     private let expireCollectionViewHeaderLabel = {
         let label = UILabel()
         
-        label.text = "😟 기간이 얼마 안남았어요!"
+        label.text = "😟 기간이 얼마 안남았어요"
         label.font = UIFont(style: FontStyle.bold, size: 18)
         label.translatesAutoresizingMaskIntoConstraints = false
         
@@ -124,7 +124,7 @@ class MainViewController: UIViewController, UISearchBarDelegate, UISearchControl
     private let recentCollectionViewHeaderLabel = {
         let label = UILabel()
         
-        label.text = "😄 최근에 등록했어요."
+        label.text = "😄 최근에 등록했어요"
         label.font = UIFont(style: FontStyle.bold, size: 18)
         label.translatesAutoresizingMaskIntoConstraints = false
         
@@ -301,9 +301,9 @@ class MainViewController: UIViewController, UISearchBarDelegate, UISearchControl
     }
     
     private func setupResponsiveConstraintViews() {
-        expireCollectionViewHeightAnchor = expireCollectionView.heightAnchor.constraint(equalToConstant: view.frame.width * 0.85)
-        recentCollectionViewHeightAnchor = recentCollectionView.heightAnchor.constraint(equalToConstant: view.frame.width * 0.85)
-        recentCollectionHeaderLabelTopAnchor = recentCollectionViewHeaderLabel.topAnchor.constraint(equalTo: searchButton.bottomAnchor, constant: view.frame.height * 0.55)
+        expireCollectionViewHeightAnchor = expireCollectionView.heightAnchor.constraint(equalToConstant: view.frame.width * 0.95)
+        recentCollectionViewHeightAnchor = recentCollectionView.heightAnchor.constraint(equalToConstant: view.frame.width * 0.95)
+        recentCollectionHeaderLabelTopAnchor = recentCollectionViewHeaderLabel.topAnchor.constraint(equalTo: searchButton.bottomAnchor, constant: view.frame.height * 0.60)
         
         NSLayoutConstraint.activate([
             expireCollectionViewHeightAnchor,
@@ -339,9 +339,9 @@ class MainViewController: UIViewController, UISearchBarDelegate, UISearchControl
         expireCollectionViewHeaderLabel.isHidden = expireCollectionViewActivate ? false : true
         recentCollectionViewHeaderLabel.isHidden = recentCollectionViewActivate ? false : true
         
-        expireCollectionViewHeightAnchor?.constant = expireCollectionViewActivate ? view.frame.width * 0.85 : 0
-        recentCollectionViewHeightAnchor?.constant = recentCollectionViewActivate ? view.frame.width * 0.85 : 0
-        recentCollectionHeaderLabelTopAnchor?.constant = recentHeaderLabelActivate ? view.frame.height * 0.55 : 25
+        expireCollectionViewHeightAnchor?.constant = expireCollectionViewActivate ? view.frame.width * 0.95 : 0
+        recentCollectionViewHeightAnchor?.constant = recentCollectionViewActivate ? view.frame.width * 0.95 : 0
+        recentCollectionHeaderLabelTopAnchor?.constant = recentHeaderLabelActivate ? view.frame.height * 0.60 : 25
         
         expireCollectionView.layoutIfNeeded()
         recentCollectionView.layoutIfNeeded()
