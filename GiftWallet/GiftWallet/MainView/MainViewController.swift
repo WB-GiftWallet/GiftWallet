@@ -173,7 +173,6 @@ class MainViewController: UIViewController, UISearchBarDelegate, UISearchControl
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        presentLoginViewIfNeeded()
         setupViews()
         setupButton()
         bind()
@@ -181,7 +180,7 @@ class MainViewController: UIViewController, UISearchBarDelegate, UISearchControl
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
-        updateCollectionViewData()
+        presentLoginViewIfNeeded()
     }
     
     private func bind() {
@@ -205,8 +204,10 @@ class MainViewController: UIViewController, UISearchBarDelegate, UISearchControl
             let loginViewModel = LoginViewModel()
             let loginViewController = LoginViewController(viewModel: loginViewModel)
             loginViewController.delegate = self
-            loginViewController.modalPresentationStyle = .fullScreen
+            loginViewController.modalPresentationStyle = .overFullScreen
             self.present(loginViewController, animated: false)
+        } completionWhenUserIsLoggedIn: {
+            self.updateCollectionViewData()
         }
     }
     
@@ -300,9 +301,9 @@ class MainViewController: UIViewController, UISearchBarDelegate, UISearchControl
     }
     
     private func setupResponsiveConstraintViews() {
-        expireCollectionViewHeightAnchor = expireCollectionView.heightAnchor.constraint(equalToConstant: .zero)
-        recentCollectionViewHeightAnchor = recentCollectionView.heightAnchor.constraint(equalToConstant: .zero)
-        recentCollectionHeaderLabelTopAnchor = recentCollectionViewHeaderLabel.topAnchor.constraint(equalTo: searchButton.bottomAnchor, constant: .zero)
+        expireCollectionViewHeightAnchor = expireCollectionView.heightAnchor.constraint(equalToConstant: view.frame.width * 0.85)
+        recentCollectionViewHeightAnchor = recentCollectionView.heightAnchor.constraint(equalToConstant: view.frame.width * 0.85)
+        recentCollectionHeaderLabelTopAnchor = recentCollectionViewHeaderLabel.topAnchor.constraint(equalTo: searchButton.bottomAnchor, constant: view.frame.height * 0.55)
         
         NSLayoutConstraint.activate([
             expireCollectionViewHeightAnchor,

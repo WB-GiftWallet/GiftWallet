@@ -92,10 +92,15 @@ extension MainViewModel {
 
 // MARK: Login 상태관련 함수
 extension MainViewModel {
-    func checkIfUserLoggedIn(completion: @escaping () -> Void) {
+    func checkIfUserLoggedIn(completionWhenUserIsNotLoggedIn: @escaping () -> Void,
+                             completionWhenUserIsLoggedIn: @escaping () -> Void) {
         if firebaseManager.currentUserID == nil {
             DispatchQueue.main.async {
-                completion()
+                completionWhenUserIsNotLoggedIn()
+            }
+        } else {
+            DispatchQueue.main.async {
+                completionWhenUserIsLoggedIn()
             }
         }
     }

@@ -128,17 +128,7 @@ class EtcSettingViewController: UIViewController {
         let alertController = UIAlertController(title: nil, message: "로그아웃 합니다.", preferredStyle: .actionSheet)
         let okAction = UIAlertAction(title: "네", style: .destructive) { _ in
             self.viewModel.signOut()
-            
-            if let tabController = self.tabBarController,
-               let mainViewController = tabController.viewControllers?.first,
-               let typeCastingMainViewController = mainViewController as? MainViewController {
-                self.tabBarController?.selectedViewController = typeCastingMainViewController
-                let loginViewModel = LoginViewModel()
-                let loginViewController = LoginViewController(viewModel: loginViewModel)
-                loginViewController.delegate = typeCastingMainViewController
-                loginViewController.modalPresentationStyle = .fullScreen
-                self.present(loginViewController, animated: true)
-            }
+            self.tabBarController?.selectedIndex = 0
         }
         
         let noAction = UIAlertAction(title: "아니오", style: .cancel)

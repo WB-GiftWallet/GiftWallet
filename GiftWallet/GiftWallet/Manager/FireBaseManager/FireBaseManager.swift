@@ -53,6 +53,14 @@ extension FireBaseManager {
             if error != nil {
                 self?.createUser(email: email, password: password) { result in
                     // 필요시, 추가 액선
+                    self?.fetchData { result in
+                        switch result {
+                        case .success(let gifts):
+                            completion(gifts)
+                        case .failure(let error):
+                            print(error)
+                        }
+                    }
                 }
             } else {
                 self?.fetchData(completion: { result in
