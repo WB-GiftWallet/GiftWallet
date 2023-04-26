@@ -56,6 +56,41 @@ final class AlarmCoreDataManager {
             }
         }
     }
+    
+    func updateData(_ alarm: AlarmModel) throws {
+        guard let context = appDelegate?.persistentContainer.viewContext else {
+            throw CoreDataError.contextInvalid
+        }
+        
+        guard let id = alarm.id else {
+            return
+        }
+                
+        let fetchRequest = NSFetchRequest<NSFetchRequestResult>.init(entityName: "Alarm")
+        fetchRequest.predicate = NSPredicate(format: "id = %@", id as CVarArg)
+
+        do {
+            let test = try context.fetch(fetchRequest)
+            guard let updatingData = test[0] as? NSManagedObject else { return }
+            
+            updatingData.setValue(alarm.title, forKey: "title")
+            updatingData.setValue(alarm.id, forKey: "id")
+            updatingData.setValue(alarm.body, forKey: "body")
+            updatingData.setValue(alarm.date, forKey: "date")
+            updatingData.setValue(alarm.notiType?.rawValue, forKey: "notiType")
+            
+            if context.hasChanges {
+                do {
+                    try context.save()
+                    return
+                } catch {
+                    print(error.localizedDescription)
+                }
+            }
+        } catch {
+            print(error.localizedDescription)
+        }
+    }
 }
 
 struct AlarmModel {
