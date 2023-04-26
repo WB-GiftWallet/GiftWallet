@@ -18,6 +18,9 @@
 		17457D0529E7F7650018162D /* UserNotificationManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 17457D0429E7F7650018162D /* UserNotificationManager.swift */; };
 		17457D0D29E9A26E0018162D /* NotificationExpireDayContents.swift in Sources */ = {isa = PBXBuildFile; fileRef = 17457D0C29E9A26E0018162D /* NotificationExpireDayContents.swift */; };
 		1759488929D49DF000E7D5B9 /* FireBaseManagerError.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1759488829D49DF000E7D5B9 /* FireBaseManagerError.swift */; };
+		17655F3729F9687F008ECDD4 /* AlarmCoreDataManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 17655F3629F9687F008ECDD4 /* AlarmCoreDataManager.swift */; };
+		17655F3A29F96C90008ECDD4 /* Alarm+CoreDataClass.swift in Sources */ = {isa = PBXBuildFile; fileRef = 17655F3829F96C90008ECDD4 /* Alarm+CoreDataClass.swift */; };
+		17655F3B29F96C90008ECDD4 /* Alarm+CoreDataProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = 17655F3929F96C90008ECDD4 /* Alarm+CoreDataProperties.swift */; };
 		17A950FF29B74DA2001E6D4F /* SearchViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 17A950FE29B74DA2001E6D4F /* SearchViewController.swift */; };
 		17A9510129B75101001E6D4F /* RecommendScrollView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 17A9510029B75101001E6D4F /* RecommendScrollView.swift */; };
 		17B579EF29D3337100042D80 /* FireBaseManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 17B579EE29D3337100042D80 /* FireBaseManager.swift */; };
@@ -117,6 +120,9 @@
 		17457D0429E7F7650018162D /* UserNotificationManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserNotificationManager.swift; sourceTree = "<group>"; };
 		17457D0C29E9A26E0018162D /* NotificationExpireDayContents.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NotificationExpireDayContents.swift; sourceTree = "<group>"; };
 		1759488829D49DF000E7D5B9 /* FireBaseManagerError.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FireBaseManagerError.swift; sourceTree = "<group>"; };
+		17655F3629F9687F008ECDD4 /* AlarmCoreDataManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AlarmCoreDataManager.swift; sourceTree = "<group>"; };
+		17655F3829F96C90008ECDD4 /* Alarm+CoreDataClass.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Alarm+CoreDataClass.swift"; sourceTree = SOURCE_ROOT; };
+		17655F3929F96C90008ECDD4 /* Alarm+CoreDataProperties.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Alarm+CoreDataProperties.swift"; sourceTree = SOURCE_ROOT; };
 		17A950FE29B74DA2001E6D4F /* SearchViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchViewController.swift; sourceTree = "<group>"; };
 		17A9510029B75101001E6D4F /* RecommendScrollView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RecommendScrollView.swift; sourceTree = "<group>"; };
 		17B579EE29D3337100042D80 /* FireBaseManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FireBaseManager.swift; sourceTree = "<group>"; };
@@ -350,6 +356,7 @@
 			children = (
 				17B579ED29D3302D00042D80 /* FireBaseManager */,
 				FC074C0029A8D5B5006AD199 /* CoreDataManager.swift */,
+				17655F3629F9687F008ECDD4 /* AlarmCoreDataManager.swift */,
 				D2CDDBDF29AF3CD300E000E3 /* VisionManager.swift */,
 				D2CA7D8929D6BAA0002D3BA2 /* KakaoLoginManager.swift */,
 				D246B39829D7CF7E00A5BB2F /* AppleLoginManager.swift */,
@@ -437,6 +444,8 @@
 		FC074C0229A9033B006AD199 /* CoreData */ = {
 			isa = PBXGroup;
 			children = (
+				17655F3829F96C90008ECDD4 /* Alarm+CoreDataClass.swift */,
+				17655F3929F96C90008ECDD4 /* Alarm+CoreDataProperties.swift */,
 				FC074C0329A90361006AD199 /* GiftData+CoreDataClass.swift */,
 				FC074C0429A90361006AD199 /* GiftData+CoreDataProperties.swift */,
 				FCAD20A429A91A55004214FD /* CoreDataError.swift */,
@@ -680,6 +689,7 @@
 				D2C7A45929A9DA6C00EB6D56 /* EtcSettingViewController.swift in Sources */,
 				D24002DB29B75B5200635FFC /* DetailViewModel.swift in Sources */,
 				D2A282B829A85EF2002CCF5A /* Observable.swift in Sources */,
+				17655F3A29F96C90008ECDD4 /* Alarm+CoreDataClass.swift in Sources */,
 				17457D0529E7F7650018162D /* UserNotificationManager.swift in Sources */,
 				171E10D429F3C01600E578D1 /* AlarmListViewModel.swift in Sources */,
 				D246B39929D7CF7E00A5BB2F /* AppleLoginManager.swift in Sources */,
@@ -698,6 +708,7 @@
 				D2C7A45D29A9E77100EB6D56 /* EtcSettingTableViewCell.swift in Sources */,
 				17A950FF29B74DA2001E6D4F /* SearchViewController.swift in Sources */,
 				17D5963729AF6F9800AFE039 /* SearchTableViewController.swift in Sources */,
+				17655F3729F9687F008ECDD4 /* AlarmCoreDataManager.swift in Sources */,
 				D2DAAA1C29A44B1600D70E8C /* MainCollectionViewCell.swift in Sources */,
 				D2CA7D8A29D6BAA0002D3BA2 /* KakaoLoginManager.swift in Sources */,
 				FC074C0629A90361006AD199 /* GiftData+CoreDataProperties.swift in Sources */,
@@ -709,6 +720,7 @@
 				FC074C0529A90361006AD199 /* GiftData+CoreDataClass.swift in Sources */,
 				D2DAAA2029A44B9200D70E8C /* ReusableView.swift in Sources */,
 				D2CA7D9729D6BFD5002D3BA2 /* LoginViewController.swift in Sources */,
+				17655F3B29F96C90008ECDD4 /* Alarm+CoreDataProperties.swift in Sources */,
 				D2A282B629A85EBC002CCF5A /* Gift.swift in Sources */,
 				D2B6334229ACD1CB00EE9ACE /* UsageHistoryViewController.swift in Sources */,
 				D2B6334029ACD1A100EE9ACE /* UsageHistoryViewModel.swift in Sources */,
