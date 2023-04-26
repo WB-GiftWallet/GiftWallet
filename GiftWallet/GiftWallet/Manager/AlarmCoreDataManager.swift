@@ -91,6 +91,29 @@ final class AlarmCoreDataManager {
             print(error.localizedDescription)
         }
     }
+    
+    func deleteDate(id: UUID) throws {
+        guard let context = appDelegate?.persistentContainer.viewContext else {
+            throw CoreDataError.contextInvalid
+        }
+        
+        let fetchRequest = NSFetchRequest<NSFetchRequestResult>.init(entityName: "Alarm")
+        fetchRequest.predicate = NSPredicate(format: "id = %@", id as CVarArg)
+        
+        do {
+            let test = try context.fetch(fetchRequest)
+            guard let objectDelete = test[0] as? NSManagedObject else { return }
+            
+            context.delete(objectDelete)
+            do {
+                try context.save()
+            } catch {
+                print(error.localizedDescription)
+            }
+        } catch {
+            print(error.localizedDescription)
+        }
+    }
 }
 
 struct AlarmModel {
