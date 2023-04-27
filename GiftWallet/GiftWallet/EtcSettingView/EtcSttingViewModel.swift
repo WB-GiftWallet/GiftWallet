@@ -25,6 +25,11 @@ class EtcSettingViewModel {
         deleteAllCoreData()
     }
     
+    func deleteUser(completion: @escaping () -> Void) {
+        firebaseManager.deleteUser(completion: completion)
+        deleteAllCoreData()
+    }
+    
     private func deleteAllCoreData() {
         do {
             try coreDataManager.deleteAllData()

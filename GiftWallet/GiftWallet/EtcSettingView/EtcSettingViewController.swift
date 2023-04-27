@@ -98,7 +98,6 @@ class EtcSettingViewController: UIViewController {
         guard let userName = viewModel.userName,
               let userEmamil = viewModel.userEmail else { return }
         
-        // TODO: UserEmail 애플일 때, 별도처리
         if userEmamil.contains("@privaterelay.appleid.com") {
             idLabel.text = "\(userName)@private.appleID.com"
         } else {
@@ -206,11 +205,27 @@ extension EtcSettingViewController: UITableViewDelegate {
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         if indexPath.section == 0, indexPath.row == 0 {
             sceneConversion()
+        } else if indexPath.section == 0, indexPath.row == 1 {
+            showDeleteUserAlert()
         } else if indexPath.section == 1, indexPath.row == 2 {
             timeSettingViewSceneConversion()
         }
         
         tableView.deselectRow(at: indexPath, animated: true)
+    }
+    
+    private func showDeleteUserAlert() {
+        let alertController = UIAlertController(title: nil, message: "회원탈퇴하고 모든 데이터를 제거합니다.", preferredStyle: .actionSheet)
+        let okAction = UIAlertAction(title: "네", style: .destructive) { _ in
+            self.viewModel.deleteUser {
+                self.tabBarController?.selectedIndex = 0
+            }
+        }
+        
+        let noAction = UIAlertAction(title: "아니오", style: .cancel)
+        
+        [okAction, noAction].forEach(alertController.addAction(_:))
+        present(alertController, animated: true)
     }
     
     private func sceneConversion() {

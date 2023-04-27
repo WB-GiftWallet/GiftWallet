@@ -107,6 +107,20 @@ extension FireBaseManager {
             }
         })
     }
+    
+    func deleteUser(completion: @escaping () -> Void) {
+        let user = Auth.auth().currentUser
+
+        user?.delete { error in
+          if let error = error {
+            // An error happened.
+              print(error)
+          } else {
+            print("삭제완료")
+              completion()
+          }
+        }
+    }
 }
 
 //MARK: FireStoreDatabase CRUD 관련
