@@ -14,6 +14,9 @@ class AlarmListViewController: UIViewController {
     private let alarmTableView = {
        let tableView = UITableView()
         
+        tableView.register(AlarmListTableHeaderView.self, forHeaderFooterViewReuseIdentifier: AlarmListTableHeaderView.reuseIdentifier)
+        tableView.translatesAutoresizingMaskIntoConstraints = false
+        
         return tableView
     }()
     
@@ -52,19 +55,37 @@ class AlarmListViewController: UIViewController {
     
     private func setupViews() {
         view.backgroundColor = .white
+        view.addSubview(alarmTableView)
+        
+        NSLayoutConstraint.activate([
+            alarmTableView.leadingAnchor.constraint(equalTo: view.leadingAnchor),
+            alarmTableView.trailingAnchor.constraint(equalTo: view.trailingAnchor),
+            alarmTableView.topAnchor.constraint(equalTo: view.topAnchor),
+            alarmTableView.bottomAnchor.constraint(equalTo: view.bottomAnchor)
+        ])
     }
     
 }
 
 extension AlarmListViewController: UITableViewDataSource {
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return viewModel.alarms.count
+        return 5
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        return UITableViewCell()
+        let cell = UITableViewCell()
+        
+        cell.textLabel?.text = "테스트용"
+        cell.detailTextLabel?.text = "테스트디테일라벨"
+        
+        return cell
     }
     
+    func tableView(_ tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
+        let headerView = tableView.dequeueReusableHeaderFooterView(withIdentifier: AlarmListTableHeaderView.reuseIdentifier) as? AlarmListTableHeaderView ?? AlarmListTableHeaderView()
+        
+        return headerView
+    }
     
 }
 
