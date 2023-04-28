@@ -118,7 +118,8 @@ final class MainTabBarController: UITabBarController {
         navigationItem.leftBarButtonItem = UIBarButtonItem(customView: imageView)
         
         let bellAction = UIAction { _ in
-            let alarmListViewController = AlarmListViewController()
+            let alarmListViewModel = AlarmListViewModel()
+            let alarmListViewController = AlarmListViewController(viewModel: alarmListViewModel)
             self.navigationController?.pushViewController(alarmListViewController, animated: true)
         }
         

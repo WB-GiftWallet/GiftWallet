@@ -9,28 +9,19 @@ import UIKit
 
 class AlarmListViewController: UIViewController {
     
-    let viewModel = AlarmListViewModel()
+    private let viewModel: AlarmListViewModel
+        
+    init(viewModel: AlarmListViewModel) {
+        self.viewModel = viewModel
+        super.init(nibName: nil, bundle: nil)
+    }
     
-//    var collectionView = UICollectionView()
+    required init?(coder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
+    }
     
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        self.navigationItem.title = "AlarmListView"
-        self.view.backgroundColor = .systemPink
-        
-//        configureLayout()
-    }
-    
-//    func configureLayout() {
-//        view.addSubview(collectionView)
-//        collectionView.translatesAutoresizingMaskIntoConstraints = false
-//
-//        NSLayoutConstraint.activate([
-//            collectionView.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor),
-//            collectionView.leadingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.leadingAnchor),
-//            collectionView.trailingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.trailingAnchor),
-//            collectionView.bottomAnchor.constraint(equalTo: view.safeAreaLayoutGuide.bottomAnchor),
-//        ])
-//    }
+    }    
 }
