@@ -346,8 +346,6 @@ extension FireBaseManager {
             if let result = result {
                 for item in result.items {
                     if let url = URL(string: item.description) {
-                        print("id:::", id)
-                        print(url.lastPathComponent)
                         imageReference.child(url.lastPathComponent).delete { deleteError in
                             if let deleteError = deleteError {
                                 print(deleteError.localizedDescription, "탈퇴전체이미지데이터삭제에러")
