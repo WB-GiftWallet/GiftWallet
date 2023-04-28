@@ -330,6 +330,35 @@ extension FireBaseManager {
 
 //MARK: FireStorage 다운로드 + 업로드 관련
 extension FireBaseManager {
+    func deleteUserAllImageData() {
+        guard let id = Auth.auth().currentUser?.uid else {
+            return
+        }
+        
+        let storageReference = storage.reference()
+        let imageReference = storageReference.child("image").child("USER_\(id)")
+        
+        imageReference.listAll { result, error in
+            if let error = error {
+                print(error)
+            }
+            
+            if let result = result {
+                for item in result.items {
+                    if let url = URL(string: item.description) {
+                        print("id:::", id)
+                        print(url.lastPathComponent)
+                        imageReference.child(url.lastPathComponent).delete { deleteError in
+                            if let deleteError = deleteError {
+                                print(deleteError.localizedDescription, "탈퇴전체이미지데이터삭제에러")
+                            }
+                        }
+                    }
+                }
+            }
+        }
+    }
+    
     private func upLoadImageData(imageData: UIImage, userID: String, dataNumber: Int, completion: @escaping (URL) -> Void) {
         let storageReference = storage.reference()
         let imageReference = storageReference.child("image").child("USER_\(userID)").child("image_\(dataNumber)")
