@@ -58,6 +58,7 @@
 		D2BB131729C0507D00A2440B /* BarcodeViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = D2BB131629C0507D00A2440B /* BarcodeViewModel.swift */; };
 		D2BB131929C2082300A2440B /* UpdateViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = D2BB131829C2082300A2440B /* UpdateViewModel.swift */; };
 		D2BE5DA629FB6D7A00DF2968 /* AlarmListTableHeaderView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D2BE5DA529FB6D7A00DF2968 /* AlarmListTableHeaderView.swift */; };
+		D2BE5DA829FB76B400DF2968 /* AlarmListTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = D2BE5DA729FB76B400DF2968 /* AlarmListTableViewCell.swift */; };
 		D2C7A45929A9DA6C00EB6D56 /* EtcSettingViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D2C7A45829A9DA6C00EB6D56 /* EtcSettingViewController.swift */; };
 		D2C7A45B29A9DAB500EB6D56 /* EtcSttingViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = D2C7A45A29A9DAB500EB6D56 /* EtcSttingViewModel.swift */; };
 		D2C7A45D29A9E77100EB6D56 /* EtcSettingTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = D2C7A45C29A9E77100EB6D56 /* EtcSettingTableViewCell.swift */; };
@@ -163,6 +164,7 @@
 		D2BB131629C0507D00A2440B /* BarcodeViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BarcodeViewModel.swift; sourceTree = "<group>"; };
 		D2BB131829C2082300A2440B /* UpdateViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UpdateViewModel.swift; sourceTree = "<group>"; };
 		D2BE5DA529FB6D7A00DF2968 /* AlarmListTableHeaderView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AlarmListTableHeaderView.swift; sourceTree = "<group>"; };
+		D2BE5DA729FB76B400DF2968 /* AlarmListTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AlarmListTableViewCell.swift; sourceTree = "<group>"; };
 		D2C7A45829A9DA6C00EB6D56 /* EtcSettingViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EtcSettingViewController.swift; sourceTree = "<group>"; };
 		D2C7A45A29A9DAB500EB6D56 /* EtcSttingViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EtcSttingViewModel.swift; sourceTree = "<group>"; };
 		D2C7A45C29A9E77100EB6D56 /* EtcSettingTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EtcSettingTableViewCell.swift; sourceTree = "<group>"; };
@@ -240,6 +242,7 @@
 				171E10D029F3BDC300E578D1 /* AlarmListViewController.swift */,
 				171E10D329F3C01600E578D1 /* AlarmListViewModel.swift */,
 				D2BE5DA529FB6D7A00DF2968 /* AlarmListTableHeaderView.swift */,
+				D2BE5DA729FB76B400DF2968 /* AlarmListTableViewCell.swift */,
 			);
 			path = AlarmListView;
 			sourceTree = "<group>";
@@ -701,6 +704,7 @@
 				D2CDDBE029AF3CD300E000E3 /* VisionManager.swift in Sources */,
 				D2CDDBCD29ADFACB00E000E3 /* DateCalCulateUseCase.swift in Sources */,
 				D2DAAA2329A4720300D70E8C /* Ext+DateFormatter.swift in Sources */,
+				D2BE5DA829FB76B400DF2968 /* AlarmListTableViewCell.swift in Sources */,
 				D2C90B5829BF4DC1003C3611 /* ZoomImageViewController.swift in Sources */,
 				17457D0D29E9A26E0018162D /* NotificationExpireDayContents.swift in Sources */,
 				FC62FF1029A77B5A003E63B0 /* MainTabBarController.swift in Sources */,

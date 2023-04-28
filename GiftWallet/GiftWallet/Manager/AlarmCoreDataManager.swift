@@ -181,4 +181,15 @@ enum AlarmType: Int {
     case notification = 0 // 공지
     case couponExpiration // 내부 알람
     case userNotification // UserNotification 알람
+    
+    var alarmImageSymbolsDescription: String {
+        switch self {
+        case .notification:
+            return "list.bullet.clipboard"
+        case .couponExpiration:
+            return "star"
+        case .userNotification:
+            return  "bell"
+        }
+    }
 }

@@ -15,6 +15,8 @@ class AlarmListViewController: UIViewController {
        let tableView = UITableView()
         
         tableView.register(AlarmListTableHeaderView.self, forHeaderFooterViewReuseIdentifier: AlarmListTableHeaderView.reuseIdentifier)
+        tableView.register(AlarmListTableViewCell.self, forCellReuseIdentifier: AlarmListTableViewCell.reuseIdentifier)
+        
         tableView.translatesAutoresizingMaskIntoConstraints = false
         
         return tableView
@@ -69,14 +71,13 @@ class AlarmListViewController: UIViewController {
 
 extension AlarmListViewController: UITableViewDataSource {
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return 5
+        return viewModel.alarms.count
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        let cell = UITableViewCell()
+        let cell = tableView.dequeueReusableCell(withIdentifier: AlarmListTableViewCell.reuseIdentifier, for: indexPath) as? AlarmListTableViewCell ?? AlarmListTableViewCell()
         
-        cell.textLabel?.text = "테스트용"
-        cell.detailTextLabel?.text = "테스트디테일라벨"
+        cell.configureCell(data: viewModel.alarms[indexPath.row])
         
         return cell
     }
@@ -86,6 +87,10 @@ extension AlarmListViewController: UITableViewDataSource {
         
         return headerView
     }
+    
+//    func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
+//        <#code#>
+//    }
     
 }
 
