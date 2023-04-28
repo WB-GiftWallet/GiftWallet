@@ -57,6 +57,7 @@
 		D2BB131529C0507300A2440B /* BarcodeViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D2BB131429C0507300A2440B /* BarcodeViewController.swift */; };
 		D2BB131729C0507D00A2440B /* BarcodeViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = D2BB131629C0507D00A2440B /* BarcodeViewModel.swift */; };
 		D2BB131929C2082300A2440B /* UpdateViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = D2BB131829C2082300A2440B /* UpdateViewModel.swift */; };
+		D2BE5DA629FB6D7A00DF2968 /* AlarmListTableHeaderView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D2BE5DA529FB6D7A00DF2968 /* AlarmListTableHeaderView.swift */; };
 		D2C7A45929A9DA6C00EB6D56 /* EtcSettingViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D2C7A45829A9DA6C00EB6D56 /* EtcSettingViewController.swift */; };
 		D2C7A45B29A9DAB500EB6D56 /* EtcSttingViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = D2C7A45A29A9DAB500EB6D56 /* EtcSttingViewModel.swift */; };
 		D2C7A45D29A9E77100EB6D56 /* EtcSettingTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = D2C7A45C29A9E77100EB6D56 /* EtcSettingTableViewCell.swift */; };
@@ -161,6 +162,7 @@
 		D2BB131429C0507300A2440B /* BarcodeViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BarcodeViewController.swift; sourceTree = "<group>"; };
 		D2BB131629C0507D00A2440B /* BarcodeViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BarcodeViewModel.swift; sourceTree = "<group>"; };
 		D2BB131829C2082300A2440B /* UpdateViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UpdateViewModel.swift; sourceTree = "<group>"; };
+		D2BE5DA529FB6D7A00DF2968 /* AlarmListTableHeaderView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AlarmListTableHeaderView.swift; sourceTree = "<group>"; };
 		D2C7A45829A9DA6C00EB6D56 /* EtcSettingViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EtcSettingViewController.swift; sourceTree = "<group>"; };
 		D2C7A45A29A9DAB500EB6D56 /* EtcSttingViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EtcSttingViewModel.swift; sourceTree = "<group>"; };
 		D2C7A45C29A9E77100EB6D56 /* EtcSettingTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EtcSettingTableViewCell.swift; sourceTree = "<group>"; };
@@ -237,6 +239,7 @@
 			children = (
 				171E10D029F3BDC300E578D1 /* AlarmListViewController.swift */,
 				171E10D329F3C01600E578D1 /* AlarmListViewModel.swift */,
+				D2BE5DA529FB6D7A00DF2968 /* AlarmListTableHeaderView.swift */,
 			);
 			path = AlarmListView;
 			sourceTree = "<group>";
@@ -688,6 +691,7 @@
 				D2CDDBE729AF487600E000E3 /* BrandList.swift in Sources */,
 				D2C7A45929A9DA6C00EB6D56 /* EtcSettingViewController.swift in Sources */,
 				D24002DB29B75B5200635FFC /* DetailViewModel.swift in Sources */,
+				D2BE5DA629FB6D7A00DF2968 /* AlarmListTableHeaderView.swift in Sources */,
 				D2A282B829A85EF2002CCF5A /* Observable.swift in Sources */,
 				17655F3A29F96C90008ECDD4 /* Alarm+CoreDataClass.swift in Sources */,
 				17457D0529E7F7650018162D /* UserNotificationManager.swift in Sources */,

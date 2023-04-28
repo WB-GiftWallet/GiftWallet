@@ -6,5 +6,7 @@
 //
 
 class AlarmListViewModel {
+    var alarms: [AlarmModel] = []
+    
     
 }

@@ -117,6 +117,8 @@ final class MainTabBarController: UITabBarController {
         imageView.frame = CGRect(x: 0, y: 0, width: 80, height: 30)
         navigationItem.leftBarButtonItem = UIBarButtonItem(customView: imageView)
         
+
+        
         let bellAction = UIAction { _ in
             let alarmListViewModel = AlarmListViewModel()
             let alarmListViewController = AlarmListViewController(viewModel: alarmListViewModel)
