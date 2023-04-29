@@ -9,6 +9,8 @@ import Foundation
 
 class SearchTableViewModel {
     
+    private let firebaseManager = FireBaseManager.shared
+    
     var allGiftData: Observable<[Gift]>
     var filteringGifts: Observable<[Gift]> = .init([])
     
@@ -63,6 +65,10 @@ class SearchTableViewModel {
         } catch {
             print(error.localizedDescription)
         }
+    }
+    
+    func deleteFireStoreDocument(_ index: Int) {
+        firebaseManager.deleteDate(index)
     }
 }
 

@@ -213,6 +213,7 @@ extension SearchViewController: UITableViewDataSource, UITableViewDelegate {
             }
             
             self.viewModel.deleteCoreData(dataNumber)
+            self.viewModel.deleteFireStoreDocument(dataNumber)
             
             for (index, data) in self.viewModel.allGiftData.value.enumerated() {
                 if data.number == dataNumber {
