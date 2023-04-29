@@ -44,7 +44,7 @@ final class AlarmCoreDataManager {
             
             info.setValue(alarm.title, forKey: "title")
             info.setValue(alarm.id, forKey: "id")
-            info.setValue(alarm.body, forKey: "body")
+            info.setValue(alarm.numbers, forKey: "numbers")
             info.setValue(alarm.date, forKey: "date")
             info.setValue(alarm.notiType?.rawValue, forKey: "notiType")
             
@@ -75,7 +75,7 @@ final class AlarmCoreDataManager {
             
             updatingData.setValue(alarm.title, forKey: "title")
             updatingData.setValue(alarm.id, forKey: "id")
-            updatingData.setValue(alarm.body, forKey: "body")
+            updatingData.setValue(alarm.numbers, forKey: "numbers")
             updatingData.setValue(alarm.date, forKey: "date")
             updatingData.setValue(alarm.notiType?.rawValue, forKey: "notiType")
             
@@ -118,18 +118,18 @@ final class AlarmCoreDataManager {
 
 struct AlarmModel {
     var title: String?
-    var body: String?
+    var numbers: [Int]?
     var date: Date?
     var id: UUID?
     var notiType: AlarmType?
     
     init(title: String,
-         body: String,
+         numbers: [Int],
          date: Date,
          id: UUID,
          notiType: AlarmType) {
         self.title = title
-        self.body = body
+        self.numbers = numbers
         self.date = date
         self.id = id
         self.notiType = notiType
@@ -137,7 +137,7 @@ struct AlarmModel {
     
     init?(alarm: Alarm) {
         self.title = alarm.title
-        self.body = alarm.body
+        self.numbers = alarm.numbers
         self.date = alarm.date
         self.id = alarm.id
         self.notiType = AlarmType(rawValue: Int(alarm.notiType))
@@ -146,16 +146,16 @@ struct AlarmModel {
 
 extension AlarmModel {
     static let sampleCoreAlarmModel: [AlarmModel] =
-    [AlarmModel(title: "첫번째 타이틀", body: "첫번째 바디", date: Date(), id: UUID(), notiType: AlarmType.couponExpiration),
-     AlarmModel(title: "2번째 타이틀", body: "2번째 바디", date: Date(), id: UUID(), notiType: AlarmType.couponExpiration),
-     AlarmModel(title: "3번째 타이틀", body: "3번째 바디", date: Date(), id: UUID(), notiType: AlarmType.couponExpiration),
-     AlarmModel(title: "4번째 타이틀", body: "4번째 바디", date: Date(), id: UUID(), notiType: AlarmType.couponExpiration),
-     AlarmModel(title: "5번째 타이틀", body: "5번째 바디", date: Date(), id: UUID(), notiType: AlarmType.couponExpiration),
-     AlarmModel(title: "6번째 타이틀", body: "6번째 바디", date: Date(), id: UUID(), notiType: AlarmType.notification),
-     AlarmModel(title: "7번째 타이틀", body: "7번째 바디", date: Date(), id: UUID(), notiType: AlarmType.notification),
-     AlarmModel(title: "8번째 타이틀", body: "8번째 바디", date: Date(), id: UUID(), notiType: AlarmType.userNotification),
-     AlarmModel(title: "9번째 타이틀", body: "9번째 바디", date: Date(), id: UUID(), notiType: AlarmType.userNotification),
-     AlarmModel(title: "10번째 타이틀", body: "10번째 바디", date: Date(), id: UUID(), notiType: AlarmType.userNotification)
+    [AlarmModel(title: "첫번째 타이틀", numbers: [1,2,45], date: Date(), id: UUID(), notiType: AlarmType.couponExpiration),
+     AlarmModel(title: "2번째 타이틀", numbers: [1,2,45], date: Date(), id: UUID(), notiType: AlarmType.couponExpiration),
+     AlarmModel(title: "3번째 타이틀", numbers: [61,2,45], date: Date(), id: UUID(), notiType: AlarmType.couponExpiration),
+     AlarmModel(title: "4번째 타이틀", numbers: [13,2,45], date: Date(), id: UUID(), notiType: AlarmType.couponExpiration),
+     AlarmModel(title: "5번째 타이틀", numbers: [11,2,45], date: Date(), id: UUID(), notiType: AlarmType.couponExpiration),
+     AlarmModel(title: "6번째 타이틀", numbers: [1,2,45], date: Date(), id: UUID(), notiType: AlarmType.notification),
+     AlarmModel(title: "7번째 타이틀", numbers: [16,2,45], date: Date(), id: UUID(), notiType: AlarmType.notification),
+     AlarmModel(title: "8번째 타이틀", numbers: [14,2,45], date: Date(), id: UUID(), notiType: AlarmType.userNotification),
+     AlarmModel(title: "9번째 타이틀", numbers: [1,23,45], date: Date(), id: UUID(), notiType: AlarmType.userNotification),
+     AlarmModel(title: "10번째 타이틀", numbers: [14,2,45], date: Date(), id: UUID(), notiType: AlarmType.userNotification)
     ]
     
     static func addSampleData() {
