@@ -19,7 +19,7 @@ class FireBaseManager {
     private var db = Firestore.firestore()
     private let storage = Storage.storage()
     
-    var currentUserInfo: User? {
+    var currentUser: User? {
         return Auth.auth().currentUser
     }
     

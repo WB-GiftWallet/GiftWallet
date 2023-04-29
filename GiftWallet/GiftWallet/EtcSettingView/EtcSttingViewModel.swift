@@ -13,11 +13,11 @@ class EtcSettingViewModel {
     private let coreDataManager = CoreDataManager.shared
     
     var userName: String? {
-        return firebaseManager.currentUserInfo?.displayName
+        return firebaseManager.currentUser?.displayName
     }
     
     var userEmail: String? {
-        return firebaseManager.currentUserInfo?.email
+        return firebaseManager.currentUser?.email
     }
     
     func signOut() {
