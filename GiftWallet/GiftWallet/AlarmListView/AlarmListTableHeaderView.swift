@@ -45,21 +45,23 @@ class AlarmListTableHeaderView: UITableViewHeaderFooterView, ReusableView {
         flagImageButton.menu = UIMenu(children: [
             UIAction(title: "전체", image: UIImage(systemName: "list.bullet.clipboard"), handler: { _ in
                 self.menuLabel.text = "전체"
+                self.delegate?.didTappedMenuButtonInAllData()
             }),
             UIAction(title: "공지", image: UIImage(systemName: "speaker.wave.3"), handler: { _ in
                 self.menuLabel.text = "공지"
+                self.delegate?.didTappedMenuButton(type: .notification)
             }),
             UIAction(title: "쿠폰 알림", image: UIImage(systemName: "bell"), handler: { _ in
                 self.menuLabel.text = "쿠폰 알림"
+                self.delegate?.didTappedMenuButton(type: .couponExpiration)
             }),
             UIAction(title: "시스템 알림", image: UIImage(systemName: "network"), handler: { _ in
                 self.menuLabel.text = "시스템 알림"
+                self.delegate?.didTappedMenuButton(type: .userNotification)
             }),
         ])
 
         flagImageButton.showsMenuAsPrimaryAction = true
-        
-        
     }
     
     private func setupViews() {
@@ -78,5 +80,6 @@ class AlarmListTableHeaderView: UITableViewHeaderFooterView, ReusableView {
 }
 
 protocol DidSelectedTableViewHeaderDelegate {
-    func didTappedHeaderView()
+    func didTappedMenuButton(type: AlarmType)
+    func didTappedMenuButtonInAllData()
 }

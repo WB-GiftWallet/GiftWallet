@@ -26,4 +26,28 @@ class AlarmListViewModel {
                    notiType: .notification)
     ]
     
+    var filteredAlarm: Observable<[AlarmModel]> = .init([])
+    
+    init() {
+        filterAllData()
+    }
+    
+    func filterAlarm(type: AlarmType) {
+        filteredAlarm.value = alarms.filter { $0.notiType == type }
+    }
+    
+    func filterAllData() {
+        filteredAlarm.value = alarms
+    }
+    
 }
+
+
+/*
+ 1. alarm은 전체 알람을 갖는다.
+ 2. 버튼이 변하면서 필터를 한다.
+ 3. filteredAlarm은 필터된 알람이 된다.
+ 4. 결국, 띄워주는 것은 filteredAlarm이 된다.
+ 
+ 
+ */

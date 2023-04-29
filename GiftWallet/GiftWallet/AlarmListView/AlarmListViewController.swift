@@ -36,12 +36,19 @@ class AlarmListViewController: UIViewController {
         setupAttributes()
         setupNavigation()
         setupViews()
+        bind()
     }
     
     override func viewDidDisappear(_ animated: Bool) {
         super.viewDidDisappear(animated)
         navigationController?.navigationBar.prefersLargeTitles = true
         navigationItem.largeTitleDisplayMode = .never
+    }
+    
+    private func bind() {
+        viewModel.filteredAlarm.bind { alarmModels in
+            self.alarmTableView.reloadData()
+        }
     }
     
     private func setupNavigation() {
@@ -71,13 +78,13 @@ class AlarmListViewController: UIViewController {
 
 extension AlarmListViewController: UITableViewDataSource {
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return viewModel.alarms.count
+        return viewModel.filteredAlarm.value.count
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: AlarmListTableViewCell.reuseIdentifier, for: indexPath) as? AlarmListTableViewCell ?? AlarmListTableViewCell()
         
-        cell.configureCell(data: viewModel.alarms[indexPath.row])
+        cell.configureCell(data: viewModel.filteredAlarm.value[indexPath.row])
         
         return cell
     }
@@ -95,9 +102,11 @@ extension AlarmListViewController: UITableViewDelegate {
 }
 
 extension AlarmListViewController: DidSelectedTableViewHeaderDelegate {
-    func didTappedHeaderView() {
-        
+    func didTappedMenuButton(type: AlarmType) {
+        viewModel.filterAlarm(type: type)
     }
     
-    
+    func didTappedMenuButtonInAllData() {
+        viewModel.filterAllData()
+    }
 }
