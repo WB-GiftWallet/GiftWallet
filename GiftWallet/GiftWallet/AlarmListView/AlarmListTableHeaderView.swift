@@ -44,7 +44,7 @@ class AlarmListTableHeaderView: UITableViewHeaderFooterView, ReusableView {
             menuLabel.leadingAnchor.constraint(equalTo: contentView.leadingAnchor, constant: 20),
             menuLabel.centerYAnchor.constraint(equalTo: contentView.centerYAnchor),
             
-            flagImageView.widthAnchor.constraint(equalTo: contentView.widthAnchor, multiplier: 0.05),
+            flagImageView.widthAnchor.constraint(equalTo: contentView.widthAnchor, multiplier: 0.045),
             flagImageView.heightAnchor.constraint(equalTo: flagImageView.widthAnchor, multiplier: 1),
             flagImageView.trailingAnchor.constraint(equalTo: contentView.trailingAnchor, constant: -20),
             flagImageView.centerYAnchor.constraint(equalTo: contentView.centerYAnchor)

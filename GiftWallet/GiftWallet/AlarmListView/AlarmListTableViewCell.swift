@@ -21,8 +21,9 @@ class AlarmListTableViewCell: UITableViewCell,ReusableView {
     private let titleLabel = {
        let label = UILabel()
         
-        label.translatesAutoresizingMaskIntoConstraints = false
         label.numberOfLines = .zero
+        label.font = UIFont(style: .regular, size: 15)
+        label.translatesAutoresizingMaskIntoConstraints = false
         
         return label
     }()
@@ -39,6 +40,8 @@ class AlarmListTableViewCell: UITableViewCell,ReusableView {
     private let dateLabel = {
        let label = UILabel()
         
+        label.textColor = .modifyButtonTitle
+        label.font = UIFont(style: .regular, size: 13)
         label.translatesAutoresizingMaskIntoConstraints = false
         label.numberOfLines = 1
         
@@ -49,6 +52,7 @@ class AlarmListTableViewCell: UITableViewCell,ReusableView {
        let imageView = UIImageView()
         
         imageView.image = UIImage(systemName: "chevron.down")
+        imageView.tintColor = .modifyButtonTitle
         //chevron.forward 로 변해야함
         imageView.translatesAutoresizingMaskIntoConstraints = false
         
@@ -70,29 +74,32 @@ class AlarmListTableViewCell: UITableViewCell,ReusableView {
         
         NSLayoutConstraint.activate([
             typeImageView.centerYAnchor.constraint(equalTo: contentView.centerYAnchor),
-            typeImageView.leadingAnchor.constraint(equalTo: contentView.leadingAnchor, constant: 10),
-            typeImageView.widthAnchor.constraint(equalTo: contentView.widthAnchor, multiplier: 0.1),
+            typeImageView.leadingAnchor.constraint(equalTo: contentView.leadingAnchor, constant: 20),
+            typeImageView.widthAnchor.constraint(equalTo: contentView.widthAnchor, multiplier: 0.06),
             typeImageView.heightAnchor.constraint(equalTo: typeImageView.widthAnchor, multiplier: 1),
             
             titleLabel.centerYAnchor.constraint(equalTo: contentView.centerYAnchor),
-            titleLabel.leadingAnchor.constraint(equalTo: typeImageView.trailingAnchor, constant: 10),
+            titleLabel.leadingAnchor.constraint(equalTo: typeImageView.trailingAnchor, constant: 20),
             titleLabel.trailingAnchor.constraint(equalTo: toggleImageView.leadingAnchor, constant: -10),
             
             dateLabel.topAnchor.constraint(equalTo: titleLabel.bottomAnchor, constant: 5),
+            dateLabel.leadingAnchor.constraint(equalTo: titleLabel.leadingAnchor),
+            dateLabel.bottomAnchor.constraint(equalTo: contentView.bottomAnchor, constant: -5),
             
             toggleImageView.centerYAnchor.constraint(equalTo: contentView.centerYAnchor),
             toggleImageView.trailingAnchor.constraint(equalTo: contentView.trailingAnchor, constant: -10),
-            toggleImageView.widthAnchor.constraint(equalTo: contentView.widthAnchor, multiplier: 0.1),
+            toggleImageView.widthAnchor.constraint(equalTo: contentView.widthAnchor, multiplier: 0.05),
             toggleImageView.heightAnchor.constraint(equalTo: toggleImageView.widthAnchor, multiplier: 1)
         ])
     }
     
     func configureCell(data: AlarmModel) {
-        guard let notiType = data.notiType else { return }
+        guard let notiType = data.notiType,
+              let date = data.date else { return }
         
         typeImageView.image = UIImage(systemName: notiType.alarmImageSymbolsDescription)
         titleLabel.text = data.title
-        dateLabel.text = data.date?.description
+        dateLabel.text = DateFormatter.convertToDisplayStringHourMinute(date: date)
     }
     
 }
