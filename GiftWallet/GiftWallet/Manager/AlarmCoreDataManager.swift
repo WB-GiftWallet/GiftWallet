@@ -185,11 +185,11 @@ enum AlarmType: Int {
     var alarmImageSymbolsDescription: String {
         switch self {
         case .notification:
-            return "list.bullet.clipboard"
+            return "speaker.wave.3"
         case .couponExpiration:
-            return "star"
+            return "bell"
         case .userNotification:
-            return  "bell"
+            return  "network"
         }
     }
 }

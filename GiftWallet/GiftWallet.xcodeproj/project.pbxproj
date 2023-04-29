@@ -59,6 +59,7 @@
 		D2BB131929C2082300A2440B /* UpdateViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = D2BB131829C2082300A2440B /* UpdateViewModel.swift */; };
 		D2BE5DA629FB6D7A00DF2968 /* AlarmListTableHeaderView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D2BE5DA529FB6D7A00DF2968 /* AlarmListTableHeaderView.swift */; };
 		D2BE5DA829FB76B400DF2968 /* AlarmListTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = D2BE5DA729FB76B400DF2968 /* AlarmListTableViewCell.swift */; };
+		D2BE5DAA29FCC89800DF2968 /* ExpandableTouchButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = D2BE5DA929FCC89800DF2968 /* ExpandableTouchButton.swift */; };
 		D2C7A45929A9DA6C00EB6D56 /* EtcSettingViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D2C7A45829A9DA6C00EB6D56 /* EtcSettingViewController.swift */; };
 		D2C7A45B29A9DAB500EB6D56 /* EtcSttingViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = D2C7A45A29A9DAB500EB6D56 /* EtcSttingViewModel.swift */; };
 		D2C7A45D29A9E77100EB6D56 /* EtcSettingTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = D2C7A45C29A9E77100EB6D56 /* EtcSettingTableViewCell.swift */; };
@@ -165,6 +166,7 @@
 		D2BB131829C2082300A2440B /* UpdateViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UpdateViewModel.swift; sourceTree = "<group>"; };
 		D2BE5DA529FB6D7A00DF2968 /* AlarmListTableHeaderView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AlarmListTableHeaderView.swift; sourceTree = "<group>"; };
 		D2BE5DA729FB76B400DF2968 /* AlarmListTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AlarmListTableViewCell.swift; sourceTree = "<group>"; };
+		D2BE5DA929FCC89800DF2968 /* ExpandableTouchButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ExpandableTouchButton.swift; sourceTree = "<group>"; };
 		D2C7A45829A9DA6C00EB6D56 /* EtcSettingViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EtcSettingViewController.swift; sourceTree = "<group>"; };
 		D2C7A45A29A9DAB500EB6D56 /* EtcSttingViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EtcSttingViewModel.swift; sourceTree = "<group>"; };
 		D2C7A45C29A9E77100EB6D56 /* EtcSettingTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EtcSettingTableViewCell.swift; sourceTree = "<group>"; };
@@ -386,6 +388,7 @@
 				D2CDDBF329B0716000E000E3 /* CustomTextField.swift */,
 				D2B7AE6029B7301A000AC592 /* CustomGiftTagUIView.swift */,
 				D27CA42C29B89F1900EC5FC7 /* CustomButton.swift */,
+				D2BE5DA929FCC89800DF2968 /* ExpandableTouchButton.swift */,
 			);
 			path = CustomUI;
 			sourceTree = "<group>";
@@ -751,6 +754,7 @@
 				1759488929D49DF000E7D5B9 /* FireBaseManagerError.swift in Sources */,
 				F6A4AB4B29A5DA1C009AEB78 /* DetailViewController.swift in Sources */,
 				D27CA42D29B89F1900EC5FC7 /* CustomButton.swift in Sources */,
+				D2BE5DAA29FCC89800DF2968 /* ExpandableTouchButton.swift in Sources */,
 				17B579EF29D3337100042D80 /* FireBaseManager.swift in Sources */,
 				D2CDDBEC29AF4C0700E000E3 /* AddViewModel.swift in Sources */,
 				171695B129B1B8CA00CF3E41 /* SearchTableViewModel.swift in Sources */,

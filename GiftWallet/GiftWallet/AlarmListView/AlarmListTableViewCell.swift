@@ -22,7 +22,7 @@ class AlarmListTableViewCell: UITableViewCell,ReusableView {
        let label = UILabel()
         
         label.numberOfLines = .zero
-        label.font = UIFont(style: .regular, size: 15)
+        label.font = UIFont(style: .regular, size: 16)
         label.translatesAutoresizingMaskIntoConstraints = false
         
         return label
@@ -84,7 +84,7 @@ class AlarmListTableViewCell: UITableViewCell,ReusableView {
             
             dateLabel.topAnchor.constraint(equalTo: titleLabel.bottomAnchor, constant: 5),
             dateLabel.leadingAnchor.constraint(equalTo: titleLabel.leadingAnchor),
-            dateLabel.bottomAnchor.constraint(equalTo: contentView.bottomAnchor, constant: -5),
+            dateLabel.bottomAnchor.constraint(equalTo: contentView.bottomAnchor, constant: -10),
             
             toggleImageView.centerYAnchor.constraint(equalTo: contentView.centerYAnchor),
             toggleImageView.trailingAnchor.constraint(equalTo: contentView.trailingAnchor, constant: -10),

@@ -84,12 +84,20 @@ extension AlarmListViewController: UITableViewDataSource {
     
     func tableView(_ tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
         let headerView = tableView.dequeueReusableHeaderFooterView(withIdentifier: AlarmListTableHeaderView.reuseIdentifier) as? AlarmListTableHeaderView ?? AlarmListTableHeaderView()
-        
+        headerView.delegate = self
         return headerView
     }
     
 }
 
 extension AlarmListViewController: UITableViewDelegate {
+
+}
+
+extension AlarmListViewController: DidSelectedTableViewHeaderDelegate {
+    func didTappedHeaderView() {
+        
+    }
+    
     
 }

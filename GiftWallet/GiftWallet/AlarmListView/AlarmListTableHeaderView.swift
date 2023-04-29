@@ -9,6 +9,8 @@ import UIKit
 
 class AlarmListTableHeaderView: UITableViewHeaderFooterView, ReusableView {
     
+    var delegate: DidSelectedTableViewHeaderDelegate?
+    
     private let menuLabel = {
        let label = UILabel()
         
@@ -18,37 +20,63 @@ class AlarmListTableHeaderView: UITableViewHeaderFooterView, ReusableView {
         return label
     }()
     
-    private let flagImageView = {
-       let imageView = UIImageView()
+    private let flagImageButton: ExpandedTouchAreaButton = {
+       let button = ExpandedTouchAreaButton()
         
-        imageView.image = UIImage(systemName: "chevron.down")
-        imageView.tintColor = .black
-        imageView.translatesAutoresizingMaskIntoConstraints = false
+        button.setImage(UIImage(systemName: "chevron.down"), for: .normal)
+        button.imageView?.tintColor = .black
         
-        return imageView
+        button.translatesAutoresizingMaskIntoConstraints = false
+        
+        return button
     }()
     
     override init(reuseIdentifier: String?) {
         super.init(reuseIdentifier: reuseIdentifier)
         setupViews()
+        setupPopUpButton()
     }
     
     required init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
     
+    private func setupPopUpButton() {
+        flagImageButton.menu = UIMenu(children: [
+            UIAction(title: "전체", image: UIImage(systemName: "list.bullet.clipboard"), handler: { _ in
+                self.menuLabel.text = "전체"
+            }),
+            UIAction(title: "공지", image: UIImage(systemName: "speaker.wave.3"), handler: { _ in
+                self.menuLabel.text = "공지"
+            }),
+            UIAction(title: "쿠폰 알림", image: UIImage(systemName: "bell"), handler: { _ in
+                self.menuLabel.text = "쿠폰 알림"
+            }),
+            UIAction(title: "시스템 알림", image: UIImage(systemName: "network"), handler: { _ in
+                self.menuLabel.text = "시스템 알림"
+            }),
+        ])
+
+        flagImageButton.showsMenuAsPrimaryAction = true
+        
+        
+    }
+    
     private func setupViews() {
-        [menuLabel, flagImageView].forEach(contentView.addSubview(_:))
+        [menuLabel, flagImageButton].forEach(contentView.addSubview(_:))
         
         NSLayoutConstraint.activate([
             menuLabel.leadingAnchor.constraint(equalTo: contentView.leadingAnchor, constant: 20),
             menuLabel.centerYAnchor.constraint(equalTo: contentView.centerYAnchor),
             
-            flagImageView.widthAnchor.constraint(equalTo: contentView.widthAnchor, multiplier: 0.045),
-            flagImageView.heightAnchor.constraint(equalTo: flagImageView.widthAnchor, multiplier: 1),
-            flagImageView.trailingAnchor.constraint(equalTo: contentView.trailingAnchor, constant: -20),
-            flagImageView.centerYAnchor.constraint(equalTo: contentView.centerYAnchor)
+            flagImageButton.widthAnchor.constraint(equalTo: contentView.widthAnchor, multiplier: 0.045),
+            flagImageButton.heightAnchor.constraint(equalTo: flagImageButton.widthAnchor, multiplier: 1),
+            flagImageButton.trailingAnchor.constraint(equalTo: contentView.trailingAnchor, constant: -20),
+            flagImageButton.centerYAnchor.constraint(equalTo: contentView.centerYAnchor)
         ])
-        
     }
+}
+
+protocol DidSelectedTableViewHeaderDelegate {
+    func didTappedHeaderView()
 }
