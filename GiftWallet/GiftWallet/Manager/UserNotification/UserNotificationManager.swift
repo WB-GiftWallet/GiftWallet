@@ -7,13 +7,13 @@
 
 import UserNotifications
 
-class UserNotificationManager: UNUserNotificationCenter {
+class UserNotificationManager {
     
     func requestNotification() throws {
         // MARK: notification 삭제
         for identifier in 0...29 {
             let id = "Notification\(identifier)"
-            removePendingNotificationRequests(withIdentifiers: [id])
+            UNUserNotificationCenter.current().removePendingNotificationRequests(withIdentifiers: [id])
         }
         
         // MARK: [Fetch] 30+6일 정렬 -> [[number]]
@@ -89,11 +89,10 @@ class UserNotificationManager: UNUserNotificationCenter {
             }
             
             //MARK: -UserNotification 이후 AlarmCoreData Save 로직
-            guard let dateFromDateComponent = dateComponents.date else { return
+            let calendar = Calendar.current
+            guard let dateFromDateComponent = calendar.date(from: dateComponents) else { return
                 print("변환 불가능한 DateComponents")
             }
-            
-            //TODO: CoreData 변경 후 -> ID notifiactionIdentifier 동일하게 적용한다.
             let formatter = DateFormatter(dateFormatte: DateFormatteConvention.yyyyMMdd)
             let dateID = formatter.string(from: dateFromDateComponent)
 
