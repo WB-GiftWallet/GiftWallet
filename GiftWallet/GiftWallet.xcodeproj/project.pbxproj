@@ -18,6 +18,8 @@
 		17457D0529E7F7650018162D /* UserNotificationManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 17457D0429E7F7650018162D /* UserNotificationManager.swift */; };
 		17457D0D29E9A26E0018162D /* NotificationExpireDayContents.swift in Sources */ = {isa = PBXBuildFile; fileRef = 17457D0C29E9A26E0018162D /* NotificationExpireDayContents.swift */; };
 		1759488929D49DF000E7D5B9 /* FireBaseManagerError.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1759488829D49DF000E7D5B9 /* FireBaseManagerError.swift */; };
+		1761B2B329FE39EA00582059 /* AlarmModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1761B2B229FE39EA00582059 /* AlarmModel.swift */; };
+		1761B2B529FE5A4500582059 /* AlarmAPI.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1761B2B429FE5A4500582059 /* AlarmAPI.swift */; };
 		17655F3729F9687F008ECDD4 /* AlarmCoreDataManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 17655F3629F9687F008ECDD4 /* AlarmCoreDataManager.swift */; };
 		17655F3A29F96C90008ECDD4 /* Alarm+CoreDataClass.swift in Sources */ = {isa = PBXBuildFile; fileRef = 17655F3829F96C90008ECDD4 /* Alarm+CoreDataClass.swift */; };
 		17655F3B29F96C90008ECDD4 /* Alarm+CoreDataProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = 17655F3929F96C90008ECDD4 /* Alarm+CoreDataProperties.swift */; };
@@ -123,6 +125,8 @@
 		17457D0429E7F7650018162D /* UserNotificationManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserNotificationManager.swift; sourceTree = "<group>"; };
 		17457D0C29E9A26E0018162D /* NotificationExpireDayContents.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NotificationExpireDayContents.swift; sourceTree = "<group>"; };
 		1759488829D49DF000E7D5B9 /* FireBaseManagerError.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FireBaseManagerError.swift; sourceTree = "<group>"; };
+		1761B2B229FE39EA00582059 /* AlarmModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AlarmModel.swift; sourceTree = "<group>"; };
+		1761B2B429FE5A4500582059 /* AlarmAPI.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AlarmAPI.swift; sourceTree = "<group>"; };
 		17655F3629F9687F008ECDD4 /* AlarmCoreDataManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AlarmCoreDataManager.swift; sourceTree = "<group>"; };
 		17655F3829F96C90008ECDD4 /* Alarm+CoreDataClass.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Alarm+CoreDataClass.swift"; sourceTree = SOURCE_ROOT; };
 		17655F3929F96C90008ECDD4 /* Alarm+CoreDataProperties.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Alarm+CoreDataProperties.swift"; sourceTree = SOURCE_ROOT; };
@@ -259,6 +263,16 @@
 			path = UserNotification;
 			sourceTree = "<group>";
 		};
+		1761B2B129FE39D200582059 /* AlarmCoreDataManager */ = {
+			isa = PBXGroup;
+			children = (
+				17655F3629F9687F008ECDD4 /* AlarmCoreDataManager.swift */,
+				1761B2B229FE39EA00582059 /* AlarmModel.swift */,
+				1761B2B429FE5A4500582059 /* AlarmAPI.swift */,
+			);
+			path = AlarmCoreDataManager;
+			sourceTree = "<group>";
+		};
 		17B579ED29D3302D00042D80 /* FireBaseManager */ = {
 			isa = PBXGroup;
 			children = (
@@ -364,7 +378,7 @@
 			children = (
 				17B579ED29D3302D00042D80 /* FireBaseManager */,
 				FC074C0029A8D5B5006AD199 /* CoreDataManager.swift */,
-				17655F3629F9687F008ECDD4 /* AlarmCoreDataManager.swift */,
+				1761B2B129FE39D200582059 /* AlarmCoreDataManager */,
 				D2CDDBDF29AF3CD300E000E3 /* VisionManager.swift */,
 				D2CA7D8929D6BAA0002D3BA2 /* KakaoLoginManager.swift */,
 				D246B39829D7CF7E00A5BB2F /* AppleLoginManager.swift */,
@@ -704,12 +718,14 @@
 				171E10D429F3C01600E578D1 /* AlarmListViewModel.swift in Sources */,
 				D246B39929D7CF7E00A5BB2F /* AppleLoginManager.swift in Sources */,
 				D295E4B929A5F64200E12CAF /* FormSheetViewController.swift in Sources */,
+				1761B2B329FE39EA00582059 /* AlarmModel.swift in Sources */,
 				D2CDDBE029AF3CD300E000E3 /* VisionManager.swift in Sources */,
 				D2CDDBCD29ADFACB00E000E3 /* DateCalCulateUseCase.swift in Sources */,
 				D2DAAA2329A4720300D70E8C /* Ext+DateFormatter.swift in Sources */,
 				D2BE5DA829FB76B400DF2968 /* AlarmListTableViewCell.swift in Sources */,
 				D2C90B5829BF4DC1003C3611 /* ZoomImageViewController.swift in Sources */,
 				17457D0D29E9A26E0018162D /* NotificationExpireDayContents.swift in Sources */,
+				1761B2B529FE5A4500582059 /* AlarmAPI.swift in Sources */,
 				FC62FF1029A77B5A003E63B0 /* MainTabBarController.swift in Sources */,
 				171E10D129F3BDC300E578D1 /* AlarmListViewController.swift in Sources */,
 				D2CDDBE229AF3D2B00E000E3 /* AutoInputUseCase.swift in Sources */,
