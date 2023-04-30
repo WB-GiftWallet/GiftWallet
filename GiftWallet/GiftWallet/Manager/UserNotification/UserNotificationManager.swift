@@ -93,22 +93,15 @@ class UserNotificationManager: UNUserNotificationCenter {
                 print("변환 불가능한 DateComponents")
             }
             
-            //TODO: CoreData 변경 전 (UUID 사용 -> String 혹은 Int 로 변환)
+            //TODO: CoreData 변경 후 -> ID notifiactionIdentifier 동일하게 적용한다.
+            let formatter = DateFormatter(dateFormatte: DateFormatteConvention.yyyyMMdd)
+            let dateID = formatter.string(from: dateFromDateComponent)
+
             let alarmModel = AlarmModel(title: contentsOfToday.title,
                                         numbers: sendingArray,
                                         date: dateFromDateComponent,
-                                        id: UUID(),
+                                        id: dateID,
                                         notiType: .couponExpiration)
-            
-//            //TODO: CoreData 변경 후
-//            let formatter = DateFormatter(dateFormatte: DateFormatteConvention.yyyyMMdd)
-//            let dateID = formatter.string(from: dateFromDateComponent)
-//
-//            let alarmModel = AlarmModel(title: contentsOfToday.title,
-//                                        numbers: sendingArray,
-//                                        date: dateFromDateComponent,
-//                                        id: dateID,
-//                                        notiType: .couponExpiration)
             
             //MARK: UserNotification에 등록된 Item들만 AlarmCoreData에 넣어준다.
             try AlarmCoreDataManager.shared.saveData(alarmModel) {

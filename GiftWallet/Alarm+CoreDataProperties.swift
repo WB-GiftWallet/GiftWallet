@@ -2,7 +2,7 @@
 //  Alarm+CoreDataProperties.swift
 //  GiftWallet
 //
-//  Created by Baem on 2023/04/29.
+//  Created by Baem on 2023/04/30.
 //
 //
 
@@ -15,10 +15,10 @@ extension Alarm {
         return NSFetchRequest<Alarm>(entityName: "Alarm")
     }
 
-    @NSManaged public var numbers: [Int]?
     @NSManaged public var date: Date?
-    @NSManaged public var id: UUID?
+    @NSManaged public var id: String?
     @NSManaged public var notiType: Int16
+    @NSManaged public var numbers: [Int]?
     @NSManaged public var title: String?
 }
 

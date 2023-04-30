@@ -12,17 +12,19 @@ class AlarmListViewModel {
         AlarmModel(title: "안녕하세요안녕하세요안녕하세요안녕하세요안녕하세요안녕하세요안녕하세요안녕하세요안녕하세요안녕하세요안녕하세요안녕하세요안녕하세요안녕하세요안녕하세요안녕하세요안녕하세요안녕하세요안녕하세요안녕하세요안녕하세요안녕하세요안녕하세요안녕하세요안녕하세요",
                    numbers: [1, 3, 5, 6],
                    date: Date(),
-                   id: UUID(),
+                   id: "예시아이디첫번째",
                    notiType: .couponExpiration),
 
         AlarmModel(title: "네네네네네네네네네네네네네네네네네네네네네네네네네네네네네네네네네네네네네네네네네네네네네네네네네네네네네네네네네네네네네네네네네네네네네네네네네네네네네네네네네네네네네네네네네네네네네네네",
                    numbers: [3],
-                   date: Date(), id: UUID(), notiType: .userNotification),
+                   date: Date(),
+                   id: "예시아이디두번째",
+                   notiType: .userNotification),
 
         AlarmModel(title: "밥먹었나요밥먹었나요밥먹었나요밥먹었나요밥먹었나요밥먹었나요밥먹었나요밥먹었나요밥먹었나요밥먹었나요밥먹었나요밥먹었나요밥먹었나요밥먹었나요밥먹었나요",
                    numbers: [1,3,6,7],
                    date: Date(),
-                   id: UUID(),
+                   id: "예시아이디세번째",
                    notiType: .notification)
     ]
     
@@ -42,7 +44,6 @@ class AlarmListViewModel {
     func filterAllData() {
         filteredAlarm.value = alarms
     }
-    
 }
 
 
