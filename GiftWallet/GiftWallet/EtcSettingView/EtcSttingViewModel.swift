@@ -11,6 +11,7 @@ class EtcSettingViewModel {
     
     private let firebaseManager = FireBaseManager.shared
     private let coreDataManager = CoreDataManager.shared
+//    private let appleLoginManager = AppleLoginManager()
     
     var userName: String? {
         return firebaseManager.currentUser?.displayName
@@ -26,6 +27,7 @@ class EtcSettingViewModel {
     }
     
     func deleteUser(completion: @escaping () -> Void) {
+//        appleLoginManager.revokeAppleToken(clientSecret: <#T##String#>, token: <#T##String#>, completionHandler: <#T##() -> Void#>)
         firebaseManager.deleteUserAllImageData()
         firebaseManager.deleteUser(completion: completion)
         deleteAllCoreData()

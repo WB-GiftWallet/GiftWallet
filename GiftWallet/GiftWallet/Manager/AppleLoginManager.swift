@@ -102,3 +102,46 @@ extension AppleLoginManager {
     }
     
 }
+
+extension AppleLoginManager {
+    func revokeAppleToken(clientSecret: String, token: String, completionHandler: @escaping () -> Void) {
+        let urlString = "https://appleid.apple.com/auth/revoke"
+        guard let url = URL(string: urlString) else { return }
+        
+        let params: [String: String] = [
+            "client_id": "wb.GiftWallet12",
+            "client_secret": clientSecret,
+            "token": token
+        ]
+        
+        var request = URLRequest(url: url)
+        request.setValue("application/x-www-form-urlencoded", forHTTPHeaderField: "Content-Type")
+        request.method = .post
+        request.httpBody = encodeParams(params: params)
+        
+
+        let task = URLSession.shared.dataTask(with: request) { data, response, error in
+            if error != nil { return }
+            
+            if let response = response as? HTTPURLResponse {
+                if !(200...299).contains(response.statusCode) {
+                    print("POST CODE Error : <<\(response.statusCode)>>")
+                } else {
+                    print("애플 토큰 삭제 성공!")
+                    completionHandler()
+                }
+            }
+        }
+    }
+    
+    func encodeParams(params: [String: String]) -> Data? {
+        let jsonEncoder = JSONEncoder()
+        
+        do {
+            return try jsonEncoder.encode(params)
+        } catch {
+            print(error.localizedDescription)
+        }
+        return nil
+    }
+}
