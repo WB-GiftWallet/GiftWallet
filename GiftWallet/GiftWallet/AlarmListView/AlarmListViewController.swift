@@ -95,8 +95,14 @@ extension AlarmListViewController: UITableViewDataSource {
     }
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        
         tableView.deselectRow(at: indexPath, animated: true)
+        
+        guard let gifts = viewModel.createDetailGiftDatas(indexRow: indexPath.row) else {
+            return
+        }
+        let detailViewModel = DetailViewModel(gifts: gifts)
+        let detailViewController = DetailViewController(viewModel: detailViewModel)
+        present(detailViewController, animated: true)
     }
 }
 

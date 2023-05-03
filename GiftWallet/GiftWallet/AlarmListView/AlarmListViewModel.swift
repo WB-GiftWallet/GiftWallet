@@ -23,6 +23,21 @@ class AlarmListViewModel {
         filteredAlarm.value = alarms
     }
     
+    func createDetailGiftDatas(indexRow: Int) -> [Gift]? {
+        guard let array = alarms[indexRow].numbers else { return nil }
+        
+        var gifts: [Gift]?
+        
+        switch CoreDataManager.shared.fetchData(of: array) {
+            case .success(let data):
+                gifts = data
+            case .failure(let error):
+                print(error.localizedDescription)
+        }
+        
+        return gifts
+    }
+    
     private func setupInitAlarmData() {
         switch AlarmCoreDataManager.shared.fetchData() {
             case .success(let data):

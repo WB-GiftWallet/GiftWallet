@@ -15,6 +15,23 @@ final class CoreDataManager {
     
     private let appDelegate = UIApplication.shared.delegate as? AppDelegate
     
+    func fetchData(of numbers: [Int]) -> Result<[Gift], CoreDataError> {
+        guard let context = appDelegate?.persistentContainer.viewContext else {
+            return .failure(.contextInvalid)
+        }
+        
+        do {
+            let result = try context.fetch(GiftData.fetchRequest())
+            let resultToGiftData = result.filter { numbers.contains(Int($0.number)) }
+            let resultToGifts = resultToGiftData.compactMap{ Gift(giftData: $0) }
+            return .success(resultToGifts)
+        } catch {
+            print(error.localizedDescription)
+        }
+        
+        return .failure(.coreDataError)
+    }
+    
     func fetchData() -> Result<[Gift], CoreDataError> {
         guard let context = appDelegate?.persistentContainer.viewContext else {
             return .failure(.contextInvalid)
