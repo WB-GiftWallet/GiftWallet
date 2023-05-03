@@ -8,33 +8,11 @@
 import Foundation
 
 class AlarmListViewModel {
-    var alarms: [AlarmModel] = [
-        AlarmModel(title: "안녕하세요안녕하세요안녕하세요안녕하세요안녕하세요안녕하세요안녕하세요안녕하세요안녕하세요안녕하세요안녕하세요안녕하세요안녕하세요안녕하세요안녕하세요안녕하세요안녕하세요안녕하세요안녕하세요안녕하세요안녕하세요안녕하세요안녕하세요안녕하세요안녕하세요",
-                   numbers: [1, 3, 5, 6],
-                   date: Date(),
-                   id: "예시아이디첫번째",
-                   notiType: .couponExpiration),
-
-        AlarmModel(title: "네네네네네네네네네네네네네네네네네네네네네네네네네네네네네네네네네네네네네네네네네네네네네네네네네네네네네네네네네네네네네네네네네네네네네네네네네네네네네네네네네네네네네네네네네네네네네네네",
-                   numbers: [3],
-                   date: Date(),
-                   id: "예시아이디두번째",
-                   notiType: .userNotification),
-
-        AlarmModel(title: "밥먹었나요밥먹었나요밥먹었나요밥먹었나요밥먹었나요밥먹었나요밥먹었나요밥먹었나요밥먹었나요밥먹었나요밥먹었나요밥먹었나요밥먹었나요밥먹었나요밥먹었나요",
-                   numbers: [1,3,6,7],
-                   date: Date(),
-                   id: "예시아이디세번째",
-                   notiType: .notification)
-    ]
-    
-//    MARK: Sample Data
-//    var alarms: [AlarmModel] = AlarmModel.sampleCoreAlarmModel
-    
+    var alarms = [AlarmModel]()
     var filteredAlarm: Observable<[AlarmModel]> = .init([])
     
     init() {
-        filterAllData()
+        setupInitAlarmData()
     }
     
     func filterAlarm(type: AlarmType) {
@@ -44,14 +22,66 @@ class AlarmListViewModel {
     func filterAllData() {
         filteredAlarm.value = alarms
     }
+    
+    private func setupInitAlarmData() {
+        switch AlarmCoreDataManager.shared.fetchData() {
+            case .success(let data):
+                alarms = data
+                
+                do {
+                    try sortAlarms()
+                } catch {
+                    print(error.localizedDescription)
+                }
+                
+                filterAllData()
+            case .failure(let error):
+                print(error.localizedDescription)
+        }
+    }
+    
+    private func sortAlarms() throws {
+        try alarms.sort {
+            guard let firstDate = $0.date,
+               let secondDate = $1.date else {
+                throw AlarmListError.notHaveDate
+            }
+            
+            return firstDate > secondDate
+        }
+        
+        alarms = try alarms.filter {
+            guard let date = $0.date else {
+                throw AlarmListError.notHaveDate
+            }
+            
+            let bool = isWithinDays(from: date, dueDay: 30)
+            
+            return bool
+        }
+    }
+    
+    private func isWithinDays(from targetDate: Date, dueDay: Int) -> Bool {
+        let currentDate = Date()
+        let calendar = Calendar.current
+        let components = calendar.dateComponents([.day], from: currentDate, to: targetDate)
+        
+        guard let days = components.day else {
+            return false
+        }
+        
+        if days <= dueDay && days < .zero {
+            return true
+        }
+        
+        if currentDate > targetDate {
+            return true
+        }
+        
+        return false
+    }
 }
 
-
-/*
- 1. alarm은 전체 알람을 갖는다.
- 2. 버튼이 변하면서 필터를 한다.
- 3. filteredAlarm은 필터된 알람이 된다.
- 4. 결국, 띄워주는 것은 filteredAlarm이 된다.
- 
- 
- */
+enum AlarmListError: Error {
+    case notHaveDate
+}
