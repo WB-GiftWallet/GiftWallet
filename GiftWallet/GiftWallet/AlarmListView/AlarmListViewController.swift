@@ -73,7 +73,6 @@ class AlarmListViewController: UIViewController {
             alarmTableView.bottomAnchor.constraint(equalTo: view.bottomAnchor)
         ])
     }
-    
 }
 
 extension AlarmListViewController: UITableViewDataSource {
@@ -95,6 +94,10 @@ extension AlarmListViewController: UITableViewDataSource {
         return headerView
     }
     
+    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        
+        tableView.deselectRow(at: indexPath, animated: true)
+    }
 }
 
 extension AlarmListViewController: UITableViewDelegate {
