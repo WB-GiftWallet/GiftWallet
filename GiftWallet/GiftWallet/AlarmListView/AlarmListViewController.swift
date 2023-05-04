@@ -100,8 +100,11 @@ extension AlarmListViewController: UITableViewDataSource {
         guard let gifts = viewModel.createDetailGiftDatas(indexRow: indexPath.row) else {
             return
         }
+        
         let detailViewModel = DetailViewModel(gifts: gifts)
         let detailViewController = DetailViewController(viewModel: detailViewModel)
+        detailViewController.modalPresentationStyle = .overFullScreen
+        
         present(detailViewController, animated: true)
     }
 }

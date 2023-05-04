@@ -37,23 +37,46 @@ final class AlarmCoreDataManager {
         guard let context = appDelegate?.persistentContainer.viewContext else {
             throw CoreDataError.contextInvalid
         }
-        let entity = NSEntityDescription.entity(forEntityName: "Alarm", in: context)
         
-        if let entity = entity {
-            let info = NSManagedObject(entity: entity, insertInto: context)
+        guard let id = alarm.id else {
+            print("ERROR NOTHAVE ALARM COREDATA ID")
+            return
+        }
+        
+        let fetchRequest = NSFetchRequest<NSFetchRequestResult>(entityName: "Alarm")
+        fetchRequest.predicate = NSPredicate(format: "id = %@", id)
+        
+        var results: [NSManagedObject] = []
+        do {
+            results = try context.fetch(fetchRequest) as! [NSManagedObject]
+        } catch let error as NSError {
+            print("Could not fetch. \(error), \(error.userInfo)")
+        }
+        
+        if let existingData = results.first {
+            existingData.setValue(alarm.title, forKey: "title")
+            existingData.setValue(alarm.numbers, forKey: "numbers")
+            existingData.setValue(alarm.date, forKey: "date")
+            existingData.setValue(alarm.notiType?.rawValue, forKey: "notiType")
+        } else {
+            let entity = NSEntityDescription.entity(forEntityName: "Alarm", in: context)
             
-            info.setValue(alarm.title, forKey: "title")
-            info.setValue(alarm.id, forKey: "id")
-            info.setValue(alarm.numbers, forKey: "numbers")
-            info.setValue(alarm.date, forKey: "date")
-            info.setValue(alarm.notiType?.rawValue, forKey: "notiType")
-            
-            do {
-                try context.save()
-                completion()
-            } catch {
-                print(error.localizedDescription)
+            if let entity = entity {
+                let newData = NSManagedObject(entity: entity, insertInto: context)
+                
+                newData.setValue(alarm.title, forKey: "title")
+                newData.setValue(alarm.id, forKey: "id")
+                newData.setValue(alarm.numbers, forKey: "numbers")
+                newData.setValue(alarm.date, forKey: "date")
+                newData.setValue(alarm.notiType?.rawValue, forKey: "notiType")
             }
+        }
+        
+        do {
+            try context.save()
+            completion()
+        } catch {
+            print(error.localizedDescription)
         }
     }
     

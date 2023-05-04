@@ -90,8 +90,9 @@ class UserNotificationManager {
             
             //MARK: -UserNotification 이후 AlarmCoreData Save 로직
             let calendar = Calendar.current
-            guard let dateFromDateComponent = calendar.date(from: dateComponents) else { return
+            guard let dateFromDateComponent = calendar.date(from: dateComponents) else {
                 print("변환 불가능한 DateComponents")
+                return
             }
             let formatter = DateFormatter(dateFormatte: DateFormatteConvention.yyyyMMdd)
             let dateID = formatter.string(from: dateFromDateComponent)
