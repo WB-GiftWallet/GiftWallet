@@ -64,8 +64,7 @@ class MainViewController: UIViewController, UISearchBarDelegate, UISearchControl
         label.text = "쿠폰을 등록하면 쿠폰함에 표시됩니다."
         label.numberOfLines = 0
         label.textAlignment = .center
-        label.textColor = .
-        modifyButtonTitle
+        label.textColor = .modifyButtonTitle
         label.font = UIFont(style: .regular, size: 18)
         
         return label
@@ -91,15 +90,25 @@ class MainViewController: UIViewController, UISearchBarDelegate, UISearchControl
         button.titleLabel?.font = UIFont(style: .medium, size: 16)
         button.setTitleColor(UIColor.searchLabel, for: .normal)
         button.contentHorizontalAlignment = .left
-        button.setImage(UIImage(systemName: "magnifyingglass"), for: .normal)
+//        button.setImage(UIImage(systemName: "magnifyingglass"), for: .normal)
         button.tintColor = .searchLabel
-        button.semanticContentAttribute = .forceRightToLeft
-        button.imageEdgeInsets = UIEdgeInsets(top: 0, left: view.frame.width - button.frame.width * 0.55, bottom: 0, right: 0)
+//        button.semanticContentAttribute = .forceRightToLeft
+//        button.imageEdgeInsets = UIEdgeInsets(top: 0, left: view.frame.width - button.frame.width * 0.55, bottom: 0, right: 0)
         button.layer.cornerRadius = 6
         
         button.translatesAutoresizingMaskIntoConstraints = false
         
         return button
+    }()
+    
+    private let buttonImageView = {
+       let imageView = UIImageView()
+        
+        imageView.tintColor = .searchLabel
+        imageView.image = UIImage(systemName: "magnifyingglass")
+        imageView.translatesAutoresizingMaskIntoConstraints = false
+        
+        return imageView
     }()
     
     
@@ -244,6 +253,7 @@ class MainViewController: UIViewController, UISearchBarDelegate, UISearchControl
     
     private func setupViews() {
         
+        searchButton.addSubview(buttonImageView)
         [emptyImageView, emptyLabel, emptyDescriptionLabel].forEach(emptyVerticalStackView.addArrangedSubview(_:))
         contentView.addSubview(emptyVerticalStackView)
         
@@ -259,6 +269,11 @@ class MainViewController: UIViewController, UISearchBarDelegate, UISearchControl
         let safeArea = contentView.safeAreaLayoutGuide
         
         NSLayoutConstraint.activate([
+            buttonImageView.widthAnchor.constraint(equalTo: searchButton.widthAnchor, multiplier: 0.06),
+            buttonImageView.heightAnchor.constraint(equalTo: buttonImageView.widthAnchor, multiplier: 1),
+            buttonImageView.trailingAnchor.constraint(equalTo: searchButton.trailingAnchor, constant: -10),
+            buttonImageView.centerYAnchor.constraint(equalTo: searchButton.centerYAnchor),
+        
             emptyVerticalStackView.widthAnchor.constraint(equalTo: view.widthAnchor),
             emptyVerticalStackView.heightAnchor.constraint(equalTo: view.heightAnchor, multiplier: 0.4),
             emptyVerticalStackView.centerXAnchor.constraint(equalTo: view.centerXAnchor),
