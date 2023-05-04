@@ -7,17 +7,17 @@
 
 import UserNotifications
 
-class UserNotificationManager: UNUserNotificationCenter {
+class UserNotificationManager {
     
     func requestNotification() throws {
         // MARK: notification 삭제
         for identifier in 0...29 {
             let id = "Notification\(identifier)"
-            removePendingNotificationRequests(withIdentifiers: [id])
+            UNUserNotificationCenter.current().removePendingNotificationRequests(withIdentifiers: [id])
         }
         
-        // MARK: [Fetch] 30+6일 정렬
-        var recent36Days = [Int]()
+        // MARK: [Fetch] 30+6일 정렬 -> [[number]]
+        var recent36Days = [[Int]]()
         
         do {
             recent36Days = try mostRecentExpireItemFetchFor_36_DaysFromCoreData()
@@ -33,27 +33,31 @@ class UserNotificationManager: UNUserNotificationCenter {
             
             // MARK: Notification id 생성 및 startDay 따른 (Noti 정보 & Contents 구성) Setting
             let notifiactionIdentifier = "Notification\(startDay)"
-            var totalValue: Int = .zero
+            var totalValue: Int = .zero // 1,3,7 중 하나에서 Item이 몇 개 남은지 count
+            var sendingArray: [Int] = [Int]() // 남은 Item의 Number id 값
             
-            totalValue += recent36Days[startDay]
+            totalValue += recent36Days[startDay].count
             
-            if recent36Days[startDay] != 0 {
+            if recent36Days[startDay].count != 0 {
                 notificationContents = .today
                 
-                totalValue = recent36Days[startDay]
+                totalValue = recent36Days[startDay].count
+                sendingArray = recent36Days[startDay]
                 
-            } else if recent36Days[startDay+2] != 0 {
+            } else if recent36Days[startDay+2].count != 0 {
                 notificationContents = .underThree
                 
                 for i in startDay...startDay+2 {
-                    totalValue += recent36Days[i]
+                    totalValue += recent36Days[i].count
+                    sendingArray += recent36Days[i]
                 }
                 
-            } else if recent36Days[startDay+6] != 0 {
+            } else if recent36Days[startDay+6].count != 0 {
                 notificationContents = .underSeven
                 
                 for i in startDay...startDay+6 {
-                    totalValue += recent36Days[i]
+                    totalValue += recent36Days[i].count
+                    sendingArray += recent36Days[i]
                 }
             } else {
                 //MARK: noti 없음 == continue
@@ -81,8 +85,27 @@ class UserNotificationManager: UNUserNotificationCenter {
             // MARK: Add UserNotification
             let notificationCenter = UNUserNotificationCenter.current()
             notificationCenter.add(request) { (error) in
-                if error != nil {
-                }
+                if error != nil { }
+            }
+            
+            //MARK: -UserNotification 이후 AlarmCoreData Save 로직
+            let calendar = Calendar.current
+            guard let dateFromDateComponent = calendar.date(from: dateComponents) else {
+                print("변환 불가능한 DateComponents")
+                return
+            }
+            let formatter = DateFormatter(dateFormatte: DateFormatteConvention.yyyyMMdd)
+            let dateID = formatter.string(from: dateFromDateComponent)
+
+            let alarmModel = AlarmModel(title: contentsOfToday.title,
+                                        numbers: sendingArray,
+                                        date: dateFromDateComponent,
+                                        id: dateID,
+                                        notiType: .couponExpiration)
+            
+            //MARK: UserNotification에 등록된 Item들만 AlarmCoreData에 넣어준다.
+            try AlarmCoreDataManager.shared.saveData(alarmModel) {
+                print("Success SaveData OF AlarmCoreDataManaer")
             }
         }
     }
@@ -112,6 +135,7 @@ class UserNotificationManager: UNUserNotificationCenter {
         return content
     }
     
+    //MARK: requestNotification로직 내에서 사용 중 (archive)
     private func setNotificationContents(_ mostRecentExpireDay: Int) throws -> NotificationExpireDayContents {
         
         switch mostRecentExpireDay {
@@ -129,19 +153,24 @@ class UserNotificationManager: UNUserNotificationCenter {
 
 // MARK: CoreData 데이터 mostRecentExpireDate 가져오기
 extension UserNotificationManager {
-    private func mostRecentExpireItemFetchFor_36_DaysFromCoreData() throws -> [Int] {
+    
+    //TODO: Naming변경 ([Int] -> [[Int]] NumberID 넘겨주었기에)
+    private func mostRecentExpireItemFetchFor_36_DaysFromCoreData() throws -> [[Int]] {
         let gifts = fetchFiltedData()
-        var thirtyDays = Array(repeating: 0, count: 36)
+        
+        var thirtyDays = Array(repeating: [Int](), count: 36)
         
         for gift in gifts {
             guard let expireDate = gift.expireDate else {
                 throw NotificationError.doNotFetchCoreData
             }
             
+            let idNumber = gift.number
+            
             let day = judgeGapOfDay(date: expireDate)
             switch day {
                 case 0...36:
-                    thirtyDays[day] += 1
+                    thirtyDays[day].append(idNumber)
                 default:
                     continue
             }
@@ -149,6 +178,30 @@ extension UserNotificationManager {
         
         return thirtyDays
     }
+    
+    //MARK: Before Logic of "mostRecentExpireItemFetchFor_36_DaysFromCoreData"
+//    private func mostRecentExpireItemFetchFor_36_DaysFromCoreData() throws -> [Int] {
+//        let gifts = fetchFiltedData()
+//
+//        //MARK: 1~36까지 데이터 개수
+//        var thirtyDays = Array(repeating: 0, count: 36)
+//
+//        for gift in gifts {
+//            guard let expireDate = gift.expireDate else {
+//                throw NotificationError.doNotFetchCoreData
+//            }
+//
+//            let day = judgeGapOfDay(date: expireDate)
+//            switch day {
+//                case 0...36:
+//                    thirtyDays[day] += 1
+//                default:
+//                    continue
+//            }
+//        }
+//
+//        return thirtyDays
+//    }
     
     private func fetchFiltedData() -> [Gift] {
         var gifts = [Gift]()

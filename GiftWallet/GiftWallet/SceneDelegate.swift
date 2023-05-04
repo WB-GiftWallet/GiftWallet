@@ -23,7 +23,7 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
                                                         etcSettingViewModel: etcSettingViewModel)
         let navigationMainController = UINavigationController(rootViewController: mainTabBarController)
         
-        window.backgroundColor = .white
+        window.backgroundColor = .systemBackground
         window.rootViewController = navigationMainController
         window.makeKeyAndVisible()
         self.window = window
@@ -37,4 +37,20 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
         }
     }
     
+    //TODO: 유저노티 등록
+    func sceneDidBecomeActive(_ scene: UIScene) {
+        do {
+            try UserNotificationManager().requestNotification()
+        } catch {
+            print(error.localizedDescription)
+        }
+    }
+    
+    func sceneDidEnterBackground(_ scene: UIScene) {
+        do {
+            try UserNotificationManager().requestNotification()
+        } catch {
+            print(error.localizedDescription)
+        }
+    }
 }
