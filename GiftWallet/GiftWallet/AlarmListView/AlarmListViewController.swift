@@ -45,6 +45,11 @@ class AlarmListViewController: UIViewController {
         navigationItem.largeTitleDisplayMode = .never
     }
     
+    override func viewWillDisappear(_ animated: Bool) {
+        super.viewWillDisappear(animated)
+        navigationController?.navigationBar.prefersLargeTitles = false
+    }
+    
     private func bind() {
         viewModel.filteredAlarm.bind { alarmModels in
             self.alarmTableView.reloadData()
