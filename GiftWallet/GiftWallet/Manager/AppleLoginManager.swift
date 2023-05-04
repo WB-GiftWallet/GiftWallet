@@ -7,6 +7,7 @@
 
 import AuthenticationServices
 import CryptoKit
+import SwiftJWT
 
 // MARK: 애플 로그인 관련
 
@@ -29,6 +30,18 @@ extension AppleLoginManager {
                 print("데이터에서 토큰 문자열을 나열할 수 없습니다: \(appleIDToken.debugDescription)")
                 return
             }
+            
+            if let authorizationCode = appleIDCredential.authorizationCode {
+                let code = String(decoding: authorizationCode, as: UTF8.self)
+                print("Code - \(code)")
+                
+                // 애플 refresh token 발급 api 통신
+                getAppleRefreshToken(code: code) { data in
+                    print("통신완료 토큰저장완료", data)
+                    UserDefaults.standard.set(data.refreshToken, forKey: "AppleRefreshToken")
+                }
+            }
+            
             
             if let givenName = appleIDCredential.fullName?.givenName,
                let familyName = appleIDCredential.fullName?.familyName {
@@ -72,7 +85,7 @@ extension AppleLoginManager {
     private func randomNonceString(length: Int = 32) -> String {
         precondition(length > 0)
         let charset: Array<Character> =
-            Array("0123456789ABCDEFGHIJKLMNOPQRSTUVXYZabcdefghijklmnopqrstuvwxyz-._")
+        Array("0123456789ABCDEFGHIJKLMNOPQRSTUVXYZabcdefghijklmnopqrstuvwxyz-._")
         var result = ""
         var remainingLength = length
         
@@ -113,13 +126,14 @@ extension AppleLoginManager {
             "client_secret": clientSecret,
             "token": token
         ]
+        print(params)
         
         var request = URLRequest(url: url)
         request.setValue("application/x-www-form-urlencoded", forHTTPHeaderField: "Content-Type")
         request.method = .post
         request.httpBody = encodeParams(params: params)
         
-
+        
         let task = URLSession.shared.dataTask(with: request) { data, response, error in
             if error != nil { return }
             
@@ -144,4 +158,42 @@ extension AppleLoginManager {
         }
         return nil
     }
+    
+    func getAppleRefreshToken(code: String, completionHandler: @escaping (AppleTokenResponse) -> Void) {
+        let jsonDecoder = JSONDecoder()
+        
+        let urlString = "https://appleid.apple.com/auth/token"
+        guard let url = URL(string: urlString),
+              let jwt = generateJWT() else { return }
+        
+        let params: [String: String] = [
+            "client_id": "wb.GiftWallet12",
+            "client_secret": jwt,
+            "code" : code,
+            "grant_type": "authorization_code"
+        ]
+        
+        print(params)
+        let encodedParams = try! JSONSerialization.data(withJSONObject: params)
+        
+        var request = URLRequest(url: url)
+        request.setValue("application/x-www-form-urlencoded", forHTTPHeaderField: "Content-Type")
+        request.httpMethod = "POST"
+        
+        request.httpBody = encodedParams
+        
+        let task = URLSession.shared.dataTask(with: request) { data, response, error in
+            if error != nil { return }
+            guard let data = data else { return }
+            guard let output = try? jsonDecoder.decode(AppleTokenResponse.self, from: data) else {
+                print("JSON디코딩오류")
+                return
+            }
+            String(data: data, encoding: .utf8)
+            completionHandler(output)
+        }
+        task.resume()
+    }
+    
 }
+
