@@ -114,13 +114,15 @@ final class MainTabBarController: UITabBarController {
         let imageView = UIImageView()
         imageView.image = image
         imageView.contentMode = .scaleAspectFit
-        imageView.frame = CGRect(x: 0, y: 0, width: 80, height: 30)
+        imageView.frame = CGRect(x: 0, y: 0, width: 130, height: 50)
         navigationItem.leftBarButtonItem = UIBarButtonItem(customView: imageView)
         
+
+        
         let bellAction = UIAction { _ in
-            //TODO: 알림 리스트 전환으로 변경
-            print("CoreData 추가")
-            Gift.addSampleData()
+            let alarmListViewModel = AlarmListViewModel()
+            let alarmListViewController = AlarmListViewController(viewModel: alarmListViewModel)
+            self.navigationController?.pushViewController(alarmListViewController, animated: true)
         }
         
         let bellSFSymbol = UIImage(systemName: "bell.fill")

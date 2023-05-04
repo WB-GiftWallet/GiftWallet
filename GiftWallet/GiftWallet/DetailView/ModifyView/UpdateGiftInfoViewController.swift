@@ -157,6 +157,7 @@ class UpdateGiftInfoViewController: UIViewController {
     private func tapCompleteButton() {
         inputtedTextsToGift()
         viewModel.coreDataUpdate()
+        viewModel.firebaseUpdate()
         
         dismiss(animated: true) { [self] in
             NotificationCenter.default.post(name: NSNotification.Name("UpdateGiftInfoVC"), object: viewModel.gift)

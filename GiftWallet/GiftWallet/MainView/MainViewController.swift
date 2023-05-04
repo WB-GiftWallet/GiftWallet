@@ -6,6 +6,8 @@
 //
 
 import UIKit
+import FirebaseAuth
+import SkeletonView
 
 class MainViewController: UIViewController, UISearchBarDelegate, UISearchControllerDelegate {
     
@@ -18,7 +20,9 @@ class MainViewController: UIViewController, UISearchBarDelegate, UISearchControl
     private lazy var contentScrollView: UIScrollView = {
         
         let scrollView = UIScrollView()
+        
         scrollView.backgroundColor = .white
+        scrollView.showsVerticalScrollIndicator = false
         scrollView.isScrollEnabled = true
         scrollView.translatesAutoresizingMaskIntoConstraints = false
         
@@ -60,8 +64,7 @@ class MainViewController: UIViewController, UISearchBarDelegate, UISearchControl
         label.text = "쿠폰을 등록하면 쿠폰함에 표시됩니다."
         label.numberOfLines = 0
         label.textAlignment = .center
-        label.textColor = .
-        modifyButtonTitle
+        label.textColor = .modifyButtonTitle
         label.font = UIFont(style: .regular, size: 18)
         
         return label
@@ -87,10 +90,10 @@ class MainViewController: UIViewController, UISearchBarDelegate, UISearchControl
         button.titleLabel?.font = UIFont(style: .medium, size: 16)
         button.setTitleColor(UIColor.searchLabel, for: .normal)
         button.contentHorizontalAlignment = .left
-        button.setImage(UIImage(systemName: "magnifyingglass"), for: .normal)
+//        button.setImage(UIImage(systemName: "magnifyingglass"), for: .normal)
         button.tintColor = .searchLabel
-        button.semanticContentAttribute = .forceRightToLeft
-        button.imageEdgeInsets = UIEdgeInsets(top: 0, left: view.frame.width - button.frame.width * 0.55, bottom: 0, right: 0)
+//        button.semanticContentAttribute = .forceRightToLeft
+//        button.imageEdgeInsets = UIEdgeInsets(top: 0, left: view.frame.width - button.frame.width * 0.55, bottom: 0, right: 0)
         button.layer.cornerRadius = 6
         
         button.translatesAutoresizingMaskIntoConstraints = false
@@ -98,11 +101,21 @@ class MainViewController: UIViewController, UISearchBarDelegate, UISearchControl
         return button
     }()
     
+    private let buttonImageView = {
+       let imageView = UIImageView()
+        
+        imageView.tintColor = .searchLabel
+        imageView.image = UIImage(systemName: "magnifyingglass")
+        imageView.translatesAutoresizingMaskIntoConstraints = false
+        
+        return imageView
+    }()
+    
     
     private let expireCollectionViewHeaderLabel = {
         let label = UILabel()
         
-        label.text = "😟 기간이 얼마 안남았어요!"
+        label.text = "😟 기간이 얼마 안남았어요"
         label.font = UIFont(style: FontStyle.bold, size: 18)
         label.translatesAutoresizingMaskIntoConstraints = false
         
@@ -114,7 +127,6 @@ class MainViewController: UIViewController, UISearchBarDelegate, UISearchControl
         
         collectionView.delegate = self
         collectionView.dataSource = self
-        collectionView.translatesAutoresizingMaskIntoConstraints = false
         
         return collectionView
     }()
@@ -122,7 +134,7 @@ class MainViewController: UIViewController, UISearchBarDelegate, UISearchControl
     private let recentCollectionViewHeaderLabel = {
         let label = UILabel()
         
-        label.text = "😄 최근에 등록했어요."
+        label.text = "😄 최근에 등록했어요"
         label.font = UIFont(style: FontStyle.bold, size: 18)
         label.translatesAutoresizingMaskIntoConstraints = false
         
@@ -132,7 +144,6 @@ class MainViewController: UIViewController, UISearchBarDelegate, UISearchControl
     private lazy var recentCollectionView: CustomCollectionView = {
         let collectionView = CustomCollectionView()
         
-        collectionView.collectionViewFlowLayout.scrollDirection = .horizontal
         collectionView.delegate = self
         collectionView.dataSource = self
         
@@ -178,7 +189,7 @@ class MainViewController: UIViewController, UISearchBarDelegate, UISearchControl
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
-        updateCollectionViewData()
+        presentLoginViewIfNeeded()
     }
     
     private func bind() {
@@ -195,8 +206,31 @@ class MainViewController: UIViewController, UISearchBarDelegate, UISearchControl
         }
     }
     
-    override func viewWillLayoutSubviews() {
-        super.viewWillLayoutSubviews()
+    private func presentLoginViewIfNeeded() {
+        viewModel.checkIfUserLoggedIn {
+            self.setupViewSkeletonable(true)
+            
+            let loginViewModel = LoginViewModel()
+            let loginViewController = LoginViewController(viewModel: loginViewModel)
+            loginViewController.delegate = self
+            loginViewController.modalPresentationStyle = .overFullScreen
+            self.present(loginViewController, animated: false)
+        } completionWhenUserIsLoggedIn: {
+            self.updateCollectionViewData()
+        }
+    }
+    
+    private func setupViewSkeletonable(_ bool: Bool) {
+        let target = [searchButton, expireCollectionViewHeaderLabel, recentCollectionViewHeaderLabel ,expireCollectionView, recentCollectionView]
+        let skeletonAnimation = SkeletonAnimationBuilder().makeSlidingAnimation(withDirection: .bottomRightTopLeft)
+        
+        target.forEach { $0.isSkeletonable = true }
+        
+        if bool {
+            target.forEach { $0.showAnimatedGradientSkeleton(usingGradient: .init(baseColor: .clouds), animation: skeletonAnimation, transition: .crossDissolve(0.25)) }
+        } else {
+            target.forEach { $0.hideSkeleton() }
+        }
     }
     
     private func updateCollectionViewData() {
@@ -206,9 +240,8 @@ class MainViewController: UIViewController, UISearchBarDelegate, UISearchControl
         }
     }
     
-    
     private func setupButton() {
-        let searchButtonAction = UIAction { _ in
+        let searchButtonAction = UIAction { _ in            
             let gifts = self.viewModel.recentGifts.value + self.viewModel.expireGifts.value
             let observableGifts: Observable<[Gift]> = .init(gifts)
             let searchTableViewModel = SearchTableViewModel(allGiftData: observableGifts)
@@ -220,6 +253,7 @@ class MainViewController: UIViewController, UISearchBarDelegate, UISearchControl
     
     private func setupViews() {
         
+        searchButton.addSubview(buttonImageView)
         [emptyImageView, emptyLabel, emptyDescriptionLabel].forEach(emptyVerticalStackView.addArrangedSubview(_:))
         contentView.addSubview(emptyVerticalStackView)
         
@@ -235,6 +269,11 @@ class MainViewController: UIViewController, UISearchBarDelegate, UISearchControl
         let safeArea = contentView.safeAreaLayoutGuide
         
         NSLayoutConstraint.activate([
+            buttonImageView.widthAnchor.constraint(equalTo: searchButton.widthAnchor, multiplier: 0.06),
+            buttonImageView.heightAnchor.constraint(equalTo: buttonImageView.widthAnchor, multiplier: 1),
+            buttonImageView.trailingAnchor.constraint(equalTo: searchButton.trailingAnchor, constant: -10),
+            buttonImageView.centerYAnchor.constraint(equalTo: searchButton.centerYAnchor),
+        
             emptyVerticalStackView.widthAnchor.constraint(equalTo: view.widthAnchor),
             emptyVerticalStackView.heightAnchor.constraint(equalTo: view.heightAnchor, multiplier: 0.4),
             emptyVerticalStackView.centerXAnchor.constraint(equalTo: view.centerXAnchor),
@@ -250,7 +289,7 @@ class MainViewController: UIViewController, UISearchBarDelegate, UISearchControl
             contentView.trailingAnchor.constraint(equalTo: contentScrollView.contentLayoutGuide.trailingAnchor),
             contentView.bottomAnchor.constraint(equalTo: contentScrollView.contentLayoutGuide.bottomAnchor),
             contentView.widthAnchor.constraint(equalTo: contentScrollView.widthAnchor),
-            contentView.heightAnchor.constraint(equalTo: contentScrollView.heightAnchor, multiplier: 1.2),
+            contentView.heightAnchor.constraint(equalTo: contentScrollView.heightAnchor, multiplier: 1.3),
             
             searchButton.topAnchor.constraint(equalTo: safeArea.topAnchor, constant: 10),
             searchButton.centerXAnchor.constraint(equalTo: contentView.centerXAnchor),
@@ -277,9 +316,9 @@ class MainViewController: UIViewController, UISearchBarDelegate, UISearchControl
     }
     
     private func setupResponsiveConstraintViews() {
-        expireCollectionViewHeightAnchor = expireCollectionView.heightAnchor.constraint(equalToConstant: .zero)
-        recentCollectionViewHeightAnchor = recentCollectionView.heightAnchor.constraint(equalToConstant: .zero)
-        recentCollectionHeaderLabelTopAnchor = recentCollectionViewHeaderLabel.topAnchor.constraint(equalTo: searchButton.bottomAnchor, constant: .zero)
+        expireCollectionViewHeightAnchor = expireCollectionView.heightAnchor.constraint(equalToConstant: view.frame.width * 0.95)
+        recentCollectionViewHeightAnchor = recentCollectionView.heightAnchor.constraint(equalToConstant: view.frame.width * 0.95)
+        recentCollectionHeaderLabelTopAnchor = recentCollectionViewHeaderLabel.topAnchor.constraint(equalTo: searchButton.bottomAnchor, constant: view.frame.height * 0.60)
         
         NSLayoutConstraint.activate([
             expireCollectionViewHeightAnchor,
@@ -315,9 +354,9 @@ class MainViewController: UIViewController, UISearchBarDelegate, UISearchControl
         expireCollectionViewHeaderLabel.isHidden = expireCollectionViewActivate ? false : true
         recentCollectionViewHeaderLabel.isHidden = recentCollectionViewActivate ? false : true
         
-        expireCollectionViewHeightAnchor?.constant = expireCollectionViewActivate ? view.frame.width * 0.85 : 0
-        recentCollectionViewHeightAnchor?.constant = recentCollectionViewActivate ? view.frame.width * 0.85 : 0
-        recentCollectionHeaderLabelTopAnchor?.constant = recentHeaderLabelActivate ? view.frame.height * 0.55 : 25
+        expireCollectionViewHeightAnchor?.constant = expireCollectionViewActivate ? view.frame.width * 0.95 : 0
+        recentCollectionViewHeightAnchor?.constant = recentCollectionViewActivate ? view.frame.width * 0.95 : 0
+        recentCollectionHeaderLabelTopAnchor?.constant = recentHeaderLabelActivate ? view.frame.height * 0.60 : 25
         
         expireCollectionView.layoutIfNeeded()
         recentCollectionView.layoutIfNeeded()
@@ -492,6 +531,7 @@ extension MainViewController: UICollectionViewDelegate {
         let alertController = UIAlertController(title: nil, message: "선택한 쿠폰을 완전히 제거합니다.", preferredStyle: .actionSheet)
         let okAction = UIAlertAction(title: "네", style: .destructive) { _ in
             self.viewModel.deleteCoreData(targetGiftNumber: gift.number)
+            self.viewModel.deleteFirebaseStoreDocument(targetGiftNumber: gift.number)
             self.updateCollectionViewData()
         }
         
@@ -514,9 +554,24 @@ extension MainViewController: UICollectionViewDelegateFlowLayout {
     }
 }
 
+// MARK: Skeleton DataSource
+extension MainViewController: SkeletonCollectionViewDataSource {
+    func collectionSkeletonView(_ skeletonView: UICollectionView, cellIdentifierForItemAt indexPath: IndexPath) -> SkeletonView.ReusableCellIdentifier {
+        return MainCollectionViewCell.reuseIdentifier
+    }
+}
+
 // MARK: GiftDidDismissDelegate Protocol 관련
 extension MainViewController: GiftDidDismissDelegate {
     func didDismissDetailViewController() {
+        updateCollectionViewData()
+    }
+}
+
+// MARK: DidFetchGiftDelegate Protocol 관련
+extension MainViewController: DidFetchGiftDelegate {
+    func finishedFetch() {
+        setupViewSkeletonable(false)
         updateCollectionViewData()
     }
 }

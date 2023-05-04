@@ -94,8 +94,13 @@ class AddViewController: UIViewController {
                 self.sceneConversion()
             case .expireDate:
                 self.viewModel.buttonActionByPage(page: self.page, inputText)
-                self.viewModel.createCoreData {
-                    self.dismiss(animated: true)
+                self.viewModel.createCoreData { giftNumber in
+                    let int16ToIntNumber = Int(giftNumber)
+                    self.viewModel.createFireStoreDocument(int16ToIntNumber) {
+                        DispatchQueue.main.async {
+                            self.dismiss(animated: true)
+                        }
+                    }
                 }
             }
         }

@@ -15,6 +15,23 @@ final class CoreDataManager {
     
     private let appDelegate = UIApplication.shared.delegate as? AppDelegate
     
+    func fetchData(of numbers: [Int]) -> Result<[Gift], CoreDataError> {
+        guard let context = appDelegate?.persistentContainer.viewContext else {
+            return .failure(.contextInvalid)
+        }
+        
+        do {
+            let result = try context.fetch(GiftData.fetchRequest())
+            let resultToGiftData = result.filter { numbers.contains(Int($0.number)) }
+            let resultToGifts = resultToGiftData.compactMap{ Gift(giftData: $0) }
+            return .success(resultToGifts)
+        } catch {
+            print(error.localizedDescription)
+        }
+        
+        return .failure(.coreDataError)
+    }
+    
     func fetchData() -> Result<[Gift], CoreDataError> {
         guard let context = appDelegate?.persistentContainer.viewContext else {
             return .failure(.contextInvalid)
@@ -30,7 +47,7 @@ final class CoreDataManager {
         return .failure(.coreDataError)
     }
     
-    func saveData(_ giftData: Gift) throws {
+    func saveData(_ giftData: Gift, completion: @escaping (Int16) -> Void) throws {
         guard let context = appDelegate?.persistentContainer.viewContext else {
             throw CoreDataError.contextInvalid
         }
@@ -52,6 +69,7 @@ final class CoreDataManager {
             info.setValue(giftData.useDate, forKey: "useDate")
             do {
                 try context.save()
+                completion(giftDataMostRecentNumber)
             } catch {
                 print(error.localizedDescription)
             }
@@ -64,7 +82,7 @@ final class CoreDataManager {
         }
         let fetchRequest = NSFetchRequest<NSFetchRequestResult>.init(entityName: "GiftData")
         fetchRequest.predicate = NSPredicate(format: "number = %@", String(giftData.number) as CVarArg)
-
+        
         do {
             let test = try context.fetch(fetchRequest)
             guard let updatingData = test[0] as? NSManagedObject else { return }
@@ -92,6 +110,43 @@ final class CoreDataManager {
         }
     }
     
+    func updateAllData(_ gifts: [Gift], completion: @escaping () -> Void) throws {
+        guard let context = appDelegate?.persistentContainer.viewContext else {
+            throw CoreDataError.contextInvalid
+        }
+        
+        let deleteFetch = NSFetchRequest<NSFetchRequestResult>(entityName: "GiftData")
+        let deleteRequest = NSBatchDeleteRequest(fetchRequest: deleteFetch)
+        try context.execute(deleteRequest)
+        try context.save()
+        
+        var giftDataMostRecentNumber = 0
+        
+        let entity = NSEntityDescription.entity(forEntityName: "GiftData", in: context)
+        for gift in gifts {
+            if let entity = entity {
+                let info = NSManagedObject(entity: entity, insertInto: context)
+                giftDataMostRecentNumber += 1
+                info.setValue(giftDataMostRecentNumber, forKey: "number")
+                info.setValue(gift.image.pngData(), forKey: "image")
+                info.setValue(gift.category?.rawValue, forKey: "category")
+                info.setValue(gift.brandName, forKey: "brandName")
+                info.setValue(gift.productName, forKey: "productName")
+                info.setValue(gift.memo, forKey: "memo")
+                info.setValue(gift.useableState, forKey: "useableState")
+                info.setValue(gift.expireDate, forKey: "expireDate")
+                info.setValue(gift.useDate, forKey: "useDate")
+            }
+        }
+        
+        do {
+            try context.save()
+            completion()
+        } catch {
+            print(error.localizedDescription)
+        }
+    }
+    
     func deleteDate(id number: Int16) throws {
         guard let context = appDelegate?.persistentContainer.viewContext else {
             throw CoreDataError.contextInvalid
@@ -114,7 +169,20 @@ final class CoreDataManager {
             print(error.localizedDescription)
         }
     }
+    
+    func deleteAllData() throws {
+        guard let context = appDelegate?.persistentContainer.viewContext else {
+            throw CoreDataError.contextInvalid
+        }
+        
+        let deleteFetch = NSFetchRequest<NSFetchRequestResult>(entityName: "GiftData")
+        let deleteRequest = NSBatchDeleteRequest(fetchRequest: deleteFetch)
+        
+        try context.execute(deleteRequest)
+        try context.save()
+    }
 }
+
 
 extension CoreDataManager {
     private func fetchMostRecentNumber(context: NSManagedObjectContext) -> Int16 {

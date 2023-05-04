@@ -14,6 +14,7 @@ class CustomCollectionView: UICollectionView {
     override init(frame: CGRect, collectionViewLayout layout: UICollectionViewLayout) {
         super.init(frame: frame, collectionViewLayout: collectionViewFlowLayout)
         setupAttributes()
+        setupContentInsetForCantScrollRightSideContents()
     }
     
     @available(*, unavailable)
@@ -29,5 +30,9 @@ class CustomCollectionView: UICollectionView {
                       forCellWithReuseIdentifier: MainCollectionViewCell.reuseIdentifier)
     }
     
+    private func setupContentInsetForCantScrollRightSideContents() {
+        let inset = UIEdgeInsets(top: 0, left: 0, bottom: 0, right: 25)
+        self.contentInset = inset
+    }
     
 }

@@ -8,23 +8,23 @@
 import UIKit
 
 class EtcSettingViewController: UIViewController {
-
+    
     let viewModel: EtcSettingViewModel
-
+    
     private let nameLabel = {
-       let label = UILabel()
+        let label = UILabel()
         
-        label.text = "서현웅"
-        label.font = .boldSystemFont(ofSize: 25)
+        label.text = "이름오류"
+        label.font = UIFont(style: .bold, size: 25)
         
         return label
     }()
     
     private let idLabel = {
-       let label = UILabel()
+        let label = UILabel()
         
-        label.text = "workplayhard1@naver.com"
-        label.font = .systemFont(ofSize: 15)
+        label.text = "아이디오류"
+        label.font = UIFont(style: .medium, size: 15)
         
         return label
     }()
@@ -33,36 +33,36 @@ class EtcSettingViewController: UIViewController {
         let button = UIButton()
         
         button.setTitle("로그아웃", for: .normal)
-        button.setTitleColor(UIColor.white, for: .normal)
-        button.backgroundColor = .black
+        button.titleLabel?.font = UIFont.boldSystemFont(ofSize: 13)
+        button.setTitleColor(UIColor.red, for: .normal)
         button.layer.cornerRadius = 10
+        button.layer.borderWidth = 1
+        button.layer.borderColor = UIColor.red.cgColor
+        button.translatesAutoresizingMaskIntoConstraints = false
         
         return button
     }()
     
     private let profileVerticalStackView = {
-       let stackView = UIStackView()
+        let stackView = UIStackView()
         
         stackView.axis = .vertical
         stackView.spacing = 5
+        stackView.translatesAutoresizingMaskIntoConstraints = false
         
         return stackView
     }()
     
     private let simpleProfileHeaderHorizontalStackView = {
-        let stackView = UIStackView()
-        
-        stackView.axis = .horizontal
-        stackView.distribution = .fill
-        stackView.alignment = .center
+        let stackView = UIView()
         
         stackView.translatesAutoresizingMaskIntoConstraints = false
-
+        
         return stackView
     }()
     
     private let settingTableView = {
-       let tableView = UITableView()
+        let tableView = UITableView(frame: .zero, style: .insetGrouped)
         
         tableView.register(EtcSettingTableViewCell.self,
                            forCellReuseIdentifier: EtcSettingTableViewCell.reuseIdentifier)
@@ -86,8 +86,34 @@ class EtcSettingViewController: UIViewController {
         setupTableViewAttributes()
         setupNavigation()
         setupViews()
+        setupButton()
     }
     
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        configureUserProfile()
+    }
+    
+    private func configureUserProfile() {
+        guard let userName = viewModel.userName,
+              let userEmamil = viewModel.userEmail else { return }
+        
+        if userEmamil.contains("@privaterelay.appleid.com") {
+            idLabel.text = "\(userName)@private.appleID.com"
+        } else {
+            idLabel.text = userEmamil
+        }
+        
+        nameLabel.text = userName
+    }
+    
+    
+    private func setupButton() {
+        let logoutAction = UIAction { _ in
+            self.showAlert()
+        }
+        logoutButton.addAction(logoutAction, for: .touchUpInside)
+    }
     
     private func setupTableViewAttributes() {
         settingTableView.delegate = self
@@ -97,26 +123,44 @@ class EtcSettingViewController: UIViewController {
     private func setupNavigation() {
     }
     
+    private func showAlert() {
+        let alertController = UIAlertController(title: nil, message: "로그아웃 합니다.", preferredStyle: .actionSheet)
+        let okAction = UIAlertAction(title: "네", style: .destructive) { _ in
+            self.viewModel.signOut()
+            self.tabBarController?.selectedIndex = 0
+        }
+        
+        let noAction = UIAlertAction(title: "아니오", style: .cancel)
+        
+        [okAction, noAction].forEach(alertController.addAction(_:))
+        present(alertController, animated: true)
+    }
     
     private func setupViews() {
         [nameLabel, idLabel].forEach(profileVerticalStackView.addArrangedSubview(_:))
-        [profileVerticalStackView, logoutButton].forEach(simpleProfileHeaderHorizontalStackView.addArrangedSubview(_:))
+        [profileVerticalStackView, logoutButton].forEach(simpleProfileHeaderHorizontalStackView.addSubview(_:))
         
         [simpleProfileHeaderHorizontalStackView, settingTableView].forEach(view.addSubview(_:))
         
         let safeArea = view.safeAreaLayoutGuide
         
-        simpleProfileHeaderHorizontalStackView.backgroundColor = .red
+        view.backgroundColor = .secondarySystemBackground
+        simpleProfileHeaderHorizontalStackView.backgroundColor = .white
+        simpleProfileHeaderHorizontalStackView.layer.cornerRadius = 10
         
         NSLayoutConstraint.activate([
-            logoutButton.widthAnchor.constraint(equalTo: simpleProfileHeaderHorizontalStackView.widthAnchor, multiplier: 0.2),
-            logoutButton.heightAnchor.constraint(equalTo: simpleProfileHeaderHorizontalStackView.heightAnchor, multiplier: 0.3),
-            
-            simpleProfileHeaderHorizontalStackView.topAnchor.constraint(equalTo: safeArea.topAnchor),
-            simpleProfileHeaderHorizontalStackView.leadingAnchor.constraint(equalTo: safeArea.leadingAnchor, constant: 15),
-            simpleProfileHeaderHorizontalStackView.trailingAnchor.constraint(equalTo: safeArea.trailingAnchor, constant: -15),
+            simpleProfileHeaderHorizontalStackView.topAnchor.constraint(equalTo: safeArea.topAnchor, constant: 20),
+            simpleProfileHeaderHorizontalStackView.widthAnchor.constraint(equalTo: safeArea.widthAnchor, multiplier: 0.9),
+            simpleProfileHeaderHorizontalStackView.centerXAnchor.constraint(equalTo: safeArea.centerXAnchor),
             simpleProfileHeaderHorizontalStackView.heightAnchor.constraint(equalTo: safeArea.heightAnchor, multiplier: 0.15),
             
+            profileVerticalStackView.leadingAnchor.constraint(equalTo: simpleProfileHeaderHorizontalStackView.leadingAnchor, constant: 10),
+            profileVerticalStackView.centerYAnchor.constraint(equalTo: simpleProfileHeaderHorizontalStackView.centerYAnchor),
+            
+            logoutButton.trailingAnchor.constraint(equalTo: simpleProfileHeaderHorizontalStackView.trailingAnchor, constant: -20),
+            logoutButton.widthAnchor.constraint(equalTo: simpleProfileHeaderHorizontalStackView.widthAnchor, multiplier: 0.15),
+            logoutButton.heightAnchor.constraint(equalTo: simpleProfileHeaderHorizontalStackView.heightAnchor, multiplier: 0.2),
+            logoutButton.centerYAnchor.constraint(equalTo: simpleProfileHeaderHorizontalStackView.centerYAnchor),
             
             settingTableView.topAnchor.constraint(equalTo: simpleProfileHeaderHorizontalStackView.bottomAnchor, constant: 20),
             settingTableView.leadingAnchor.constraint(equalTo: safeArea.leadingAnchor),
@@ -128,7 +172,7 @@ class EtcSettingViewController: UIViewController {
 
 extension EtcSettingViewController: UITableViewDataSource {
     
-
+    
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         return viewModel.setupNumberOfRowsInSection(section: section)
     }
@@ -136,24 +180,11 @@ extension EtcSettingViewController: UITableViewDataSource {
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = settingTableView.dequeueReusableCell(withIdentifier: EtcSettingTableViewCell.reuseIdentifier,
                                                         for: indexPath) as? EtcSettingTableViewCell ?? EtcSettingTableViewCell()
+        cell.etcCellElementTappedDelegate = self
         cell.accessoryType = .disclosureIndicator
-        bind(cell: cell)
         cell.configureCell(section: indexPath.section, index: indexPath.row)
         
         return cell
-    }
-    
-    private func bind(cell: EtcSettingTableViewCell) {
-        cell.senderStatus.bind { status in
-            let reloadTargetIndex = IndexPath(row: 0, section: 1)
-            let targetCell = self.settingTableView.cellForRow(at: reloadTargetIndex) as? EtcSettingTableViewCell ?? EtcSettingTableViewCell()
-            switch status {
-            case true:
-                targetCell.statusLabel.text = "ON"
-            case false:
-                targetCell.statusLabel.text = "OFF"
-            }
-        }
     }
     
     func numberOfSections(in tableView: UITableView) -> Int {
@@ -174,7 +205,27 @@ extension EtcSettingViewController: UITableViewDelegate {
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         if indexPath.section == 0, indexPath.row == 0 {
             sceneConversion()
+        } else if indexPath.section == 0, indexPath.row == 1 {
+            showDeleteUserAlert()
+        } else if indexPath.section == 1, indexPath.row == 2 {
+            timeSettingViewSceneConversion()
         }
+        
+        tableView.deselectRow(at: indexPath, animated: true)
+    }
+    
+    private func showDeleteUserAlert() {
+        let alertController = UIAlertController(title: nil, message: "회원탈퇴하고 모든 데이터를 제거합니다.", preferredStyle: .actionSheet)
+        let okAction = UIAlertAction(title: "네", style: .destructive) { _ in
+            self.viewModel.deleteUser {
+                self.tabBarController?.selectedIndex = 0
+            }
+        }
+        
+        let noAction = UIAlertAction(title: "아니오", style: .cancel)
+        
+        [okAction, noAction].forEach(alertController.addAction(_:))
+        present(alertController, animated: true)
     }
     
     private func sceneConversion() {
@@ -182,4 +233,35 @@ extension EtcSettingViewController: UITableViewDelegate {
         let usageHistoryViewController = UsageHistoryViewController(viewModel: UsageHistoryViewModel)
         navigationController?.pushViewController(usageHistoryViewController, animated: true)
     }
+    
+    private func timeSettingViewSceneConversion() {
+        let timeSeetingViewController = TimeSettingViewController()
+        navigationController?.pushViewController(timeSeetingViewController, animated: true)
+    }
+}
+
+extension EtcSettingViewController: EtcCellElementTappedDelegate {
+    func toggledSwitch(sender: UISwitch, completion: @escaping (Bool) -> Void) {
+        showToggleAlert(sender: sender, completion: completion)
+    }
+    
+    private func showToggleAlert(sender: UISwitch, completion: @escaping (Bool) -> Void) {
+        let alertController = UIAlertController(title: nil, message: "푸시알림 설정을 변경할까요?", preferredStyle: .actionSheet)
+        let okAction = UIAlertAction(title: "네", style: .destructive) { _ in
+            let cell = self.settingTableView.cellForRow(at: IndexPath(row: 0, section: 1)) as? EtcSettingTableViewCell
+            
+            cell?.statusLabel.text = sender.isOn ? "ON" : "OFF"
+            completion(sender.isOn)
+        }
+        
+        let noAction = UIAlertAction(title: "아니오", style: .cancel) { _ in
+            let cell = self.settingTableView.cellForRow(at: IndexPath(row: 0, section: 1)) as? EtcSettingTableViewCell
+            cell?.statusLabel.text = !sender.isOn ? "ON" : "OFF"
+            completion(!sender.isOn)
+        }
+        
+        [okAction, noAction].forEach(alertController.addAction(_:))
+        present(alertController, animated: true)
+    }
+    
 }

@@ -41,7 +41,6 @@ class MainCollectionViewCell: UICollectionViewCell, ReusableView {
         label.font = UIFont(style: .bmJua, size: 12)
         label.translatesAutoresizingMaskIntoConstraints = false
         label.textColor = .white
-        label.text = "10일"
         
         return label
     }()
@@ -54,6 +53,7 @@ class MainCollectionViewCell: UICollectionViewCell, ReusableView {
     
     private let productNameLabel = {
         let label = UILabel()
+        
         label.font = UIFont(style: .regular, size: 15)
 
         return label
@@ -61,6 +61,7 @@ class MainCollectionViewCell: UICollectionViewCell, ReusableView {
     
     private let expireDateLabel = {
         let label = UILabel()
+
         label.font = UIFont(style: .regular, size: 14)
         label.textColor = .systemGray
 
@@ -101,6 +102,7 @@ class MainCollectionViewCell: UICollectionViewCell, ReusableView {
         super.init(frame: frame)
         setupShadow()
         setupViews()
+        setupSkeleton()
     }
     
     @available(*, unavailable)
@@ -131,6 +133,11 @@ class MainCollectionViewCell: UICollectionViewCell, ReusableView {
         shadowView.layer.shadowRadius = 5
         shadowView.layer.shadowOffset = CGSize(width: 10, height: 10)
         shadowView.layer.masksToBounds = false
+    }
+    
+    private func setupSkeleton() {
+        self.isSkeletonable = true
+        contentView.isSkeletonable = true
     }
     
     private func setupViews() {

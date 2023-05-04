@@ -11,6 +11,7 @@ import UIKit
 class MainViewModel {
     private let useCase = DateCalculateUseCase()
     private let coreDataManager = CoreDataManager.shared
+    private let firebaseManager = FireBaseManager.shared
     
     var allGifts: [Gift] = []
     var expireGifts: Observable<[Gift]> = .init([])
@@ -52,10 +53,12 @@ extension MainViewModel {
             var gift = recentGifts.value[index]
             gift.useableState = false
             updateCoreData(gift: gift)
+            updateUseableStateFirebaseStoreDocument(gift: gift)
         } else if let index = expireGifts.value.firstIndex(where: { $0.number == updategiftNumber }) {
             var gift = expireGifts.value[index]
             gift.useableState = false
             updateCoreData(gift: gift)
+            updateUseableStateFirebaseStoreDocument(gift: gift)
         }
     }
     
@@ -67,7 +70,6 @@ extension MainViewModel {
         } catch {
             print(error.localizedDescription)
         }
-        
     }
     
     private func updateCoreData(gift: Gift) {
@@ -75,6 +77,31 @@ extension MainViewModel {
             try coreDataManager.updateData(gift)
         } catch {
             print(error.localizedDescription)
+        }
+    }
+
+    func deleteFirebaseStoreDocument(targetGiftNumber: Int) {
+        firebaseManager.deleteDate(targetGiftNumber)
+    }
+    
+    func updateUseableStateFirebaseStoreDocument(gift: Gift) {
+        firebaseManager.updateUseableState(gift)
+    }
+    
+}
+
+// MARK: Login 상태관련 함수
+extension MainViewModel {
+    func checkIfUserLoggedIn(completionWhenUserIsNotLoggedIn: @escaping () -> Void,
+                             completionWhenUserIsLoggedIn: @escaping () -> Void) {
+        if firebaseManager.currentUserID == nil {
+            DispatchQueue.main.async {
+                completionWhenUserIsNotLoggedIn()
+            }
+        } else {
+            DispatchQueue.main.async {
+                completionWhenUserIsLoggedIn()
+            }
         }
     }
 }

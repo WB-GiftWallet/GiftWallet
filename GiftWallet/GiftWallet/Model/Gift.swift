@@ -42,7 +42,7 @@ struct Gift {
         
         self.number = Int(giftData.number)
         self.image = image
-        self.category = Category.bread
+        self.category = nil
         self.brandName = giftData.brandName
         self.productName = giftData.productName
         self.memo = giftData.memo
@@ -91,9 +91,11 @@ extension Gift {
     ]
     
     static func addSampleData() {
-        Gift.sampleCoreGifts.forEach { gift in
-            try? CoreDataManager.shared.saveData(gift)
-        }
+//        Gift.sampleCoreGifts.forEach { gift in
+//            try? CoreDataManager.shared.saveData(gift, completion: { int in
+//                print(int)
+//            })
+//        }
     }
 }
 
