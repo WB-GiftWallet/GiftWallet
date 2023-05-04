@@ -30,7 +30,7 @@ extension DateFormatter {
     
     static func convertToDisplayStringHourMinute(date: Date) -> String {
         let dateFormatter = DateFormatter()
-        dateFormatter.dateFormat = "yyyy. MM. dd HH:MM"
+        dateFormatter.dateFormat = "yyyy. MM. dd HH:mm"
         return dateFormatter.string(from: date)
     }
 }
