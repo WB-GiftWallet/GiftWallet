@@ -45,4 +45,12 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
             print(error.localizedDescription)
         }
     }
+    
+    func sceneDidEnterBackground(_ scene: UIScene) {
+        do {
+            try UserNotificationManager().requestNotification()
+        } catch {
+            print(error.localizedDescription)
+        }
+    }
 }
