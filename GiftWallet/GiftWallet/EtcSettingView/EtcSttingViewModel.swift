@@ -11,6 +11,7 @@ class EtcSettingViewModel {
     
     private let firebaseManager = FireBaseManager.shared
     private let coreDataManager = CoreDataManager.shared
+    private let alarmCoreDataManager = AlarmCoreDataManager.shared
     
     var userName: String? {
         return firebaseManager.currentUserInfo?.displayName
@@ -34,6 +35,7 @@ class EtcSettingViewModel {
     private func deleteAllCoreData() {
         do {
             try coreDataManager.deleteAllData()
+            try alarmCoreDataManager.deleteAllData()
         } catch {
             print(error.localizedDescription)
         }

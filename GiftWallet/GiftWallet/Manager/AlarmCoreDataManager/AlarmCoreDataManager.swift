@@ -137,4 +137,16 @@ final class AlarmCoreDataManager {
             print(error.localizedDescription)
         }
     }
+    
+    func deleteAllData() throws {
+        guard let context = appDelegate?.persistentContainer.viewContext else {
+            throw CoreDataError.contextInvalid
+        }
+        
+        let deleteFetch = NSFetchRequest<NSFetchRequestResult>(entityName: "Alarm")
+        let deleteRequest = NSBatchDeleteRequest(fetchRequest: deleteFetch)
+        
+        try context.execute(deleteRequest)
+        try context.save()
+    }
 }
