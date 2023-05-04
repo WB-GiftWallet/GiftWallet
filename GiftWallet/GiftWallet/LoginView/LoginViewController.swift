@@ -83,6 +83,7 @@ class LoginViewController: UIViewController {
     private func setupButton() {
         let kakaoLoginAction = UIAction { _ in
             self.viewModel.kakaoLogin {
+                self.setupUserSetting()
                 self.dismiss(animated: true)
             } updateDataCompletion: {
                 self.delegate?.finishedFetch()
@@ -92,7 +93,7 @@ class LoginViewController: UIViewController {
         
         let appleLoginAction = UIAction { _ in
             let request = self.viewModel.appleLogin()
-            
+            self.setupUserSetting()
             let controller = ASAuthorizationController(authorizationRequests: [request])
             controller.delegate = self
             controller.presentationContextProvider = self
@@ -120,6 +121,11 @@ class LoginViewController: UIViewController {
             appleLoginButton.heightAnchor.constraint(equalToConstant: 45),
         ])
     }
+    
+    private func setupUserSetting() {
+        UserDefaults.standard.setValue(9, forKey: "NotificationHour")
+    }
+    
 }
 
 extension LoginViewController: ASAuthorizationControllerDelegate {
