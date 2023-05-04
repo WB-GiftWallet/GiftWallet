@@ -114,7 +114,7 @@ final class MainTabBarController: UITabBarController {
         let imageView = UIImageView()
         imageView.image = image
         imageView.contentMode = .scaleAspectFit
-        imageView.frame = CGRect(x: 0, y: 0, width: 80, height: 30)
+        imageView.frame = CGRect(x: 0, y: 0, width: 130, height: 50)
         navigationItem.leftBarButtonItem = UIBarButtonItem(customView: imageView)
         
 
