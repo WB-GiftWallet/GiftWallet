@@ -107,6 +107,10 @@ extension AlarmListViewController: UITableViewDataSource {
         
         present(detailViewController, animated: true)
     }
+    
+    func tableView(_ tableView: UITableView, titleForFooterInSection section: Int) -> String? {
+        return "알림 내역은 수신일로 부터 30일까지 보관됩니다."
+    }
 }
 
 extension AlarmListViewController: UITableViewDelegate {
