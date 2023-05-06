@@ -8,6 +8,7 @@
 import UserNotifications
 
 class UserNotificationManager {
+    let userNotificationUseCase = UserNotificationUseCase()
     
     func requestNotification() throws {
         // MARK: notification 삭제
@@ -20,7 +21,7 @@ class UserNotificationManager {
         var recent36Days = [[Int]]()
         
         do {
-            recent36Days = try mostRecentExpireItemFetchFor_36_DaysFromCoreData()
+            recent36Days = try userNotificationUseCase.mostRecentExpireItemFetchCoreData(from: 0, to: 36)
         } catch {
             print(error.localizedDescription)
         }
