@@ -37,8 +37,6 @@ class UserNotificationManager {
             var totalValue: Int = .zero // 1,3,7 중 하나에서 Item이 몇 개 남은지 count
             var sendingArray: [Int] = [Int]() // 남은 Item의 Number id 값
             
-            totalValue += recent36Days[startDay].count
-            
             if recent36Days[startDay].count != 0 {
                 notificationContents = .today
                 
