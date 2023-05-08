@@ -241,7 +241,8 @@ class MainViewController: UIViewController, UISearchBarDelegate, UISearchControl
     }
     
     private func setupButton() {
-        let searchButtonAction = UIAction { [weak self] _ in            
+        let searchButtonAction = UIAction { [weak self] _ in
+            guard let self = self else { return }
             let gifts = self.viewModel.recentGifts.value + self.viewModel.expireGifts.value
             let observableGifts: Observable<[Gift]> = .init(gifts)
             let searchTableViewModel = SearchTableViewModel(allGiftData: observableGifts)
