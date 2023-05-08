@@ -145,34 +145,6 @@ class UserNotificationManager {
         
         return content
     }
-    
-    //MARK: requestNotification로직 내에서 사용 중 (archive)
-    private func setNotificationContents(_ mostRecentExpireDay: Int) throws -> NotificationExpireDayContents {
-        
-        switch mostRecentExpireDay {
-            case 0:
-                return .today
-            case 1...2:
-                return .underThree
-            case 3...6:
-                return .underSeven
-            default:
-                throw NotificationError.outOfNumbersMostRecent
-        }
-    }
-}
-
-private extension DateFormatter {
-    convenience init(dateFormatte: DateFormatteConvention) {
-        self.init()
-        self.locale = Locale(identifier: "ko_KR")
-        self.timeZone = TimeZone(abbreviation: "KST")
-        self.dateFormat = dateFormatte.rawValue
-    }
-}
-
-private enum DateFormatteConvention: String {
-    case yyyyMMdd
 }
 
 //MARK: -TEST Logic
