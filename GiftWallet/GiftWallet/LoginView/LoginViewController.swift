@@ -132,7 +132,7 @@ class LoginViewController: UIViewController {
 extension LoginViewController: ASAuthorizationControllerDelegate {
     // 성공 후 동작
     func authorizationController(controller: ASAuthorizationController, didCompleteWithAuthorization authorization: ASAuthorization) {
-        self.viewModel.didCompleteAppleLogin(controller: controller, authorization: authorization) {
+        self.viewModel.didCompleteAppleLogin(controller: controller, authorization: authorization) { 
             self.dismiss(animated: true)
         } updateDataCompletion: {
             self.delegate?.finishedFetch()
