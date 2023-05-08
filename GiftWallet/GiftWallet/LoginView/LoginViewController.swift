@@ -81,17 +81,18 @@ class LoginViewController: UIViewController {
     }
     
     private func setupButton() {
-        let kakaoLoginAction = UIAction { _ in
-            self.viewModel.kakaoLogin {
-                self.setupUserSetting()
-                self.dismiss(animated: true)
+        let kakaoLoginAction = UIAction { [weak self] _ in
+            self?.viewModel.kakaoLogin {
+                self?.setupUserSetting()
+                self?.dismiss(animated: true)
             } updateDataCompletion: {
-                self.delegate?.finishedFetch()
+                self?.delegate?.finishedFetch()
             }
         }
         kakaoLoginButton.addAction(kakaoLoginAction, for: .touchUpInside)
         
-        let appleLoginAction = UIAction { _ in
+        let appleLoginAction = UIAction { [weak self] _ in
+            guard let self = self else { return }
             let request = self.viewModel.appleLogin()
             self.setupUserSetting()
             let controller = ASAuthorizationController(authorizationRequests: [request])
