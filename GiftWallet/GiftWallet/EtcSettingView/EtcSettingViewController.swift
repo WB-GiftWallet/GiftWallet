@@ -109,8 +109,8 @@ class EtcSettingViewController: UIViewController {
     
     
     private func setupButton() {
-        let logoutAction = UIAction { _ in
-            self.showAlert()
+        let logoutAction = UIAction { [weak self] _ in
+            self?.showAlert()
         }
         logoutButton.addAction(logoutAction, for: .touchUpInside)
     }
