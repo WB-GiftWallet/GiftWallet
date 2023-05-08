@@ -8,6 +8,8 @@
 import Foundation
 
 struct UserNotificationUseCase {
+    var startingDay: Int = .zero
+    var endingDay: Int = 29
     
     func mostRecentExpireItemFetchCoreData(from startDay: Int, to endDay: Int) throws -> [[Int]] {
         let gifts = fetchFilteredData()
