@@ -49,9 +49,9 @@ class BarcodeViewController: UIViewController {
     }
     
     private func configureImageView() {
-        viewModel.detectBarcodeInGiftImage { pngData in
+        viewModel.detectBarcodeInGiftImage { [weak self] pngData in
             guard let pngData = pngData else { return }
-            self.imageView.image = UIImage(data: pngData)
+            self?.imageView.image = UIImage(data: pngData)
         }
     }
     
