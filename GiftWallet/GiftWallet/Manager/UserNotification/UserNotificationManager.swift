@@ -89,25 +89,35 @@ class UserNotificationManager {
                 if error != nil { }
             }
             
-            //MARK: -UserNotification 이후 AlarmCoreData Save 로직
-            let calendar = Calendar.current
-            guard let dateFromDateComponent = calendar.date(from: dateComponents) else {
-                print("변환 불가능한 DateComponents")
-                return
-            }
-            let formatter = DateFormatter(dateFormatte: DateFormatteConvention.yyyyMMdd)
-            let dateID = formatter.string(from: dateFromDateComponent)
-
-            let alarmModel = AlarmModel(title: contentsOfToday.title,
-                                        numbers: sendingArray,
-                                        date: dateFromDateComponent,
-                                        id: dateID,
-                                        notiType: .couponExpiration)
-            
-            //MARK: UserNotification에 등록된 Item들만 AlarmCoreData에 넣어준다.
+            saveAlarmCoreDataUsingAlarmModel(dateComponents: dateComponents,
+                                             contentsTitle: contentsOfToday.title,
+                                             sendingArray: sendingArray)
+        }
+    }
+    
+    //MARK: -UserNotification 이후 AlarmCoreData Save 로직
+    func saveAlarmCoreDataUsingAlarmModel(dateComponents: DateComponents,
+                                          contentsTitle: String,
+                                          sendingArray: [Int]) {
+        let calendar = Calendar.current
+        guard let dateFromDateComponent = calendar.date(from: dateComponents) else {
+            print("변환 불가능한 DateComponents")
+            return
+        }
+        let dateID = userNotificationUseCase.makeDateID(date: dateFromDateComponent)
+        
+        let alarmModel = AlarmModel(title: contentsTitle,
+                                    numbers: sendingArray,
+                                    date: dateFromDateComponent,
+                                    id: dateID,
+                                    notiType: .couponExpiration)
+        
+        do {
             try AlarmCoreDataManager.shared.saveData(alarmModel) {
                 print("Success SaveData OF AlarmCoreDataManaer")
             }
+        } catch {
+            print(error.localizedDescription)
         }
     }
     
@@ -173,10 +183,10 @@ extension UserNotificationManager {
     // day -> minute 단위로 실행됨
     private func TEST_setupNotificationDateComponents(after notiDay: Int) -> DateComponents? {
         let now = Date()
-
+        
         var notiDateComponent = DateComponents()
         notiDateComponent.minute = notiDay
-
+        
         let calendar = Calendar.current
         guard let dateAfterDays = calendar.date(byAdding: notiDateComponent, to: now) else { return nil }
         let dateComponentsAfterDays = calendar.dateComponents([.year, .month, .day, .hour, .minute], from: dateAfterDays)

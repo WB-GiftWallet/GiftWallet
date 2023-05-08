@@ -57,6 +57,13 @@ struct UserNotificationUseCase {
         
         return Int(ceil(formatter.date(from: expireDate)!.timeIntervalSince(currentDate) / 86400))
     }
+    
+    func makeDateID(date: Date) -> String {
+        let formatter = DateFormatter(dateFormatte: DateFormatteConvention.yyyyMMdd)
+        let dateID = formatter.string(from: date)
+        
+        return dateID
+    }
 }
 
 private extension DateFormatter {
