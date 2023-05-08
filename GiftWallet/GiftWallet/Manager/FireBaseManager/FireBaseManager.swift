@@ -132,12 +132,12 @@ extension FireBaseManager {
         
         let dispatchGroup = DispatchGroup()
         
-        db.collection(id.description).getDocuments { (snapshot, error) in
+        db.collection(id.description).getDocuments { [weak self] (snapshot, error) in
             if error == nil && snapshot != nil {
                 var giftData = [Gift]()
                 for document in snapshot!.documents {
                     dispatchGroup.enter()
-                    self.changeGiftData(document) { gift in
+                    self?.changeGiftData(document) { gift in
                         giftData.append(gift)
                         dispatchGroup.leave()
                     }
