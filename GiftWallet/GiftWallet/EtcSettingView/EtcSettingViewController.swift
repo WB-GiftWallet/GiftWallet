@@ -84,7 +84,6 @@ class EtcSettingViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         setupTableViewAttributes()
-        setupNavigation()
         setupViews()
         setupButton()
     }
@@ -110,7 +109,7 @@ class EtcSettingViewController: UIViewController {
     
     private func setupButton() {
         let logoutAction = UIAction { _ in
-            self.showAlert()
+            self.showSignOutAlert()
         }
         logoutButton.addAction(logoutAction, for: .touchUpInside)
     }
@@ -120,21 +119,6 @@ class EtcSettingViewController: UIViewController {
         settingTableView.dataSource = self
     }
     
-    private func setupNavigation() {
-    }
-    
-    private func showAlert() {
-        let alertController = UIAlertController(title: nil, message: "로그아웃 합니다.", preferredStyle: .actionSheet)
-        let okAction = UIAlertAction(title: "네", style: .destructive) { _ in
-            self.viewModel.signOut()
-            self.tabBarController?.selectedIndex = 0
-        }
-        
-        let noAction = UIAlertAction(title: "아니오", style: .cancel)
-        
-        [okAction, noAction].forEach(alertController.addAction(_:))
-        present(alertController, animated: true)
-    }
     
     private func setupViews() {
         [nameLabel, idLabel].forEach(profileVerticalStackView.addArrangedSubview(_:))
@@ -204,7 +188,7 @@ extension EtcSettingViewController: UITableViewDataSource {
 extension EtcSettingViewController: UITableViewDelegate {
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         if indexPath.section == 0, indexPath.row == 0 {
-            sceneConversion()
+            usageHistoryViewSceneConversion()
         } else if indexPath.section == 0, indexPath.row == 1 {
             showDeleteUserAlert()
         } else if indexPath.section == 1, indexPath.row == 2 {
@@ -214,21 +198,7 @@ extension EtcSettingViewController: UITableViewDelegate {
         tableView.deselectRow(at: indexPath, animated: true)
     }
     
-    private func showDeleteUserAlert() {
-        let alertController = UIAlertController(title: nil, message: "회원탈퇴하고 모든 데이터를 제거합니다.", preferredStyle: .actionSheet)
-        let okAction = UIAlertAction(title: "네", style: .destructive) { _ in
-            self.viewModel.deleteUser {
-                self.tabBarController?.selectedIndex = 0
-            }
-        }
-        
-        let noAction = UIAlertAction(title: "아니오", style: .cancel)
-        
-        [okAction, noAction].forEach(alertController.addAction(_:))
-        present(alertController, animated: true)
-    }
-    
-    private func sceneConversion() {
+    private func usageHistoryViewSceneConversion() {
         let UsageHistoryViewModel = UsageHistoryViewModel()
         let usageHistoryViewController = UsageHistoryViewController(viewModel: UsageHistoryViewModel)
         navigationController?.pushViewController(usageHistoryViewController, animated: true)
@@ -237,6 +207,13 @@ extension EtcSettingViewController: UITableViewDelegate {
     private func timeSettingViewSceneConversion() {
         let timeSeetingViewController = TimeSettingViewController()
         navigationController?.pushViewController(timeSeetingViewController, animated: true)
+    }
+    
+    private func loginViewSceneConversion() {
+        let loginViewModel = LoginViewModel()
+        let loginViewController = LoginViewController(viewModel: loginViewModel)
+        loginViewController.modalPresentationStyle = .fullScreen
+        present(loginViewController, animated: true)
     }
 }
 
@@ -264,4 +241,52 @@ extension EtcSettingViewController: EtcCellElementTappedDelegate {
         present(alertController, animated: true)
     }
     
+}
+
+//MARK: Alert 관련
+extension EtcSettingViewController {
+    private func showSignOutAlert() {
+        let title = viewModel.currentUser == nil ? "로그인이 필요합니다." : nil
+        let message = viewModel.currentUser == nil ? "로그인 할까요?" : "로그아웃 합니다."
+        let style: UIAlertController.Style = viewModel.currentUser == nil ? .alert : .actionSheet
+        
+        let alertController = UIAlertController(title: title, message: message, preferredStyle: style
+        )
+        let okAction = UIAlertAction(title: "네", style: .destructive) { _ in
+            if self.viewModel.currentUser == nil {
+                self.loginViewSceneConversion()
+            } else {
+                self.viewModel.signOut()
+                self.tabBarController?.selectedIndex = 0
+            }
+        }
+        
+        let noAction = UIAlertAction(title: "아니오", style: .cancel)
+        
+        [okAction, noAction].forEach(alertController.addAction(_:))
+        present(alertController, animated: true)
+    }
+    
+    
+    private func showDeleteUserAlert() {
+        let title = viewModel.currentUser == nil ? "로그인이 필요합니다." : nil
+        let message = viewModel.currentUser == nil ? "로그인 할까요?" : "회원탈퇴하고 모든 데이터를 제거합니다."
+        let style: UIAlertController.Style = viewModel.currentUser == nil ? .alert : .actionSheet
+        
+        let alertController = UIAlertController(title: title, message: message, preferredStyle: style)
+        let okAction = UIAlertAction(title: "네", style: .destructive) { _ in
+            if self.viewModel.currentUser == nil {
+                self.loginViewSceneConversion()
+            } else {
+                self.viewModel.deleteUser {
+                    self.tabBarController?.selectedIndex = 0
+                }
+            }
+        }
+        
+        let noAction = UIAlertAction(title: "아니오", style: .cancel)
+        
+        [okAction, noAction].forEach(alertController.addAction(_:))
+        present(alertController, animated: true)
+    }
 }

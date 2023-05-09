@@ -21,6 +21,10 @@ class EtcSettingViewModel {
         return firebaseManager.currentUserInfo?.email
     }
     
+    var currentUser: String? {
+        return firebaseManager.currentUserID
+    }
+    
     func signOut() {
         firebaseManager.signOut()
         deleteAllCoreData()
