@@ -189,7 +189,7 @@ class MainViewController: UIViewController, UISearchBarDelegate, UISearchControl
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
-//        presentLoginViewIfNeeded()
+        updateCollectionViewData()
     }
     
     private func bind() {
@@ -206,19 +206,19 @@ class MainViewController: UIViewController, UISearchBarDelegate, UISearchControl
         }
     }
     
-    private func presentLoginViewIfNeeded() {
-        viewModel.checkIfUserLoggedIn {
-            self.setupViewSkeletonable(true)
-            
-            let loginViewModel = LoginViewModel()
-            let loginViewController = LoginViewController(viewModel: loginViewModel)
-            loginViewController.delegate = self
-            loginViewController.modalPresentationStyle = .overFullScreen
-            self.present(loginViewController, animated: false)
-        } completionWhenUserIsLoggedIn: {
-            self.updateCollectionViewData()
-        }
-    }
+//    private func presentLoginViewIfNeeded() {
+//        viewModel.checkIfUserLoggedIn {
+//            self.setupViewSkeletonable(true)
+//
+//            let loginViewModel = LoginViewModel()
+//            let loginViewController = LoginViewController(viewModel: loginViewModel)
+//            loginViewController.delegate = self
+//            loginViewController.modalPresentationStyle = .overFullScreen
+//            self.present(loginViewController, animated: false)
+//        } completionWhenUserIsLoggedIn: {
+//            self.updateCollectionViewData()
+//        }
+//    }
     
     private func setupViewSkeletonable(_ bool: Bool) {
         let target = [searchButton, expireCollectionViewHeaderLabel, recentCollectionViewHeaderLabel ,expireCollectionView, recentCollectionView]
