@@ -32,12 +32,9 @@ class EtcSettingViewController: UIViewController {
     private let logoutButton = {
         let button = UIButton()
         
-        button.setTitle("로그아웃", for: .normal)
         button.titleLabel?.font = UIFont.boldSystemFont(ofSize: 13)
-        button.setTitleColor(UIColor.red, for: .normal)
         button.layer.cornerRadius = 10
         button.layer.borderWidth = 1
-        button.layer.borderColor = UIColor.red.cgColor
         button.translatesAutoresizingMaskIntoConstraints = false
         
         return button
@@ -90,7 +87,7 @@ class EtcSettingViewController: UIViewController {
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
-        configureUserProfile()
+        reloadProfileViewAttributes()
     }
     
     private func configureUserProfile() {
@@ -112,6 +109,20 @@ class EtcSettingViewController: UIViewController {
         }
     }
     
+    private func reloadProfileViewAttributes() {
+        setupButtonAttributes()
+        configureUserProfile()
+    }
+    
+    private func setupButtonAttributes() {
+        let titleLabel = viewModel.currentUser == nil ? "로그인" : "로그아웃"
+        let color = viewModel.currentUser == nil ? UIColor.systemBlue : UIColor.red
+        let layerColor = color.cgColor
+        
+        logoutButton.setTitle(titleLabel, for: .normal)
+        logoutButton.setTitleColor(color, for: .normal)
+        logoutButton.layer.borderColor = layerColor
+    }
     
     private func setupButton() {
         let logoutAction = UIAction { _ in
@@ -265,7 +276,7 @@ extension EtcSettingViewController {
                 self.loginViewSceneConversion()
             } else {
                 self.viewModel.signOut()
-                self.tabBarController?.selectedIndex = 0
+                self.reloadProfileViewAttributes()
             }
         }
         
@@ -287,7 +298,7 @@ extension EtcSettingViewController {
                 self.loginViewSceneConversion()
             } else {
                 self.viewModel.deleteUser {
-                    self.tabBarController?.selectedIndex = 0
+                    self.reloadProfileViewAttributes()
                 }
             }
         }
@@ -302,6 +313,6 @@ extension EtcSettingViewController {
 //MARK: 로그인완료를 알리는 DidFetchGiftDelegate 관련
 extension EtcSettingViewController: DidFetchGiftDelegate {
     func finishedFetch() {
-        self.configureUserProfile()
+        reloadProfileViewAttributes()
     }
 }
