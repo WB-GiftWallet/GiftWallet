@@ -94,16 +94,22 @@ class EtcSettingViewController: UIViewController {
     }
     
     private func configureUserProfile() {
+        if viewModel.currentUser == nil {
+            nameLabel.text = "로그인 필요"
+            idLabel.text = "표시할 유저정보가 없습니다."
+        }
+        
         guard let userName = viewModel.userName,
               let userEmamil = viewModel.userEmail else { return }
         
         if userEmamil.contains("@privaterelay.appleid.com") {
+            nameLabel.text = userName
             idLabel.text = "\(userName)@private.appleID.com"
+            
         } else {
+            nameLabel.text = userName
             idLabel.text = userEmamil
         }
-        
-        nameLabel.text = userName
     }
     
     
@@ -154,9 +160,8 @@ class EtcSettingViewController: UIViewController {
     }
 }
 
+// MARK: TableViewDataSource 관련
 extension EtcSettingViewController: UITableViewDataSource {
-    
-    
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         return viewModel.setupNumberOfRowsInSection(section: section)
     }
@@ -185,6 +190,7 @@ extension EtcSettingViewController: UITableViewDataSource {
     
 }
 
+// MARK: TableViewDelegate 관련
 extension EtcSettingViewController: UITableViewDelegate {
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         if indexPath.section == 0, indexPath.row == 0 {
@@ -212,11 +218,13 @@ extension EtcSettingViewController: UITableViewDelegate {
     private func loginViewSceneConversion() {
         let loginViewModel = LoginViewModel()
         let loginViewController = LoginViewController(viewModel: loginViewModel)
-        loginViewController.modalPresentationStyle = .fullScreen
+        loginViewController.delegate = self
+        loginViewController.modalPresentationStyle = .overFullScreen
         present(loginViewController, animated: true)
     }
 }
 
+// MARK: Cell의 인터랙션을 관리하는 EtcCellElementTappedDelegate
 extension EtcSettingViewController: EtcCellElementTappedDelegate {
     func toggledSwitch(sender: UISwitch, completion: @escaping (Bool) -> Void) {
         showToggleAlert(sender: sender, completion: completion)
@@ -288,5 +296,12 @@ extension EtcSettingViewController {
         
         [okAction, noAction].forEach(alertController.addAction(_:))
         present(alertController, animated: true)
+    }
+}
+
+//MARK: 로그인완료를 알리는 DidFetchGiftDelegate 관련
+extension EtcSettingViewController: DidFetchGiftDelegate {
+    func finishedFetch() {
+        self.configureUserProfile()
     }
 }
