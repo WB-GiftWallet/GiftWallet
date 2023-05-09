@@ -21,6 +21,12 @@ class AddViewModel {
                                          brandName: "",
                                          productName: "",
                                          expireDate: Date())
+    
+    var currentUser: String? {
+        return firebaseManager.currentUserID
+    }
+    
+    
     init(seletedImage: UIImage) {
         self.selectedImage = seletedImage
     }
@@ -42,7 +48,18 @@ class AddViewModel {
         }
     }
     
-    func createFireStoreDocument(_ number: Int, completion: @escaping () -> Void) {
+    func createLocalDBAndRemoteDB(completion: @escaping () -> Void) {
+        createCoreData { giftNumber in
+            let int16ToIntNumber = Int(giftNumber)
+            self.createFireStoreDocument(int16ToIntNumber) {
+                DispatchQueue.main.async {
+                    completion()
+                }
+            }
+        }
+    }
+    
+    private func createFireStoreDocument(_ number: Int, completion: @escaping () -> Void) {
         guard let gift = gift else { return }
         
         do {
@@ -53,7 +70,7 @@ class AddViewModel {
         }
     }
     
-    func createCoreData(completion: @escaping (Int16) -> Void) {
+    private func createCoreData(completion: @escaping (Int16) -> Void) {
         guard let gift = gift else { return }
         
         do {

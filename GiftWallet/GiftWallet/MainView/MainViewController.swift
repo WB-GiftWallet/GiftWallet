@@ -189,9 +189,15 @@ class MainViewController: UIViewController, UISearchBarDelegate, UISearchControl
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
-        presentLoginViewIfNeeded()
+        addUpdateNotification()
+        updateCollectionViewData()
     }
     
+    override func viewWillDisappear(_ animated: Bool) {
+        super.viewWillDisappear(animated)
+        removeUpdateNotification()
+    }
+        
     private func bind() {
         viewModel.expireGifts.bind { [weak self] _ in
             DispatchQueue.main.async {
@@ -206,19 +212,19 @@ class MainViewController: UIViewController, UISearchBarDelegate, UISearchControl
         }
     }
     
-    private func presentLoginViewIfNeeded() {
-        viewModel.checkIfUserLoggedIn {
-            self.setupViewSkeletonable(true)
-            
-            let loginViewModel = LoginViewModel()
-            let loginViewController = LoginViewController(viewModel: loginViewModel)
-            loginViewController.delegate = self
-            loginViewController.modalPresentationStyle = .overFullScreen
-            self.present(loginViewController, animated: false)
-        } completionWhenUserIsLoggedIn: {
-            self.updateCollectionViewData()
-        }
-    }
+//    private func presentLoginViewIfNeeded() {
+//        viewModel.checkIfUserLoggedIn {
+//            self.setupViewSkeletonable(true)
+//
+//            let loginViewModel = LoginViewModel()
+//            let loginViewController = LoginViewController(viewModel: loginViewModel)
+//            loginViewController.delegate = self
+//            loginViewController.modalPresentationStyle = .overFullScreen
+//            self.present(loginViewController, animated: false)
+//        } completionWhenUserIsLoggedIn: {
+//            self.updateCollectionViewData()
+//        }
+//    }
     
     private func setupViewSkeletonable(_ bool: Bool) {
         let target = [searchButton, expireCollectionViewHeaderLabel, recentCollectionViewHeaderLabel ,expireCollectionView, recentCollectionView]
@@ -568,10 +574,18 @@ extension MainViewController: GiftDidDismissDelegate {
     }
 }
 
-// MARK: DidFetchGiftDelegate Protocol 관련
-extension MainViewController: DidFetchGiftDelegate {
-    func finishedFetch() {
-        setupViewSkeletonable(false)
+// MARK: Notificaiton
+extension MainViewController {
+    private func addUpdateNotification() {
+        NotificationCenter.default.addObserver(self, selector: #selector(updateCollectionView), name: Notification.Name("finisehdFetch"), object: nil)
+    }
+    
+    private func removeUpdateNotification() {
+        NotificationCenter.default.removeObserver(self, name: Notification.Name("finisehdFetch"), object: nil)
+    }
+    
+    @objc
+    private func updateCollectionView() {
         updateCollectionViewData()
     }
 }

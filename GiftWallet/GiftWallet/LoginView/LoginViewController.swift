@@ -30,7 +30,7 @@ class LoginViewController: UIViewController {
         button.contentHorizontalAlignment = .center
         button.tintColor = .black
         button.imageEdgeInsets = UIEdgeInsets.init(top: 0, left: 0, bottom: 0, right: 12)
-
+        
         button.translatesAutoresizingMaskIntoConstraints = false
         
         return button
@@ -38,7 +38,7 @@ class LoginViewController: UIViewController {
     
     private let appleLoginButton = {
         let button = UIButton()
-                
+        
         button.layer.cornerRadius = 12.0
         button.backgroundColor = .black
         button.setTitle("Apple로 로그인", for: .normal)
@@ -53,9 +53,9 @@ class LoginViewController: UIViewController {
         
         return button
     }()
-
+    
     private let buttonVerticalStackView = {
-       let stackView = UIStackView()
+        let stackView = UIStackView()
         
         stackView.axis = .vertical
         stackView.distribution = .fill
@@ -85,8 +85,10 @@ class LoginViewController: UIViewController {
             self.viewModel.kakaoLogin {
                 self.setupUserSetting()
                 self.dismiss(animated: true)
+            } updateUserProfileCompletion: {
+                self.delegate?.finishedUpdateProfile()
             } updateDataCompletion: {
-                self.delegate?.finishedFetch()
+                NotificationCenter.default.post(name: Notification.Name("finisehdFetch"), object: nil)
             }
         }
         kakaoLoginButton.addAction(kakaoLoginAction, for: .touchUpInside)
@@ -133,11 +135,11 @@ extension LoginViewController: ASAuthorizationControllerDelegate {
     func authorizationController(controller: ASAuthorizationController, didCompleteWithAuthorization authorization: ASAuthorization) {
         self.viewModel.didCompleteAppleLogin(controller: controller, authorization: authorization) {
             self.dismiss(animated: true)
+        } updateUserProfileCompletion: {
+            self.delegate?.finishedUpdateProfile()
         } updateDataCompletion: {
-            self.delegate?.finishedFetch()
+            NotificationCenter.default.post(name: Notification.Name("finisehdFetch"), object: nil)
         }
-
-        
     }
     
     // 실패시 동작
@@ -153,5 +155,5 @@ extension LoginViewController: ASAuthorizationControllerPresentationContextProvi
 }
 
 protocol DidFetchGiftDelegate {
-    func finishedFetch()
+    func finishedUpdateProfile()
 }

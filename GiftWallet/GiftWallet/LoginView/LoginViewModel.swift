@@ -15,6 +15,7 @@ class LoginViewModel {
     private let firebaseManager = FireBaseManager.shared
     
     func kakaoLogin(completion: @escaping () -> Void,
+                    updateUserProfileCompletion: @escaping () -> Void,
                     updateDataCompletion: @escaping () -> Void) {
         kakaoLoginManager.checkLoginEnabledAndLogin { result in
             switch result {
@@ -24,7 +25,7 @@ class LoginViewModel {
                       let userName = user.properties,
                       let userNickName = userName["nickname"] else { return }
                 self.firebaseManager.signInWithEmail(email: userEmail, password: userID) { gifts in
-                    self.firebaseManager.changeProfile(name: userNickName)
+                    self.firebaseManager.changeProfile(name: userNickName, completion: updateUserProfileCompletion)
                     
                     do {
                         try self.coreDataManager.updateAllData(gifts, completion: updateDataCompletion)
@@ -49,6 +50,7 @@ class LoginViewModel {
     func didCompleteAppleLogin(controller: ASAuthorizationController,
                                authorization: ASAuthorization,
                                completion: @escaping () -> Void,
+                               updateUserProfileCompletion: @escaping () -> Void,
                                updateDataCompletion: @escaping () -> Void) {
         appleLoginManager.didCompleteLogin(controller: controller, authorization: authorization) { userInfo in
             guard let idTokenString = userInfo["idTokenString"],
@@ -59,7 +61,7 @@ class LoginViewModel {
             
             self.firebaseManager.signInWithCredential(authCredential: credentail) { gifts in
                 if fullName != "" {
-                    self.firebaseManager.changeProfile(name: fullName)
+                    self.firebaseManager.changeProfile(name: fullName, completion: updateUserProfileCompletion)
                 }
                 
                 do {
