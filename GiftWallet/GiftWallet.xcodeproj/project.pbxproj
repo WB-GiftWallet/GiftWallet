@@ -261,7 +261,6 @@
 			isa = PBXGroup;
 			children = (
 				17457D0429E7F7650018162D /* UserNotificationManager.swift */,
-				17B6F9992A067734004B83C2 /* UserNotificationUseCase.swift */,
 				17457D0C29E9A26E0018162D /* NotificationExpireDayContents.swift */,
 				171DE6D629F3AABA00F66486 /* UserNotificationError.swift */,
 			);
@@ -366,6 +365,7 @@
 			isa = PBXGroup;
 			children = (
 				D2CDDBCC29ADFACB00E000E3 /* DateCalCulateUseCase.swift */,
+				17B6F9992A067734004B83C2 /* UserNotificationUseCase.swift */,
 				D2CDDBE129AF3D2B00E000E3 /* AutoInputUseCase.swift */,
 			);
 			path = UseCase;
