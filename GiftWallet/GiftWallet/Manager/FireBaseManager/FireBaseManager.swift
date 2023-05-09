@@ -98,12 +98,14 @@ extension FireBaseManager {
         }
     }
     
-    func changeProfile(name: String) {
+    func changeProfile(name: String, completion: @escaping () -> Void) {
         let changeRequest = Auth.auth().currentUser?.createProfileChangeRequest()
         changeRequest?.displayName = name
         changeRequest?.commitChanges(completion: { error in
             if let error = error {
                 print("프로필설정실패", error.localizedDescription)
+            } else {
+                completion()
             }
         })
     }

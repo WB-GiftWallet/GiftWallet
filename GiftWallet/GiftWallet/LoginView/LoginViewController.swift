@@ -85,6 +85,8 @@ class LoginViewController: UIViewController {
             self.viewModel.kakaoLogin {
                 self.setupUserSetting()
                 self.dismiss(animated: true)
+            } updateUserProfileCompletion: {
+                self.delegate?.finishedUpdateProfile()
             } updateDataCompletion: {
                 self.delegate?.finishedFetch()
             }
@@ -133,6 +135,8 @@ extension LoginViewController: ASAuthorizationControllerDelegate {
     func authorizationController(controller: ASAuthorizationController, didCompleteWithAuthorization authorization: ASAuthorization) {
         self.viewModel.didCompleteAppleLogin(controller: controller, authorization: authorization) {
             self.dismiss(animated: true)
+        } updateUserProfileCompletion: {
+            self.delegate?.finishedUpdateProfile()
         } updateDataCompletion: {
             self.delegate?.finishedFetch()
         }
@@ -154,4 +158,5 @@ extension LoginViewController: ASAuthorizationControllerPresentationContextProvi
 
 protocol DidFetchGiftDelegate {
     func finishedFetch()
+    func finishedUpdateProfile()
 }

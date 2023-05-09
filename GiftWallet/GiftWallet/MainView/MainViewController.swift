@@ -570,7 +570,12 @@ extension MainViewController: GiftDidDismissDelegate {
 
 // MARK: DidFetchGiftDelegate Protocol 관련
 extension MainViewController: DidFetchGiftDelegate {
+    func finishedUpdateProfile() {
+        // 임시구현, 현재작동하지않음
+    }
+    
     func finishedFetch() {
+        // 임시구현, 현재작동하지않음.
         setupViewSkeletonable(false)
         updateCollectionViewData()
     }

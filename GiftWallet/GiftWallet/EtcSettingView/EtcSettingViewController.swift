@@ -312,7 +312,10 @@ extension EtcSettingViewController {
 
 //MARK: 로그인완료를 알리는 DidFetchGiftDelegate 관련
 extension EtcSettingViewController: DidFetchGiftDelegate {
-    func finishedFetch() {
+    func finishedUpdateProfile() {
         reloadProfileViewAttributes()
+    }
+    
+    func finishedFetch() {
     }
 }
