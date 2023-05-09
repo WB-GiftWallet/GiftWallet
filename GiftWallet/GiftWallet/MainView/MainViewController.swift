@@ -189,9 +189,15 @@ class MainViewController: UIViewController, UISearchBarDelegate, UISearchControl
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
+        addUpdateNotification()
         updateCollectionViewData()
     }
     
+    override func viewWillDisappear(_ animated: Bool) {
+        super.viewWillDisappear(animated)
+        removeUpdateNotification()
+    }
+        
     private func bind() {
         viewModel.expireGifts.bind { [weak self] _ in
             DispatchQueue.main.async {
@@ -568,15 +574,18 @@ extension MainViewController: GiftDidDismissDelegate {
     }
 }
 
-// MARK: DidFetchGiftDelegate Protocol 관련
-extension MainViewController: DidFetchGiftDelegate {
-    func finishedUpdateProfile() {
-        // 임시구현, 현재작동하지않음
+// MARK: Notificaiton
+extension MainViewController {
+    private func addUpdateNotification() {
+        NotificationCenter.default.addObserver(self, selector: #selector(updateCollectionView), name: Notification.Name("finisehdFetch"), object: nil)
     }
     
-    func finishedFetch() {
-        // 임시구현, 현재작동하지않음.
-        setupViewSkeletonable(false)
+    private func removeUpdateNotification() {
+        NotificationCenter.default.removeObserver(self, name: Notification.Name("finisehdFetch"), object: nil)
+    }
+    
+    @objc
+    private func updateCollectionView() {
         updateCollectionViewData()
     }
 }

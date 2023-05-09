@@ -315,7 +315,4 @@ extension EtcSettingViewController: DidFetchGiftDelegate {
     func finishedUpdateProfile() {
         reloadProfileViewAttributes()
     }
-    
-    func finishedFetch() {
-    }
 }
