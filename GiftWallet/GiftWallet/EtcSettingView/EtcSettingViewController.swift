@@ -230,7 +230,7 @@ extension EtcSettingViewController: UITableViewDelegate {
         let loginViewModel = LoginViewModel()
         let loginViewController = LoginViewController(viewModel: loginViewModel)
         loginViewController.delegate = self
-        loginViewController.modalPresentationStyle = .overFullScreen
+        loginViewController.modalPresentationStyle = .fullScreen
         present(loginViewController, animated: true)
     }
 }

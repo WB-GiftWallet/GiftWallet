@@ -119,7 +119,7 @@ class AddViewController: UIViewController {
     private func loginViewSceneConversion() {
         let loginViewModel = LoginViewModel()
         let loginViewController = LoginViewController(viewModel: loginViewModel)
-        loginViewController.modalPresentationStyle = .overFullScreen
+        loginViewController.modalPresentationStyle = .fullScreen
         present(loginViewController, animated: true)
     }
     
