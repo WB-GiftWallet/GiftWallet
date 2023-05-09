@@ -93,24 +93,34 @@ class AddViewController: UIViewController {
                 self.viewModel.buttonActionByPage(page: self.page, inputText)
                 self.sceneConversion()
             case .expireDate:
-                self.viewModel.buttonActionByPage(page: self.page, inputText)
-                self.viewModel.createCoreData { giftNumber in
-                    let int16ToIntNumber = Int(giftNumber)
-                    self.viewModel.createFireStoreDocument(int16ToIntNumber) {
-                        DispatchQueue.main.async {
-                            self.dismiss(animated: true)
-                        }
-                    }
-                }
+                self.expireDatePageAction(inputText: inputText)
             }
         }
         actionButton.addAction(actionButtonAction, for: .touchUpInside)
+    }
+    
+    private func expireDatePageAction(inputText: String) {
+        if viewModel.currentUser == nil {
+            showLoginAlert()
+        } else {
+            self.viewModel.buttonActionByPage(page: self.page, inputText)
+            self.viewModel.createLocalDBAndRemoteDB {
+                self.dismiss(animated: true)
+            }
+        }
     }
     
     private func sceneConversion() {
         guard let netxPage = Page(rawValue: page.rawValue + 1) else { return }
         let addViewController = AddViewController(viewModel: viewModel, page: netxPage)
         navigationController?.pushViewController(addViewController, animated: true)
+    }
+    
+    private func loginViewSceneConversion() {
+        let loginViewModel = LoginViewModel()
+        let loginViewController = LoginViewController(viewModel: loginViewModel)
+        loginViewController.modalPresentationStyle = .overFullScreen
+        present(loginViewController, animated: true)
     }
     
     private func setupNavigation() {
@@ -124,6 +134,18 @@ class AddViewController: UIViewController {
         navigationItem.rightBarButtonItem = UIBarButtonItem(image: buttonImage,
                                                             primaryAction: closeAction)
         navigationController?.navigationBar.tintColor = .black
+    }
+    
+    private func showLoginAlert() {
+        let alertController = UIAlertController(title: "로그인이 필요합니다.", message: "로그인 할까요?", preferredStyle: .alert)
+        let okAction = UIAlertAction(title: "네", style: .destructive) { _ in
+            self.loginViewSceneConversion()
+        }
+        
+        let noAction = UIAlertAction(title: "아니오", style: .cancel)
+        
+        [okAction, noAction].forEach(alertController.addAction(_:))
+        present(alertController, animated: true)
     }
     
     private func setupViews() {
