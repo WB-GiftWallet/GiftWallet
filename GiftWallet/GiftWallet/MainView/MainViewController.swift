@@ -189,7 +189,7 @@ class MainViewController: UIViewController, UISearchBarDelegate, UISearchControl
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
-        presentLoginViewIfNeeded()
+//        presentLoginViewIfNeeded()
     }
     
     private func bind() {
