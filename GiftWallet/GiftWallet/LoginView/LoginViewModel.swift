@@ -17,18 +17,18 @@ class LoginViewModel {
     func kakaoLogin(completion: @escaping () -> Void,
                     updateUserProfileCompletion: @escaping () -> Void,
                     updateDataCompletion: @escaping () -> Void) {
-        kakaoLoginManager.checkLoginEnabledAndLogin { result in
+        kakaoLoginManager.checkLoginEnabledAndLogin { [weak self] result in
             switch result {
             case .success(let user):
                 guard let userEmail = user.kakaoAccount?.email,
                       let userID = user.id?.description,
                       let userName = user.properties,
                       let userNickName = userName["nickname"] else { return }
-                self.firebaseManager.signInWithEmail(email: userEmail, password: userID) { gifts in
-                    self.firebaseManager.changeProfile(name: userNickName, completion: updateUserProfileCompletion)
+                self?.firebaseManager.signInWithEmail(email: userEmail, password: userID) { [weak self] gifts in
+                    self?.firebaseManager.changeProfile(name: userNickName, completion: updateUserProfileCompletion)
                     
                     do {
-                        try self.coreDataManager.updateAllData(gifts, completion: updateDataCompletion)
+                        try self?.coreDataManager.updateAllData(gifts, completion: updateDataCompletion)
                         
                     } catch {
                         print(error.localizedDescription)
@@ -52,20 +52,21 @@ class LoginViewModel {
                                completion: @escaping () -> Void,
                                updateUserProfileCompletion: @escaping () -> Void,
                                updateDataCompletion: @escaping () -> Void) {
-        appleLoginManager.didCompleteLogin(controller: controller, authorization: authorization) { userInfo in
+        appleLoginManager.didCompleteLogin(controller: controller, authorization: authorization) { [weak self] userInfo in
             guard let idTokenString = userInfo["idTokenString"],
                   let rawNonce = userInfo["rawNonce"],
-                  let fullName = userInfo["fullName"] else { return }
+                  let fullName = userInfo["fullName"],
+                  let self = self else { return }
                             
             let credentail = self.firebaseManager.makeAppleAuthProviderCredential(idToken: idTokenString, rawNonce: rawNonce)
             
-            self.firebaseManager.signInWithCredential(authCredential: credentail) { gifts in
+            self.firebaseManager.signInWithCredential(authCredential: credentail) { [weak self] gifts in
                 if fullName != "" {
-                    self.firebaseManager.changeProfile(name: fullName, completion: updateUserProfileCompletion)
+                    self?.firebaseManager.changeProfile(name: fullName, completion: updateUserProfileCompletion)
                 }
                 
                 do {
-                    try self.coreDataManager.updateAllData(gifts, completion: updateDataCompletion)
+                    try self?.coreDataManager.updateAllData(gifts, completion: updateDataCompletion)
                     completion()
                 } catch {
                     print(error.localizedDescription)

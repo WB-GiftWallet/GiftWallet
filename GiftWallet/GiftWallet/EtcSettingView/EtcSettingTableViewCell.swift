@@ -70,9 +70,9 @@ class EtcSettingTableViewCell: UITableViewCell, ReusableView {
     
     @objc
     private func setupPushSwitchAction(sender: UISwitch) {
-        etcCellElementTappedDelegate?.toggledSwitch(sender: sender, completion: { value in
+        etcCellElementTappedDelegate?.toggledSwitch(sender: sender, completion: { [weak self] value in
             UserDefaults.standard.setValue(value, forKey: "PushAlarm")
-            self.pushSwitch.setOn(value, animated: true)
+            self?.pushSwitch.setOn(value, animated: true)
         })
     }
     

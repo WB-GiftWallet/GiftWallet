@@ -51,7 +51,7 @@ extension FireBaseManager {
     func signInWithEmail(email: String, password: String, completion: @escaping ([Gift]) -> Void) {
         Auth.auth().signIn(withEmail: email, password: password) { [weak self] authResult, error in
             if error != nil {
-                self?.createUser(email: email, password: password) { result in
+                self?.createUser(email: email, password: password) { [weak self] result in
                     // 필요시, 추가 액선
                     self?.fetchData { result in
                         switch result {
@@ -134,12 +134,12 @@ extension FireBaseManager {
         
         let dispatchGroup = DispatchGroup()
         
-        db.collection(id.description).getDocuments { (snapshot, error) in
+        db.collection(id.description).getDocuments { [weak self] (snapshot, error) in
             if error == nil && snapshot != nil {
                 var giftData = [Gift]()
                 for document in snapshot!.documents {
                     dispatchGroup.enter()
-                    self.changeGiftData(document) { gift in
+                    self?.changeGiftData(document) { gift in
                         giftData.append(gift)
                         dispatchGroup.leave()
                     }
@@ -184,8 +184,8 @@ extension FireBaseManager {
             strUseDate = dateFormatter.string(from: useDate)
         }
         
-        upLoadImageData(imageData: imageData, userID: id, dataNumber: number) { url in
-            self.db.collection(id.description).document((number).description).setData(["image":url.absoluteString,
+        upLoadImageData(imageData: imageData, userID: id, dataNumber: number) { [weak self] url in
+            self?.db.collection(id.description).document((number).description).setData(["image":url.absoluteString,
                                                                                        "number":number,
                                                                                        "category":category,
                                                                                        "brandName":brandName,
@@ -225,7 +225,7 @@ extension FireBaseManager {
             useDate = dateFormatter.string(from: giftUseDate)
         }
         
-        upLoadImageData(imageData: imageData, userID: id, dataNumber: giftData.number) { url in
+        upLoadImageData(imageData: imageData, userID: id, dataNumber: giftData.number) { [weak self] url in
             let data: [AnyHashable: Any] = ["image":url.absoluteString,
                                             "category": category,
                                             "brandName":brandName,
@@ -236,7 +236,7 @@ extension FireBaseManager {
                                             "useDate": useDate
             ]
             
-            self.db.collection(id.description).document(String(dataNumber)).updateData(data) { error in
+            self?.db.collection(id.description).document(String(dataNumber)).updateData(data) { error in
                 if let error = error {
                     print("업데이트에러확인용:", error.localizedDescription)
                 }

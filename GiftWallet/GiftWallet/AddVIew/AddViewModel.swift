@@ -49,9 +49,9 @@ class AddViewModel {
     }
     
     func createLocalDBAndRemoteDB(completion: @escaping () -> Void) {
-        createCoreData { giftNumber in
+        createCoreData { [weak self] giftNumber in
             let int16ToIntNumber = Int(giftNumber)
-            self.createFireStoreDocument(int16ToIntNumber) {
+            self?.createFireStoreDocument(int16ToIntNumber) {
                 DispatchQueue.main.async {
                     completion()
                 }
