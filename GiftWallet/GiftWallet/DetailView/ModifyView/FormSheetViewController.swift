@@ -159,8 +159,7 @@ class FormSheetViewController: UIViewController {
     }
     
     private func setupButton() {
-        let pencilAction = UIAction { [weak self] _ in
-            guard let self = self else { return }
+        let pencilAction = UIAction { _ in
             guard let presentViewController = self.presentingViewController else { return }
             
             self.dismiss(animated: true) {

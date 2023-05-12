@@ -82,9 +82,8 @@ class AddViewController: UIViewController {
     }
     
     private func setupButton() {
-        let actionButtonAction = UIAction { [weak self] _ in
-            guard let self = self,
-                  let inputText = self.inputTextField.text else { return }
+        let actionButtonAction = UIAction { _ in
+            guard let inputText = self.inputTextField.text else { return }
             switch self.page {
             case .brand:
                 self.viewModel.buttonActionByPage(page: self.page, inputText)
