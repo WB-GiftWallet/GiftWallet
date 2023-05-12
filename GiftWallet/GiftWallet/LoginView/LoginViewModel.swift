@@ -52,20 +52,21 @@ class LoginViewModel {
                                completion: @escaping () -> Void,
                                updateUserProfileCompletion: @escaping () -> Void,
                                updateDataCompletion: @escaping () -> Void) {
-        appleLoginManager.didCompleteLogin(controller: controller, authorization: authorization) { userInfo in
+        appleLoginManager.didCompleteLogin(controller: controller, authorization: authorization) { [weak self] userInfo in
             guard let idTokenString = userInfo["idTokenString"],
                   let rawNonce = userInfo["rawNonce"],
-                  let fullName = userInfo["fullName"] else { return }
+                  let fullName = userInfo["fullName"],
+                  let self = self else { return }
                             
             let credentail = self.firebaseManager.makeAppleAuthProviderCredential(idToken: idTokenString, rawNonce: rawNonce)
             
-            self.firebaseManager.signInWithCredential(authCredential: credentail) { gifts in
+            self.firebaseManager.signInWithCredential(authCredential: credentail) { [weak self] gifts in
                 if fullName != "" {
-                    self.firebaseManager.changeProfile(name: fullName, completion: updateUserProfileCompletion)
+                    self?.firebaseManager.changeProfile(name: fullName, completion: updateUserProfileCompletion)
                 }
                 
                 do {
-                    try self.coreDataManager.updateAllData(gifts, completion: updateDataCompletion)
+                    try self?.coreDataManager.updateAllData(gifts, completion: updateDataCompletion)
                     completion()
                 } catch {
                     print(error.localizedDescription)
