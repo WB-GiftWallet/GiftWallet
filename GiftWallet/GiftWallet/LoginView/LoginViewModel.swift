@@ -17,18 +17,18 @@ class LoginViewModel {
     func kakaoLogin(completion: @escaping () -> Void,
                     updateUserProfileCompletion: @escaping () -> Void,
                     updateDataCompletion: @escaping () -> Void) {
-        kakaoLoginManager.checkLoginEnabledAndLogin { result in
+        kakaoLoginManager.checkLoginEnabledAndLogin { [weak self] result in
             switch result {
             case .success(let user):
                 guard let userEmail = user.kakaoAccount?.email,
                       let userID = user.id?.description,
                       let userName = user.properties,
                       let userNickName = userName["nickname"] else { return }
-                self.firebaseManager.signInWithEmail(email: userEmail, password: userID) { gifts in
-                    self.firebaseManager.changeProfile(name: userNickName, completion: updateUserProfileCompletion)
+                self?.firebaseManager.signInWithEmail(email: userEmail, password: userID) { [weak self] gifts in
+                    self?.firebaseManager.changeProfile(name: userNickName, completion: updateUserProfileCompletion)
                     
                     do {
-                        try self.coreDataManager.updateAllData(gifts, completion: updateDataCompletion)
+                        try self?.coreDataManager.updateAllData(gifts, completion: updateDataCompletion)
                         
                     } catch {
                         print(error.localizedDescription)
