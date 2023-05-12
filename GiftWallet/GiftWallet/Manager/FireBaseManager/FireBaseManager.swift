@@ -51,7 +51,7 @@ extension FireBaseManager {
     func signInWithEmail(email: String, password: String, completion: @escaping ([Gift]) -> Void) {
         Auth.auth().signIn(withEmail: email, password: password) { [weak self] authResult, error in
             if error != nil {
-                self?.createUser(email: email, password: password) { result in
+                self?.createUser(email: email, password: password) { [weak self] result in
                     // 필요시, 추가 액선
                     self?.fetchData { result in
                         switch result {
