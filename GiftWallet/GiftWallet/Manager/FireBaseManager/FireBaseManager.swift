@@ -184,8 +184,8 @@ extension FireBaseManager {
             strUseDate = dateFormatter.string(from: useDate)
         }
         
-        upLoadImageData(imageData: imageData, userID: id, dataNumber: number) { url in
-            self.db.collection(id.description).document((number).description).setData(["image":url.absoluteString,
+        upLoadImageData(imageData: imageData, userID: id, dataNumber: number) { [weak self] url in
+            self?.db.collection(id.description).document((number).description).setData(["image":url.absoluteString,
                                                                                        "number":number,
                                                                                        "category":category,
                                                                                        "brandName":brandName,
@@ -225,7 +225,7 @@ extension FireBaseManager {
             useDate = dateFormatter.string(from: giftUseDate)
         }
         
-        upLoadImageData(imageData: imageData, userID: id, dataNumber: giftData.number) { url in
+        upLoadImageData(imageData: imageData, userID: id, dataNumber: giftData.number) { [weak self] url in
             let data: [AnyHashable: Any] = ["image":url.absoluteString,
                                             "category": category,
                                             "brandName":brandName,
@@ -236,7 +236,7 @@ extension FireBaseManager {
                                             "useDate": useDate
             ]
             
-            self.db.collection(id.description).document(String(dataNumber)).updateData(data) { error in
+            self?.db.collection(id.description).document(String(dataNumber)).updateData(data) { error in
                 if let error = error {
                     print("업데이트에러확인용:", error.localizedDescription)
                 }
