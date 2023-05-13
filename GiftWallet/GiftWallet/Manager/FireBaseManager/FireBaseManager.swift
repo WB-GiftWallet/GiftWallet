@@ -19,7 +19,7 @@ class FireBaseManager {
     private var db = Firestore.firestore()
     private let storage = Storage.storage()
     
-    var currentUserInfo: User? {
+    var currentUser: User? {
         return Auth.auth().currentUser
     }
     
@@ -52,7 +52,6 @@ extension FireBaseManager {
         Auth.auth().signIn(withEmail: email, password: password) { [weak self] authResult, error in
             if error != nil {
                 self?.createUser(email: email, password: password) { [weak self] result in
-                    // 필요시, 추가 액선
                     self?.fetchData { result in
                         switch result {
                         case .success(let gifts):
@@ -98,18 +97,6 @@ extension FireBaseManager {
         }
     }
     
-    func changeProfile(name: String, completion: @escaping () -> Void) {
-        let changeRequest = Auth.auth().currentUser?.createProfileChangeRequest()
-        changeRequest?.displayName = name
-        changeRequest?.commitChanges(completion: { error in
-            if let error = error {
-                print("프로필설정실패", error.localizedDescription)
-            } else {
-                completion()
-            }
-        })
-    }
-    
     func deleteUser(completion: @escaping () -> Void) {
         let user = Auth.auth().currentUser
 
@@ -123,11 +110,23 @@ extension FireBaseManager {
           }
         }
     }
+    
+    func changeProfile(name: String, completion: @escaping () -> Void) {
+        let changeRequest = Auth.auth().currentUser?.createProfileChangeRequest()
+        changeRequest?.displayName = name
+        changeRequest?.commitChanges(completion: { error in
+            if let error = error {
+                print("프로필설정실패", error.localizedDescription)
+            } else {
+                completion()
+            }
+        })
+    }
 }
 
 //MARK: FireStoreDatabase CRUD 관련
 extension FireBaseManager {
-    func fetchData(completion: @escaping  (Result<[Gift], FireBaseManagerError>) -> Void) {
+    func fetchData(completion: @escaping (Result<[Gift], FireBaseManagerError>) -> Void) {
         guard let id = Auth.auth().currentUser?.uid else {
             return completion(.failure(.notHaveID))
         }
@@ -333,7 +332,7 @@ extension FireBaseManager {
 //MARK: FireStorage 다운로드 + 업로드 관련
 extension FireBaseManager {
     func deleteUserAllImageData() {
-        guard let id = Auth.auth().currentUser?.uid else {
+        guard let id = currentUserID else {
             return
         }
         
