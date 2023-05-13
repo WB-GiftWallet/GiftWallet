@@ -43,7 +43,7 @@ class LoginViewModel {
     }
     
     func appleLogin() -> ASAuthorizationAppleIDRequest {
-        return appleLoginManager.startSignInWithApple()
+        return appleLoginManager.createAppleSignInRequest()
     }
     
     
@@ -52,7 +52,7 @@ class LoginViewModel {
                                completion: @escaping () -> Void,
                                updateUserProfileCompletion: @escaping () -> Void,
                                updateDataCompletion: @escaping () -> Void) {
-        appleLoginManager.didCompleteLogin(controller: controller, authorization: authorization) { [weak self] userInfo in
+        appleLoginManager.handleAppleSignInCompletion(controller: controller, authorization: authorization) { [weak self] userInfo in
             guard let idTokenString = userInfo["idTokenString"],
                   let rawNonce = userInfo["rawNonce"],
                   let fullName = userInfo["fullName"],

@@ -14,9 +14,8 @@ struct AppleLoginManager {
     private var currentNonce: String?
 }
 
-
 extension AppleLoginManager {
-    func didCompleteLogin(controller: ASAuthorizationController, authorization: ASAuthorization, completion: @escaping ([String: String]) -> Void) {
+    func handleAppleSignInCompletion(controller: ASAuthorizationController, authorization: ASAuthorization, completion: @escaping ([String: String]) -> Void) {
         if let appleIDCredential = authorization.credential as? ASAuthorizationAppleIDCredential {
             guard let nonce = currentNonce else {
                 fatalError("Invalidstate: 로그인 콜백이 수신되었지만 로그인 요청이 전송되지 않았습니다.")
@@ -46,19 +45,19 @@ extension AppleLoginManager {
         
     }
     
-    mutating func startSignInWithApple() -> ASAuthorizationAppleIDRequest {
-        let nonce = randomNonceString()
+    mutating func createAppleSignInRequest() -> ASAuthorizationAppleIDRequest {
+        let nonce = createRandomNonceString()
         currentNonce = nonce
         
         let appleIDProvider = ASAuthorizationAppleIDProvider()
         let request = appleIDProvider.createRequest()
         request.requestedScopes = [.fullName, .email]
-        request.nonce = sha256(nonce)
+        request.nonce = getSHA256Hash(nonce)
         
         return request
     }
     
-    private func sha256(_ input: String) -> String {
+    private func getSHA256Hash(_ input: String) -> String {
         let inputData = Data(input.utf8)
         let hashedData = SHA256.hash(data: inputData)
         let hashString = hashedData.compactMap {
@@ -68,11 +67,9 @@ extension AppleLoginManager {
         return hashString
     }
     
-    
-    private func randomNonceString(length: Int = 32) -> String {
+    private func createRandomNonceString(length: Int = 32) -> String {
         precondition(length > 0)
-        let charset: Array<Character> =
-            Array("0123456789ABCDEFGHIJKLMNOPQRSTUVXYZabcdefghijklmnopqrstuvwxyz-._")
+        let charset: Array<Character> = Array("0123456789ABCDEFGHIJKLMNOPQRSTUVXYZabcdefghijklmnopqrstuvwxyz-._")
         var result = ""
         var remainingLength = length
         
@@ -97,8 +94,6 @@ extension AppleLoginManager {
                 }
             }
         }
-        
         return result
     }
-    
 }
