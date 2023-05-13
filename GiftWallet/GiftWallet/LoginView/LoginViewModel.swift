@@ -48,7 +48,6 @@ extension LoginViewModel {
         return appleLoginManager.createAppleSignInRequest()
     }
     
-    
     func didCompleteAppleLogin(controller: ASAuthorizationController,
                                authorization: ASAuthorization,
                                completion: @escaping () -> Void,
