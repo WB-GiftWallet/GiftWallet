@@ -13,7 +13,9 @@ class LoginViewModel {
     private var appleLoginManager = AppleLoginManager()
     private let coreDataManager = CoreDataManager.shared
     private let firebaseManager = FireBaseManager.shared
-    
+}
+
+extension LoginViewModel {
     func kakaoLogin(completion: @escaping () -> Void,
                     updateUserProfileCompletion: @escaping () -> Void,
                     updateDataCompletion: @escaping () -> Void) {
@@ -34,15 +36,15 @@ class LoginViewModel {
                         print(error.localizedDescription)
                     }
                 }
-                completion()
                 
-            case .failure(let failure):
-                print("폴트:::::::::::::",failure)
+                completion()
+            case .failure(let error):
+                print(error.localizedDescription)
             }
         }
     }
     
-    func appleLogin() -> ASAuthorizationAppleIDRequest {
+    func createAppleSignInRequest() -> ASAuthorizationAppleIDRequest {
         return appleLoginManager.createAppleSignInRequest()
     }
     
@@ -57,7 +59,7 @@ class LoginViewModel {
                   let rawNonce = userInfo["rawNonce"],
                   let fullName = userInfo["fullName"],
                   let self = self else { return }
-                            
+            
             let credentail = self.firebaseManager.makeAppleAuthProviderCredential(idToken: idTokenString, rawNonce: rawNonce)
             
             self.firebaseManager.signInWithCredential(authCredential: credentail) { [weak self] gifts in
@@ -75,3 +77,4 @@ class LoginViewModel {
         }
     }
 }
+
