@@ -13,6 +13,7 @@ class MainViewController: UIViewController, UISearchBarDelegate, UISearchControl
     
     private let viewModel: MainViewModel
     
+    private var contentViewHeightAnchor: NSLayoutConstraint?
     private var expireCollectionViewHeightAnchor: NSLayoutConstraint?
     private var recentCollectionViewHeightAnchor: NSLayoutConstraint?
     private var recentCollectionHeaderLabelTopAnchor: NSLayoutConstraint?
@@ -295,12 +296,11 @@ class MainViewController: UIViewController, UISearchBarDelegate, UISearchControl
             contentView.trailingAnchor.constraint(equalTo: contentScrollView.contentLayoutGuide.trailingAnchor),
             contentView.bottomAnchor.constraint(equalTo: contentScrollView.contentLayoutGuide.bottomAnchor),
             contentView.widthAnchor.constraint(equalTo: contentScrollView.widthAnchor),
-            contentView.heightAnchor.constraint(equalTo: contentScrollView.heightAnchor, multiplier: 1.3),
             
             searchButton.topAnchor.constraint(equalTo: safeArea.topAnchor, constant: 10),
-            searchButton.centerXAnchor.constraint(equalTo: contentView.centerXAnchor),
-            searchButton.widthAnchor.constraint(equalTo: contentView.widthAnchor, multiplier: 0.9),
-            searchButton.heightAnchor.constraint(equalTo: contentView.heightAnchor, multiplier: 0.04),
+            searchButton.centerXAnchor.constraint(equalTo: view.centerXAnchor),
+            searchButton.widthAnchor.constraint(equalTo: view.widthAnchor, multiplier: 0.9),
+            searchButton.heightAnchor.constraint(equalTo: view.heightAnchor, multiplier: 0.05),
             
             expireCollectionViewHeaderLabel.topAnchor.constraint(equalTo: searchButton.bottomAnchor, constant: 30),
             expireCollectionViewHeaderLabel.leadingAnchor.constraint(equalTo: safeArea.leadingAnchor, constant: 15),
@@ -325,11 +325,13 @@ class MainViewController: UIViewController, UISearchBarDelegate, UISearchControl
         expireCollectionViewHeightAnchor = expireCollectionView.heightAnchor.constraint(equalToConstant: view.frame.width * 0.95)
         recentCollectionViewHeightAnchor = recentCollectionView.heightAnchor.constraint(equalToConstant: view.frame.width * 0.95)
         recentCollectionHeaderLabelTopAnchor = recentCollectionViewHeaderLabel.topAnchor.constraint(equalTo: searchButton.bottomAnchor, constant: view.frame.height * 0.60)
+        contentViewHeightAnchor = contentView.heightAnchor.constraint(equalTo: contentScrollView.heightAnchor)
         
         NSLayoutConstraint.activate([
             expireCollectionViewHeightAnchor,
             recentCollectionViewHeightAnchor,
-            recentCollectionHeaderLabelTopAnchor
+            recentCollectionHeaderLabelTopAnchor,
+            contentViewHeightAnchor
         ].compactMap { $0 })
     }
     
@@ -364,6 +366,9 @@ class MainViewController: UIViewController, UISearchBarDelegate, UISearchControl
         recentCollectionViewHeightAnchor?.constant = recentCollectionViewActivate ? view.frame.width * 0.95 : 0
         recentCollectionHeaderLabelTopAnchor?.constant = recentHeaderLabelActivate ? view.frame.height * 0.60 : 25
         
+        contentViewHeightAnchor?.constant = expireCollectionViewActivate && recentCollectionViewActivate ? view.frame.height * 0.3 : 0
+        
+        contentScrollView.layoutIfNeeded()
         expireCollectionView.layoutIfNeeded()
         recentCollectionView.layoutIfNeeded()
         recentCollectionViewHeaderLabel.layoutIfNeeded()
