@@ -242,14 +242,14 @@ extension SearchViewController: UISearchResultsUpdating {
 
 extension SearchViewController: UISearchControllerDelegate {
     func willPresentSearchController(_ searchController: UISearchController) {
-        UIView.animate(withDuration: 1) {
+        UIView.animate(withDuration: 0.1) {
             self.activateConstraint.isActive = true
             self.view.layoutIfNeeded()
         }
     }
     
     func willDismissSearchController(_ searchController: UISearchController) {
-        UIView.animate(withDuration: 1) {
+        UIView.animate(withDuration: 0.1) {
             self.activateConstraint.isActive = false
             self.view.layoutIfNeeded()
         }
