@@ -24,7 +24,7 @@ class FireBaseManager {
     }
     
     var currentUserID: String? {
-      return Auth.auth().currentUser?.uid
+        return Auth.auth().currentUser?.uid
     }
     
     private init() { }
@@ -99,15 +99,15 @@ extension FireBaseManager {
     
     func deleteUser(completion: @escaping () -> Void) {
         let user = Auth.auth().currentUser
-
+        
         user?.delete { error in
-          if let error = error {
-            // An error happened.
-              print(error)
-          } else {
-            print("삭제완료")
-              completion()
-          }
+            if let error = error {
+                // An error happened.
+                print(error)
+            } else {
+                print("삭제완료")
+                completion()
+            }
         }
     }
     
@@ -184,16 +184,18 @@ extension FireBaseManager {
         }
         
         upLoadImageData(imageData: imageData, userID: id, dataNumber: number) { [weak self] url in
-            self?.db.collection(id.description).document((number).description).setData(["image":url.absoluteString,
-                                                                                       "number":number,
-                                                                                       "category":category,
-                                                                                       "brandName":brandName,
-                                                                                       "productName":productName,
-                                                                                       "memo":memo,
-                                                                                       "useableState": giftData.useableState,
-                                                                                       "expireDate": expireDate,
-                                                                                       "useDate": strUseDate
-                                                                                      ])
+            let data: [String: Any] = ["image":url.absoluteString,
+                                       "number":number,
+                                       "category":category,
+                                       "brandName":brandName,
+                                       "productName":productName,
+                                       "memo":memo,
+                                       "useableState": giftData.useableState,
+                                       "expireDate": expireDate,
+                                       "useDate": strUseDate
+            ]
+            
+            self?.db.collection(id.description).document((number).description).setData(data)
         }
     }
     
