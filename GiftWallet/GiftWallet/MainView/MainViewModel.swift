@@ -18,7 +18,7 @@ class MainViewModel {
     var recentGifts: Observable<[Gift]> = .init([])
     
     func fetchCoreData() {
-        switch CoreDataManager.shared.fetchData() {
+        switch coreDataManager.fetchData() {
         case .success(let data):
             allGifts = data
         case .failure(let error):
@@ -27,8 +27,8 @@ class MainViewModel {
     }
     
     func sortOutInGlobalThread(completion: @escaping () -> Void) {
-        DispatchQueue.global().async { [self] in
-            sortOutAsTodaysDate()
+        DispatchQueue.global().async {
+            self.sortOutAsTodaysDate()
             DispatchQueue.main.async {
                 completion()
             }
@@ -79,7 +79,7 @@ extension MainViewModel {
             print(error.localizedDescription)
         }
     }
-
+    
     func deleteFirebaseStoreDocument(targetGiftNumber: Int) {
         firebaseManager.deleteDate(targetGiftNumber)
     }
@@ -90,7 +90,7 @@ extension MainViewModel {
     
 }
 
-// MARK: Login 상태관련 함수
+// MARK: [레거시] Login 상태관련 함수
 extension MainViewModel {
     func checkIfUserLoggedIn(completionWhenUserIsNotLoggedIn: @escaping () -> Void,
                              completionWhenUserIsLoggedIn: @escaping () -> Void) {
