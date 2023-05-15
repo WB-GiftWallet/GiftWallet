@@ -38,13 +38,15 @@ struct Gift {
     
     init?(giftData: GiftData) {
         guard let imageData = giftData.image,
-              let image = UIImage(data: imageData) else { return nil }
+              let image = UIImage(data: imageData),
+              let brandName = giftData.brandName,
+              let productName = giftData.productName else { return nil }
         
         self.number = Int(giftData.number)
         self.image = image
         self.category = nil
-        self.brandName = giftData.brandName
-        self.productName = giftData.productName
+        self.brandName = brandName
+        self.productName = productName
         self.memo = giftData.memo
         self.useableState = giftData.useableState
         self.expireDate = giftData.expireDate
