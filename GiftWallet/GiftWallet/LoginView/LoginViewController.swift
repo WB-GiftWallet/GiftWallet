@@ -13,9 +13,7 @@ import CryptoKit
 class LoginViewController: UIViewController {
     
     private let viewModel: LoginViewModel
-    var delegate: DidFetchGiftDelegate?
-    fileprivate var currentNonce: String?
-    
+    var delegate: DidFinishLoginDelegate?
     
     private let kakaoLoginButton = {
         let button = UIButton()
@@ -30,7 +28,6 @@ class LoginViewController: UIViewController {
         button.contentHorizontalAlignment = .center
         button.tintColor = .black
         button.imageEdgeInsets = UIEdgeInsets.init(top: 0, left: 0, bottom: 0, right: 12)
-        
         button.translatesAutoresizingMaskIntoConstraints = false
         
         return button
@@ -83,19 +80,18 @@ class LoginViewController: UIViewController {
     private func setupButton() {
         let kakaoLoginAction = UIAction { _ in
             self.viewModel.kakaoLogin {
-                self.setupUserSetting()
                 self.dismiss(animated: true)
             } updateUserProfileCompletion: {
                 self.delegate?.finishedUpdateProfile()
             } updateDataCompletion: {
+                self.initializeUserSettings()
                 NotificationCenter.default.post(name: Notification.Name("finisehdFetch"), object: nil)
             }
         }
         kakaoLoginButton.addAction(kakaoLoginAction, for: .touchUpInside)
         
         let appleLoginAction = UIAction { _ in
-            let request = self.viewModel.appleLogin()
-            self.setupUserSetting()
+            let request = self.viewModel.createAppleSignInRequest()
             let controller = ASAuthorizationController(authorizationRequests: [request])
             controller.delegate = self
             controller.presentationContextProvider = self
@@ -124,12 +120,12 @@ class LoginViewController: UIViewController {
         ])
     }
     
-    private func setupUserSetting() {
+    private func initializeUserSettings() {
         UserDefaults.standard.setValue(9, forKey: "NotificationHour")
     }
-    
 }
 
+// MARK: AppleSignIn 관련
 extension LoginViewController: ASAuthorizationControllerDelegate {
     // 성공 후 동작
     func authorizationController(controller: ASAuthorizationController, didCompleteWithAuthorization authorization: ASAuthorization) {
@@ -138,6 +134,7 @@ extension LoginViewController: ASAuthorizationControllerDelegate {
         } updateUserProfileCompletion: {
             self.delegate?.finishedUpdateProfile()
         } updateDataCompletion: {
+            self.initializeUserSettings()
             NotificationCenter.default.post(name: Notification.Name("finisehdFetch"), object: nil)
         }
     }
@@ -154,6 +151,6 @@ extension LoginViewController: ASAuthorizationControllerPresentationContextProvi
     }
 }
 
-protocol DidFetchGiftDelegate {
+protocol DidFinishLoginDelegate {
     func finishedUpdateProfile()
 }

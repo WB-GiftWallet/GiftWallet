@@ -14,11 +14,11 @@ class EtcSettingViewModel {
     private let alarmCoreDataManager = AlarmCoreDataManager.shared
     
     var userName: String? {
-        return firebaseManager.currentUserInfo?.displayName
+        return firebaseManager.currentUser?.displayName
     }
     
     var userEmail: String? {
-        return firebaseManager.currentUserInfo?.email
+        return firebaseManager.currentUser?.email
     }
     
     var currentUser: String? {

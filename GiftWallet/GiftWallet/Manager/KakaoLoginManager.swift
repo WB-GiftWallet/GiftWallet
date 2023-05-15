@@ -26,14 +26,10 @@ extension KakaoLoginManager {
     private func logInWithUserApplication(completion: @escaping (Result<User, Error>) -> Void) {
         UserApi.shared.loginWithKakaoTalk {(oauthToken, error) in
             if let error = error {
-                print("이거에러:::::::::",error)
+                print(error.localizedDescription)
             }
             else {
-                print("loginWithKakaoTalk() success.")
-                
-                //do something
-                
-                setUserInfo(completion: completion)
+                getUserInfo(completion: completion)
             }
         }
     }
@@ -42,20 +38,15 @@ extension KakaoLoginManager {
     private func logInWithUserAccount(completion: @escaping (Result<User, Error>) -> Void) {
         UserApi.shared.loginWithKakaoAccount {(oauthToken, error) in
             if let error = error {
-                print(error)
+                print(error.localizedDescription)
             }
             else {
-                print("loginWithKakaoAccount() success.")
-                
-                //do something
-                print("오쓰토근:::::::::::", oauthToken)
-                _ = oauthToken
-                setUserInfo(completion: completion)
+                getUserInfo(completion: completion)
             }
         }
     }
     
-    private func setUserInfo(completion: @escaping (Result<User, Error>) -> Void) {
+    private func getUserInfo(completion: @escaping (Result<User, Error>) -> Void) {
         UserApi.shared.me { user, error in
             if let error = error {
                 completion(.failure(error))
@@ -65,7 +56,10 @@ extension KakaoLoginManager {
             }
         }
     }
-    
+}
+
+//MARK: 현재, 사용되지않는 코드
+extension KakaoLoginManager {
     func checkToken(handler: @escaping (Bool) -> Void) {
         if (AuthApi.hasToken()) {
             UserApi.shared.accessTokenInfo { ( accessTokenInfo, error) in

@@ -41,7 +41,7 @@ class AddViewModel {
             return nil
         case .expireDate:
             guard let texts = texts,
-                  let processedTexts = autoInputUseCase.processImageTextsToBrandNameText(imageTexts: texts),
+                  let processedTexts = autoInputUseCase.processImageTextsToExpireDate(imageTexts: texts),
                   let convertToDate = DateFormatter.convertToDisplyStringToExpireDate(dateText: processedTexts),
                   let checkValidDate = dateCalculateUseCase.checkValidDate(expireDate: convertToDate) else { return nil }
             return DateFormatter.convertToDisplayStringInputStyle(date: checkValidDate)

@@ -17,8 +17,7 @@ struct AutoInputUseCase {
         guard let imageTexts = imageTexts else { return nil }
         let separatedTexts = imageTexts.flatMap { $0.components(separatedBy: " ") }
         let removedPunctuationTexts = separatedTexts.map { $0.components(separatedBy: CharacterSet.alphanumerics.inverted).joined() }
-                
-        if let brand = removedPunctuationTexts.first(where: { brandList.contains($0.lowercased()) }) {
+        if let brand = removedPunctuationTexts.first(where: { brandList.contains($0) }) {
             brandName = brand
         }
         return brandName
