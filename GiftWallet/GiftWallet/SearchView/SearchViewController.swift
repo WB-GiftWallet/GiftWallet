@@ -110,6 +110,10 @@ final class SearchViewController: UIViewController {
         let viewModelData = viewModel.sortedRecommendData
         
         for (index, value) in viewModelData.enumerated() {
+            if index > 4 {
+                break
+            }
+            
             buttons[index].setTitle(value, for: .normal)
             recommendScrollView.recommendStackView.addArrangedSubview(buttons[index])
         }
