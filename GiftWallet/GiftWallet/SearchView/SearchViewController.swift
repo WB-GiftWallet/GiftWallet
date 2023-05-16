@@ -109,18 +109,9 @@ final class SearchViewController: UIViewController {
         
         let viewModelData = viewModel.sortedRecommendData
         
-        if viewModelData.count == 0 {
-            return
-        } else if viewModelData.count <= 5 {
-            for (index, value) in viewModelData.enumerated() {
-                buttons[index].setTitle(value, for: .normal)
-                recommendScrollView.recommendStackView.addArrangedSubview(buttons[index])
-            }
-        } else {
-            for index in 0...4 {
-                buttons[index].setTitle(viewModelData[index], for: .normal)
-                recommendScrollView.recommendStackView.addArrangedSubview(buttons[index])
-            }
+        for (index, value) in viewModelData.enumerated() {
+            buttons[index].setTitle(value, for: .normal)
+            recommendScrollView.recommendStackView.addArrangedSubview(buttons[index])
         }
         
         addTargetButtons()
