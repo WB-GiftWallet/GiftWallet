@@ -46,22 +46,32 @@ class EtcSettingViewModel {
     }
     
     var sectionNumber: Int {
-        return 2
+        return 3
     }
     
     func setupNumberOfRowsInSection(section: Int) -> Int {
         switch section {
-        case 0:
-            return 2
-        case 1:
-            return 3
-        default:
-            return 0
+            case 0:
+                return 2
+            case 1:
+                return 3
+            case 2:
+                return 3
+            default:
+                return 0
         }
     }
     
     func setupSectionHeader(section: Int) -> String {
-        guard let constantForSection = Constant(rawValue: section) else { return "" }
+        guard let constantForSection = EtcSettingConstant(rawValue: section) else { return "" }
         return constantForSection.sectionDescription
+    }
+    
+    func getURL(index: Int) -> String {
+        guard let url = EtcSettingConstant.CustomerSupport(rawValue: index)?.url else {
+            return ""
+        }
+        
+        return url
     }
 }

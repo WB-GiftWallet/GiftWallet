@@ -210,9 +210,20 @@ extension EtcSettingViewController: UITableViewDelegate {
             showDeleteUserAlert()
         } else if indexPath.section == 1, indexPath.row == 2 {
             timeSettingViewSceneConversion()
+        } else if indexPath.section == 2 {
+            tapMovingDevelopNote(index: indexPath.row)
         }
         
         tableView.deselectRow(at: indexPath, animated: true)
+    }
+    
+    private func tapMovingDevelopNote(index: Int) {
+        let urlString = viewModel.getURL(index: index)
+        
+        if let urlStringEncoded = urlString.addingPercentEncoding(withAllowedCharacters: .urlQueryAllowed),
+           let url = URL(string: urlStringEncoded) {
+            UIApplication.shared.open(url, options: [:])
+        }
     }
     
     private func usageHistoryViewSceneConversion() {

@@ -57,12 +57,14 @@ class EtcSettingTableViewCell: UITableViewCell, ReusableView {
     func configureCell(section: Int, index: Int) {
         switch section {
         case 0:
-            settingListLabel.text = Constant.AccountInfo(rawValue: index)?.labelDescription
+            settingListLabel.text = EtcSettingConstant.AccountInfo(rawValue: index)?.labelDescription
             statusLabel.text = nil
             setupAttributesAccontInfoCell(index)
         case 1:
-            settingListLabel.text = Constant.AuthorizeSetting(rawValue: index)?.labelDescription
+            settingListLabel.text = EtcSettingConstant.AuthorizeSetting(rawValue: index)?.labelDescription
             setupAttributesAuthorizeSettingCell(index)
+        case 2:
+            settingListLabel.text = EtcSettingConstant.CustomerSupport(rawValue: index)?.labelDescription
         default:
             break
         }
