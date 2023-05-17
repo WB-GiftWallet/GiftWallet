@@ -1,6 +1,7 @@
 # MyGift
 
-개발기간 : 2023.03 ~ 2022.05
+개발기간 : 2023.03 ~ 2022.05. 
+
 개발과정노트 : [Notion - MyGift](https://glossy-modem-fe7.notion.site/Gift-Wallet-53d4eb1058854bac97d034ee1a71abc9)
 
 [![appStore](https://user-images.githubusercontent.com/50910456/173174832-7d395623-ceb3-4796-b718-22e550af6934.svg)](https://apps.apple.com/kr/app/mygift/id6448777213)
