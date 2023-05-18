@@ -73,7 +73,7 @@ enum EtcSettingConstant: Int {
         var url: String {
             switch self {
                 case .inconvenience:
-                    return "https://github.com/WB-GiftWallet/GiftWallet/discussions/categories/q-a-불편사항-접수"
+                    return "https://open.kakao.com/o/gjrFstkf"
                 case .moveSite:
                     return "https://github.com/WB-GiftWallet/GiftWallet/discussions"
                 case .privacyPolicy:
