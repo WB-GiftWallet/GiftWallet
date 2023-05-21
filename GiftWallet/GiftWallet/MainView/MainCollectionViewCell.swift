@@ -23,6 +23,10 @@ class MainCollectionViewCell: UICollectionViewCell, ReusableView {
         imageView.clipsToBounds = true
         imageView.translatesAutoresizingMaskIntoConstraints = false
         
+        //TODO: Image size ScaleAspectFit 확인 후 적용 혹은 삭제
+        imageView.contentMode = . scaleAspectFit
+        imageView.backgroundColor = .systemBackground
+        
         return imageView
     }()
     
