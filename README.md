@@ -15,29 +15,34 @@
 
 ## [Update]
 
-- version 1.0.0 : 
-    -앱 스토어 출시 ( 23.05.13 )
+- ![version 1.0.0](https://img.shields.io/badge/version-1.0.0-yellow) 
+    - 앱 스토어 출시 ( 23.05.13 )
   
-- version 1.0.1 :
-    -쿠폰 추가 시 브랜드, 만료일 자동입력 기능의 버그 수정
-    -메인화면에서 유저 스크롤 가능 영역의 조절
-    -기타 안정성 개선 (순환참조 및 등록시 미업데이트 에러해결)
-    -마케팅URL 링크 추가 ( 23.05.23 )
+- ![version 1.0.1](https://img.shields.io/badge/version-1.0.1-yellow) 
+    - 쿠폰 추가 시 브랜드, 만료일 자동입력 기능의 버그 수정
+    - 메인화면에서 유저 스크롤 가능 영역의 조절
+    - 기타 안정성 개선 (순환참조 및 등록시 미업데이트 에러해결)
+    - 마케팅URL 링크 추가 ( 23.05.23 )
 
 ## [ Develop Environment ]
 
-- iOS Deployment Target : 14.0
-- Xcode : 14.1
+- ![iOS Deployment Target : 14.0](https://img.shields.io/badge/iOS%20Deployment%20Target-%2014.0-green)
+- ![Xcode : 14.1](https://img.shields.io/badge/Xcode-14.1-brightgreen)
 
 ## [ Technical Skills ]
 
-- iOS
-- Swift
-- MVVM
-- Core Data
-- Vision
-- Social Login(Kakao/Apple)
-- Firebase(Auth/Store/Storage)
+- ![iOS](https://img.shields.io/badge/-iOS-lightgrey)
+- ![Swift](https://img.shields.io/badge/-Swift-orange)
+- ![MVVM](https://img.shields.io/badge/Architecture-MVVM-red)
+- ![Core Data](https://img.shields.io/badge/LocalDB-CoreData-blue)
+- ![Vision](https://img.shields.io/badge/Framework-Vision-lightgrey)
+- Social Login
+    - ![](https://img.shields.io/badge/Kakao-Login-yellow)
+    - ![](https://img.shields.io/badge/Apple-Login-lightgrey)
+- FireBase
+    - ![](https://img.shields.io/badge/firebase-Auth-green)
+    - ![](https://img.shields.io/badge/firebase-Store-brightgreen)
+    - ![](https://img.shields.io/badge/firebase-Storage-yellowgreen)
 
 
 ## [ Library ]
