@@ -23,10 +23,6 @@ class MainCollectionViewCell: UICollectionViewCell, ReusableView {
         imageView.clipsToBounds = true
         imageView.translatesAutoresizingMaskIntoConstraints = false
         
-        //TODO: Image size ScaleAspectFit 확인 후 적용 혹은 삭제
-        imageView.contentMode = . scaleAspectFit
-        imageView.backgroundColor = .systemBackground
-        
         return imageView
     }()
     
@@ -164,10 +160,6 @@ class MainCollectionViewCell: UICollectionViewCell, ReusableView {
             tagView.trailingAnchor.constraint(equalTo: giftImageView.trailingAnchor, constant: -10),
             tagView.topAnchor.constraint(equalTo: giftImageView.topAnchor),
             
-            shadowView.topAnchor.constraint(equalTo: giftImageView.topAnchor),
-            shadowView.bottomAnchor.constraint(equalTo: giftImageView.bottomAnchor),
-            shadowView.leadingAnchor.constraint(equalTo: giftImageView.leadingAnchor),
-            shadowView.trailingAnchor.constraint(equalTo: giftImageView.trailingAnchor),
             shadowView.widthAnchor.constraint(equalTo: giftImageView.widthAnchor),
             shadowView.heightAnchor.constraint(equalTo: giftImageView.heightAnchor),
             
