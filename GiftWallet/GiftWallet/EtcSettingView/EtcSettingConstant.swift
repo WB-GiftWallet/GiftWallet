@@ -77,7 +77,7 @@ enum EtcSettingConstant: Int {
                 case .moveSite:
                     return "https://glossy-modem-fe7.notion.site/WellCome-MyGift-7eae55071d8d41309c5db299fb1aaeb8"
                 case .privacyPolicy:
-                    return "https://velog.io/@wooong/개인정보처리방침"
+                    return "https://github.com/WB-GiftWallet/GiftWallet/discussions/39"
             }
         }
     }
