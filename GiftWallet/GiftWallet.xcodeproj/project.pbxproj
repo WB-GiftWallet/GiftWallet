@@ -51,7 +51,7 @@
 		D2A282B629A85EBC002CCF5A /* Gift.swift in Sources */ = {isa = PBXBuildFile; fileRef = D2A282B529A85EBC002CCF5A /* Gift.swift */; };
 		D2A282B829A85EF2002CCF5A /* Observable.swift in Sources */ = {isa = PBXBuildFile; fileRef = D2A282B729A85EF2002CCF5A /* Observable.swift */; };
 		D2A282C029A8702B002CCF5A /* MainViewModelTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = D2A282BF29A8702B002CCF5A /* MainViewModelTests.swift */; };
-		D2B6333D29ACCA4100EE9ACE /* Constant.swift in Sources */ = {isa = PBXBuildFile; fileRef = D2B6333C29ACCA4100EE9ACE /* Constant.swift */; };
+		D2B6333D29ACCA4100EE9ACE /* EtcSettingConstant.swift in Sources */ = {isa = PBXBuildFile; fileRef = D2B6333C29ACCA4100EE9ACE /* EtcSettingConstant.swift */; };
 		D2B6334029ACD1A100EE9ACE /* UsageHistoryViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = D2B6333F29ACD1A100EE9ACE /* UsageHistoryViewModel.swift */; };
 		D2B6334229ACD1CB00EE9ACE /* UsageHistoryViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D2B6334129ACD1CB00EE9ACE /* UsageHistoryViewController.swift */; };
 		D2B6334429ACEAB700EE9ACE /* HistoryTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = D2B6334329ACEAB700EE9ACE /* HistoryTableViewCell.swift */; };
@@ -162,7 +162,7 @@
 		D2A282BD29A8702B002CCF5A /* MainViewModelTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = MainViewModelTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		D2A282BF29A8702B002CCF5A /* MainViewModelTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainViewModelTests.swift; sourceTree = "<group>"; };
 		D2A4088429D6E82200633370 /* GiftWallet.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = GiftWallet.entitlements; sourceTree = "<group>"; };
-		D2B6333C29ACCA4100EE9ACE /* Constant.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Constant.swift; sourceTree = "<group>"; };
+		D2B6333C29ACCA4100EE9ACE /* EtcSettingConstant.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EtcSettingConstant.swift; sourceTree = "<group>"; };
 		D2B6333F29ACD1A100EE9ACE /* UsageHistoryViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UsageHistoryViewModel.swift; sourceTree = "<group>"; };
 		D2B6334129ACD1CB00EE9ACE /* UsageHistoryViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UsageHistoryViewController.swift; sourceTree = "<group>"; };
 		D2B6334329ACEAB700EE9ACE /* HistoryTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HistoryTableViewCell.swift; sourceTree = "<group>"; };
@@ -346,7 +346,7 @@
 				D2C7A45829A9DA6C00EB6D56 /* EtcSettingViewController.swift */,
 				D2C7A45A29A9DAB500EB6D56 /* EtcSttingViewModel.swift */,
 				D2C7A45C29A9E77100EB6D56 /* EtcSettingTableViewCell.swift */,
-				D2B6333C29ACCA4100EE9ACE /* Constant.swift */,
+				D2B6333C29ACCA4100EE9ACE /* EtcSettingConstant.swift */,
 				D26019CE29F3A28600931FBD /* TimeSettingViewController.swift */,
 			);
 			path = EtcSettingView;
@@ -761,7 +761,7 @@
 				D2DAAA2529A47CD500D70E8C /* CustomCollectionView.swift in Sources */,
 				FC1E747C29A207DA0010A4BA /* GiftWallet.xcdatamodeld in Sources */,
 				17D5963B29B0835800AFE039 /* Extension+Date.swift in Sources */,
-				D2B6333D29ACCA4100EE9ACE /* Constant.swift in Sources */,
+				D2B6333D29ACCA4100EE9ACE /* EtcSettingConstant.swift in Sources */,
 				D2B7AE6129B7301A000AC592 /* CustomGiftTagUIView.swift in Sources */,
 				D295E4B529A5E2F400E12CAF /* UpdateGiftInfoViewController.swift in Sources */,
 				D2B6334429ACEAB700EE9ACE /* HistoryTableViewCell.swift in Sources */,
