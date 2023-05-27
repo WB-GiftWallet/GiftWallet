@@ -120,14 +120,11 @@ final class CoreDataManager {
         try context.execute(deleteRequest)
         try context.save()
         
-        var giftDataMostRecentNumber = 0
-        
         let entity = NSEntityDescription.entity(forEntityName: "GiftData", in: context)
         for gift in gifts {
             if let entity = entity {
                 let info = NSManagedObject(entity: entity, insertInto: context)
-                giftDataMostRecentNumber += 1
-                info.setValue(giftDataMostRecentNumber, forKey: "number")
+                info.setValue(gift.number, forKey: "number")
                 info.setValue(gift.image.pngData(), forKey: "image")
                 info.setValue(gift.category?.rawValue, forKey: "category")
                 info.setValue(gift.brandName, forKey: "brandName")
