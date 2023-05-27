@@ -315,7 +315,7 @@ extension FireBaseManager {
         
         self.downLoadImageData(dataNumber: number) { data in
             if let image = UIImage(data: data) {
-                let gift = Gift(
+                var gift = Gift(
                     image: image,
                     category: category as? Category,
                     brandName: brandName,
@@ -325,6 +325,7 @@ extension FireBaseManager {
                     expireDate: expireDate,
                     useDate: useDate
                 )
+                gift.number = number
                 completion(gift)
             }
         }
