@@ -26,6 +26,7 @@ class AddViewController: UIViewController {
     private lazy var inputDescriptionLabel = {
         let label = UILabel()
         
+        
         label.font = UIFont(style: .medium, size: 15)
         label.text = page.labelDescription
         label.translatesAutoresizingMaskIntoConstraints = false
