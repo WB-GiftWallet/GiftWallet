@@ -12,41 +12,37 @@ class AddViewController: UIViewController {
     let page: Page
     let viewModel: AddViewModel
     
-    private lazy var giftImageView = {
+    private var giftImageView = {
         let imageView = UIImageView()
         
         imageView.translatesAutoresizingMaskIntoConstraints = false
-        imageView.image = viewModel.selectedImage
         imageView.contentMode = .scaleAspectFit
         imageView.clipsToBounds = true
         
         return imageView
     }()
     
-    private lazy var inputDescriptionLabel = {
+    private var inputDescriptionLabel = {
         let label = UILabel()
         
         label.font = UIFont(style: .medium, size: 15)
-        label.text = page.labelDescription
         label.translatesAutoresizingMaskIntoConstraints = false
         
         return label
     }()
     
-    private lazy var inputTextField = {
+    private var inputTextField = {
         let textField = CustomTextField()
         
-        textField.delegate = self
         textField.clearButtonMode = .always
         textField.translatesAutoresizingMaskIntoConstraints = false
         
         return textField
     }()
     
-    private lazy var actionButton = {
+    private var actionButton = {
         let button = CustomButton()
         
-        button.setTitle(page.buttonDescription, for: .normal)
         button.translatesAutoresizingMaskIntoConstraints = false
         
         return button
@@ -64,6 +60,9 @@ class AddViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        
+        setupProperties()
+        
         setupNavigation()
         setupViews()
         setupButton()
@@ -75,6 +74,13 @@ class AddViewController: UIViewController {
     override func viewDidLayoutSubviews() {
         super.viewDidLayoutSubviews()
         inputTextField.setupTextFieldBottomBorder()
+    }
+    
+    private func setupProperties() {
+        giftImageView.image = viewModel.selectedImage
+        inputDescriptionLabel.text = page.labelDescription
+        inputTextField.delegate = self
+        actionButton.setTitle(page.buttonDescription, for: .normal)
     }
     
     private func setuptextInTextField() {
