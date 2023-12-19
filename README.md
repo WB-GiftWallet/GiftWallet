@@ -1,6 +1,6 @@
 # MyGift
 
-개발기간 : 2023.03 ~ 2022.05. 
+개발기간 : 2023.03 ~ 2023. 06
 
 개발과정노트 : [Notion - MyGift](https://glossy-modem-fe7.notion.site/Gift-Wallet-53d4eb1058854bac97d034ee1a71abc9)
 
